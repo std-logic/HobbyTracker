@@ -1,5 +1,5 @@
 #include "HobbyTracker.h"
-#include "MainWindow.h"
+#include "gui/MainWindow.h"
 
 HobbyTracker::HobbyTracker()
 	: _main_window{std::make_unique<MainWindow>()}
@@ -14,4 +14,3 @@ void HobbyTracker::show()
 {
 	_main_window->show();
 }
-
