@@ -123,7 +123,26 @@ void Books::WidgetList::showByCenturies(const DataList& list)
 
 void Books::WidgetList::showByRatings(const DataList& list)
 {
+	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR};
+	initColumns({tr("Оценка / Название"), tr("К-во"), tr("Жанр"), tr("Год")},
+				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR});
+	initSorting(CLMN_TITLE);
 
+	auto list_by_ratings = list.listByRatings();
+
+	for (const auto& [rating, books] : list_by_ratings) {
+		auto item_rating = new Base::WidgetTreeItem(this, Helper::ratingColor(rating));
+		item_rating->setNumb(CLMN_TITLE, rating);
+		item_rating->setNumb(CLMN_COUNT, books.size());
+		item_rating->setText(CLMN_YEAR, Helper::yearString(DataList::sublistMinMaxYears(books)));
+
+		for (const auto book : books) {
+			auto item_book = new Base::WidgetTreeItem(item_rating);
+			item_book->setText(CLMN_TITLE, book->autorAndTitle());
+			item_book->setText(CLMN_GENRE, book->genre());
+			item_book->setText(CLMN_YEAR, book->yearString());
+		}
+	}
 }
 
 void Books::WidgetList::showSimple(const DataList& list)

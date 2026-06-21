@@ -52,4 +52,9 @@ namespace Helper
 				QStringLiteral("[Неизвестное]") :
 				QStringLiteral("%1-е").arg((year / step) * step);
 	}
+
+	inline QColor ratingColor(uint32_t rating)
+	{
+		return Global::Colors::rating[((1 <= rating) && (rating <= 10)) ? rating-1 : 4];
+	}
 }

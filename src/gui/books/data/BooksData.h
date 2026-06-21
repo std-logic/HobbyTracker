@@ -81,7 +81,7 @@ private:
 	QString _title_orig;
 	QString _genre;
 	uint32_t _year = Global::undefined_value;
-	uint8_t _rating = Global::undefined_value;
+	uint32_t _rating = Global::undefined_value;
 };
 
 } // namespace Books

@@ -48,6 +48,16 @@ public:
 		return list;
 	}
 
+	using ListByRatings = std::unordered_map<uint32_t, SubListContainer>;
+	ListByRatings listByRatings() const
+	{
+		ListByRatings list;
+		for (const auto& book : _data_list) {
+			list[book.rating()].push_back(&book);
+		}
+		return list;
+	}
+
 	static auto sublistMinMaxYears(const SubListContainer& sublist)
 	{
 		std::pair<uint32_t, uint32_t> res(Global::undefined_value, Global::undefined_value);

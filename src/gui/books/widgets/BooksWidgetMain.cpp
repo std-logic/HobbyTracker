@@ -60,7 +60,7 @@ void Books::WidgetMain::start()
 	data.setTitleOrig("Время секонд хэнд");
 	data.setGenre("Документальная");
 	data.setYear(2013);
-	data.setRating(5);
+	data.setRating(6);
 	_data_list.value().add(data);
 
 	_list->showList(_data_list.value());

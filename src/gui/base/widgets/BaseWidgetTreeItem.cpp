@@ -1,6 +1,7 @@
 #include "BaseWidgetTreeItem.h"
 
 #include <common/Global.h>
+#include <common/Helper.h>
 
 #include <QTreeWidget>
 
@@ -41,9 +42,7 @@ void Base::WidgetTreeItem::setRating(int column, const QVariant& value)
 {
 	setNumb(column, value);
 	auto rating = value.toUInt();
-	if ((1 <= rating) && (rating <= 10)) {
-		setBackground(column, Global::Colors::rating[rating-1]);
-	}
+	setBackground(column, Helper::ratingColor(rating));
 }
 
 void Base::WidgetTreeItem::setBold(bool enable)
