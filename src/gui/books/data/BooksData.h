@@ -1,6 +1,7 @@
 #pragma once
 
 #include <common/Global.h>
+#include <common/Helper.h>
 
 #include <QString>
 
@@ -12,19 +13,45 @@ class Data
 public:
 	Data() = default;
 
-	inline void setAuthor(const QString& author)
-	{ _author = author; }
-	inline void setAuthor(QString&& author)
-	{ _author = std::move(author); }
-	inline QString author() const
-	{ return _author; }
+	void clear()
+	{ *this = Data(); }
 
-	inline void setTitle(const QString& title)
-	{ _title = title; }
-	inline void setTitle(QString&& title)
-	{ _title = std::move(title); }
+	inline void setAuthorTr(const QString& author_tr)
+	{ _author_tr = author_tr; }
+	inline void setAuthorTr(QString&& author_tr)
+	{ _author_tr = std::move(author_tr); }
+	inline QString authorTr() const
+	{ return _author_tr; }
+
+	inline void setAuthorOrig(const QString& author_orig)
+	{ _author_orig = author_orig; }
+	inline void setAuthorOrig(QString&& author_orig)
+	{ _author_orig = std::move(author_orig); }
+	inline QString authorOrig() const
+	{ return _author_orig; }
+
+	inline QString author() const
+	{ return Helper::fullTrAndOrigString(_author_tr, _author_orig); }
+
+	inline void setTitleTr(const QString& title_tr)
+	{ _title_tr = title_tr; }
+	inline void setTitleTr(QString&& title_tr)
+	{ _title_tr = std::move(title_tr); }
+	inline QString titleTr() const
+	{ return _title_tr; }
+
+	inline void setTitleOrig(const QString& title_orig)
+	{ _title_orig = title_orig; }
+	inline void setTitleOrig(QString&& title_orig)
+	{ _title_orig = std::move(title_orig); }
+	inline QString titleOrig() const
+	{ return _title_orig; }
+
 	inline QString title() const
-	{ return _title; }
+	{ return Helper::fullTrAndOrigString(_title_tr, _title_orig); }
+
+	inline QString autorAndTitle() const
+	{ return QStringLiteral("%1 - %2").arg(author(), title()); }
 
 	inline void setGenre(const QString& genre)
 	{ _genre = genre; }
@@ -48,8 +75,10 @@ public:
 	{ return (_rating == Global::undefined_value) ? QString() : QString::number(_rating); }
 
 private:
-	QString _author;
-	QString _title;
+	QString _author_tr;
+	QString _author_orig;
+	QString _title_tr;
+	QString _title_orig;
 	QString _genre;
 	uint32_t _year = Global::undefined_value;
 	uint8_t _rating = Global::undefined_value;

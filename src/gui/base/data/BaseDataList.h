@@ -13,6 +13,7 @@ public:
 	virtual ~DataList() = default;
 
 	using ListContainer = std::vector<T>;
+	using SubListContainer = std::vector<const T*>;
 
 	ListContainer::iterator begin() noexcept
 	{ return _data_list.begin(); }

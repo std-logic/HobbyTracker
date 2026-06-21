@@ -16,37 +16,53 @@ void Books::WidgetMain::start()
 
 	// test!!!!
 	_data_list = DataList();
+
 	Data data;
-	data.setAuthor("Айзек Азимов (Isaac Asimov)");
-	data.setTitle("О времени, пространстве и других вещах (Of time and space and other things)");
+	data.setAuthorTr("Айзек Азимов");
+	data.setAuthorOrig("Isaac Asimov");
+	data.setTitleTr("О времени, пространстве и других вещах");
+	data.setTitleOrig("Of time and space and other things");
 	data.setGenre("Научно-популярная");
 	data.setYear(1965);
 	data.setRating(4);
 	_data_list.value().add(data);
-	data.setAuthor("Айзек Азимов (Isaac Asimov)");
-	data.setTitle("Я, робот (I, robot)");
+
+	data.clear();
+	data.setAuthorTr("Айзек Азимов");
+	data.setAuthorOrig("Isaac Asimov");
+	data.setTitleTr("Я, робот");
+	data.setTitleOrig("I, robot");
 	data.setGenre("Художественная");
 	data.setYear(1950);
 	data.setRating(8);
 	_data_list.value().add(data);
-	data.setAuthor("Рикарду С. Аморим (Ricardo S. Amorim)");
-	data.setTitle("Волки, которые были людьми. История Moonspell (Wolves who were men - The history of Moonspell)");
+
+	data.clear();
+	data.setAuthorTr("Рикарду С. Аморим");
+	data.setAuthorOrig("Ricardo S. Amorim");
+	data.setTitleTr("Волки, которые были людьми. История Moonspell");
+	data.setTitleOrig("Wolves who were men - The history of Moonspell");
 	data.setGenre("Документальная");
 	data.setYear(2021);
 	data.setRating(9);
 	_data_list.value().add(data);
-	data.setAuthor("Светлана Алексиевич");
-	data.setTitle("У войны не женское лицо");
+
+	data.clear();
+	data.setAuthorOrig("Светлана Алексиевич");
+	data.setTitleOrig("У войны не женское лицо");
 	data.setGenre("Документальная");
 	data.setYear(1985);
 	data.setRating(6);
 	_data_list.value().add(data);
-	data.setAuthor("Светлана Алексиевич");
-	data.setTitle("Время секонд хэнд");
+
+	data.clear();
+	data.setAuthorOrig("Светлана Алексиевич");
+	data.setTitleOrig("Время секонд хэнд");
 	data.setGenre("Документальная");
 	data.setYear(2013);
 	data.setRating(5);
 	_data_list.value().add(data);
+
 	_list->showList(_data_list.value());
 	// test!!!!
 }

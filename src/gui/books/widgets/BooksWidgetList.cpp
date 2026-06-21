@@ -34,6 +34,7 @@ void Books::WidgetList::showByAuthors(const DataList& list)
 		auto item_author = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_author->setText(CLMN_TITLE, author);
 		item_author->setNumb(CLMN_COUNT, books.size());
+		item_author->setText(CLMN_YEAR, Helper::yearString(Books::DataList::sublistMinMaxYears(books)));
 
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_author);
@@ -58,11 +59,11 @@ void Books::WidgetList::showByGenres(const DataList& list)
 		auto item_genre = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_genre->setText(CLMN_TITLE, genre);
 		item_genre->setNumb(CLMN_COUNT, books.size());
+		item_genre->setText(CLMN_YEAR, Helper::yearString(Books::DataList::sublistMinMaxYears(books)));
 
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_genre);
-			item_book->setText(CLMN_TITLE, QStringLiteral("%1 - %2")
-					.arg(book->author(), book->title()));
+			item_book->setText(CLMN_TITLE, book->autorAndTitle());
 			item_book->setNumb(CLMN_YEAR, book->year());
 			item_book->setRating(CLMN_RATING, book->rating());
 		}
@@ -88,7 +89,7 @@ void Books::WidgetList::showSimple(const DataList& list)
 
 	for (const auto& book : list) {
 		auto item_book = new Base::WidgetTreeItem(this);
-		item_book->setText(CLMN_TITLE, book.title());
+		item_book->setText(CLMN_TITLE, book.autorAndTitle());
 		item_book->setText(CLMN_GENRE, book.genre());
 		item_book->setNumb(CLMN_YEAR, book.year());
 		item_book->setRating(CLMN_RATING, book.rating());

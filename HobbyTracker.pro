@@ -43,6 +43,7 @@ SOURCES += \
 HEADERS += \
 	src/HobbyTracker.h \
 	src/common/Global.h \
+	src/common/Helper.h \
 	src/gui/MainWindow.h \
 	src/gui/base/data/BaseDataList.h \
 	src/gui/base/widgets/BaseButtonSave.h \
