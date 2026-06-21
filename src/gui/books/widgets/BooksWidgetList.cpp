@@ -13,10 +13,10 @@ void Books::WidgetList::showList(const DataList& list)
 	clear();
 	switch (static_cast<ListViewModes>(_view_mode)) {
 		case ListViewModes::ByAuthors:		showByAuthors(list);		break;
-		case ListViewModes::ByTitles:		showByTitles(list);			break;
 		case ListViewModes::ByGenres:		showByGenres(list);			break;
 		case ListViewModes::ByYears:		showByYears(list);			break;
 		case ListViewModes::ByRatings:		showByRatings(list);		break;
+		case ListViewModes::Simple:			showSimple(list);			break;
 		default: return;
 	}
 }
@@ -42,22 +42,6 @@ void Books::WidgetList::showByAuthors(const DataList& list)
 			item_book->setNumb(CLMN_YEAR, book->year());
 			item_book->setRating(CLMN_RATING, book->rating());
 		}
-	}
-}
-
-void Books::WidgetList::showByTitles(const DataList& list)
-{
-	enum Columns {CLMN_TITLE, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
-	initColumns({tr("Название"), tr("Жанр"), tr("Год"), tr("Оценка")},
-				{WIDTH_TITLE, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
-	initSorting(CLMN_TITLE);
-
-	for (const auto& book : list) {
-		auto item_book = new Base::WidgetTreeItem(this);
-		item_book->setText(CLMN_TITLE, book.title());
-		item_book->setText(CLMN_GENRE, book.genre());
-		item_book->setNumb(CLMN_YEAR, book.year());
-		item_book->setRating(CLMN_RATING, book.rating());
 	}
 }
 
@@ -93,4 +77,20 @@ void Books::WidgetList::showByYears(const DataList& list)
 void Books::WidgetList::showByRatings(const DataList& list)
 {
 
+}
+
+void Books::WidgetList::showSimple(const DataList& list)
+{
+	enum Columns {CLMN_TITLE, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
+	initColumns({tr("Название"), tr("Жанр"), tr("Год"), tr("Оценка")},
+				{WIDTH_TITLE, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
+	initSorting(CLMN_TITLE);
+
+	for (const auto& book : list) {
+		auto item_book = new Base::WidgetTreeItem(this);
+		item_book->setText(CLMN_TITLE, book.title());
+		item_book->setText(CLMN_GENRE, book.genre());
+		item_book->setNumb(CLMN_YEAR, book.year());
+		item_book->setRating(CLMN_RATING, book.rating());
+	}
 }

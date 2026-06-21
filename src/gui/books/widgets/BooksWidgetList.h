@@ -20,10 +20,10 @@ signals:
 
 private:
 	void showByAuthors(const DataList& list);
-	void showByTitles(const DataList& list);
 	void showByGenres(const DataList& list);
 	void showByYears(const DataList& list);
 	void showByRatings(const DataList& list);
+	void showSimple(const DataList& list);
 
 private:
 	static const int WIDTH_TITLE = 0; // stretched

@@ -32,17 +32,17 @@ void Books::WidgetControl::initGui()
 		addSpacing();
 
 		addWidget(_button_list = new Base::ButtonShow(tr("Список"), this));
-		connect(_button_list, &Base::ButtonShow::toggled, [this](bool on) {
+		connect(_button_list, &Base::ButtonShow::toggled, this, [this](bool on) {
 			_combo_list_mode->setEnabled(on);
 			emit showList(on);
 		});
 
 		addWidget(_combo_list_mode = new QComboBox(this));
 		_combo_list_mode->addItem(tr("По авторам"), static_cast<int>(ListViewModes::ByAuthors));
-		_combo_list_mode->addItem(tr("По названиям"), static_cast<int>(ListViewModes::ByTitles));
 		_combo_list_mode->addItem(tr("По жанрам"), static_cast<int>(ListViewModes::ByGenres));
 		_combo_list_mode->addItem(tr("По годам"), static_cast<int>(ListViewModes::ByYears));
 		_combo_list_mode->addItem(tr("По оценкам"), static_cast<int>(ListViewModes::ByRatings));
+		_combo_list_mode->addItem(tr("Простой"), static_cast<int>(ListViewModes::Simple));
 		connect(_combo_list_mode, &QComboBox::currentIndexChanged,
 				this, &WidgetControl::listModeChanged);
 	}
