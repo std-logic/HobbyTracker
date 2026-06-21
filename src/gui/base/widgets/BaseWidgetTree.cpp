@@ -40,9 +40,15 @@ void Base::WidgetTree::initColumns(const QStringList& labels, const std::vector<
 {
 	setColumnCount(labels.size());
 	setHeaderLabels(labels);
+	auto head = header();
+	head->setStretchLastSection(false);
 	for (size_t i = 0; i < widths.size(); ++i) {
 		if (widths[i] > 0) {
+			head->setSectionResizeMode(i, QHeaderView::Fixed);
 			setColumnWidth(i, widths[i]);
+		} else {
+			head->setStretchLastSection(false);
+			head->setSectionResizeMode(i, QHeaderView::Stretch);
 		}
 	}
 }

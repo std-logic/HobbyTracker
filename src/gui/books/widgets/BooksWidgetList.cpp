@@ -25,7 +25,7 @@ void Books::WidgetList::showByAuthors(const DataList& list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
 	initColumns({tr("Автор / Название"), tr("К-во"), tr("Жанр"), tr("Год"), tr("Оценка")},
-				{550, 50, 150, 90, 70});
+				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
 	auto list_by_authors = list.listByAuthors();
@@ -49,7 +49,7 @@ void Books::WidgetList::showByTitles(const DataList& list)
 {
 	enum Columns {CLMN_TITLE, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
 	initColumns({tr("Название"), tr("Жанр"), tr("Год"), tr("Оценка")},
-				{600, 150, 90, 70});
+				{WIDTH_TITLE, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
 	for (const auto& book : list) {
@@ -65,7 +65,7 @@ void Books::WidgetList::showByGenres(const DataList& list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_YEAR, CLMN_RATING};
 	initColumns({tr("Жанр / Название"), tr("К-во"), tr("Год"), tr("Оценка")},
-				{700, 50, 90, 70});
+				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
 	auto list_by_genres = list.listByGenres();
