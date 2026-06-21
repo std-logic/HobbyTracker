@@ -40,7 +40,8 @@ void Books::WidgetControl::initGui()
 		addWidget(_combo_list_mode = new QComboBox(this));
 		_combo_list_mode->addItem(tr("По авторам"), static_cast<int>(ListViewModes::ByAuthors));
 		_combo_list_mode->addItem(tr("По жанрам"), static_cast<int>(ListViewModes::ByGenres));
-		_combo_list_mode->addItem(tr("По годам"), static_cast<int>(ListViewModes::ByYears));
+		_combo_list_mode->addItem(tr("По десятилетиям"), static_cast<int>(ListViewModes::ByDecades));
+		_combo_list_mode->addItem(tr("По столетиям"), static_cast<int>(ListViewModes::ByCenturies));
 		_combo_list_mode->addItem(tr("По оценкам"), static_cast<int>(ListViewModes::ByRatings));
 		_combo_list_mode->addItem(tr("Простой"), static_cast<int>(ListViewModes::Simple));
 		connect(_combo_list_mode, &QComboBox::currentIndexChanged,

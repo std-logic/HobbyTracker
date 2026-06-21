@@ -14,7 +14,8 @@ void Books::WidgetList::showList(const DataList& list)
 	switch (static_cast<ListViewModes>(_view_mode)) {
 		case ListViewModes::ByAuthors:		showByAuthors(list);		break;
 		case ListViewModes::ByGenres:		showByGenres(list);			break;
-		case ListViewModes::ByYears:		showByYears(list);			break;
+		case ListViewModes::ByDecades:		showByDecades(list);		break;
+		case ListViewModes::ByCenturies:	showByCenturies(list);		break;
 		case ListViewModes::ByRatings:		showByRatings(list);		break;
 		case ListViewModes::Simple:			showSimple(list);			break;
 		default: return;
@@ -34,13 +35,13 @@ void Books::WidgetList::showByAuthors(const DataList& list)
 		auto item_author = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_author->setText(CLMN_TITLE, author);
 		item_author->setNumb(CLMN_COUNT, books.size());
-		item_author->setText(CLMN_YEAR, Helper::yearString(Books::DataList::sublistMinMaxYears(books)));
+		item_author->setText(CLMN_YEAR, Helper::yearString(DataList::sublistMinMaxYears(books)));
 
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_author);
 			item_book->setText(CLMN_TITLE, book->title());
 			item_book->setText(CLMN_GENRE, book->genre());
-			item_book->setNumb(CLMN_YEAR, book->year());
+			item_book->setText(CLMN_YEAR, book->yearString());
 			item_book->setRating(CLMN_RATING, book->rating());
 		}
 	}
@@ -59,20 +60,65 @@ void Books::WidgetList::showByGenres(const DataList& list)
 		auto item_genre = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_genre->setText(CLMN_TITLE, genre);
 		item_genre->setNumb(CLMN_COUNT, books.size());
-		item_genre->setText(CLMN_YEAR, Helper::yearString(Books::DataList::sublistMinMaxYears(books)));
+		item_genre->setText(CLMN_YEAR, Helper::yearString(DataList::sublistMinMaxYears(books)));
 
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_genre);
 			item_book->setText(CLMN_TITLE, book->autorAndTitle());
-			item_book->setNumb(CLMN_YEAR, book->year());
+			item_book->setText(CLMN_YEAR, book->yearString());
 			item_book->setRating(CLMN_RATING, book->rating());
 		}
 	}
 }
 
-void Books::WidgetList::showByYears(const DataList& list)
+void Books::WidgetList::showByDecades(const DataList& list)
 {
+	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
+	initColumns({tr("Десятилетие / Название"), tr("К-во"), tr("Жанр"), tr("Год"), tr("Оценка")},
+				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
+	initSorting(CLMN_TITLE);
 
+	auto list_by_years = list.listByYears(10);
+
+	for (const auto& [decade, books] : list_by_years) {
+		auto item_decade = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
+		item_decade->setText(CLMN_TITLE, decade);
+		item_decade->setNumb(CLMN_COUNT, books.size());
+		item_decade->setText(CLMN_YEAR, Helper::yearString(DataList::sublistMinMaxYears(books)));
+
+		for (const auto book : books) {
+			auto item_book = new Base::WidgetTreeItem(item_decade);
+			item_book->setText(CLMN_TITLE, book->autorAndTitle());
+			item_book->setText(CLMN_GENRE, book->genre());
+			item_book->setText(CLMN_YEAR, book->yearString());
+			item_book->setRating(CLMN_RATING, book->rating());
+		}
+	}
+}
+
+void Books::WidgetList::showByCenturies(const DataList& list)
+{
+	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
+	initColumns({tr("Столетие / Название"), tr("К-во"), tr("Жанр"), tr("Год"), tr("Оценка")},
+				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
+	initSorting(CLMN_TITLE);
+
+	auto list_by_years = list.listByYears(100);
+
+	for (const auto& [century, books] : list_by_years) {
+		auto item_century = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
+		item_century->setText(CLMN_TITLE, century);
+		item_century->setNumb(CLMN_COUNT, books.size());
+		item_century->setText(CLMN_YEAR, Helper::yearString(DataList::sublistMinMaxYears(books)));
+
+		for (const auto book : books) {
+			auto item_book = new Base::WidgetTreeItem(item_century);
+			item_book->setText(CLMN_TITLE, book->autorAndTitle());
+			item_book->setText(CLMN_GENRE, book->genre());
+			item_book->setText(CLMN_YEAR, book->yearString());
+			item_book->setRating(CLMN_RATING, book->rating());
+		}
+	}
 }
 
 void Books::WidgetList::showByRatings(const DataList& list)
@@ -91,7 +137,7 @@ void Books::WidgetList::showSimple(const DataList& list)
 		auto item_book = new Base::WidgetTreeItem(this);
 		item_book->setText(CLMN_TITLE, book.autorAndTitle());
 		item_book->setText(CLMN_GENRE, book.genre());
-		item_book->setNumb(CLMN_YEAR, book.year());
+		item_book->setText(CLMN_YEAR, book.yearString());
 		item_book->setRating(CLMN_RATING, book.rating());
 	}
 }

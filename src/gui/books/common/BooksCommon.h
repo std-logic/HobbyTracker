@@ -6,7 +6,8 @@ namespace Books
 	{
 		ByAuthors,
 		ByGenres,
-		ByYears,
+		ByDecades,
+		ByCenturies,
 		ByRatings,
 		Simple,
 	};

@@ -34,6 +34,20 @@ public:
 		return list;
 	}
 
+	using ListByYears = std::unordered_map<QString, SubListContainer>;
+	ListByYears listByYears(uint32_t step = 1) const
+	{
+		ListByYears list;
+		for (const auto& book : _data_list) {
+			if (step == 1) {
+				list[book.yearString(QStringLiteral("[Неизвестный]"))].push_back(&book);
+			} else {
+				list[Helper::epochString(book.year(), step)].push_back(&book);
+			}
+		}
+		return list;
+	}
+
 	static auto sublistMinMaxYears(const SubListContainer& sublist)
 	{
 		std::pair<uint32_t, uint32_t> res(Global::undefined_value, Global::undefined_value);

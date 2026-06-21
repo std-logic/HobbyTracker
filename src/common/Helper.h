@@ -39,10 +39,17 @@ namespace Helper
 	{
 		return	(min_year == Global::undefined_value) ? QString() :
 				(min_year == max_year) ? QString::number(min_year) :
-				QString("%1-%2").arg(min_year).arg(max_year);
+				QStringLiteral("%1-%2").arg(min_year).arg(max_year);
 	}
 	inline QString yearString(std::pair<uint32_t, uint32_t> min_max_year)
 	{
 		return yearString(min_max_year.first, min_max_year.second);
+	}
+
+	inline QString epochString(uint32_t year, uint32_t step)
+	{
+		return	(year == Global::undefined_value) ?
+				QStringLiteral("[Неизвестное]") :
+				QStringLiteral("%1-е").arg((year / step) * step);
 	}
 }

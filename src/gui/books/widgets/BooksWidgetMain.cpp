@@ -23,7 +23,7 @@ void Books::WidgetMain::start()
 	data.setTitleTr("О времени, пространстве и других вещах");
 	data.setTitleOrig("Of time and space and other things");
 	data.setGenre("Научно-популярная");
-	data.setYear(1965);
+	// data.setYear(1965);
 	data.setRating(4);
 	_data_list.value().add(data);
 
