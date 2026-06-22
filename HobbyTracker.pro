@@ -24,6 +24,8 @@ INCLUDEPATH += \
 	src
 
 SOURCES += \
+	src/gui/base/widgets/BaseButtonCollapse.cpp \
+	src/gui/base/widgets/BaseButtonExpand.cpp \
 	src/main.cpp \
 	src/HobbyTracker.cpp \
 	src/gui/MainWindow.cpp \
@@ -46,6 +48,8 @@ HEADERS += \
 	src/common/Helper.h \
 	src/gui/MainWindow.h \
 	src/gui/base/data/BaseDataList.h \
+	src/gui/base/widgets/BaseButtonCollapse.h \
+	src/gui/base/widgets/BaseButtonExpand.h \
 	src/gui/base/widgets/BaseButtonSave.h \
 	src/gui/base/widgets/BaseButtonSettings.h \
 	src/gui/base/widgets/BaseButtonShow.h \

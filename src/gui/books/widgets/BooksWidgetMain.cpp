@@ -80,7 +80,11 @@ void Books::WidgetMain::initConnections()
 {
 	connect(_control, &WidgetControl::showList,
 			_list, &WidgetList::setVisible);
-	connect(_control, &WidgetControl::listModeChanged,
+	connect(_control, &WidgetControl::collapseList,
+			_list, &WidgetList::collapseAll);
+	connect(_control, &WidgetControl::expandList,
+			_list, &WidgetList::expandAll);
+	connect(_control, &WidgetControl::setListViewMode,
 			_list, &WidgetList::setViewMode);
 
 	connect(_control, &WidgetControl::showStatistics,

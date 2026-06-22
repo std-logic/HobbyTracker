@@ -7,6 +7,8 @@ class QComboBox;
 
 namespace Base
 {
+class ButtonCollapse;
+class ButtonExpand;
 class ButtonSave;
 class ButtonSettings;
 class ButtonShow;
@@ -26,7 +28,9 @@ public:
 
 signals:
 	void showList(bool on);
-	void listModeChanged(int view_mode);
+	void collapseList();
+	void expandList();
+	void setListViewMode(int view_mode);
 
 	void showStatistics(bool on);
 
@@ -37,7 +41,9 @@ private:
 	Base::ButtonSave* _button_save = nullptr;
 
 	Base::ButtonShow* _button_list = nullptr;
-	QComboBox* _combo_list_mode = nullptr;
+	Base::ButtonCollapse* _button_collapse_list = nullptr;
+	Base::ButtonExpand* _button_expand_list = nullptr;
+	QComboBox* _combo_list_view_mode = nullptr;
 
 	Base::ButtonShow* _button_statistics = nullptr;
 
