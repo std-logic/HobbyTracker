@@ -24,11 +24,11 @@ INCLUDEPATH += \
 	src
 
 SOURCES += \
-	src/gui/base/widgets/BaseButtonCollapse.cpp \
-	src/gui/base/widgets/BaseButtonExpand.cpp \
 	src/main.cpp \
 	src/HobbyTracker.cpp \
 	src/gui/MainWindow.cpp \
+	src/gui/base/widgets/BaseButtonCollapse.cpp \
+	src/gui/base/widgets/BaseButtonExpand.cpp \
 	src/gui/base/widgets/BaseButtonSave.cpp \
 	src/gui/base/widgets/BaseButtonSettings.cpp \
 	src/gui/base/widgets/BaseButtonShow.cpp \
@@ -36,11 +36,14 @@ SOURCES += \
 	src/gui/base/widgets/BaseWidgetMain.cpp \
 	src/gui/base/widgets/BaseWidgetTree.cpp \
 	src/gui/base/widgets/BaseWidgetTreeItem.cpp \
+	src/gui/books/data/BooksConverter.cpp \
 	src/gui/books/widgets/BooksWidgetControl.cpp \
 	src/gui/books/widgets/BooksWidgetList.cpp \
 	src/gui/books/widgets/BooksWidgetMain.cpp \
 	src/gui/books/widgets/BooksWidgetStatistics.cpp \
-	src/gui/games/widgets/GamesWidgetMain.cpp
+	src/gui/games/widgets/GamesWidgetMain.cpp \
+	src/storage/Storage.cpp \
+	src/storage/csv/CsvStorage.cpp
 
 HEADERS += \
 	src/HobbyTracker.h \
@@ -58,10 +61,16 @@ HEADERS += \
 	src/gui/base/widgets/BaseWidgetTree.h \
 	src/gui/base/widgets/BaseWidgetTreeItem.h \
 	src/gui/books/common/BooksCommon.h \
+	src/gui/books/data/BooksConverter.h \
 	src/gui/books/data/BooksData.h \
 	src/gui/books/data/BooksDataList.h \
+	src/gui/books/data/BooksSettings.h \
 	src/gui/books/widgets/BooksWidgetControl.h \
 	src/gui/books/widgets/BooksWidgetList.h \
 	src/gui/books/widgets/BooksWidgetMain.h \
 	src/gui/books/widgets/BooksWidgetStatistics.h \
-	src/gui/games/widgets/GamesWidgetMain.h
+	src/gui/games/widgets/GamesWidgetMain.h \
+	src/storage/Storage.h \
+	src/storage/csv/CsvData.h \
+	src/storage/csv/CsvSettings.h \
+	src/storage/csv/CsvStorage.h

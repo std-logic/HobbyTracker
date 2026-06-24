@@ -2,6 +2,7 @@
 #include "BooksWidgetControl.h"
 #include "BooksWidgetList.h"
 #include "BooksWidgetStatistics.h"
+#include "../data/BooksConverter.h"
 
 Books::WidgetMain::WidgetMain(QWidget* parent)
 	: Base::WidgetMain{parent}
@@ -15,56 +16,32 @@ void Books::WidgetMain::start()
 	_control->start();
 
 	// test!!!!
-	_data_list = DataList();
+	Csv::Settings settings;
+	settings.setFileName("hobby_books_data.csv");
+	settings.setEncoding(QStringConverter::Utf8);
+	settings.setDelimiter(';');
+	settings.setSkipAtStart(1);
+	settings.setHeader({
+		tr("Автор (пер.)"), tr("Автор (ориг.)"),
+		tr("Произведение (пер.)"), tr("Произведение (ориг.)"),
+		tr("Жанр"), tr("Год"), tr("Оценка")
+   });
+	_settings.setCsvSettings(settings);
 
-	Data data;
-	data.setAuthorTr("Айзек Азимов");
-	data.setAuthorOrig("Isaac Asimov");
-	data.setTitleTr("О времени, пространстве и других вещах");
-	data.setTitleOrig("Of time and space and other things");
-	data.setGenre("Научно-популярная");
-	// data.setYear(1965);
-	data.setRating(4);
-	_data_list.value().add(data);
+	emit readCsv(_settings.csvSettings());
+	// test!!!!
+}
 
-	data.clear();
-	data.setAuthorTr("Айзек Азимов");
-	data.setAuthorOrig("Isaac Asimov");
-	data.setTitleTr("Я, робот");
-	data.setTitleOrig("I, robot");
-	data.setGenre("Художественная");
-	data.setYear(1950);
-	data.setRating(8);
-	_data_list.value().add(data);
+void Books::WidgetMain::dataCsv(const Csv::Settings& csv_settings, const Csv::Data& csv_data)
+{
+	if (!_settings.isCsvFileNameEqual(csv_settings.fileName())) {
+		return;
+	}
 
-	data.clear();
-	data.setAuthorTr("Рикарду С. Аморим");
-	data.setAuthorOrig("Ricardo S. Amorim");
-	data.setTitleTr("Волки, которые были людьми. История Moonspell");
-	data.setTitleOrig("Wolves who were men - The history of Moonspell");
-	data.setGenre("Документальная");
-	data.setYear(2021);
-	data.setRating(9);
-	_data_list.value().add(data);
-
-	data.clear();
-	data.setAuthorOrig("Светлана Алексиевич");
-	data.setTitleOrig("У войны не женское лицо");
-	data.setGenre("Документальная");
-	data.setYear(1985);
-	data.setRating(6);
-	_data_list.value().add(data);
-
-	data.clear();
-	data.setAuthorOrig("Светлана Алексиевич");
-	data.setTitleOrig("Время секонд хэнд");
-	data.setGenre("Документальная");
-	data.setYear(2013);
-	data.setRating(6);
-	_data_list.value().add(data);
+	_csv_data = csv_data;
+	_data_list = Converter::conv(csv_data);
 
 	_list->showList(_data_list.value());
-	// test!!!!
 }
 
 void Books::WidgetMain::initGui()

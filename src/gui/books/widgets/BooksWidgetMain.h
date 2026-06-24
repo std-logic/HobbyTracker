@@ -1,7 +1,9 @@
 #pragma once
 
 #include "../data/BooksDataList.h"
+#include "../data/BooksSettings.h"
 
+#include <storage/csv/CsvData.h>
 #include <gui/base/widgets/BaseWidgetMain.h>
 
 namespace Books
@@ -22,7 +24,10 @@ public:
 
 	void start() override;
 
+	void dataCsv(const Csv::Settings& csv_settings, const Csv::Data& csv_data);
+
 signals:
+	void readCsv(const Csv::Settings& csv_settings);
 
 private:
 	void initGui();
@@ -36,7 +41,9 @@ private:
 	WidgetList* _list = nullptr;
 	WidgetStatistics* _statistics = nullptr;
 
+	std::optional<Csv::Data> _csv_data;
 	std::optional<DataList> _data_list;
+	Settings _settings;
 };
 
 } // namespace Books

@@ -11,8 +11,22 @@ MainWindow::MainWindow(QWidget* parent)
 	initCommonParams();
 	initStatusBar();
 	initCentralWidget();
+	initConnections();
+}
 
-	start();
+void MainWindow::start()
+{
+	showDefaultTitle();
+
+	_books->start();
+	_games->start();
+
+	show();
+}
+
+void MainWindow::dataCsv(const Csv::Settings& csv_settings, const Csv::Data& csv_data)
+{
+	_books->dataCsv(csv_settings, csv_data);
 }
 
 void MainWindow::initCommonParams()
@@ -35,15 +49,13 @@ void MainWindow::initCentralWidget()
 	setCentralWidget(central_widget);
 }
 
+void MainWindow::initConnections()
+{
+	connect(_books, &Books::WidgetMain::readCsv,
+			this, &MainWindow::readCsv);
+}
+
 void MainWindow::showDefaultTitle()
 {
 	setWindowTitle(tr("Трекер хобби"));
-}
-
-void MainWindow::start()
-{
-	showDefaultTitle();
-
-	_books->start();
-	_games->start();
 }
