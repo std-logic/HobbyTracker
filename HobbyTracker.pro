@@ -27,6 +27,7 @@ SOURCES += \
 	src/main.cpp \
 	src/HobbyTracker.cpp \
 	src/gui/MainWindow.cpp \
+	src/gui/base/data/BaseSettings.cpp \
 	src/gui/base/widgets/BaseButtonCollapse.cpp \
 	src/gui/base/widgets/BaseButtonExpand.cpp \
 	src/gui/base/widgets/BaseButtonSave.cpp \
@@ -37,12 +38,14 @@ SOURCES += \
 	src/gui/base/widgets/BaseWidgetTree.cpp \
 	src/gui/base/widgets/BaseWidgetTreeItem.cpp \
 	src/gui/books/data/BooksConverter.cpp \
+	src/gui/books/data/BooksSettings.cpp \
 	src/gui/books/widgets/BooksWidgetControl.cpp \
 	src/gui/books/widgets/BooksWidgetList.cpp \
 	src/gui/books/widgets/BooksWidgetMain.cpp \
 	src/gui/books/widgets/BooksWidgetStatistics.cpp \
 	src/gui/games/widgets/GamesWidgetMain.cpp \
 	src/storage/Storage.cpp \
+	src/storage/csv/CsvSettings.cpp \
 	src/storage/csv/CsvStorage.cpp
 
 HEADERS += \
@@ -51,6 +54,7 @@ HEADERS += \
 	src/common/Helper.h \
 	src/gui/MainWindow.h \
 	src/gui/base/data/BaseDataList.h \
+	src/gui/base/data/BaseSettings.h \
 	src/gui/base/widgets/BaseButtonCollapse.h \
 	src/gui/base/widgets/BaseButtonExpand.h \
 	src/gui/base/widgets/BaseButtonSave.h \

@@ -57,4 +57,4 @@ namespace Helper
 	{
 		return Global::Colors::rating[((1 <= rating) && (rating <= 10)) ? rating-1 : 4];
 	}
-}
+} // namespace Helper

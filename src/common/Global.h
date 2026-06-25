@@ -27,5 +27,5 @@ namespace Global
 			QColor( 90, 255, 110), // 9
 			QColor( 30, 255,  50), // 10
 		};
-	}
+	} // namespace Colors
 } // namespace Global

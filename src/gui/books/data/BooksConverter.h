@@ -1,5 +1,8 @@
 #pragma once
 
+#include <QStringList>
+#include <QCoreApplication>
+
 namespace Csv
 {
 class Data;
@@ -12,8 +15,11 @@ class DataList;
 
 class Converter
 {
+	Q_DECLARE_TR_FUNCTIONS(Converter)
 public:
 	Converter() = delete;
+
+	static QStringList getDefaultCsvHeader();
 
 	static DataList conv(const Csv::Data& csv_data);
 	static Csv::Data conv(const DataList& data_list);

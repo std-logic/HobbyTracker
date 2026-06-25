@@ -1,14 +1,18 @@
 #pragma once
 
+#include <gui/base/data/BaseSettings.h>
 #include <storage/csv/CsvSettings.h>
 
 namespace Books
 {
 
-class Settings
+class Settings : public Base::Settings
 {
 public:
-	Settings() = default;
+	Settings();
+
+	void save() const override;
+	void load() override;
 
 	inline void setCsvSettings(const Csv::Settings& csv_settings)
 	{ _csv_settings = csv_settings; }

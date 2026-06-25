@@ -32,6 +32,7 @@ signals:
 private:
 	void initGui();
 	void initConnections();
+	void initSettings();
 
 private slots:
 	void updateList();

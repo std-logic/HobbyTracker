@@ -3,6 +3,24 @@
 
 #include <storage/csv/CsvData.h>
 
+QStringList Books::Converter::getDefaultCsvHeader()
+{
+	QStringList header;
+	for (int i = 0; i < NUM_OF_COLUMNS; ++i) {
+		header += QString();
+	}
+
+	header[CLMN_AUTHOR_TR] = tr("Автор (пер.)");
+	header[CLMN_AUTHOR_ORIG] = tr("Автор (ориг.)");
+	header[CLMN_TITLE_TR] = tr("Произведение (пер.)");
+	header[CLMN_TITLE_ORIG] = tr("Произведение (ориг.)");
+	header[CLMN_GENRE] = tr("Жанр");
+	header[CLMN_YEAR] = tr("Год");
+	header[CLMN_RATING] = tr("Оценка");
+
+	return header;
+}
+
 Books::DataList Books::Converter::conv(const Csv::Data& csv_data)
 {
 	DataList data_list;

@@ -9,27 +9,14 @@ Books::WidgetMain::WidgetMain(QWidget* parent)
 {
 	initGui();
 	initConnections();
+	initSettings();
 }
 
 void Books::WidgetMain::start()
 {
 	_control->start();
 
-	// test!!!!
-	Csv::Settings settings;
-	settings.setFileName("hobby_books_data.csv");
-	settings.setEncoding(QStringConverter::Utf8);
-	settings.setDelimiter(';');
-	settings.setSkipAtStart(1);
-	settings.setHeader({
-		tr("Автор (пер.)"), tr("Автор (ориг.)"),
-		tr("Произведение (пер.)"), tr("Произведение (ориг.)"),
-		tr("Жанр"), tr("Год"), tr("Оценка")
-   });
-	_settings.setCsvSettings(settings);
-
 	emit readCsv(_settings.csvSettings());
-	// test!!!!
 }
 
 void Books::WidgetMain::dataCsv(const Csv::Settings& csv_settings, const Csv::Data& csv_data)
@@ -69,6 +56,11 @@ void Books::WidgetMain::initConnections()
 
 	connect(_list, &WidgetList::needUpdate,
 			this, &WidgetMain::updateList);
+}
+
+void Books::WidgetMain::initSettings()
+{
+	_settings.load();
 }
 
 void Books::WidgetMain::updateList()

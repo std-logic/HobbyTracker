@@ -3,6 +3,8 @@
 #include <QString>
 #include <QStringList>
 
+class QSettings;
+
 namespace Csv
 {
 
@@ -10,6 +12,9 @@ class Settings
 {
 public:
 	Settings() = default;
+
+	void save(QSettings* settings) const;
+	void load(QSettings* settings);
 
 	inline void setFileName(const QString& file_name)
 	{ _file_name = file_name; }
