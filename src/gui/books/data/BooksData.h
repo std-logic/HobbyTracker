@@ -51,7 +51,15 @@ public:
 	{ return Helper::fullTrAndOrigString(_title_tr, _title_orig); }
 
 	inline QString autorAndTitle() const
-	{ return QStringLiteral("%1 - %2").arg(author(), title()); }
+	{
+		QString res = QStringLiteral("%1 - %2").arg(_author_tr, _title_tr);
+		if (!_author_orig.isEmpty() || !_title_orig.isEmpty()) {
+			res += QStringLiteral(" (%1 - %2)")
+					.arg(!_author_orig.isEmpty() ? _author_orig : _author_tr,
+						 !_title_orig.isEmpty() ? _title_orig : _title_tr);
+		}
+		return res;
+	}
 
 	inline void setGenre(const QString& genre)
 	{ _genre = genre; }

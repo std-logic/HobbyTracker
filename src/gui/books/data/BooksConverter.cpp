@@ -6,11 +6,12 @@
 Books::DataList Books::Converter::conv(const Csv::Data& csv_data)
 {
 	DataList data_list;
-	Data data;
 	bool conv_ok;
 
 	for (const auto& line : csv_data) {
 		int line_size = line.size();
+		Data data;
+
 		if (CLMN_AUTHOR_TR < line_size) {
 			data.setAuthorTr(line[CLMN_AUTHOR_TR]);
 		}
@@ -36,7 +37,6 @@ Books::DataList Books::Converter::conv(const Csv::Data& csv_data)
 		}
 
 		data_list.add(data);
-		data.clear();
 	}
 
 	return data_list;

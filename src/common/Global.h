@@ -21,11 +21,11 @@ namespace Global
 			QColor(245, 190, 190), // 3
 			QColor(240, 220, 220), // 4
 			QColor(235, 235, 235), // 5
-			QColor(210, 240, 210), // 6
-			QColor(180, 245, 180), // 7
-			QColor(150, 250, 150), // 8
-			QColor(100, 255, 100), // 9
-			QColor( 50, 255,  50), // 10
+			QColor(205, 240, 210), // 6
+			QColor(180, 245, 190), // 7
+			QColor(140, 250, 160), // 8
+			QColor( 90, 255, 110), // 9
+			QColor( 30, 255,  50), // 10
 		};
 	}
 } // namespace Global
