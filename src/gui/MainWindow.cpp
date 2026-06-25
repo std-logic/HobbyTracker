@@ -17,10 +17,12 @@ MainWindow::MainWindow(QWidget* parent)
 void MainWindow::start()
 {
 	showDefaultTitle();
+	showLoadingStart();
 
 	_books->start();
 	_games->start();
 
+	showLoadingFinish();
 	show();
 }
 
@@ -58,4 +60,15 @@ void MainWindow::initConnections()
 void MainWindow::showDefaultTitle()
 {
 	setWindowTitle(tr("Трекер хобби"));
+}
+
+void MainWindow::showLoadingStart()
+{
+	_loading_timer.start();
+}
+
+void MainWindow::showLoadingFinish()
+{
+	statusBar()->showMessage(tr("Базы данных загружены за %1 мс")
+							 .arg(_loading_timer.elapsed()), 10000);
 }

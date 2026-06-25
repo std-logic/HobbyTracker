@@ -2,6 +2,8 @@
 
 #include <QMainWindow>
 
+#include <QElapsedTimer>
+
 namespace Csv
 {
 class Data;
@@ -33,8 +35,12 @@ private:
 	void initConnections();
 
 	void showDefaultTitle();
+	void showLoadingStart();
+	void showLoadingFinish();
 
 private:
 	Books::WidgetMain* _books;
 	Games::WidgetMain* _games;
+
+	QElapsedTimer _loading_timer;
 };
