@@ -2,30 +2,40 @@
 #include "BooksConverter.h"
 #include "../common/BooksCommon.h"
 
+#include <common/Helper.h>
+
 #include <QSettings>
-#include <QFile>
 
 Books::Settings::Settings()
+	: Base::Settings{settings_group_name}
 {
 }
 
 void Books::Settings::save() const
 {
-	QSettings settings(fullPath(SETTINGS_FILE_NAME), QSettings::IniFormat);
+	QSettings settings(Helper::stdPathSettings(), QSettings::IniFormat);
 
-	_csv_settings.save(&settings);
+	settings.beginGroup(_group_name);
+
+	_csv_settings.save(&settings, "csv");
+
+	settings.endGroup();
 }
 
 void Books::Settings::load()
 {
-	QSettings settings(fullPath(SETTINGS_FILE_NAME), QSettings::IniFormat);
+	QSettings settings(Helper::stdPathSettings(), QSettings::IniFormat);
 
-	// create settings file automatically if it doesn't exists (first run)
-	if (!QFile::exists(settings.fileName())) {
-		_csv_settings.setFileName(fullPath(DATA_FILE_NAME));
+	// create group automatically if it doesn't exists (first run)
+	if (!settings.childGroups().contains(_group_name)) {
+		_csv_settings.setFileName(Helper::stdPath(data_file_name));
 		save();
 	}
 
-	_csv_settings.load(&settings);
+	settings.beginGroup(_group_name);
+
+	_csv_settings.load(&settings, "csv");
 	_csv_settings.setHeader(Converter::getDefaultCsvHeader());
+
+	settings.endGroup();
 }

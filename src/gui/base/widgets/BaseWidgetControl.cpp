@@ -1,26 +1,28 @@
 #include "BaseWidgetControl.h"
 
+#include <common/Global.h>
+
 #include <QHBoxLayout>
 
 Base::WidgetControl::WidgetControl(QWidget* parent)
 	: QWidget{parent}
 {
-	_main_layout = new QHBoxLayout(this);
-	_main_layout->setContentsMargins(0, 0, 0, 0);
-	_main_layout->setSpacing(5);
+	_layout_main = new QHBoxLayout(this);
+	_layout_main->setContentsMargins(0, 0, 0, 0);
+	_layout_main->setSpacing(Global::Sizes::default_spacing);
 }
 
 void Base::WidgetControl::addWidget(QWidget* widget, int stretch, Qt::Alignment alignment)
 {
-	_main_layout->addWidget(widget, stretch, alignment);
+	_layout_main->addWidget(widget, stretch, alignment);
 }
 
 void Base::WidgetControl::addStretch(int stretch)
 {
-	_main_layout->addStretch(stretch);
+	_layout_main->addStretch(stretch);
 }
 
 void Base::WidgetControl::addSpacing(int size)
 {
-	_main_layout->addSpacing(size);
+	_layout_main->addSpacing(size);
 }

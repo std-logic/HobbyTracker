@@ -2,70 +2,86 @@
 #include "BooksWidgetControl.h"
 #include "BooksWidgetList.h"
 #include "BooksWidgetStatistics.h"
+#include "BooksWidgetSettings.h"
 #include "../data/BooksConverter.h"
+
+#include <storage/Storage.h>
 
 Books::WidgetMain::WidgetMain(QWidget* parent)
 	: Base::WidgetMain{parent}
 {
-	initGui();
+	initWidgets();
 	initConnections();
-	initSettings();
 }
 
 void Books::WidgetMain::start()
 {
-	_control->start();
+	_widget_control->start();
 
-	emit readCsv(_settings.csvSettings());
+	_settings.load();
+	readCsvData(_settings.csvSettings());
 }
 
-void Books::WidgetMain::dataCsv(const Csv::Settings& csv_settings, const Csv::Data& csv_data)
+void Books::WidgetMain::initWidgets()
 {
-	if (!_settings.isCsvFileNameEqual(csv_settings.fileName())) {
-		return;
-	}
+	addWidget(_widget_control = new WidgetControl(this), 0, Qt::AlignTop);
 
-	_csv_data = csv_data;
-	_data_list = Converter::conv(csv_data);
+	addWidget(_widget_list = new WidgetList(this));
 
-	_list->showList(_data_list.value());
-}
-
-void Books::WidgetMain::initGui()
-{
-	addWidget(_control = new WidgetControl(this), 0, Qt::AlignTop);
-
-	addWidget(_list = new WidgetList(this));
-
-	addWidget(_statistics = new WidgetStatistics(this));
+	addWidget(_widget_statistics = new WidgetStatistics(this));
 }
 
 void Books::WidgetMain::initConnections()
 {
-	connect(_control, &WidgetControl::showList,
-			_list, &WidgetList::setVisible);
-	connect(_control, &WidgetControl::collapseList,
-			_list, &WidgetList::collapseAll);
-	connect(_control, &WidgetControl::expandList,
-			_list, &WidgetList::expandAll);
-	connect(_control, &WidgetControl::setListViewMode,
-			_list, &WidgetList::setViewMode);
+	connect(_widget_control, &WidgetControl::showList,
+			_widget_list, &WidgetList::setVisible);
+	connect(_widget_control, &WidgetControl::collapseList,
+			_widget_list, &WidgetList::collapseAll);
+	connect(_widget_control, &WidgetControl::expandList,
+			_widget_list, &WidgetList::expandAll);
+	connect(_widget_control, &WidgetControl::setListViewMode,
+			_widget_list, &WidgetList::setViewMode);
 
-	connect(_control, &WidgetControl::showStatistics,
-			_statistics, &WidgetList::setVisible);
+	connect(_widget_control, &WidgetControl::showStatistics,
+			_widget_statistics, &WidgetList::setVisible);
 
-	connect(_list, &WidgetList::needUpdate,
+	connect(_widget_control, &WidgetControl::showSettings,
+			this, &WidgetMain::showSettings);
+
+	connect(_widget_list, &WidgetList::needUpdate,
 			this, &WidgetMain::updateList);
 }
 
-void Books::WidgetMain::initSettings()
+void Books::WidgetMain::showSettings()
 {
-	_settings.load();
+	if (!_widget_settings) {
+		_widget_settings = new WidgetSettings(_settings, this);
+		connect(_widget_settings, &WidgetSettings::readCsvData,
+				this, &WidgetMain::readCsvData);
+		connect(_widget_settings, &WidgetSettings::saveSettings,
+				this, &WidgetMain::saveSettings);
+	}
+	_widget_settings->open();
+}
+
+void Books::WidgetMain::saveSettings(const Settings& settings)
+{
+	_settings = settings;
+	_settings.save();
+	readCsvData(_settings.csvSettings());
+}
+
+void Books::WidgetMain::readCsvData(const Csv::Settings& csv_settings)
+{
+	_csv_data = Storage::readCsv(csv_settings);
+	_data_list = Converter::conv(_csv_data.value());
+
+	_widget_list->showList(_data_list.value());
 }
 
 void Books::WidgetMain::updateList()
 {
 	if (_data_list.has_value()) {
-		_list->showList(_data_list.value());
+		_widget_list->showList(_data_list.value());
 	}
 }

@@ -13,8 +13,8 @@ class Settings
 public:
 	Settings() = default;
 
-	void save(QSettings* settings) const;
-	void load(QSettings* settings);
+	void save(QSettings* settings, const QString& group_name) const;
+	void load(QSettings* settings, const QString& group_name);
 
 	inline void setFileName(const QString& file_name)
 	{ _file_name = file_name; }
@@ -22,8 +22,6 @@ public:
 	{ _file_name = std::move(file_name); }
 	inline QString fileName() const
 	{ return _file_name; }
-	inline bool isFileNameEqual(QString&& file_name) const
-	{ return (_file_name == file_name); }
 
 	inline void setEncoding(QStringConverter::Encoding encoding)
 	{ _encoding = encoding; }

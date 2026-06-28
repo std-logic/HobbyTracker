@@ -6,12 +6,15 @@
 #include <storage/csv/CsvData.h>
 #include <gui/base/widgets/BaseWidgetMain.h>
 
+#include <QPointer>
+
 namespace Books
 {
 
 class WidgetControl;
 class WidgetList;
 class WidgetStatistics;
+class WidgetSettings;
 
 class WidgetMain : public Base::WidgetMain
 {
@@ -24,23 +27,23 @@ public:
 
 	void start() override;
 
-	void dataCsv(const Csv::Settings& csv_settings, const Csv::Data& csv_data);
-
 signals:
-	void readCsv(const Csv::Settings& csv_settings);
 
 private:
-	void initGui();
+	void initWidgets();
 	void initConnections();
-	void initSettings();
 
 private slots:
+	void showSettings();
+	void saveSettings(const Settings& settings);
+	void readCsvData(const Csv::Settings& csv_settings);
 	void updateList();
 
 private:
-	WidgetControl* _control = nullptr;
-	WidgetList* _list = nullptr;
-	WidgetStatistics* _statistics = nullptr;
+	WidgetControl* _widget_control = nullptr;
+	WidgetList* _widget_list = nullptr;
+	WidgetStatistics* _widget_statistics = nullptr;
+	QPointer<WidgetSettings> _widget_settings;
 
 	std::optional<Csv::Data> _csv_data;
 	std::optional<DataList> _data_list;

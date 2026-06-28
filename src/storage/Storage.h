@@ -1,24 +1,16 @@
 #pragma once
 
-#include <QObject>
-
 namespace Csv
 {
 class Data;
 class Settings;
 }
 
-class Storage : public QObject
+class Storage
 {
-	Q_OBJECT
 public:
-	explicit Storage(QObject* parent = nullptr);
-	~Storage() = default;
+	Storage() = delete;
 
-public slots:
-	void readCsv(const Csv::Settings& csv_settings);
-	void writeCsv(const Csv::Settings& csv_settings, const Csv::Data& csv_data);
-
-signals:
-	void dataCsv(const Csv::Settings& csv_settings, const Csv::Data& csv_data);
+	static Csv::Data readCsv(const Csv::Settings& csv_settings);
+	static void writeCsv(const Csv::Settings& csv_settings, const Csv::Data& csv_data);
 };

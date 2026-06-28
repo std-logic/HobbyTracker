@@ -26,11 +26,6 @@ void MainWindow::start()
 	show();
 }
 
-void MainWindow::dataCsv(const Csv::Settings& csv_settings, const Csv::Data& csv_data)
-{
-	_books->dataCsv(csv_settings, csv_data);
-}
-
 void MainWindow::initCommonParams()
 {
 	setMinimumSize(QSize(960, 540));
@@ -53,8 +48,6 @@ void MainWindow::initCentralWidget()
 
 void MainWindow::initConnections()
 {
-	connect(_books, &Books::WidgetMain::readCsv,
-			this, &MainWindow::readCsv);
 }
 
 void MainWindow::showDefaultTitle()

@@ -1,11 +1,14 @@
 #pragma once
 
 #include <QColor>
+#include <QMargins>
 
 #include <cstdint>
 
 namespace Global
 {
+	inline const char settings_file_name[] = "settings.ini";
+
 	const uint32_t undefined_value = 0;
 
 	namespace Colors
@@ -28,4 +31,11 @@ namespace Global
 			QColor( 30, 255,  50), // 10
 		};
 	} // namespace Colors
+
+	namespace Sizes
+	{
+		const int default_spacing = 5;
+		const QMargins default_margin = {5, 5, 5, 5};
+	} // namespace Sizes
+
 } // namespace Global

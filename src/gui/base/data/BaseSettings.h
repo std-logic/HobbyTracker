@@ -8,13 +8,14 @@ namespace Base
 class Settings
 {
 public:
-	Settings();
+	Settings(const QString& group_name);
+	virtual ~Settings() = default;
 
 	virtual void save() const = 0;
 	virtual void load() = 0;
 
 protected:
-	virtual QString fullPath(const QString& file_name) const;
+	QString _group_name;
 };
 
 } // namespace Base

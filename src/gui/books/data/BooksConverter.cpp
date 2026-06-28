@@ -60,7 +60,7 @@ Books::DataList Books::Converter::conv(const Csv::Data& csv_data)
 	return data_list;
 }
 
-Csv::Data Books::Converter::conv(const DataList& data_list)
+Csv::Data Books::Converter::conv(const DataList& /*data_list*/)
 {
 	Csv::Data csv_data;
 

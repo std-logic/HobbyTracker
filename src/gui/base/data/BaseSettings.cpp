@@ -1,12 +1,6 @@
 #include "BaseSettings.h"
 
-#include <QCoreApplication>
-
-Base::Settings::Settings()
+Base::Settings::Settings(const QString& group_name)
+	: _group_name{group_name}
 {
-}
-
-QString Base::Settings::fullPath(const QString& file_name) const
-{
-	return QCoreApplication::applicationDirPath() + '/' + file_name;
 }

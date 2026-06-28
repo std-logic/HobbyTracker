@@ -3,9 +3,19 @@
 #include "Global.h"
 
 #include <QString>
+#include <QCoreApplication>
 
 namespace Helper
 {
+	inline QString stdPath(const QString& file_name)
+	{
+		return QCoreApplication::applicationDirPath() + '/' + file_name;
+	}
+	inline QString stdPathSettings()
+	{
+		return stdPath(Global::settings_file_name);
+	}
+
 	inline QString fullTrAndOrigString(const QString& tr_str, const QString& orig_str)
 	{
 		if (tr_str.isEmpty()) {

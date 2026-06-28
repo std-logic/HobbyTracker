@@ -13,7 +13,7 @@ enum class ListViewModes
 	Simple,
 };
 
-inline const char DATA_FILE_NAME[] = "hobby_books_data.csv";
-inline const char SETTINGS_FILE_NAME[] = "hobby_books_settings.ini";
+inline const char data_file_name[] = "hobby_books_data.csv";
+inline const char settings_group_name[] = "books";
 
 } // namespace Books

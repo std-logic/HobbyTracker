@@ -1,0 +1,33 @@
+#pragma once
+
+#include "../data/BooksSettings.h"
+
+#include <gui/base/widgets/BaseWidgetCsvSettings.h>
+#include <gui/base/widgets/BaseWidgetSettings.h>
+
+namespace Books
+{
+
+class WidgetSettings : public Base::WidgetSettings
+{
+	Q_OBJECT
+public:
+	explicit WidgetSettings(const Settings& settings, QWidget* parent = nullptr);
+
+signals:
+	void readCsvData(const Csv::Settings& csv_settings);
+	void saveSettings(const Settings& settings);
+
+private:
+	void initWidgets();
+
+private slots:
+	void save() override;
+
+private:
+	Base::WidgetCsvSettings* _widget_csv_settings = nullptr;
+
+	Settings _settings;
+};
+
+} // namespace Books

@@ -14,7 +14,7 @@
 Books::WidgetControl::WidgetControl(QWidget* parent)
 	: Base::WidgetControl{parent}
 {
-	initGui();
+	initWidgets();
 }
 
 void Books::WidgetControl::start()
@@ -22,7 +22,7 @@ void Books::WidgetControl::start()
 	_button_list->setChecked(true);
 }
 
-void Books::WidgetControl::initGui()
+void Books::WidgetControl::initWidgets()
 {
 	// save
 	{
@@ -75,5 +75,7 @@ void Books::WidgetControl::initGui()
 		addStretch();
 
 		addWidget(_button_settings = new Base::ButtonSettings(this));
+		connect(_button_settings, &Base::ButtonSettings::clicked,
+				this, &WidgetControl::showSettings);
 	}
 }

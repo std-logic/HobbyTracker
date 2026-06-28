@@ -22,7 +22,7 @@ public:
 signals:
 
 private:
-	QVBoxLayout* _main_layout = nullptr;
+	QVBoxLayout* _layout_main = nullptr;
 };
 
 } // namespace Base

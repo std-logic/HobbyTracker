@@ -34,8 +34,10 @@ signals:
 
 	void showStatistics(bool on);
 
+	void showSettings();
+
 private:
-	void initGui();
+	void initWidgets();
 
 private:
 	Base::ButtonSave* _button_save = nullptr;
