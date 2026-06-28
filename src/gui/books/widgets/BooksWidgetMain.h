@@ -12,6 +12,7 @@ namespace Books
 {
 
 class WidgetControl;
+class WidgetSummary;
 class WidgetList;
 class WidgetStatistics;
 class WidgetSettings;
@@ -41,6 +42,7 @@ private slots:
 
 private:
 	WidgetControl* _widget_control = nullptr;
+	WidgetSummary* _widget_summary = nullptr;
 	WidgetList* _widget_list = nullptr;
 	WidgetStatistics* _widget_statistics = nullptr;
 	QPointer<WidgetSettings> _widget_settings;

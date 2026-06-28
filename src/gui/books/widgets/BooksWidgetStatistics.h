@@ -10,6 +10,7 @@ class WidgetStatistics : public QFrame
 	Q_OBJECT
 public:
 	explicit WidgetStatistics(QWidget* parent = nullptr);
+	~WidgetStatistics() = default;
 
 signals:
 

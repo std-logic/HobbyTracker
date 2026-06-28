@@ -1,5 +1,6 @@
 #include "BooksWidgetMain.h"
 #include "BooksWidgetControl.h"
+#include "BooksWidgetSummary.h"
 #include "BooksWidgetList.h"
 #include "BooksWidgetStatistics.h"
 #include "BooksWidgetSettings.h"
@@ -25,6 +26,8 @@ void Books::WidgetMain::start()
 void Books::WidgetMain::initWidgets()
 {
 	addWidget(_widget_control = new WidgetControl(this), 0, Qt::AlignTop);
+
+	addWidget(_widget_summary = new WidgetSummary(this), 0, Qt::AlignTop);
 
 	addWidget(_widget_list = new WidgetList(this));
 
@@ -76,12 +79,13 @@ void Books::WidgetMain::readCsvData(const Csv::Settings& csv_settings)
 	_csv_data = Storage::readCsv(csv_settings);
 	_data_list = Converter::conv(_csv_data.value());
 
-	_widget_list->showList(_data_list.value());
+	_widget_summary->update(_data_list.value());
+	_widget_list->update(_data_list.value());
 }
 
 void Books::WidgetMain::updateList()
 {
 	if (_data_list.has_value()) {
-		_widget_list->showList(_data_list.value());
+		_widget_list->update(_data_list.value());
 	}
 }

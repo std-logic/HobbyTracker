@@ -13,6 +13,7 @@ class WidgetSettings : public Base::WidgetSettings
 	Q_OBJECT
 public:
 	explicit WidgetSettings(const Settings& settings, QWidget* parent = nullptr);
+	~WidgetSettings() = default;
 
 signals:
 	void readCsvData(const Csv::Settings& csv_settings);

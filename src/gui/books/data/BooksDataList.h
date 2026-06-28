@@ -5,6 +5,7 @@
 #include <gui/base/data/BaseDataList.h>
 
 #include <unordered_map>
+#include <unordered_set>
 
 namespace Books
 {
@@ -66,6 +67,36 @@ public:
 			res.second = Helper::checkMaxYear(res.second, book->year());
 		}
 		return res;
+	}
+
+	struct Summary
+	{
+		int authors_num = 0;
+		int books_num = 0;
+		int genres_num = 0;
+		int min_year = Global::undefined_value;
+		int max_year = Global::undefined_value;
+		double rating = 0.;
+	};
+	Summary getSummary() const
+	{
+		Summary summary;
+		std::unordered_set<QString> list_authors;
+		std::unordered_set<QString> list_genres;
+		for (const auto& book : _data_list) {
+			list_authors.insert(book.author());
+			list_genres.insert(book.genre());
+			summary.min_year = Helper::checkMinYear(summary.min_year, book.year());
+			summary.max_year = Helper::checkMaxYear(summary.max_year, book.year());
+			summary.rating += book.rating();
+		}
+		summary.authors_num = list_authors.size();
+		summary.books_num = _data_list.size();
+		summary.genres_num = list_genres.size();
+		if (summary.books_num) {
+			summary.rating /= summary.books_num;
+		}
+		return summary;
 	}
 };
 

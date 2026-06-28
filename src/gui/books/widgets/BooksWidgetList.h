@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../data/BooksDataList.h"
-
 #include <gui/base/widgets/BaseWidgetTree.h>
 
 namespace Books
 {
+
+class DataList;
 
 class WidgetList : public Base::WidgetTree
 {
@@ -14,7 +14,7 @@ public:
 	explicit WidgetList(QWidget* parent = nullptr);
 	~WidgetList() = default;
 
-	void showList(const DataList& list);
+	void update(const DataList& list);
 
 signals:
 

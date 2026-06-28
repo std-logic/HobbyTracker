@@ -1,5 +1,6 @@
 #include "BooksWidgetList.h"
 #include "../common/BooksCommon.h"
+#include "../data/BooksDataList.h"
 
 #include <gui/base/widgets/BaseWidgetTreeItem.h>
 
@@ -8,7 +9,7 @@ Books::WidgetList::WidgetList(QWidget* parent)
 {
 }
 
-void Books::WidgetList::showList(const DataList& list)
+void Books::WidgetList::update(const DataList& list)
 {
 	clear();
 	switch (static_cast<ListViewModes>(_view_mode)) {
