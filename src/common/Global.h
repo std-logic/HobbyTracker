@@ -46,6 +46,12 @@ namespace Global
 
 	namespace Sizes
 	{
+		const int window_min_width = 960;
+		const int window_min_height = 540;
+
+		const int font_small = 9;
+		const int font_big = 11;
+
 		const int default_spacing = 5;
 		const QMargins default_margin = {5, 5, 5, 5};
 	} // namespace Sizes

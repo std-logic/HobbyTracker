@@ -9,7 +9,7 @@ Base::WidgetSummary::WidgetSummary(QWidget* parent)
 	: QWidget{parent}
 {
 	QFont default_font = font();
-	default_font.setPointSize(default_font.pointSize() + 2);
+	default_font.setPointSize(Global::Sizes::font_big);
 	setFont(default_font);
 
 	_layout_main = new QHBoxLayout(this);

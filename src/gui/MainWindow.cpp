@@ -2,6 +2,8 @@
 #include "books/widgets/BooksWidgetMain.h"
 #include "games/widgets/GamesWidgetMain.h"
 
+#include <common/Global.h>
+
 #include <QStatusBar>
 #include <QTabWidget>
 
@@ -28,7 +30,11 @@ void MainWindow::start()
 
 void MainWindow::initCommonParams()
 {
-	setMinimumSize(QSize(960, 540));
+	setMinimumSize(Global::Sizes::window_min_width, Global::Sizes::window_min_height);
+
+	QFont default_font = font();
+	default_font.setPointSize(Global::Sizes::font_small);
+	setFont(default_font);
 }
 
 void MainWindow::initStatusBar()

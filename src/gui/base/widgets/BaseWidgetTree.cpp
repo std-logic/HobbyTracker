@@ -1,5 +1,7 @@
 #include "BaseWidgetTree.h"
 
+#include <common/Global.h>
+
 #include <QHeaderView>
 
 Base::WidgetTree::WidgetTree(QWidget* parent)
@@ -10,7 +12,7 @@ Base::WidgetTree::WidgetTree(QWidget* parent)
 	setLineWidth(1);
 
 	QFont default_font = font();
-	default_font.setPointSize(default_font.pointSize() + 2);
+	default_font.setPointSize(Global::Sizes::font_big);
 	setFont(default_font);
 
 	// keep current sorting column between view modes
