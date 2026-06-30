@@ -5,7 +5,7 @@
 namespace Base
 {
 
-template <class T>
+template <typename T>
 class DataList
 {
 public:
@@ -14,6 +14,13 @@ public:
 
 	using ListContainer = std::vector<T>;
 	using SubListContainer = std::vector<const T*>;
+
+	enum class RangeTypes
+	{
+		Discrete,
+		Linear,
+		LinearWithMin,
+	};
 
 	ListContainer::iterator begin() noexcept
 	{ return _data_list.begin(); }

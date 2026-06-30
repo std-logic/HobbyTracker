@@ -58,9 +58,15 @@ namespace Helper
 
 	inline QString epochString(uint32_t year, uint32_t step)
 	{
-		return	(year == Global::undefined_value) ?
-				QStringLiteral("[Неизвестное]") :
-				QStringLiteral("%1-е").arg((year / step) * step);
+		if (step == 1) {
+			return	(year == Global::undefined_value) ?
+					QStringLiteral("[Неизвестный]") :
+					QString::number(year);
+		} else {
+			return	(year == Global::undefined_value) ?
+					QStringLiteral("[Неизвестное]") :
+					QStringLiteral("%1-е").arg((year / step) * step);
+		}
 	}
 
 	inline QColor ratingColor(uint32_t rating)

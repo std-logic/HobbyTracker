@@ -33,9 +33,7 @@ void Base::WidgetTree::setViewMode(int view_mode)
 void Base::WidgetTree::clearList()
 {
 	_sorting_column.clear();
-
 	clear();
-	hide();
 }
 
 void Base::WidgetTree::initColumns(const QStringList& labels, const std::vector<int>& widths)

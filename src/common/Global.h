@@ -7,7 +7,7 @@
 
 namespace Global
 {
-	inline const char settings_file_name[] = "settings.ini";
+	inline const char settings_file_name[] = "HobbyTrackerSettings.ini";
 
 	inline const uint32_t undefined_value = 0;
 

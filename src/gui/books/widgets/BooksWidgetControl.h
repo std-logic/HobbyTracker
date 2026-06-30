@@ -32,7 +32,8 @@ signals:
 	void expandList();
 	void setListViewMode(int view_mode);
 
-	void showStatistics(bool on);
+	void showChart(bool on);
+	void setChartViewMode(int view_mode);
 
 	void showSettings();
 
@@ -47,7 +48,8 @@ private:
 	Base::ButtonExpand* _button_expand_list = nullptr;
 	QComboBox* _combo_list_view_mode = nullptr;
 
-	Base::ButtonShow* _button_statistics = nullptr;
+	Base::ButtonShow* _button_chart = nullptr;
+	QComboBox* _combo_chart_view_mode = nullptr;
 
 	Base::ButtonSettings* _button_settings = nullptr;
 };

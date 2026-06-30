@@ -2,7 +2,7 @@
 #include "BooksWidgetControl.h"
 #include "BooksWidgetSummary.h"
 #include "BooksWidgetList.h"
-#include "BooksWidgetStatistics.h"
+#include "BooksWidgetChart.h"
 #include "BooksWidgetSettings.h"
 #include "../data/BooksConverter.h"
 
@@ -29,9 +29,9 @@ void Books::WidgetMain::initWidgets()
 
 	addWidget(_widget_summary = new WidgetSummary(this), 0, Qt::AlignTop);
 
-	addWidget(_widget_list = new WidgetList(this));
+	addWidget(_widget_list = new WidgetList(this), 50);
 
-	addWidget(_widget_statistics = new WidgetStatistics(this));
+	addWidget(_widget_chart = new WidgetChart(this), 50);
 }
 
 void Books::WidgetMain::initConnections()
@@ -45,14 +45,19 @@ void Books::WidgetMain::initConnections()
 	connect(_widget_control, &WidgetControl::setListViewMode,
 			_widget_list, &WidgetList::setViewMode);
 
-	connect(_widget_control, &WidgetControl::showStatistics,
-			_widget_statistics, &WidgetList::setVisible);
+	connect(_widget_control, &WidgetControl::showChart,
+			_widget_chart, &WidgetChart::setVisible);
+	connect(_widget_control, &WidgetControl::setChartViewMode,
+			_widget_chart, &WidgetChart::setViewMode);
 
 	connect(_widget_control, &WidgetControl::showSettings,
 			this, &WidgetMain::showSettings);
 
 	connect(_widget_list, &WidgetList::needUpdate,
 			this, &WidgetMain::updateList);
+
+	connect(_widget_chart, &WidgetChart::needUpdate,
+			this, &WidgetMain::updateChart);
 }
 
 void Books::WidgetMain::showSettings()
@@ -81,11 +86,19 @@ void Books::WidgetMain::readCsvData(const Csv::Settings& csv_settings)
 
 	_widget_summary->update(_data_list.value());
 	_widget_list->update(_data_list.value());
+	_widget_chart->update(_data_list.value());
 }
 
 void Books::WidgetMain::updateList()
 {
 	if (_data_list.has_value()) {
 		_widget_list->update(_data_list.value());
+	}
+}
+
+void Books::WidgetMain::updateChart()
+{
+	if (_data_list.has_value()) {
+		_widget_chart->update(_data_list.value());
 	}
 }

@@ -30,9 +30,9 @@ void Books::WidgetList::showByAuthors(const DataList& list)
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
-	auto list_by_authors = list.listByAuthors();
+	auto books_by_authors = list.booksByAuthors();
 
-	for (const auto& [author, books] : list_by_authors) {
+	for (const auto& [author, books] : books_by_authors) {
 		auto item_author = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_author->setText(CLMN_TITLE, author);
 		item_author->setNumb(CLMN_COUNT, books.size());
@@ -55,9 +55,9 @@ void Books::WidgetList::showByGenres(const DataList& list)
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
-	auto list_by_genres = list.listByGenres();
+	auto books_by_genres = list.booksByGenres();
 
-	for (const auto& [genre, books] : list_by_genres) {
+	for (const auto& [genre, books] : books_by_genres) {
 		auto item_genre = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_genre->setText(CLMN_TITLE, genre);
 		item_genre->setNumb(CLMN_COUNT, books.size());
@@ -79,9 +79,9 @@ void Books::WidgetList::showByDecades(const DataList& list)
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
-	auto list_by_years = list.listByYears(10);
+	auto books_by_years = list.booksByYears(10);
 
-	for (const auto& [decade, books] : list_by_years) {
+	for (const auto& [decade, books] : books_by_years) {
 		auto item_decade = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_decade->setText(CLMN_TITLE, decade);
 		item_decade->setNumb(CLMN_COUNT, books.size());
@@ -104,9 +104,9 @@ void Books::WidgetList::showByCenturies(const DataList& list)
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
-	auto list_by_years = list.listByYears(100);
+	auto books_by_years = list.booksByYears(100);
 
-	for (const auto& [century, books] : list_by_years) {
+	for (const auto& [century, books] : books_by_years) {
 		auto item_century = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_century->setText(CLMN_TITLE, century);
 		item_century->setNumb(CLMN_COUNT, books.size());
@@ -129,9 +129,9 @@ void Books::WidgetList::showByRatings(const DataList& list)
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR});
 	initSorting(CLMN_TITLE);
 
-	auto list_by_ratings = list.listByRatings();
+	auto books_by_ratings = list.booksByRatings();
 
-	for (const auto& [rating, books] : list_by_ratings) {
+	for (const auto& [rating, books] : books_by_ratings) {
 		auto item_rating = new Base::WidgetTreeItem(this, Helper::ratingColor(rating));
 		item_rating->setNumb(CLMN_TITLE, rating);
 		item_rating->setNumb(CLMN_COUNT, books.size());

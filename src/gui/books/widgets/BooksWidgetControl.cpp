@@ -42,10 +42,12 @@ void Books::WidgetControl::initWidgets()
 		});
 
 		addWidget(_button_collapse_list = new Base::ButtonCollapse(this));
+		_button_collapse_list->setEnabled(false);
 		connect(_button_collapse_list, &Base::ButtonCollapse::clicked,
 				this, &WidgetControl::collapseList);
 
 		addWidget(_button_expand_list = new Base::ButtonExpand(this));
+		_button_expand_list->setEnabled(false);
 		connect(_button_expand_list, &Base::ButtonExpand::clicked,
 				this, &WidgetControl::expandList);
 
@@ -56,18 +58,30 @@ void Books::WidgetControl::initWidgets()
 		_combo_list_view_mode->addItem(tr("По столетиям"), static_cast<int>(ListViewModes::ByCenturies));
 		_combo_list_view_mode->addItem(tr("По оценкам"), static_cast<int>(ListViewModes::ByRatings));
 		_combo_list_view_mode->addItem(tr("Простой"), static_cast<int>(ListViewModes::Simple));
+		_combo_list_view_mode->setEnabled(false);
 		connect(_combo_list_view_mode, &QComboBox::currentIndexChanged, this, [this](int index) {
 			emit setListViewMode(_combo_list_view_mode->itemData(index).toInt());
 		});
 	}
 
-	// statistics
+	// chart
 	{
 		addSpacing();
 
-		addWidget(_button_statistics = new Base::ButtonShow(tr("Статистика"), this));
-		connect(_button_statistics, &Base::ButtonShow::toggled,
-				this, &WidgetControl::showStatistics);
+		addWidget(_button_chart = new Base::ButtonShow(tr("Статистика"), this));
+		connect(_button_chart, &Base::ButtonShow::toggled, this, [this](bool on) {
+			_combo_chart_view_mode->setEnabled(on);
+			emit showChart(on);
+		});
+
+		addWidget(_combo_chart_view_mode = new QComboBox(this));
+		_combo_chart_view_mode->addItem(tr("По десятилетиям"), static_cast<int>(ChartViewModes::ByDecades));
+		_combo_chart_view_mode->addItem(tr("По столетиям"), static_cast<int>(ChartViewModes::ByCenturies));
+		_combo_chart_view_mode->addItem(tr("По оценкам"), static_cast<int>(ChartViewModes::ByRatings));
+		_combo_chart_view_mode->setEnabled(false);
+		connect(_combo_chart_view_mode, &QComboBox::currentIndexChanged, this, [this](int index) {
+			emit setChartViewMode(_combo_chart_view_mode->itemData(index).toInt());
+		});
 	}
 
 	// settings

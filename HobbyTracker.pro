@@ -33,6 +33,7 @@ SOURCES += \
 	src/gui/base/widgets/BaseButtonSave.cpp \
 	src/gui/base/widgets/BaseButtonSettings.cpp \
 	src/gui/base/widgets/BaseButtonShow.cpp \
+	src/gui/base/widgets/BaseWidgetChart.cpp \
 	src/gui/base/widgets/BaseWidgetControl.cpp \
 	src/gui/base/widgets/BaseWidgetCsvSettings.cpp \
 	src/gui/base/widgets/BaseWidgetMain.cpp \
@@ -41,12 +42,13 @@ SOURCES += \
 	src/gui/base/widgets/BaseWidgetTree.cpp \
 	src/gui/base/widgets/BaseWidgetTreeItem.cpp \
 	src/gui/books/data/BooksConverter.cpp \
+	src/gui/books/data/BooksDataList.cpp \
 	src/gui/books/data/BooksSettings.cpp \
+	src/gui/books/widgets/BooksWidgetChart.cpp \
 	src/gui/books/widgets/BooksWidgetControl.cpp \
 	src/gui/books/widgets/BooksWidgetList.cpp \
 	src/gui/books/widgets/BooksWidgetMain.cpp \
 	src/gui/books/widgets/BooksWidgetSettings.cpp \
-	src/gui/books/widgets/BooksWidgetStatistics.cpp \
 	src/gui/books/widgets/BooksWidgetSummary.cpp \
 	src/gui/games/widgets/GamesWidgetMain.cpp \
 	src/storage/Storage.cpp \
@@ -65,6 +67,7 @@ HEADERS += \
 	src/gui/base/widgets/BaseButtonSave.h \
 	src/gui/base/widgets/BaseButtonSettings.h \
 	src/gui/base/widgets/BaseButtonShow.h \
+	src/gui/base/widgets/BaseWidgetChart.h \
 	src/gui/base/widgets/BaseWidgetControl.h \
 	src/gui/base/widgets/BaseWidgetCsvSettings.h \
 	src/gui/base/widgets/BaseWidgetMain.h \
@@ -77,11 +80,11 @@ HEADERS += \
 	src/gui/books/data/BooksData.h \
 	src/gui/books/data/BooksDataList.h \
 	src/gui/books/data/BooksSettings.h \
+	src/gui/books/widgets/BooksWidgetChart.h \
 	src/gui/books/widgets/BooksWidgetControl.h \
 	src/gui/books/widgets/BooksWidgetList.h \
 	src/gui/books/widgets/BooksWidgetMain.h \
 	src/gui/books/widgets/BooksWidgetSettings.h \
-	src/gui/books/widgets/BooksWidgetStatistics.h \
 	src/gui/books/widgets/BooksWidgetSummary.h \
 	src/gui/games/widgets/GamesWidgetMain.h \
 	src/storage/Storage.h \

@@ -14,7 +14,7 @@ namespace Books
 class WidgetControl;
 class WidgetSummary;
 class WidgetList;
-class WidgetStatistics;
+class WidgetChart;
 class WidgetSettings;
 
 class WidgetMain : public Base::WidgetMain
@@ -39,12 +39,13 @@ private slots:
 	void saveSettings(const Settings& settings);
 	void readCsvData(const Csv::Settings& csv_settings);
 	void updateList();
+	void updateChart();
 
 private:
 	WidgetControl* _widget_control = nullptr;
 	WidgetSummary* _widget_summary = nullptr;
 	WidgetList* _widget_list = nullptr;
-	WidgetStatistics* _widget_statistics = nullptr;
+	WidgetChart* _widget_chart = nullptr;
 	QPointer<WidgetSettings> _widget_settings;
 
 	std::optional<Csv::Data> _csv_data;
