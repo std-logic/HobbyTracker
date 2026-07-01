@@ -2,8 +2,6 @@
 #include "../common/BooksCommon.h"
 #include "../data/BooksDataList.h"
 
-#include <QBarSet>
-
 Books::WidgetChart::WidgetChart(QWidget* parent)
 	: Base::WidgetChart{parent}
 {
@@ -23,20 +21,17 @@ void Books::WidgetChart::update(const DataList& list)
 void Books::WidgetChart::showByDecades(const DataList& list)
 {
 	chart()->setTitle(tr("Распределение по десятилетиям"));
-	auto number_by_years = list.numberByYears(10, DataList::RangeTypes::LinearWithMin, 1800);
-	updateBars(number_by_years);
+	updateBars(list.numberByYears(10, DataList::RangeTypes::LinearWithMin, 1800));
 }
 
 void Books::WidgetChart::showByCenturies(const DataList& list)
 {
 	chart()->setTitle(tr("Распределение по столетиям"));
-	auto number_by_years = list.numberByYears(100, DataList::RangeTypes::Linear);
-	updateBars(number_by_years);
+	updateBars(list.numberByYears(100, DataList::RangeTypes::Linear));
 }
 
 void Books::WidgetChart::showByRatings(const DataList& list)
 {
 	chart()->setTitle(tr("Распределение по оценкам"));
-	auto number_by_ratings = list.numberByRatings();
-	updateBars(number_by_ratings);
+	updateBars(list.numberByRatings());
 }

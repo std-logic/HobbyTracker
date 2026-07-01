@@ -10,8 +10,7 @@ Books::DataList::Summary Books::DataList::getSummary() const
 	for (const auto& data : _data_list) {
 		list_authors.insert(data.author());
 		list_genres.insert(data.genre());
-		summary.min_year = Helper::checkMinYear(summary.min_year, data.year());
-		summary.max_year = Helper::checkMaxYear(summary.max_year, data.year());
+		Helper::checkMinMax(data.year(), &summary.min_year, &summary.max_year);
 		summary.rating += data.rating();
 	}
 	summary.authors_num = list_authors.size();
@@ -51,30 +50,12 @@ Books::DataList::BooksByYears Books::DataList::booksByYears(uint32_t step) const
 }
 
 Books::DataList::NumberByYears Books::DataList::numberByYears(uint32_t step,
-		RangeTypes range_type, uint32_t min) const
+		RangeTypes range_type, uint32_t required_min, uint32_t required_max) const
 {
 	NumberByYears list;
-	uint32_t real_min = std::numeric_limits<uint32_t>::max(), real_max = 0;
-	for (const auto& data : _data_list) {
-		auto year = data.year();
-		if (real_min > year) { real_min = year; }
-		if (real_max < year) { real_max = year; }
-		if (range_type == RangeTypes::LinearWithMin) {
-			if (year < min) {
-				++list[QStringLiteral("&lt;%1").arg(min)];
-				continue;
-			}
-		}
-		++list[Helper::epochString(year, step)];
-	}
-	if (range_type != RangeTypes::Discrete) {
-		if (range_type == RangeTypes::LinearWithMin) { real_min = min; }
-		real_min = (real_min / step) * step;
-		real_max = (real_max / step) * step;
-		for (uint32_t year = real_min; year < real_max; year += step) {
-			list.try_emplace(Helper::epochString(year, step), 0);
-		}
-	}
+	fillNumbersInRange(&list, step, range_type, required_min, required_max,
+			[](const Data& data) { return data.year(); },
+			[](uint32_t val, uint32_t step) { return Helper::epochString(val, step); });
 	return list;
 }
 
@@ -100,8 +81,7 @@ Books::DataList::SublistMinMaxYears Books::DataList::sublistMinMaxYears(const Su
 {
 	SublistMinMaxYears res(Global::undefined_value, Global::undefined_value);
 	for (auto data : sublist) {
-		res.first = Helper::checkMinYear(res.first, data->year());
-		res.second = Helper::checkMaxYear(res.second, data->year());
+		Helper::checkMinMax(data->year(), &res.first, &res.second);
 	}
 	return res;
 }

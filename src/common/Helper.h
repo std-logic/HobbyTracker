@@ -27,6 +27,18 @@ namespace Helper
 		}
 	}
 
+	inline std::pair<uint32_t, uint32_t> initMinMax()
+	{
+		return {Global::undefined_value, Global::undefined_value};
+	}
+	inline void checkMinMax(uint32_t val, uint32_t* min, uint32_t* max)
+	{
+		if (val != Global::undefined_value) {
+			if ((*min > val) || (*min == Global::undefined_value)) { *min = val; }
+			if ((*max < val) || (*max == Global::undefined_value)) { *max = val; }
+		}
+	}
+
 	inline auto checkMinYear(uint32_t curr_min_year, uint32_t year)
 	{
 		if (year != Global::undefined_value) {

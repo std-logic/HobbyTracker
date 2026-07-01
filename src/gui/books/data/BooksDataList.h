@@ -20,8 +20,8 @@ public:
 		int authors_num = 0;
 		int books_num = 0;
 		int genres_num = 0;
-		int min_year = Global::undefined_value;
-		int max_year = Global::undefined_value;
+		uint32_t min_year = Global::undefined_value;
+		uint32_t max_year = Global::undefined_value;
 		double rating = 0.;
 	};
 	Summary getSummary() const;
@@ -36,7 +36,8 @@ public:
 	BooksByYears booksByYears(uint32_t step = 1) const;
 	using NumberByYears = std::map<QString, uint32_t>;
 	NumberByYears numberByYears(uint32_t step = 1,
-			RangeTypes range_type = RangeTypes::Discrete, uint32_t min = 0) const;
+			RangeTypes range_type = RangeTypes::Discrete,
+			uint32_t required_min = 0, uint32_t required_max = 0) const;
 
 	using BooksByRatings = std::unordered_map<uint32_t, SubListContainer>;
 	BooksByRatings booksByRatings() const;
