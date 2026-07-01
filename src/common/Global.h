@@ -13,9 +13,9 @@ namespace Global
 
 	namespace Colors
 	{
-		inline const QColor tree_level_1 = QColor(240, 240, 240);
-		inline const QColor tree_level_2 = QColor(230, 230, 230);
-		inline const QColor tree_level_3 = QColor(220, 220, 220);
+		inline const QColor tree_level_1 = QColor(210, 210, 210);
+		inline const QColor tree_level_2 = QColor(200, 200, 200);
+		inline const QColor tree_level_3 = QColor(190, 190, 190);
 
 		inline const QColor rating[10] =
 		{
@@ -41,6 +41,11 @@ namespace Global
 				"border-radius: 6px;"
 				"padding-left: 10px;"
 				"padding-right: 10px;"
+				"}";
+		inline const char tree_widget[] =
+				"QTreeWidget{"
+				"background-color: rgb(230,230,230);"
+				"color: black;"
 				"}";
 	} // namespace Stylesheets
 

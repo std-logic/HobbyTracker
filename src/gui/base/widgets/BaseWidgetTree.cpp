@@ -11,6 +11,8 @@ Base::WidgetTree::WidgetTree(QWidget* parent)
 	setFrameShadow(QFrame::Sunken);
 	setLineWidth(1);
 
+	setStyleSheet(Global::Stylesheets::tree_widget);
+
 	QFont default_font = font();
 	default_font.setPointSize(Global::Sizes::font_big);
 	setFont(default_font);

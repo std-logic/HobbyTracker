@@ -20,7 +20,8 @@ Base::WidgetChart::WidgetChart(QWidget* parent)
 
 	auto bar_chart = chart();
 
-	bar_chart->setTheme(QChart::ChartThemeLight);
+	bar_chart->setTheme(QChart::ChartThemeDark);
+	bar_chart->setBackgroundBrush(QColor(100, 100, 100));
 	bar_chart->setMargins({3, 0, 10, 0});
 	bar_chart->legend()->setVisible(false);
 	auto title_font = bar_chart->titleFont();
@@ -28,7 +29,9 @@ Base::WidgetChart::WidgetChart(QWidget* parent)
 	bar_chart->setTitleFont(title_font);
 
 	auto bar_set = new QBarSet("");
-	bar_set->setLabelColor(QColor(Qt::black));
+	bar_set->setLabelColor(QColor(Qt::white));
+	bar_set->setBorderColor(QColor(50, 120, 180));
+	bar_set->setColor(QColor(78, 148, 212));
 	auto label_font = bar_set->labelFont();
 	label_font.setPointSize(Global::Sizes::font_small);
 	bar_set->setLabelFont(label_font);
