@@ -41,6 +41,7 @@ void Books::WidgetList::showByAuthors(const DataList& list)
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_author);
 			item_book->setText(CLMN_TITLE, book->title());
+			item_book->setToolTip(CLMN_TITLE, book->summaryString());
 			item_book->setText(CLMN_GENRE, book->genre());
 			item_book->setText(CLMN_YEAR, book->yearString());
 			item_book->setRating(CLMN_RATING, book->rating());
@@ -66,6 +67,7 @@ void Books::WidgetList::showByGenres(const DataList& list)
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_genre);
 			item_book->setText(CLMN_TITLE, book->autorAndTitle());
+			item_book->setToolTip(CLMN_TITLE, book->summaryString());
 			item_book->setText(CLMN_YEAR, book->yearString());
 			item_book->setRating(CLMN_RATING, book->rating());
 		}
@@ -90,6 +92,7 @@ void Books::WidgetList::showByDecades(const DataList& list)
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_decade);
 			item_book->setText(CLMN_TITLE, book->autorAndTitle());
+			item_book->setToolTip(CLMN_TITLE, book->summaryString());
 			item_book->setText(CLMN_GENRE, book->genre());
 			item_book->setText(CLMN_YEAR, book->yearString());
 			item_book->setRating(CLMN_RATING, book->rating());
@@ -115,6 +118,7 @@ void Books::WidgetList::showByCenturies(const DataList& list)
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_century);
 			item_book->setText(CLMN_TITLE, book->autorAndTitle());
+			item_book->setToolTip(CLMN_TITLE, book->summaryString());
 			item_book->setText(CLMN_GENRE, book->genre());
 			item_book->setText(CLMN_YEAR, book->yearString());
 			item_book->setRating(CLMN_RATING, book->rating());
@@ -140,6 +144,7 @@ void Books::WidgetList::showByRatings(const DataList& list)
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_rating);
 			item_book->setText(CLMN_TITLE, book->autorAndTitle());
+			item_book->setToolTip(CLMN_TITLE, book->summaryString());
 			item_book->setText(CLMN_GENRE, book->genre());
 			item_book->setText(CLMN_YEAR, book->yearString());
 		}
@@ -156,6 +161,7 @@ void Books::WidgetList::showSimple(const DataList& list)
 	for (const auto& book : list) {
 		auto item_book = new Base::WidgetTreeItem(this);
 		item_book->setText(CLMN_TITLE, book.autorAndTitle());
+		item_book->setToolTip(CLMN_TITLE, book.summaryString());
 		item_book->setText(CLMN_GENRE, book.genre());
 		item_book->setText(CLMN_YEAR, book.yearString());
 		item_book->setRating(CLMN_RATING, book.rating());

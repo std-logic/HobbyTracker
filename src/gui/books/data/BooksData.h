@@ -50,13 +50,19 @@ public:
 	inline QString title() const
 	{ return Helper::fullTrAndOrigString(_title_tr, _title_orig); }
 
+	inline QString autorAndTitleTr() const
+	{ return QStringLiteral("%1 - %2").arg(_author_tr, _title_tr); }
+	inline QString autorAndTitleOrig() const
+	{
+		return QStringLiteral("%1 - %2")
+				.arg(!_author_orig.isEmpty() ? _author_orig : _author_tr,
+					 !_title_orig.isEmpty() ? _title_orig : _title_tr);
+	}
 	inline QString autorAndTitle() const
 	{
-		QString res = QStringLiteral("%1 - %2").arg(_author_tr, _title_tr);
+		QString res = autorAndTitleTr();
 		if (!_author_orig.isEmpty() || !_title_orig.isEmpty()) {
-			res += QStringLiteral(" (%1 - %2)")
-					.arg(!_author_orig.isEmpty() ? _author_orig : _author_tr,
-						 !_title_orig.isEmpty() ? _title_orig : _title_tr);
+			res += QStringLiteral(" (%1)").arg(autorAndTitleOrig());
 		}
 		return res;
 	}
@@ -81,6 +87,19 @@ public:
 	{ return _rating; }
 	QString ratingString(const QString& undefined_string = QString()) const
 	{ return (_rating == Global::undefined_value) ? undefined_string : QString::number(_rating); }
+
+	QString summaryString() const
+	{
+		QString text;
+		text += autorAndTitleTr();
+		if (!_author_orig.isEmpty() || !_title_orig.isEmpty()) {
+			text += QStringLiteral("\n%1").arg(autorAndTitleOrig());
+		}
+		text += QStringLiteral("\n\nЖанр: %1").arg(_genre);
+		text += QStringLiteral("\nГод: %1").arg(yearString());
+		text += QStringLiteral("\nОценка: %1").arg(_rating);
+		return text;
+	}
 
 private:
 	QString _author_tr;

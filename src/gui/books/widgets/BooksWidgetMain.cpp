@@ -27,11 +27,11 @@ void Books::WidgetMain::initWidgets()
 {
 	addWidget(_widget_control = new WidgetControl(this), 0, Qt::AlignTop);
 
-	addWidget(_widget_summary = new WidgetSummary(this), 0, Qt::AlignTop);
+	addWidget(_widget_summary = new WidgetSummary(this), 1, Qt::AlignTop);
 
-	addWidget(_widget_list = new WidgetList(this), 50);
+	addWidget(_widget_list = new WidgetList(this), 100);
 
-	addWidget(_widget_chart = new WidgetChart(this), 50);
+	addWidget(_widget_chart = new WidgetChart(this), 100);
 }
 
 void Books::WidgetMain::initConnections()

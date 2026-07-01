@@ -2,24 +2,24 @@
 
 #include <unordered_set>
 
-Books::DataList::Summary Books::DataList::getSummary() const
+Books::DataList::Summary Books::DataList::summary() const
 {
-	Summary summary;
+	Summary sum;
 	std::unordered_set<QString> list_authors;
 	std::unordered_set<QString> list_genres;
 	for (const auto& data : _data_list) {
 		list_authors.insert(data.author());
 		list_genres.insert(data.genre());
-		Helper::checkMinMax(data.year(), &summary.min_year, &summary.max_year);
-		summary.rating += data.rating();
+		Helper::checkMinMax(data.year(), &sum.min_year, &sum.max_year);
+		sum.rating += data.rating();
 	}
-	summary.authors_num = list_authors.size();
-	summary.books_num = _data_list.size();
-	summary.genres_num = list_genres.size();
-	if (summary.books_num) {
-		summary.rating /= summary.books_num;
+	sum.authors_num = list_authors.size();
+	sum.books_num = _data_list.size();
+	sum.genres_num = list_genres.size();
+	if (sum.books_num) {
+		sum.rating /= sum.books_num;
 	}
-	return summary;
+	return sum;
 }
 
 Books::DataList::BooksByAuthors Books::DataList::booksByAuthors() const

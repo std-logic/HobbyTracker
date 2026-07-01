@@ -24,7 +24,7 @@ public:
 		uint32_t max_year = Global::undefined_value;
 		double rating = 0.;
 	};
-	Summary getSummary() const;
+	Summary summary() const;
 
 	using BooksByAuthors = std::unordered_map<QString, SubListContainer>;
 	BooksByAuthors booksByAuthors() const;

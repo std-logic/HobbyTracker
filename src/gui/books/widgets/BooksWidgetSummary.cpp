@@ -13,7 +13,7 @@ Books::WidgetSummary::WidgetSummary(QWidget* parent)
 
 void Books::WidgetSummary::update(const DataList& list)
 {
-	auto summary = list.getSummary();
+	auto summary = list.summary();
 
 	_label_authors_num->setText(QString::number(summary.authors_num));
 
