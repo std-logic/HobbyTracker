@@ -49,14 +49,12 @@ Books::DataList::BooksByYears Books::DataList::booksByYears(uint32_t step) const
 	return list;
 }
 
-Books::DataList::NumberByYears Books::DataList::numberByYears(uint32_t step,
+Books::DataList::NumbersInRange Books::DataList::numbersByYears(uint32_t step,
 		RangeTypes range_type, uint32_t required_min, uint32_t required_max) const
 {
-	NumberByYears list;
-	fillNumbersInRange(&list, step, range_type, required_min, required_max,
+	return numbersInRange(step, range_type, required_min, required_max,
 			[](const Data& data) { return data.year(); },
 			[](uint32_t val, uint32_t step) { return Helper::epochString(val, step); });
-	return list;
 }
 
 Books::DataList::BooksByRatings Books::DataList::booksByRatings() const
@@ -68,9 +66,9 @@ Books::DataList::BooksByRatings Books::DataList::booksByRatings() const
 	return list;
 }
 
-Books::DataList::NumberByRatings Books::DataList::numberByRatings() const
+Books::DataList::NumbersByRatings Books::DataList::numbersByRatings() const
 {
-	NumberByRatings list;
+	NumbersByRatings list;
 	for (const auto& data : _data_list) {
 		++list[data.rating()];
 	}

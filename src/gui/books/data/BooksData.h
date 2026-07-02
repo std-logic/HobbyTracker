@@ -93,7 +93,7 @@ public:
 		QString text;
 		text += autorAndTitleTr();
 		if (!_author_orig.isEmpty() || !_title_orig.isEmpty()) {
-			text += QStringLiteral("\n%1").arg(autorAndTitleOrig());
+			text += QStringLiteral("\n(%1)").arg(autorAndTitleOrig());
 		}
 		text += QStringLiteral("\n\nЖанр: %1").arg(_genre);
 		text += QStringLiteral("\nГод: %1").arg(yearString());

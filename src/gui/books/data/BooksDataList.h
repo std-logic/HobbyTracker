@@ -34,15 +34,14 @@ public:
 
 	using BooksByYears = std::unordered_map<QString, SubListContainer>;
 	BooksByYears booksByYears(uint32_t step = 1) const;
-	using NumberByYears = std::map<QString, uint32_t>;
-	NumberByYears numberByYears(uint32_t step = 1,
+	NumbersInRange numbersByYears(uint32_t step = 1,
 			RangeTypes range_type = RangeTypes::Discrete,
 			uint32_t required_min = 0, uint32_t required_max = 0) const;
 
 	using BooksByRatings = std::unordered_map<uint32_t, SubListContainer>;
 	BooksByRatings booksByRatings() const;
-	using NumberByRatings = std::map<uint32_t, uint32_t>;
-	NumberByRatings numberByRatings() const;
+	using NumbersByRatings = std::map<uint32_t, uint32_t>;
+	NumbersByRatings numbersByRatings() const;
 
 	using SublistMinMaxYears = std::pair<uint32_t, uint32_t>;
 	static SublistMinMaxYears sublistMinMaxYears(const SubListContainer& sublist);

@@ -21,17 +21,17 @@ void Books::WidgetChart::update(const DataList& list)
 void Books::WidgetChart::showByDecades(const DataList& list)
 {
 	chart()->setTitle(tr("Распределение по десятилетиям"));
-	updateBars(list.numberByYears(10, DataList::RangeTypes::LinearWithMin, 1800));
+	updateBars(list.numbersByYears(10, DataList::RangeTypes::LinearWithMin, 1800));
 }
 
 void Books::WidgetChart::showByCenturies(const DataList& list)
 {
 	chart()->setTitle(tr("Распределение по столетиям"));
-	updateBars(list.numberByYears(100, DataList::RangeTypes::Linear));
+	updateBars(list.numbersByYears(100, DataList::RangeTypes::Linear));
 }
 
 void Books::WidgetChart::showByRatings(const DataList& list)
 {
 	chart()->setTitle(tr("Распределение по оценкам"));
-	updateBars(list.numberByRatings());
+	updateBars(list.numbersByRatings());
 }

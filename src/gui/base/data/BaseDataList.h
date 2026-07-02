@@ -47,27 +47,28 @@ public:
 	inline void add(const T& data)
 	{ _data_list.push_back(data); }
 
+	using NumbersInRange = std::map<QString, uint32_t>;
 	// Standard helper for functions, whose need to count
 	// number of items in _data_list by some criteria
 	// and return in container like a std::map<QString, uint32_t>
-	// funcIn - lambda for extraction required member of data
-	// funcOut - lambda for creating key for list
-	template<typename ContainerType, typename FuncIn, typename FuncOut>
-	void fillNumbersInRange(ContainerType* list,
-			uint32_t step, RangeTypes range_type,
-			uint32_t required_min, uint32_t required_max,
+	// funcIn - lambda for extraction required member of data (must return uint32_t)
+	// funcOut - lambda for creating key for list (must return QString)
+	template<typename FuncIn, typename FuncOut>
+	NumbersInRange numbersInRange(uint32_t step,
+			RangeTypes range_type, uint32_t required_min, uint32_t required_max,
 			FuncIn&& funcIn, FuncOut&& funcOut) const
 	{
+		NumbersInRange list;
 		auto [real_min, real_max] = Helper::initMinMax();
 		for (const auto& data : _data_list) {
 			auto val = funcIn(data);
 			Helper::checkMinMax(val, &real_min, &real_max);
 			if ((range_type == RangeTypes::LinearWithMin) && (val < required_min)) {
-				++(*list)[QStringLiteral("&lt;%1").arg(required_min)];
+				++list[QStringLiteral("&lt;%1").arg(required_min)];
 			} else if ((range_type == RangeTypes::LinearWithMax) && (val >= required_max)) {
-				++(*list)[QStringLiteral("%1+").arg(required_max)];
+				++list[QStringLiteral("%1+").arg(required_max)];
 			} else {
-				++(*list)[funcOut(val, step)];
+				++list[funcOut(val, step)];
 			}
 		}
 		if (range_type != RangeTypes::Discrete) {
@@ -76,9 +77,10 @@ public:
 			real_min = (real_min / step) * step;
 			real_max = (real_max / step) * step;
 			for (uint32_t val = real_min; val < real_max; val += step) {
-				list->try_emplace(funcOut(val, step), 0);
+				list.try_emplace(funcOut(val, step), 0);
 			}
 		}
+		return list;
 	}
 
 protected:
