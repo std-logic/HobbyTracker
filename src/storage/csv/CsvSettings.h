@@ -16,10 +16,9 @@ public:
 	void save(QSettings* settings, const QString& group_name) const;
 	void load(QSettings* settings, const QString& group_name);
 
-	inline void setFileName(const QString& file_name)
-	{ _file_name = file_name; }
-	inline void setFileName(QString&& file_name)
-	{ _file_name = std::move(file_name); }
+	template<typename T>
+	inline void setFileName(T&& file_name)
+	{ _file_name = std::forward<T>(file_name); }
 	inline QString fileName() const
 	{ return _file_name; }
 
@@ -48,10 +47,9 @@ public:
 	inline int skipAtStart() const
 	{ return _skip_at_start; }
 
-	inline void setHeader(const QStringList& header)
-	{ _header = header; }
-	inline void setHeader(QStringList&& header)
-	{ _header = std::move(header); }
+	template<typename T>
+	inline void setHeader(T&& header)
+	{ _header = std::forward<T>(header); }
 	inline QStringList header() const
 	{ return _header; }
 

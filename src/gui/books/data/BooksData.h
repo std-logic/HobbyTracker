@@ -16,34 +16,30 @@ public:
 	void clear()
 	{ *this = Data(); }
 
-	inline void setAuthorTr(const QString& author_tr)
-	{ _author_tr = author_tr; }
-	inline void setAuthorTr(QString&& author_tr)
-	{ _author_tr = std::move(author_tr); }
+	template<typename T>
+	inline void setAuthorTr(T&& author_tr)
+	{ _author_tr = std::forward<T>(author_tr); }
 	inline QString authorTr() const
 	{ return _author_tr; }
 
-	inline void setAuthorOrig(const QString& author_orig)
-	{ _author_orig = author_orig; }
-	inline void setAuthorOrig(QString&& author_orig)
-	{ _author_orig = std::move(author_orig); }
+	template<typename T>
+	inline void setAuthorOrig(T&& author_orig)
+	{ _author_orig = std::forward<T>(author_orig); }
 	inline QString authorOrig() const
 	{ return _author_orig; }
 
 	inline QString author() const
 	{ return Helper::fullTrAndOrigString(_author_tr, _author_orig); }
 
-	inline void setTitleTr(const QString& title_tr)
-	{ _title_tr = title_tr; }
-	inline void setTitleTr(QString&& title_tr)
-	{ _title_tr = std::move(title_tr); }
+	template<typename T>
+	inline void setTitleTr(T&& title_tr)
+	{ _title_tr = std::forward<T>(title_tr); }
 	inline QString titleTr() const
 	{ return _title_tr; }
 
-	inline void setTitleOrig(const QString& title_orig)
-	{ _title_orig = title_orig; }
-	inline void setTitleOrig(QString&& title_orig)
-	{ _title_orig = std::move(title_orig); }
+	template<typename T>
+	inline void setTitleOrig(T&& title_orig)
+	{ _title_orig = std::forward<T>(title_orig); }
 	inline QString titleOrig() const
 	{ return _title_orig; }
 
@@ -67,10 +63,9 @@ public:
 		return res;
 	}
 
-	inline void setGenre(const QString& genre)
-	{ _genre = genre; }
-	inline void setGenre(QString&& genre)
-	{ _genre = std::move(genre); }
+	template<typename T>
+	inline void setGenre(T&& genre)
+	{ _genre = std::forward<T>(genre); }
 	inline QString genre() const
 	{ return _genre; }
 

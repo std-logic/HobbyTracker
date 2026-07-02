@@ -18,14 +18,6 @@ public:
 	using ListContainer = std::vector<T>;
 	using SubListContainer = std::vector<const T*>;
 
-	enum class RangeTypes
-	{
-		Discrete,
-		Linear,
-		LinearWithMin,
-		LinearWithMax,
-	};
-
 	ListContainer::iterator begin() noexcept
 	{ return _data_list.begin(); }
 	ListContainer::const_iterator begin() const noexcept
@@ -36,18 +28,25 @@ public:
 	ListContainer::const_iterator end() const noexcept
 	{ return _data_list.end(); }
 
-	inline T& operator[](size_t index)
+	inline T& operator[](size_t index) noexcept
 	{ return _data_list[index]; }
-	inline const T& operator[](size_t index) const
+	inline const T& operator[](size_t index) const noexcept
 	{ return _data_list[index]; }
 
-	inline auto size() const
+	inline auto size() const noexcept
 	{ return _data_list.size(); }
 
 	inline void add(const T& data)
 	{ _data_list.push_back(data); }
 
 	using NumbersInRange = std::map<QString, uint32_t>;
+	enum class RangeTypes
+	{
+		Discrete,
+		Linear,
+		LinearWithMin,
+		LinearWithMax,
+	};
 	// Standard helper for functions, whose need to count
 	// number of items in _data_list by some criteria
 	// and return in container like a std::map<QString, uint32_t>

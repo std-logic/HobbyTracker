@@ -75,11 +75,11 @@ Books::DataList::NumbersByRatings Books::DataList::numbersByRatings() const
 	return list;
 }
 
-Books::DataList::SublistMinMaxYears Books::DataList::sublistMinMaxYears(const SubListContainer& sublist)
+QString Books::DataList::yearString(const SubListContainer& sublist)
 {
-	SublistMinMaxYears res(Global::undefined_value, Global::undefined_value);
+	std::pair<uint32_t, uint32_t> years(Global::undefined_value, Global::undefined_value);
 	for (auto data : sublist) {
-		Helper::checkMinMax(data->year(), &res.first, &res.second);
+		Helper::checkMinMax(data->year(), &years.first, &years.second);
 	}
-	return res;
+	return Helper::yearString(years);
 }

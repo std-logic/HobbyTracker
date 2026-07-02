@@ -43,8 +43,7 @@ public:
 	using NumbersByRatings = std::map<uint32_t, uint32_t>;
 	NumbersByRatings numbersByRatings() const;
 
-	using SublistMinMaxYears = std::pair<uint32_t, uint32_t>;
-	static SublistMinMaxYears sublistMinMaxYears(const SubListContainer& sublist);
+	static QString yearString(const SubListContainer& sublist);
 };
 
 } // namespace Books
