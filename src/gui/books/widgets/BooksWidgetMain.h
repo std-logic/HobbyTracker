@@ -16,6 +16,7 @@ class WidgetSummary;
 class WidgetList;
 class WidgetChart;
 class WidgetSettings;
+class WidgetData;
 
 class WidgetMain : public Base::WidgetMain
 {
@@ -38,6 +39,10 @@ private slots:
 	void showSettings();
 	void saveSettings(const Settings& settings);
 	void readCsvData(const Csv::Settings& csv_settings);
+
+	void addData();
+	void saveData(std::size_t index, const Data& data);
+
 	void updateList();
 	void updateChart();
 
@@ -47,6 +52,7 @@ private:
 	WidgetList* _widget_list = nullptr;
 	WidgetChart* _widget_chart = nullptr;
 	QPointer<WidgetSettings> _widget_settings;
+	QPointer<WidgetData> _widget_data;
 
 	std::optional<Csv::Data> _csv_data;
 	std::optional<DataList> _data_list;

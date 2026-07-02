@@ -16,9 +16,13 @@ void Books::WidgetSettings::initWidgets()
 	addStandardButtons();
 }
 
-void Books::WidgetSettings::save()
+void Books::WidgetSettings::copyGuiToSettings()
 {
 	_settings.setCsvSettings(_widget_csv_settings->getSettings());
+}
 
+void Books::WidgetSettings::save()
+{
+	copyGuiToSettings();
 	emit saveSettings(_settings);
 }

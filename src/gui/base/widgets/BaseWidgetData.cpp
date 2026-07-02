@@ -1,4 +1,4 @@
-#include "BaseWidgetSettings.h"
+#include "BaseWidgetData.h"
 
 #include <common/Global.h>
 
@@ -7,19 +7,19 @@
 #include <QPushButton>
 #include <QLabel>
 
-Base::WidgetSettings::WidgetSettings(QWidget* parent)
+Base::WidgetData::WidgetData(QWidget* parent)
 	: QDialog{parent}
 {
 	initCommonParams();
 	initWidgets();
 }
 
-void Base::WidgetSettings::addWidget(QWidget* widget)
+void Base::WidgetData::addWidget(QWidget* widget)
 {
 	_layout_main->addWidget(widget, _layout_main->rowCount(), 0, 1, 2);
 }
 
-void Base::WidgetSettings::addWidget(const QString& label_text, QWidget* widget)
+void Base::WidgetData::addWidget(const QString& label_text, QWidget* widget)
 {
 	auto row_count = _layout_main->rowCount();
 	auto label = new QLabel(label_text, this);
@@ -28,12 +28,12 @@ void Base::WidgetSettings::addWidget(const QString& label_text, QWidget* widget)
 	_layout_main->addWidget(widget, row_count, 1);
 }
 
-void Base::WidgetSettings::addLayout(QLayout* layout)
+void Base::WidgetData::addLayout(QLayout* layout)
 {
 	_layout_main->addLayout(layout, _layout_main->rowCount(), 0, 1, 2);
 }
 
-void Base::WidgetSettings::addLayout(const QString& label_text, QLayout* layout)
+void Base::WidgetData::addLayout(const QString& label_text, QLayout* layout)
 {
 	auto row_count = _layout_main->rowCount();
 	auto label = new QLabel(label_text, this);
@@ -42,29 +42,33 @@ void Base::WidgetSettings::addLayout(const QString& label_text, QLayout* layout)
 	_layout_main->addLayout(layout, row_count, 1);
 }
 
-void Base::WidgetSettings::addStandardButtons()
+void Base::WidgetData::addStandardButtons()
 {
-	auto row_count = _layout_main->rowCount();
+	auto layout_buttons = new QHBoxLayout();
+	layout_buttons->setContentsMargins(0, 0, 0, 0);
+	layout_buttons->setSpacing(Global::Sizes::default_spacing);
 
-	_button_save = new QPushButton(tr("Сохранить"), this);
+	_button_save = new QPushButton(tr("OK"), this);
 	connect(_button_save, &QPushButton::clicked,
-			this, &WidgetSettings::save);
-	_layout_main->addWidget(_button_save, row_count, 0);
+			this, &WidgetData::save);
+	layout_buttons->addWidget(_button_save);
 
-	_button_exit = new QPushButton(tr("Закрыть"), this);
+	_button_exit = new QPushButton(tr("Отмена"), this);
 	connect(_button_exit, &QPushButton::clicked,
-			this, &WidgetSettings::close);
-	_layout_main->addWidget(_button_exit, row_count, 1);
+			this, &WidgetData::close);
+	layout_buttons->addWidget(_button_exit);
+
+	addLayout(layout_buttons);
 }
 
-void Base::WidgetSettings::initCommonParams()
+void Base::WidgetData::initCommonParams()
 {
 	setAttribute(Qt::WA_DeleteOnClose);
-	setWindowTitle(tr("Настройки"));
+	setWindowTitle(tr("Данные"));
 	setMinimumWidth(400);
 }
 
-void Base::WidgetSettings::initWidgets()
+void Base::WidgetData::initWidgets()
 {
 	_layout_main = new QGridLayout(this);
 	_layout_main->setContentsMargins(Global::Sizes::default_margin);

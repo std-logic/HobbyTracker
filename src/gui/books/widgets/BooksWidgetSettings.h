@@ -22,6 +22,8 @@ signals:
 private:
 	void initWidgets();
 
+	void copyGuiToSettings();
+
 private slots:
 	void save() override;
 

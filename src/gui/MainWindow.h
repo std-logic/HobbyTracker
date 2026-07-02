@@ -16,9 +16,9 @@ public:
 
 	void start();
 
-public slots:
-
 signals:
+
+public slots:
 
 private:
 	void initCommonParams();
@@ -29,6 +29,9 @@ private:
 	void showDefaultTitle();
 	void showLoadingStart();
 	void showLoadingFinish();
+
+private slots:
+	void showMessage(const QString& text, int timeout = 0);
 
 private:
 	Books::WidgetMain* _books;

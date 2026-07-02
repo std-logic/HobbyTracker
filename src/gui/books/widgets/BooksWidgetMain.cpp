@@ -4,6 +4,7 @@
 #include "BooksWidgetList.h"
 #include "BooksWidgetChart.h"
 #include "BooksWidgetSettings.h"
+#include "BooksWidgetData.h"
 #include "../data/BooksConverter.h"
 
 #include <storage/Storage.h>
@@ -50,6 +51,8 @@ void Books::WidgetMain::initConnections()
 	connect(_widget_control, &WidgetControl::setChartViewMode,
 			_widget_chart, &WidgetChart::setViewMode);
 
+	connect(_widget_control, &WidgetControl::addData,
+			this, &WidgetMain::addData);
 	connect(_widget_control, &WidgetControl::showSettings,
 			this, &WidgetMain::showSettings);
 
@@ -87,6 +90,23 @@ void Books::WidgetMain::readCsvData(const Csv::Settings& csv_settings)
 	_widget_summary->update(_data_list.value());
 	_widget_list->update(_data_list.value());
 	_widget_chart->update(_data_list.value());
+}
+
+void Books::WidgetMain::addData()
+{
+	if (!_widget_data) {
+		_widget_data = new WidgetData(_data_list.value().size(), _data_list.value(), this);
+		connect(_widget_data, &WidgetData::showMessage,
+				this, &WidgetMain::showMessage);
+		connect(_widget_data, &WidgetData::saveData,
+				this, &WidgetMain::saveData);
+	}
+	_widget_data->open();
+}
+
+void Books::WidgetMain::saveData(std::size_t index, const Data& data)
+{
+
 }
 
 void Books::WidgetMain::updateList()

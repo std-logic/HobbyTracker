@@ -1,6 +1,7 @@
 #include "BooksWidgetControl.h"
 #include "../common/BooksCommon.h"
 
+#include <gui/base/widgets/BaseButtonAdd.h>
 #include <gui/base/widgets/BaseButtonCollapse.h>
 #include <gui/base/widgets/BaseButtonExpand.h>
 #include <gui/base/widgets/BaseButtonSave.h>
@@ -35,11 +36,17 @@ void Books::WidgetControl::initWidgets()
 
 		addWidget(_button_list = new Base::ButtonShow(tr("Список"), this));
 		connect(_button_list, &Base::ButtonShow::toggled, this, [this](bool on) {
+			_button_add_data->setEnabled(on);
 			_button_collapse_list->setEnabled(on);
 			_button_expand_list->setEnabled(on);
 			_combo_list_view_mode->setEnabled(on);
 			emit showList(on);
 		});
+
+		addWidget(_button_add_data = new Base::ButtonAdd(this));
+		_button_add_data->setEnabled(false);
+		connect(_button_add_data, &Base::ButtonAdd::clicked,
+				this, &WidgetControl::addData);
 
 		addWidget(_button_collapse_list = new Base::ButtonCollapse(this));
 		_button_collapse_list->setEnabled(false);

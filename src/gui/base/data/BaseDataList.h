@@ -4,6 +4,7 @@
 
 #include <cstdint>
 #include <vector>
+#include <set>
 
 namespace Base
 {
@@ -17,6 +18,7 @@ public:
 
 	using ListContainer = std::vector<T>;
 	using SubListContainer = std::vector<const T*>;
+	using ListOfStrings = std::set<QString>;
 
 	ListContainer::iterator begin() noexcept
 	{ return _data_list.begin(); }

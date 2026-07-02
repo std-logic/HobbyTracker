@@ -36,8 +36,6 @@ void Base::WidgetCsvSettings::initWidgets()
 	_layout_main = new QGridLayout(this);
 	_layout_main->setContentsMargins(Global::Sizes::default_margin);
 	_layout_main->setSpacing(Global::Sizes::default_spacing);
-	_layout_main->setColumnStretch(0, 50);
-	_layout_main->setColumnStretch(1, 50);
 
 	auto layout_file_name = new QHBoxLayout();
 	layout_file_name->setContentsMargins(0, 0, 0, 0);
@@ -47,6 +45,7 @@ void Base::WidgetCsvSettings::initWidgets()
 	_button_choose_file = new QPushButton(QIcon::fromTheme(QIcon::ThemeIcon::FolderOpen), "", this);
 	_button_choose_file->setToolTip(tr("Выбрать файл..."));
 	_button_choose_file->setFixedWidth(24);
+	_button_choose_file->setFocusPolicy(Qt::NoFocus);
 	connect(_button_choose_file, &QPushButton::clicked,
 			this, &WidgetCsvSettings::chooseFile);
 	layout_file_name->addWidget(_button_choose_file);
@@ -88,6 +87,7 @@ void Base::WidgetCsvSettings::initWidgets()
 	_layout_main->addWidget(_edit_skip_at_start, 3, 1);
 
 	_button_load_data = new QPushButton(tr("Прочитать данные"), this);
+	_button_load_data->setFocusPolicy(Qt::NoFocus);
 	connect(_button_load_data, &QPushButton::clicked,
 			this, &WidgetCsvSettings::loadData);
 	_layout_main->addWidget(_button_load_data, 4, 0, 1, 2);

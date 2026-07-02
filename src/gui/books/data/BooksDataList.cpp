@@ -31,11 +31,38 @@ Books::DataList::BooksByAuthors Books::DataList::booksByAuthors() const
 	return list;
 }
 
+Books::DataList::ListOfStrings Books::DataList::listOfAuthorsTr() const
+{
+	ListOfStrings list;
+	for (const auto& data : _data_list) {
+		list.insert(data.authorTr());
+	}
+	return list;
+}
+
+Books::DataList::ListOfStrings Books::DataList::listOfAuthorsOrig() const
+{
+	ListOfStrings list;
+	for (const auto& data : _data_list) {
+		list.insert(data.authorOrig());
+	}
+	return list;
+}
+
 Books::DataList::BooksByGenres Books::DataList::booksByGenres() const
 {
 	BooksByGenres list;
 	for (const auto& data : _data_list) {
 		list[data.genre()].push_back(&data);
+	}
+	return list;
+}
+
+Books::DataList::ListOfStrings Books::DataList::listOfGenres() const
+{
+	ListOfStrings list;
+	for (const auto& data : _data_list) {
+		list.insert(data.genre());
 	}
 	return list;
 }

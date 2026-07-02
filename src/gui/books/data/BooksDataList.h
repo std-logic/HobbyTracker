@@ -28,9 +28,12 @@ public:
 
 	using BooksByAuthors = std::unordered_map<QString, SubListContainer>;
 	BooksByAuthors booksByAuthors() const;
+	ListOfStrings listOfAuthorsTr() const;
+	ListOfStrings listOfAuthorsOrig() const;
 
 	using BooksByGenres = std::unordered_map<QString, SubListContainer>;
 	BooksByGenres booksByGenres() const;
+	ListOfStrings listOfGenres() const;
 
 	using BooksByYears = std::unordered_map<QString, SubListContainer>;
 	BooksByYears booksByYears(uint32_t step = 1) const;
