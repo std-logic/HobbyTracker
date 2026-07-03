@@ -16,6 +16,9 @@ public:
 	void clear()
 	{ *this = Data(); }
 
+	inline QString id() const
+	{ return autorAndTitleTr(); }
+
 	template<typename T>
 	inline void setAuthorTr(T&& author_tr)
 	{ _author_tr = std::forward<T>(author_tr); }

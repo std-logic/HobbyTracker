@@ -45,6 +45,7 @@ void Books::WidgetList::showByAuthors(const DataList& list)
 			item_book->setText(CLMN_GENRE, book->genre());
 			item_book->setText(CLMN_YEAR, book->yearString());
 			item_book->setRating(CLMN_RATING, book->rating());
+			item_book->setId(book->id());
 		}
 	}
 }
@@ -70,6 +71,7 @@ void Books::WidgetList::showByGenres(const DataList& list)
 			item_book->setToolTip(CLMN_TITLE, book->summaryString());
 			item_book->setText(CLMN_YEAR, book->yearString());
 			item_book->setRating(CLMN_RATING, book->rating());
+			item_book->setId(book->id());
 		}
 	}
 }
@@ -96,6 +98,7 @@ void Books::WidgetList::showByDecades(const DataList& list)
 			item_book->setText(CLMN_GENRE, book->genre());
 			item_book->setText(CLMN_YEAR, book->yearString());
 			item_book->setRating(CLMN_RATING, book->rating());
+			item_book->setId(book->id());
 		}
 	}
 }
@@ -122,6 +125,7 @@ void Books::WidgetList::showByCenturies(const DataList& list)
 			item_book->setText(CLMN_GENRE, book->genre());
 			item_book->setText(CLMN_YEAR, book->yearString());
 			item_book->setRating(CLMN_RATING, book->rating());
+			item_book->setId(book->id());
 		}
 	}
 }
@@ -147,6 +151,7 @@ void Books::WidgetList::showByRatings(const DataList& list)
 			item_book->setToolTip(CLMN_TITLE, book->summaryString());
 			item_book->setText(CLMN_GENRE, book->genre());
 			item_book->setText(CLMN_YEAR, book->yearString());
+			item_book->setId(book->id());
 		}
 	}
 }
@@ -165,5 +170,6 @@ void Books::WidgetList::showSimple(const DataList& list)
 		item_book->setText(CLMN_GENRE, book.genre());
 		item_book->setText(CLMN_YEAR, book.yearString());
 		item_book->setRating(CLMN_RATING, book.rating());
+		item_book->setId(book.id());
 	}
 }

@@ -58,6 +58,8 @@ void Books::WidgetMain::initConnections()
 
 	connect(_widget_list, &WidgetList::needUpdate,
 			this, &WidgetMain::updateList);
+	connect(_widget_list, &WidgetList::editData,
+			this, &WidgetMain::editData);
 
 	connect(_widget_chart, &WidgetChart::needUpdate,
 			this, &WidgetMain::updateChart);
@@ -92,8 +94,23 @@ void Books::WidgetMain::readCsvData(const Csv::Settings& csv_settings)
 
 void Books::WidgetMain::addData()
 {
+	showData(_data_list.value().size());
+}
+
+void Books::WidgetMain::editData(const QString& id)
+{
+	for (std::size_t i = 0; i < _data_list.value().size(); ++i) {
+		if (id == _data_list.value()[i].id()) {
+			showData(i);
+			break;
+		}
+	}
+}
+
+void Books::WidgetMain::showData(std::size_t index)
+{
 	if (!_widget_data) {
-		_widget_data = new WidgetData(_data_list.value().size(), _data_list.value(), this);
+		_widget_data = new WidgetData(index, _data_list.value(), this);
 		connect(_widget_data, &WidgetData::showMessage,
 				this, &WidgetMain::showMessage);
 		connect(_widget_data, &WidgetData::saveData,

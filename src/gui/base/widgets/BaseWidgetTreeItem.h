@@ -19,6 +19,9 @@ public:
 	inline void setNumb(int column, const QVariant& value)
 	{ setData(column, Qt::DisplayRole, value); }
 
+	inline void setId(const QVariant& value)
+	{ setData(0, Qt::UserRole, value); }
+
 	void setRating(int column, const QVariant& value);
 
 	void setBold(bool enable);

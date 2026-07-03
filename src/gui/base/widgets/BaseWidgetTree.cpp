@@ -22,6 +22,10 @@ Base::WidgetTree::WidgetTree(QWidget* parent)
 	connect(header(), &QHeaderView::sortIndicatorChanged,
 			this, &WidgetTree::sortingChanged);
 
+	// tracking items doubleclicking
+	connect(this, &WidgetTree::itemDoubleClicked,
+			this, &WidgetTree::onItemDoubleClicked);
+
 	hide();
 }
 
@@ -72,4 +76,12 @@ void Base::WidgetTree::sortingChanged(int index, Qt::SortOrder order)
 	if (index == -1) { return; }
 	_sorting_column = headerItem()->text(index);
 	_sorting_order = order;
+}
+
+void Base::WidgetTree::onItemDoubleClicked(QTreeWidgetItem* item, int /*column*/)
+{
+	auto id = item->data(0, Qt::UserRole).toString();
+	if (!id.isEmpty()) {
+		emit editData(id);
+	}
 }
