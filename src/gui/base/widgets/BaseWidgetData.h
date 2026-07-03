@@ -23,7 +23,7 @@ public:
 	void addStandardButtons();
 
 signals:
-	void showMessage(const QString& text, int timeout = 0);
+	void showMessage(const QString& text, int timeout = 5000);
 
 protected slots:
 	virtual void save() = 0;

@@ -60,12 +60,21 @@ namespace Helper
 	inline QString yearString(uint32_t min_year, uint32_t max_year)
 	{
 		return	(min_year == Global::undefined_value) ? QString() :
-				(min_year == max_year) ? QString::number(min_year) :
-				QStringLiteral("%1-%2").arg(min_year).arg(max_year);
+				(min_year == max_year) ?
+				QStringLiteral("%1").arg(min_year, 4, 10, QChar('0')) :
+				QStringLiteral("%1-%2")
+					.arg(min_year, 4, 10, QChar('0'))
+					.arg(max_year, 4, 10, QChar('0'));
 	}
 	inline QString yearString(std::pair<uint32_t, uint32_t> min_max_year)
 	{
 		return yearString(min_max_year.first, min_max_year.second);
+	}
+	inline QString yearString(uint32_t year)
+	{
+		return	(year == Global::undefined_value) ?
+				QStringLiteral() :
+				QStringLiteral("%1").arg(year, 4, 10, QChar('0'));
 	}
 
 	inline QString epochString(uint32_t year, uint32_t step)
@@ -73,11 +82,11 @@ namespace Helper
 		if (step == 1) {
 			return	(year == Global::undefined_value) ?
 					QStringLiteral("[Неизвестный]") :
-					QString::number(year);
+					QStringLiteral("%1").arg(year, 4, 10, QChar('0'));
 		} else {
 			return	(year == Global::undefined_value) ?
 					QStringLiteral("[Неизвестное]") :
-					QStringLiteral("%1-е").arg((year / step) * step);
+					QStringLiteral("%1-е").arg((year / step) * step, 4, 10, QChar('0'));
 		}
 	}
 

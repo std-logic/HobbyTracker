@@ -43,6 +43,8 @@ private slots:
 	void addData();
 	void saveData(std::size_t index, const Data& data);
 
+	void updateAll();
+	void updateSummary();
 	void updateList();
 	void updateChart();
 

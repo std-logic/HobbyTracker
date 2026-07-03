@@ -49,6 +49,16 @@ Books::DataList::ListOfStrings Books::DataList::listOfAuthorsOrig() const
 	return list;
 }
 
+QString Books::DataList::findAuthorOrigByTr(const QString& author_tr) const
+{
+	for (const auto& data : _data_list) {
+		if (author_tr == data.authorTr()) {
+			return data.authorOrig();
+		}
+	}
+	return QString();
+}
+
 Books::DataList::BooksByGenres Books::DataList::booksByGenres() const
 {
 	BooksByGenres list;

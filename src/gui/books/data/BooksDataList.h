@@ -30,6 +30,7 @@ public:
 	BooksByAuthors booksByAuthors() const;
 	ListOfStrings listOfAuthorsTr() const;
 	ListOfStrings listOfAuthorsOrig() const;
+	QString findAuthorOrigByTr(const QString& author_tr) const;
 
 	using BooksByGenres = std::unordered_map<QString, SubListContainer>;
 	BooksByGenres booksByGenres() const;

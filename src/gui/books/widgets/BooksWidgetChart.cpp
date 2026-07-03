@@ -27,7 +27,7 @@ void Books::WidgetChart::showByDecades(const DataList& list)
 void Books::WidgetChart::showByCenturies(const DataList& list)
 {
 	chart()->setTitle(tr("Распределение по столетиям"));
-	updateBars(list.numbersByYears(100, DataList::RangeTypes::Linear));
+	updateBars(list.numbersByYears(100));
 }
 
 void Books::WidgetChart::showByRatings(const DataList& list)

@@ -33,6 +33,7 @@ private:
 	bool copyGuiToData();
 
 private slots:
+	void authorTrChanged(int index);
 	void save() override;
 
 private:

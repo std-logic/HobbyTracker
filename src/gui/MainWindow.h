@@ -31,7 +31,7 @@ private:
 	void showLoadingFinish();
 
 private slots:
-	void showMessage(const QString& text, int timeout = 0);
+	void showMessage(const QString& text, int timeout = 5000);
 
 private:
 	Books::WidgetMain* _books;

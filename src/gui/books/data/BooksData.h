@@ -73,15 +73,13 @@ public:
 	{ _year = year; }
 	inline uint32_t year() const
 	{ return _year; }
-	QString yearString(const QString& undefined_string = QString()) const
-	{ return (_year == Global::undefined_value) ? undefined_string : QString::number(_year); }
+	QString yearString() const
+	{ return Helper::yearString(_year); }
 
 	inline void setRating(uint32_t rating)
 	{ _rating = rating; }
 	inline uint32_t rating() const
 	{ return _rating; }
-	QString ratingString(const QString& undefined_string = QString()) const
-	{ return (_rating == Global::undefined_value) ? undefined_string : QString::number(_rating); }
 
 	QString summaryString() const
 	{

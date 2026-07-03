@@ -87,9 +87,7 @@ void Books::WidgetMain::readCsvData(const Csv::Settings& csv_settings)
 	_csv_data = Storage::readCsv(csv_settings);
 	_data_list = Converter::conv(_csv_data.value());
 
-	_widget_summary->update(_data_list.value());
-	_widget_list->update(_data_list.value());
-	_widget_chart->update(_data_list.value());
+	updateAll();
 }
 
 void Books::WidgetMain::addData()
@@ -106,19 +104,33 @@ void Books::WidgetMain::addData()
 
 void Books::WidgetMain::saveData(std::size_t index, const Data& data)
 {
+	if (index < _data_list.value().size()) {
+		_data_list.value()[index] = data;
+	} else {
+		_data_list.value().add(data);
+	}
 
+	updateAll();
+}
+
+void Books::WidgetMain::updateAll()
+{
+	updateSummary();
+	updateList();
+	updateChart();
+}
+
+void Books::WidgetMain::updateSummary()
+{
+	if (_data_list.has_value()) { _widget_summary->update(_data_list.value()); }
 }
 
 void Books::WidgetMain::updateList()
 {
-	if (_data_list.has_value()) {
-		_widget_list->update(_data_list.value());
-	}
+	if (_data_list.has_value()) { _widget_list->update(_data_list.value()); }
 }
 
 void Books::WidgetMain::updateChart()
 {
-	if (_data_list.has_value()) {
-		_widget_chart->update(_data_list.value());
-	}
+	if (_data_list.has_value()) { _widget_chart->update(_data_list.value()); }
 }

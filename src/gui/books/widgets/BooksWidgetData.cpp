@@ -15,6 +15,10 @@ Books::WidgetData::WidgetData(std::size_t index, const DataList& list, QWidget* 
 	initCommonParams();
 	initWidgets();
 	copyDataToGui();
+
+	// strictly after initialization finished, because we need only real changes
+	connect(_combo_author_tr, &Base::ComboEdit::currentIndexChanged,
+			this, &WidgetData::authorTrChanged);
 }
 
 void Books::WidgetData::initCommonParams()
@@ -70,7 +74,7 @@ bool Books::WidgetData::copyGuiToData()
 {
 	_data.setAuthorTr(_combo_author_tr->currentText());
 	if (_data.authorTr().isEmpty()) {
-		emit showMessage(tr("Введён некорректный автор!"), 5000);
+		emit showMessage(tr("Введён некорректный автор!"));
 		return false;
 	}
 
@@ -78,7 +82,7 @@ bool Books::WidgetData::copyGuiToData()
 
 	_data.setTitleTr(_edit_title_tr->text());
 	if (_data.titleTr().isEmpty()) {
-		emit showMessage(tr("Введено некорректное название!"), 5000);
+		emit showMessage(tr("Введено некорректное название!"));
 		return false;
 	}
 
@@ -86,23 +90,31 @@ bool Books::WidgetData::copyGuiToData()
 
 	_data.setGenre(_combo_genre->currentText());
 	if (_data.genre().isEmpty()) {
-		emit showMessage(tr("Введён некорректный жанр!"), 5000);
+		emit showMessage(tr("Введён некорректный жанр!"));
 		return false;
 	}
 
 	_data.setYear(_edit_year->text().toUInt());
 	if ((_data.year() < 1) || (2100 < _data.year())) {
-		emit showMessage(tr("Введён некорректный год!"), 5000);
+		emit showMessage(tr("Введён некорректный год!"));
 		return false;
 	}
 
 	_data.setRating(_widget_rating->rating());
 	if ((_data.rating() < 1) || (10 < _data.rating())) {
-		emit showMessage(tr("Не выбрана оценка!"), 5000);
+		emit showMessage(tr("Не выбрана оценка!"));
 		return false;
 	}
 
 	return true;
+}
+
+void Books::WidgetData::authorTrChanged(int index)
+{
+	if (index >= 0) {
+		auto author_orig = _data_list.findAuthorOrigByTr(_combo_author_tr->itemText(index));
+		_combo_author_orig->lineEdit()->setText(author_orig);
+	}
 }
 
 void Books::WidgetData::save()
