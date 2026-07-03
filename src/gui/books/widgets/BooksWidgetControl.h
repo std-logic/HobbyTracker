@@ -28,6 +28,8 @@ public:
 	void start() override;
 
 signals:
+	void saveCsvData();
+
 	void showList(bool on);
 	void addData();
 	void collapseList();

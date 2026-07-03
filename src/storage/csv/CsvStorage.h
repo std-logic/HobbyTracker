@@ -13,7 +13,7 @@ public:
 
 	static void createFile(const Settings& csv_settings);
 	static Data readFile(const Settings& csv_settings);
-	static void writeFile(const Settings& csv_settings, const Data& csv_data);
+	static bool writeFile(const Settings& csv_settings, const Data& csv_data);
 };
 
 } // namespace Csv

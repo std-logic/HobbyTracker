@@ -28,6 +28,8 @@ void Books::WidgetControl::initWidgets()
 	// save
 	{
 		addWidget(_button_save = new Base::ButtonSave(this));
+		connect(_button_save, &Base::ButtonSave::clicked,
+				this, &WidgetControl::saveCsvData);
 	}
 
 	// list

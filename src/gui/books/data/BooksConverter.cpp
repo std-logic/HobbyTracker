@@ -60,15 +60,23 @@ Books::DataList Books::Converter::conv(const Csv::Data& csv_data)
 	return data_list;
 }
 
-Csv::Data Books::Converter::conv(const DataList& /*data_list*/)
+Csv::Data Books::Converter::conv(const DataList& data_list)
 {
 	Csv::Data csv_data;
 
+	for (const auto& data : data_list) {
+		QStringList line;
 
+		line.insert(CLMN_AUTHOR_TR, data.authorTr());
+		line.insert(CLMN_AUTHOR_ORIG, data.authorOrig());
+		line.insert(CLMN_TITLE_TR, data.titleTr());
+		line.insert(CLMN_TITLE_ORIG, data.titleOrig());
+		line.insert(CLMN_GENRE, data.genre());
+		line.insert(CLMN_YEAR, QString::number(data.year()));
+		line.insert(CLMN_RATING, QString::number(data.rating()));
 
-
-
-
+		csv_data.push_back(line);
+	}
 
 	return csv_data;
 }

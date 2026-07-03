@@ -14,11 +14,12 @@ void Csv::Storage::createFile(const Settings& csv_settings)
 		return;
 	}
 
+	QTextStream stream(&file);
+	stream.setEncoding(csv_settings.encoding());
+	stream.setGenerateByteOrderMark(csv_settings.addBom());
+
 	auto header = csv_settings.header();
 	if (!header.isEmpty()) {
-		QTextStream stream(&file);
-		stream.setEncoding(csv_settings.encoding());
-		stream.setGenerateByteOrderMark(csv_settings.addBom());
 		for (int column = 0; column < header.size(); ++column) {
 			stream << header[column];
 			if (column != (header.size() - 1)) {
@@ -45,6 +46,7 @@ Csv::Data Csv::Storage::readFile(const Settings& csv_settings)
 	for (int line = 0; line < csv_settings.skipAtStart(); ++line) {
 		stream.readLine();
 	}
+
 	QString buff;
 	while (stream.readLineInto(&buff)) {
 		csv_data.push_back(buff.remove(QChar('\"')).split(csv_settings.delimiter()));
@@ -54,7 +56,38 @@ Csv::Data Csv::Storage::readFile(const Settings& csv_settings)
 	return csv_data;
 }
 
-void Csv::Storage::writeFile(const Settings& /*csv_settings*/, const Data& /*csv_data*/)
+bool Csv::Storage::writeFile(const Settings& csv_settings, const Data& csv_data)
 {
+	QFile file(csv_settings.fileName());
+	if (!file.open(QFile::WriteOnly | QFile::Text)) {
+		return false;
+	}
 
+	QTextStream stream(&file);
+	stream.setEncoding(csv_settings.encoding());
+	stream.setGenerateByteOrderMark(csv_settings.addBom());
+
+	auto header = csv_settings.header();
+	if (!header.isEmpty()) {
+		for (int column = 0; column < header.size(); ++column) {
+			stream << header[column];
+			if (column != (header.size() - 1)) {
+				stream << csv_settings.delimiter();
+			}
+		}
+		stream << csv_settings.ending();
+	}
+
+	for (const auto& line : csv_data) {
+		for (int column = 0; column < line.size(); ++column) {
+			stream << line[column];
+			if (column != (line.size() - 1)) {
+				stream << csv_settings.delimiter();
+			}
+		}
+		stream << csv_settings.ending();
+	}
+
+	file.close();
+	return true;
 }

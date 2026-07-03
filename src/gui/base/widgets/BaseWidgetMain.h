@@ -20,7 +20,7 @@ public:
 	void addStretch(int stretch = 0);
 
 signals:
-	void showMessage(const QString& text, int timeout = 0);
+	void showMessage(const QString& text, int timeout = 5000);
 
 private:
 	QVBoxLayout* _layout_main = nullptr;

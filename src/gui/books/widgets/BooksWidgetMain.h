@@ -40,6 +40,8 @@ private slots:
 	void saveSettings(const Settings& settings);
 	void readCsvData(const Csv::Settings& csv_settings);
 
+	void saveCsvData();
+
 	void addData();
 	void editData(const QString& id);
 	void showData(std::size_t index);

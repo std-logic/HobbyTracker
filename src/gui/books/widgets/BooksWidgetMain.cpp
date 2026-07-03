@@ -51,6 +51,8 @@ void Books::WidgetMain::initConnections()
 	connect(_widget_control, &WidgetControl::setChartViewMode,
 			_widget_chart, &WidgetChart::setViewMode);
 
+	connect(_widget_control, &WidgetControl::saveCsvData,
+			this, &WidgetMain::saveCsvData);
 	connect(_widget_control, &WidgetControl::addData,
 			this, &WidgetMain::addData);
 	connect(_widget_control, &WidgetControl::showSettings,
@@ -90,6 +92,19 @@ void Books::WidgetMain::readCsvData(const Csv::Settings& csv_settings)
 	_data_list = Converter::conv(_csv_data.value());
 
 	updateAll();
+}
+
+void Books::WidgetMain::saveCsvData()
+{
+	_csv_data = Converter::conv(_data_list.value());
+	auto write_ok = Storage::writeCsv(_settings.csvSettings(), _csv_data.value());
+
+	if (write_ok) {
+		emit showMessage(tr("Данные сохранены в файл %1")
+						 .arg(_settings.csvSettings().fileName()));
+	} else {
+		emit showMessage(tr("Ошибка записи в файл!"));
+	}
 }
 
 void Books::WidgetMain::addData()
