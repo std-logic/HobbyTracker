@@ -23,6 +23,11 @@ void Books::WidgetControl::start()
 	_button_list->setChecked(true);
 }
 
+void Books::WidgetControl::highlightButtonSave(bool on)
+{
+	_button_save->highlight(on);
+}
+
 void Books::WidgetControl::initWidgets()
 {
 	// save

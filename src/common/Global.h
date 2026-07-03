@@ -47,6 +47,10 @@ namespace Global
 				"background-color: rgb(230,230,230);"
 				"color: black;"
 				"}";
+		inline const char button_highligh[] =
+				"QPushButton{"
+				"background-color: rgb(140,250,160);"
+				"}";
 	} // namespace Stylesheets
 
 	namespace Sizes

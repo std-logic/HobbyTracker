@@ -58,6 +58,9 @@ void Books::WidgetMain::initConnections()
 	connect(_widget_control, &WidgetControl::showSettings,
 			this, &WidgetMain::showSettings);
 
+	connect(this, &WidgetMain::highlightButtonSave,
+			_widget_control, &WidgetControl::highlightButtonSave);
+
 	connect(_widget_list, &WidgetList::needUpdate,
 			this, &WidgetMain::updateList);
 	connect(_widget_list, &WidgetList::editData,
@@ -100,6 +103,7 @@ void Books::WidgetMain::saveCsvData()
 	auto write_ok = Storage::writeCsv(_settings.csvSettings(), _csv_data.value());
 
 	if (write_ok) {
+		emit highlightButtonSave(false);
 		emit showMessage(tr("Данные сохранены в файл %1")
 						 .arg(_settings.csvSettings().fileName()));
 	} else {
@@ -137,12 +141,14 @@ void Books::WidgetMain::showData(std::size_t index)
 void Books::WidgetMain::saveData(std::size_t index, const Data& data)
 {
 	if (index < _data_list.value().size()) {
+		if (_data_list.value()[index] == data) { return; }
 		_data_list.value()[index] = data;
 	} else {
 		_data_list.value().add(data);
 	}
 
 	updateAll();
+	emit highlightButtonSave(true);
 }
 
 void Books::WidgetMain::updateAll()

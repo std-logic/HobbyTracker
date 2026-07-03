@@ -27,6 +27,9 @@ public:
 
 	void start() override;
 
+public slots:
+	void highlightButtonSave(bool on);
+
 signals:
 	void saveCsvData();
 

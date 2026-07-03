@@ -30,6 +30,7 @@ public:
 	void start() override;
 
 signals:
+	void highlightButtonSave(bool on);
 
 private:
 	void initWidgets();

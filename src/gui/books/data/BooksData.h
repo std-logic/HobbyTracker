@@ -97,6 +97,17 @@ public:
 		return text;
 	}
 
+	inline bool operator==(const Data& other) const noexcept
+	{
+		return	(_author_tr == other.authorTr()) &&
+				(_author_orig == other.authorOrig()) &&
+				(_title_tr == other.titleTr()) &&
+				(_title_orig == other.titleOrig()) &&
+				(_genre == other.genre()) &&
+				(_year == other.year()) &&
+				(_rating == other.rating());
+	}
+
 private:
 	QString _author_tr;
 	QString _author_orig;

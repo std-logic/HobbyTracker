@@ -12,8 +12,8 @@ public:
 	explicit ButtonSave(QWidget* parent = nullptr);
 	virtual ~ButtonSave() = default;
 
-signals:
-
+public slots:
+	void highlight(bool on);
 };
 
 } // namespace Base
