@@ -5,6 +5,10 @@
 
 void Csv::Storage::createFile(size_t index, const Settings& csv_settings)
 {
+	if (csv_settings.fileName(index).isEmpty()) {
+		return;
+	}
+
 	if (QFile::exists(csv_settings.fileName(index))) {
 		return;
 	}
@@ -36,6 +40,10 @@ Csv::Data Csv::Storage::readFile(size_t index, const Settings& csv_settings)
 {
 	Data csv_data;
 
+	if (csv_settings.fileName(index).isEmpty()) {
+		return csv_data;
+	}
+
 	QFile file(csv_settings.fileName(index));
 	if (!file.open(QFile::ReadOnly | QFile::Text)) {
 		return csv_data;
@@ -58,6 +66,10 @@ Csv::Data Csv::Storage::readFile(size_t index, const Settings& csv_settings)
 
 bool Csv::Storage::writeFile(size_t index, const Settings& csv_settings, const Data& csv_data)
 {
+	if (csv_settings.fileName(index).isEmpty()) {
+		return false;
+	}
+
 	QFile file(csv_settings.fileName(index));
 	if (!file.open(QFile::WriteOnly | QFile::Text)) {
 		return false;

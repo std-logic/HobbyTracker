@@ -107,8 +107,10 @@ void Base::WidgetChart::updateBars(const std::map<QString, uint32_t>& values)
 		bar_set->append(val_y);
 	}
 
-	auto max_y = *std::ranges::max_element(values | std::views::values);
-	updateAxisYRange(max_y);
+	if (!values.empty()) {
+		auto max_y = *std::ranges::max_element(values | std::views::values);
+		updateAxisYRange(max_y);
+	}
 }
 
 void Base::WidgetChart::updateBars(const std::map<uint32_t, uint32_t>& values)
@@ -120,8 +122,10 @@ void Base::WidgetChart::updateBars(const std::map<uint32_t, uint32_t>& values)
 		bar_set->append(val_y);
 	}
 
-	auto max_y = *std::ranges::max_element(values | std::views::values);
-	updateAxisYRange(max_y);
+	if (!values.empty()) {
+		auto max_y = *std::ranges::max_element(values | std::views::values);
+		updateAxisYRange(max_y);
+	}
 }
 
 void Base::WidgetChart::updateAxisYRange(uint32_t max_y)
