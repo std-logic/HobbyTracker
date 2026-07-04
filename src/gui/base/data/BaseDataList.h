@@ -41,6 +41,9 @@ public:
 	inline void add(const T& data)
 	{ _data_list.push_back(data); }
 
+	inline void del(size_t index)
+	{ _data_list.erase(_data_list.begin() + index); }
+
 	using NumbersInRange = std::map<QString, uint32_t>;
 	enum class RangeTypes
 	{

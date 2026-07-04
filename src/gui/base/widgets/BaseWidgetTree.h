@@ -19,6 +19,7 @@ public slots:
 signals:
 	void needUpdate();
 	void editData(const QString& id);
+	void deleteData(const QString& id);
 
 protected:
 	void initColumns(const QStringList& labels, const std::vector<int>& widths = {});
@@ -27,6 +28,7 @@ protected:
 private slots:
 	void sortingChanged(int index, Qt::SortOrder order);
 	void onItemDoubleClicked(QTreeWidgetItem* item, int column);
+	void onItemDeletePressed();
 
 protected:
 	int _view_mode = 0;

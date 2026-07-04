@@ -45,8 +45,10 @@ private slots:
 
 	void addData();
 	void editData(const QString& id);
-	void showData(std::size_t index);
-	void saveData(std::size_t index, const Data& data);
+	void showData(size_t index);
+	void saveData(size_t index, const Data& data);
+	void deleteData(const QString& id);
+	void deleteDataAtIndex(size_t index);
 
 	void updateAll();
 	void updateSummary();
@@ -61,7 +63,6 @@ private:
 	QPointer<WidgetSettings> _widget_settings;
 	QPointer<WidgetData> _widget_data;
 
-	std::optional<Csv::Data> _csv_data;
 	std::optional<DataList> _data_list;
 	Settings _settings;
 };

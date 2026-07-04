@@ -19,11 +19,11 @@ class WidgetData : public Base::WidgetData
 {
 	Q_OBJECT
 public:
-	explicit WidgetData(std::size_t index, const DataList& list, QWidget* parent = nullptr);
+	explicit WidgetData(size_t index, const DataList& list, QWidget* parent = nullptr);
 	~WidgetData() = default;
 
 signals:
-	void saveData(std::size_t index, const Data& data);
+	void saveData(size_t index, const Data& data);
 
 private:
 	void initCommonParams();
@@ -45,7 +45,7 @@ private:
 	QLineEdit* _edit_year = nullptr;
 	Base::WidgetRating* _widget_rating = nullptr;
 
-	std::size_t _index = 0;
+	size_t _index = 0;
 	DataList _data_list;
 	Data _data;
 };

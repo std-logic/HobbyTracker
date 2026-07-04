@@ -9,6 +9,8 @@
 
 #include <storage/Storage.h>
 
+#include <QMessageBox>
+
 Books::WidgetMain::WidgetMain(QWidget* parent)
 	: Base::WidgetMain{parent}
 {
@@ -65,6 +67,8 @@ void Books::WidgetMain::initConnections()
 			this, &WidgetMain::updateList);
 	connect(_widget_list, &WidgetList::editData,
 			this, &WidgetMain::editData);
+	connect(_widget_list, &WidgetList::deleteData,
+			this, &WidgetMain::deleteData);
 
 	connect(_widget_chart, &WidgetChart::needUpdate,
 			this, &WidgetMain::updateChart);
@@ -91,16 +95,16 @@ void Books::WidgetMain::saveSettings(const Settings& settings)
 
 void Books::WidgetMain::readCsvData(const Csv::Settings& csv_settings)
 {
-	_csv_data = Storage::readCsv(csv_settings);
-	_data_list = Converter::conv(_csv_data.value());
+	auto csv_data = Storage::readCsv(csv_settings);
+	_data_list = Converter::conv(csv_data);
 
 	updateAll();
 }
 
 void Books::WidgetMain::saveCsvData()
 {
-	_csv_data = Converter::conv(_data_list.value());
-	auto write_ok = Storage::writeCsv(_settings.csvSettings(), _csv_data.value());
+	auto csv_data = Converter::conv(_data_list.value());
+	auto write_ok = Storage::writeCsv(_settings.csvSettings(), csv_data);
 
 	if (write_ok) {
 		emit highlightButtonSave(false);
@@ -118,7 +122,7 @@ void Books::WidgetMain::addData()
 
 void Books::WidgetMain::editData(const QString& id)
 {
-	for (std::size_t i = 0; i < _data_list.value().size(); ++i) {
+	for (size_t i = 0; i < _data_list.value().size(); ++i) {
 		if (id == _data_list.value()[i].id()) {
 			showData(i);
 			break;
@@ -126,7 +130,7 @@ void Books::WidgetMain::editData(const QString& id)
 	}
 }
 
-void Books::WidgetMain::showData(std::size_t index)
+void Books::WidgetMain::showData(size_t index)
 {
 	if (!_widget_data) {
 		_widget_data = new WidgetData(index, _data_list.value(), this);
@@ -138,7 +142,7 @@ void Books::WidgetMain::showData(std::size_t index)
 	_widget_data->open();
 }
 
-void Books::WidgetMain::saveData(std::size_t index, const Data& data)
+void Books::WidgetMain::saveData(size_t index, const Data& data)
 {
 	if (index < _data_list.value().size()) {
 		if (_data_list.value()[index] == data) { return; }
@@ -149,6 +153,31 @@ void Books::WidgetMain::saveData(std::size_t index, const Data& data)
 
 	updateAll();
 	emit highlightButtonSave(true);
+}
+
+void Books::WidgetMain::deleteData(const QString& id)
+{
+	for (size_t i = 0; i < _data_list.value().size(); ++i) {
+		if (id == _data_list.value()[i].id()) {
+			deleteDataAtIndex(i);
+			break;
+		}
+	}
+}
+
+void Books::WidgetMain::deleteDataAtIndex(size_t index)
+{
+	auto ans = QMessageBox::question(
+			this,
+			tr("Удаление данных"),
+			tr("Удалить произведение \"%1\"?")
+				.arg(_data_list.value()[index].autorAndTitleTr()));
+
+	if (ans == QMessageBox::Yes) {
+		_data_list.value().del(index);
+		updateAll();
+		emit highlightButtonSave(true);
+	}
 }
 
 void Books::WidgetMain::updateAll()

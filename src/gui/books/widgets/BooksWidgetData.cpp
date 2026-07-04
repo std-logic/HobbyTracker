@@ -5,7 +5,7 @@
 
 #include <QLineEdit>
 
-Books::WidgetData::WidgetData(std::size_t index, const DataList& list, QWidget* parent)
+Books::WidgetData::WidgetData(size_t index, const DataList& list, QWidget* parent)
 	: Base::WidgetData{parent}
 	, _index{index}
 	, _data_list{list}

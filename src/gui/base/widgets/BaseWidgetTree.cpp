@@ -3,6 +3,7 @@
 #include <common/Global.h>
 
 #include <QHeaderView>
+#include <QShortcut>
 
 Base::WidgetTree::WidgetTree(QWidget* parent)
 	: QTreeWidget{parent}
@@ -25,6 +26,12 @@ Base::WidgetTree::WidgetTree(QWidget* parent)
 	// tracking items doubleclicking
 	connect(this, &WidgetTree::itemDoubleClicked,
 			this, &WidgetTree::onItemDoubleClicked);
+
+	// tracking items delete pressing
+	auto shortcut = new QShortcut(QKeySequence(Qt::Key_Delete), this);
+	shortcut->setContext(Qt::WidgetShortcut);
+	connect(shortcut, &QShortcut::activated,
+			this, &WidgetTree::onItemDeletePressed);
 
 	hide();
 }
@@ -83,5 +90,16 @@ void Base::WidgetTree::onItemDoubleClicked(QTreeWidgetItem* item, int /*column*/
 	auto id = item->data(0, Qt::UserRole).toString();
 	if (!id.isEmpty()) {
 		emit editData(id);
+	}
+}
+
+void Base::WidgetTree::onItemDeletePressed()
+{
+	auto item = currentItem();
+	if (item) {
+		auto id = item->data(0, Qt::UserRole).toString();
+		if (!id.isEmpty()) {
+			emit deleteData(id);
+		}
 	}
 }

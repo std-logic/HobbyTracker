@@ -30,8 +30,8 @@ Base::WidgetChart::WidgetChart(QWidget* parent)
 
 	auto bar_set = new QBarSet("");
 	bar_set->setLabelColor(QColor(Qt::white));
-	bar_set->setBorderColor(QColor(50, 120, 180));
-	bar_set->setColor(QColor(78, 148, 212));
+	bar_set->setBorderColor(QColor(60, 120, 180));
+	bar_set->setColor(QColor(90, 155, 215));
 	auto label_font = bar_set->labelFont();
 	label_font.setPointSize(Global::Sizes::font_small);
 	bar_set->setLabelFont(label_font);
