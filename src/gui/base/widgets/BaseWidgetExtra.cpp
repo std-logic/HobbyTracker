@@ -33,8 +33,6 @@ void Base::WidgetExtra::initWidgets()
 	addWidget(tr("Запись:"), _edit_title = new QLineEdit(this));
 
 	addWidget(tr("Комментарий:"), _edit_notes = new QLineEdit(this));
-
-	addStandardButtons();
 }
 
 void Base::WidgetExtra::copyDataToGui()

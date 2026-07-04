@@ -50,8 +50,6 @@ void Books::WidgetData::initWidgets()
 	_edit_year->setValidator(new QIntValidator(1, 2100, _edit_year));
 
 	addWidget(tr("Оценка:"), _widget_rating = new Base::WidgetRating(this));
-
-	addStandardButtons();
 }
 
 void Books::WidgetData::copyDataToGui()
@@ -113,18 +111,18 @@ bool Books::WidgetData::copyGuiToData()
 	return true;
 }
 
-void Books::WidgetData::authorTrChanged(int index)
-{
-	if (index >= 0) {
-		auto author_orig = _data_list.findAuthorOrigByTr(_combo_author_tr->itemText(index));
-		_combo_author_orig->lineEdit()->setText(author_orig);
-	}
-}
-
 void Books::WidgetData::save()
 {
 	if (copyGuiToData()) {
 		emit saveData(_index, _data);
 		close();
+	}
+}
+
+void Books::WidgetData::authorTrChanged(int index)
+{
+	if (index >= 0) {
+		auto author_orig = _data_list.findAuthorOrigByTr(_combo_author_tr->itemText(index));
+		_combo_author_orig->lineEdit()->setText(author_orig);
 	}
 }

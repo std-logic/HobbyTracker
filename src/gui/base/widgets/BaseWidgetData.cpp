@@ -4,6 +4,7 @@
 
 #include <QGridLayout>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QPushButton>
 #include <QLabel>
 
@@ -42,8 +43,25 @@ void Base::WidgetData::addLayout(const QString& label_text, QLayout* layout)
 	_layout_main->addLayout(layout, row_count, 1);
 }
 
-void Base::WidgetData::addStandardButtons()
+void Base::WidgetData::initCommonParams()
 {
+	setAttribute(Qt::WA_DeleteOnClose);
+	setWindowTitle(tr("Данные"));
+	setMinimumWidth(400);
+}
+
+void Base::WidgetData::initWidgets()
+{
+	auto layout_top = new QVBoxLayout(this);
+	layout_top->setContentsMargins(Global::Sizes::default_margin);
+	layout_top->setSpacing(Global::Sizes::default_spacing);
+
+	_layout_main = new QGridLayout();
+	_layout_main->setContentsMargins(0, 0, 0, 0);
+	_layout_main->setSpacing(Global::Sizes::default_spacing);
+
+	layout_top->addLayout(_layout_main);
+
 	auto layout_buttons = new QHBoxLayout();
 	layout_buttons->setContentsMargins(0, 0, 0, 0);
 	layout_buttons->setSpacing(Global::Sizes::default_spacing);
@@ -58,19 +76,5 @@ void Base::WidgetData::addStandardButtons()
 			this, &WidgetData::close);
 	layout_buttons->addWidget(_button_exit);
 
-	addLayout(layout_buttons);
-}
-
-void Base::WidgetData::initCommonParams()
-{
-	setAttribute(Qt::WA_DeleteOnClose);
-	setWindowTitle(tr("Данные"));
-	setMinimumWidth(400);
-}
-
-void Base::WidgetData::initWidgets()
-{
-	_layout_main = new QGridLayout(this);
-	_layout_main->setContentsMargins(Global::Sizes::default_margin);
-	_layout_main->setSpacing(Global::Sizes::default_spacing);
+	layout_top->addLayout(layout_buttons);
 }

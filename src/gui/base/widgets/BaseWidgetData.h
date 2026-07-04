@@ -20,8 +20,6 @@ public:
 	void addLayout(QLayout* layout);
 	void addLayout(const QString& label_text, QLayout* layout);
 
-	void addStandardButtons();
-
 signals:
 	void showMessage(const QString& text, int timeout = 5000);
 

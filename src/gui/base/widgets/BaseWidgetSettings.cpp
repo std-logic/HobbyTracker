@@ -4,6 +4,7 @@
 
 #include <QGridLayout>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QPushButton>
 #include <QLabel>
 
@@ -42,21 +43,6 @@ void Base::WidgetSettings::addLayout(const QString& label_text, QLayout* layout)
 	_layout_main->addLayout(layout, row_count, 1);
 }
 
-void Base::WidgetSettings::addStandardButtons()
-{
-	auto row_count = _layout_main->rowCount();
-
-	_button_save = new QPushButton(tr("Сохранить"), this);
-	connect(_button_save, &QPushButton::clicked,
-			this, &WidgetSettings::save);
-	_layout_main->addWidget(_button_save, row_count, 0);
-
-	_button_exit = new QPushButton(tr("Закрыть"), this);
-	connect(_button_exit, &QPushButton::clicked,
-			this, &WidgetSettings::close);
-	_layout_main->addWidget(_button_exit, row_count, 1);
-}
-
 void Base::WidgetSettings::initCommonParams()
 {
 	setAttribute(Qt::WA_DeleteOnClose);
@@ -66,7 +52,29 @@ void Base::WidgetSettings::initCommonParams()
 
 void Base::WidgetSettings::initWidgets()
 {
-	_layout_main = new QGridLayout(this);
-	_layout_main->setContentsMargins(Global::Sizes::default_margin);
+	auto layout_top = new QVBoxLayout(this);
+	layout_top->setContentsMargins(Global::Sizes::default_margin);
+	layout_top->setSpacing(Global::Sizes::default_spacing);
+
+	_layout_main = new QGridLayout();
+	_layout_main->setContentsMargins(0, 0, 0, 0);
 	_layout_main->setSpacing(Global::Sizes::default_spacing);
+
+	layout_top->addLayout(_layout_main);
+
+	auto layout_buttons = new QHBoxLayout();
+	layout_buttons->setContentsMargins(0, 0, 0, 0);
+	layout_buttons->setSpacing(Global::Sizes::default_spacing);
+
+	_button_save = new QPushButton(tr("Сохранить"), this);
+	connect(_button_save, &QPushButton::clicked,
+			this, &WidgetSettings::save);
+	layout_buttons->addWidget(_button_save);
+
+	_button_exit = new QPushButton(tr("Закрыть"), this);
+	connect(_button_exit, &QPushButton::clicked,
+			this, &WidgetSettings::close);
+	layout_buttons->addWidget(_button_exit);
+
+	layout_top->addLayout(layout_buttons);
 }

@@ -12,8 +12,6 @@ void Books::WidgetSettings::initWidgets()
 	addWidget(_widget_csv_settings = new Base::WidgetCsvSettings(_settings.csvSettings(), this));
 	connect(_widget_csv_settings, &Base::WidgetCsvSettings::readCsvData,
 			this, &WidgetSettings::readCsvData);
-
-	addStandardButtons();
 }
 
 void Books::WidgetSettings::copyGuiToSettings()

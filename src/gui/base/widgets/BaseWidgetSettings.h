@@ -20,8 +20,6 @@ public:
 	void addLayout(QLayout* layout);
 	void addLayout(const QString& label_text, QLayout* layout);
 
-	void addStandardButtons();
-
 protected slots:
 	virtual void save() = 0;
 

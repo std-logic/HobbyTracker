@@ -82,7 +82,7 @@ void Books::WidgetControl::initWidgets()
 	{
 		addSpacing();
 
-		addWidget(_button_extra_list = new Base::ButtonShow(tr("Дополнения"), this));
+		addWidget(_button_extra_list = new Base::ButtonShow(tr(" Дополнения "), this));
 		connect(_button_extra_list, &Base::ButtonShow::toggled, this, [this](bool on) {
 			_button_add_extra->setEnabled(on);
 			_button_collapse_extra_list->setEnabled(on);
