@@ -30,6 +30,7 @@ signals:
 private:
 	void initCommonParams();
 	void initWidgets();
+
 	void copySettingsToGui();
 	void copyGuiToSettings();
 

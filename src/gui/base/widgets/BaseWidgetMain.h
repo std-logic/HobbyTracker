@@ -16,11 +16,12 @@ public:
 
 	virtual void start() = 0;
 
-	void addWidget(QWidget* widget, int stretch = 0, Qt::Alignment alignment = Qt::Alignment());
-	void addStretch(int stretch = 0);
-
 signals:
 	void showMessage(const QString& text, int timeout = 5000);
+
+protected:
+	void addWidget(QWidget* widget, int stretch = 0, Qt::Alignment alignment = Qt::Alignment());
+	void addStretch(int stretch = 0);
 
 private:
 	QVBoxLayout* _layout_main = nullptr;

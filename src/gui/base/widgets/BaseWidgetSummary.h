@@ -15,12 +15,13 @@ public:
 	explicit WidgetSummary(QWidget* parent = nullptr);
 	virtual ~WidgetSummary() = default;
 
+signals:
+
+protected:
 	void addWidget(QLabel* widget);
 	void addWidget(const QString& label_text, QLabel* widget);
 	void addStretch(int stretch = 0);
 	void addSpacing(int size = 30);
-
-signals:
 
 private:
 	QHBoxLayout* _layout_main = nullptr;

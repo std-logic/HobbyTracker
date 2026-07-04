@@ -10,8 +10,6 @@ namespace Base
 class ButtonAdd;
 class ButtonCollapse;
 class ButtonExpand;
-class ButtonSave;
-class ButtonSettings;
 class ButtonShow;
 }
 
@@ -27,12 +25,7 @@ public:
 
 	void start() override;
 
-public slots:
-	void highlightButtonSave(bool on);
-
 signals:
-	void saveCsvData();
-
 	void showDataList(bool on);
 	void addData();
 	void collapseDataList();
@@ -47,14 +40,10 @@ signals:
 	void showChart(bool on);
 	void setChartViewMode(int view_mode);
 
-	void showSettings();
-
 private:
 	void initWidgets();
 
 private:
-	Base::ButtonSave* _button_save = nullptr;
-
 	Base::ButtonShow* _button_data_list = nullptr;
 	Base::ButtonAdd* _button_add_data = nullptr;
 	Base::ButtonCollapse* _button_collapse_data_list = nullptr;
@@ -68,8 +57,6 @@ private:
 
 	Base::ButtonShow* _button_chart = nullptr;
 	QComboBox* _combo_chart_view_mode = nullptr;
-
-	Base::ButtonSettings* _button_settings = nullptr;
 };
 
 } // namespace Books
