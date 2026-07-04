@@ -1,14 +1,13 @@
 #include "Storage.h"
 #include "csv/CsvStorage.h"
 
-Csv::Data Storage::readCsv(const Csv::Settings& csv_settings)
+Csv::Data Storage::readCsv(size_t index, const Csv::Settings& csv_settings)
 {
-	Csv::Storage::createFile(csv_settings);
-	return Csv::Storage::readFile(csv_settings);
+	Csv::Storage::createFile(index, csv_settings);
+	return Csv::Storage::readFile(index, csv_settings);
 }
 
-bool Storage::writeCsv(const Csv::Settings& csv_settings, const Csv::Data& csv_data)
+bool Storage::writeCsv(size_t index, const Csv::Settings& csv_settings, const Csv::Data& csv_data)
 {
-	Csv::Storage::createFile(csv_settings);
-	return Csv::Storage::writeFile(csv_settings, csv_data);
+	return Csv::Storage::writeFile(index, csv_settings, csv_data);
 }

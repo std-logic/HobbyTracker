@@ -4,19 +4,26 @@
 #include "../data/BooksSettings.h"
 
 #include <storage/csv/CsvData.h>
+#include <gui/base/data/BaseExtraList.h>
 #include <gui/base/widgets/BaseWidgetMain.h>
 
 #include <QPointer>
+
+namespace Base
+{
+class WidgetExtra;
+class WidgetExtraList;
+}
 
 namespace Books
 {
 
 class WidgetControl;
 class WidgetSummary;
-class WidgetList;
+class WidgetData;
+class WidgetDataList;
 class WidgetChart;
 class WidgetSettings;
-class WidgetData;
 
 class WidgetMain : public Base::WidgetMain
 {
@@ -40,7 +47,6 @@ private slots:
 	void showSettings();
 	void saveSettings(const Settings& settings);
 	void readCsvData(const Csv::Settings& csv_settings);
-
 	void saveCsvData();
 
 	void addData();
@@ -50,20 +56,31 @@ private slots:
 	void deleteData(const QString& id);
 	void deleteDataAtIndex(size_t index);
 
+	void addExtra();
+	void editExtra(const QString& id);
+	void showExtra(size_t index);
+	void saveExtra(size_t index, const Base::Extra& extra);
+	void deleteExtra(const QString& id);
+	void deleteExtraAtIndex(size_t index);
+
 	void updateAll();
 	void updateSummary();
-	void updateList();
+	void updateDataList();
+	void updateExtraList();
 	void updateChart();
 
 private:
 	WidgetControl* _widget_control = nullptr;
 	WidgetSummary* _widget_summary = nullptr;
-	WidgetList* _widget_list = nullptr;
+	WidgetDataList* _widget_data_list = nullptr;
+	Base::WidgetExtraList* _widget_extra_list = nullptr;
 	WidgetChart* _widget_chart = nullptr;
 	QPointer<WidgetSettings> _widget_settings;
 	QPointer<WidgetData> _widget_data;
+	QPointer<Base::WidgetExtra> _widget_extra;
 
 	std::optional<DataList> _data_list;
+	std::optional<Base::ExtraList> _extra_list;
 	Settings _settings;
 };
 

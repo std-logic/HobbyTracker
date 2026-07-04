@@ -1,29 +1,29 @@
-#include "BooksWidgetList.h"
+#include "BooksWidgetDataList.h"
 #include "../common/BooksCommon.h"
 #include "../data/BooksDataList.h"
 
 #include <gui/base/widgets/BaseWidgetTreeItem.h>
 
-Books::WidgetList::WidgetList(QWidget* parent)
+Books::WidgetDataList::WidgetDataList(QWidget* parent)
 	: Base::WidgetTree{parent}
 {
 }
 
-void Books::WidgetList::update(const DataList& list)
+void Books::WidgetDataList::update(const DataList& list)
 {
 	clear();
-	switch (static_cast<ListViewModes>(_view_mode)) {
-		case ListViewModes::ByAuthors:		showByAuthors(list);		break;
-		case ListViewModes::ByGenres:		showByGenres(list);			break;
-		case ListViewModes::ByDecades:		showByDecades(list);		break;
-		case ListViewModes::ByCenturies:	showByCenturies(list);		break;
-		case ListViewModes::ByRatings:		showByRatings(list);		break;
-		case ListViewModes::Simple:			showSimple(list);			break;
+	switch (static_cast<DataListViewModes>(_view_mode)) {
+		case DataListViewModes::ByAuthors:		showByAuthors(list);		break;
+		case DataListViewModes::ByGenres:		showByGenres(list);			break;
+		case DataListViewModes::ByDecades:		showByDecades(list);		break;
+		case DataListViewModes::ByCenturies:	showByCenturies(list);		break;
+		case DataListViewModes::ByRatings:		showByRatings(list);		break;
+		case DataListViewModes::Simple:			showSimple(list);			break;
 		default: return;
 	}
 }
 
-void Books::WidgetList::showByAuthors(const DataList& list)
+void Books::WidgetDataList::showByAuthors(const DataList& list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
 	initColumns({tr("Автор / Название"), tr("К-во"), tr("Жанр"), tr("Год"), tr("Оценка")},
@@ -50,7 +50,7 @@ void Books::WidgetList::showByAuthors(const DataList& list)
 	}
 }
 
-void Books::WidgetList::showByGenres(const DataList& list)
+void Books::WidgetDataList::showByGenres(const DataList& list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_YEAR, CLMN_RATING};
 	initColumns({tr("Жанр / Название"), tr("К-во"), tr("Год"), tr("Оценка")},
@@ -76,7 +76,7 @@ void Books::WidgetList::showByGenres(const DataList& list)
 	}
 }
 
-void Books::WidgetList::showByDecades(const DataList& list)
+void Books::WidgetDataList::showByDecades(const DataList& list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
 	initColumns({tr("Десятилетие / Название"), tr("К-во"), tr("Жанр"), tr("Год"), tr("Оценка")},
@@ -103,7 +103,7 @@ void Books::WidgetList::showByDecades(const DataList& list)
 	}
 }
 
-void Books::WidgetList::showByCenturies(const DataList& list)
+void Books::WidgetDataList::showByCenturies(const DataList& list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
 	initColumns({tr("Столетие / Название"), tr("К-во"), tr("Жанр"), tr("Год"), tr("Оценка")},
@@ -130,7 +130,7 @@ void Books::WidgetList::showByCenturies(const DataList& list)
 	}
 }
 
-void Books::WidgetList::showByRatings(const DataList& list)
+void Books::WidgetDataList::showByRatings(const DataList& list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR};
 	initColumns({tr("Оценка / Название"), tr("К-во"), tr("Жанр"), tr("Год")},
@@ -156,7 +156,7 @@ void Books::WidgetList::showByRatings(const DataList& list)
 	}
 }
 
-void Books::WidgetList::showSimple(const DataList& list)
+void Books::WidgetDataList::showSimple(const DataList& list)
 {
 	enum Columns {CLMN_TITLE, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
 	initColumns({tr("Название"), tr("Жанр"), tr("Год"), tr("Оценка")},

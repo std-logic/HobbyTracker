@@ -26,6 +26,7 @@ signals:
 	void saveData(size_t index, const Data& data);
 
 private:
+	void initData();
 	void initCommonParams();
 	void initWidgets();
 

@@ -48,6 +48,8 @@ public:
 	NumbersByRatings numbersByRatings() const;
 
 	static QString yearString(const SubListContainer& sublist);
+
+	int findIndexById(const QString& id);
 };
 
 } // namespace Books

@@ -13,11 +13,11 @@ namespace Books
 
 class DataList;
 
-class Converter
+class DataConverter
 {
-	Q_DECLARE_TR_FUNCTIONS(Converter)
+	Q_DECLARE_TR_FUNCTIONS(DataConverter)
 public:
-	Converter() = delete;
+	DataConverter() = delete;
 
 	static QStringList getDefaultCsvHeader();
 

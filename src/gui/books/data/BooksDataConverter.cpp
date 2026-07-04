@@ -1,27 +1,24 @@
-#include "BooksConverter.h"
+#include "BooksDataConverter.h"
 #include "BooksDataList.h"
 
 #include <storage/csv/CsvData.h>
 
-QStringList Books::Converter::getDefaultCsvHeader()
+QStringList Books::DataConverter::getDefaultCsvHeader()
 {
-	QStringList header;
-	for (int i = 0; i < NUM_OF_COLUMNS; ++i) {
-		header += QString();
-	}
+	QStringList header(NUM_OF_COLUMNS);
 
-	header[CLMN_AUTHOR_TR] = tr("Автор (пер.)");
-	header[CLMN_AUTHOR_ORIG] = tr("Автор (ориг.)");
-	header[CLMN_TITLE_TR] = tr("Произведение (пер.)");
-	header[CLMN_TITLE_ORIG] = tr("Произведение (ориг.)");
-	header[CLMN_GENRE] = tr("Жанр");
-	header[CLMN_YEAR] = tr("Год");
-	header[CLMN_RATING] = tr("Оценка");
+	header[CLMN_AUTHOR_TR]		= tr("Автор (пер.)");
+	header[CLMN_AUTHOR_ORIG]	= tr("Автор (ориг.)");
+	header[CLMN_TITLE_TR]		= tr("Произведение (пер.)");
+	header[CLMN_TITLE_ORIG]		= tr("Произведение (ориг.)");
+	header[CLMN_GENRE]			= tr("Жанр");
+	header[CLMN_YEAR]			= tr("Год");
+	header[CLMN_RATING]			= tr("Оценка");
 
 	return header;
 }
 
-Books::DataList Books::Converter::conv(const Csv::Data& csv_data)
+Books::DataList Books::DataConverter::conv(const Csv::Data& csv_data)
 {
 	DataList data_list;
 	bool conv_ok;
@@ -60,20 +57,20 @@ Books::DataList Books::Converter::conv(const Csv::Data& csv_data)
 	return data_list;
 }
 
-Csv::Data Books::Converter::conv(const DataList& data_list)
+Csv::Data Books::DataConverter::conv(const DataList& data_list)
 {
 	Csv::Data csv_data;
 
 	for (const auto& data : data_list) {
-		QStringList line;
+		QStringList line(NUM_OF_COLUMNS);
 
-		line.insert(CLMN_AUTHOR_TR, data.authorTr());
-		line.insert(CLMN_AUTHOR_ORIG, data.authorOrig());
-		line.insert(CLMN_TITLE_TR, data.titleTr());
-		line.insert(CLMN_TITLE_ORIG, data.titleOrig());
-		line.insert(CLMN_GENRE, data.genre());
-		line.insert(CLMN_YEAR, QString::number(data.year()));
-		line.insert(CLMN_RATING, QString::number(data.rating()));
+		line[CLMN_AUTHOR_TR]	= data.authorTr();
+		line[CLMN_AUTHOR_ORIG]	= data.authorOrig();
+		line[CLMN_TITLE_TR]		= data.titleTr();
+		line[CLMN_TITLE_ORIG]	= data.titleOrig();
+		line[CLMN_GENRE]		= data.genre();
+		line[CLMN_YEAR]			= QString::number(data.year());
+		line[CLMN_RATING]		= QString::number(data.rating());
 
 		csv_data.push_back(line);
 	}

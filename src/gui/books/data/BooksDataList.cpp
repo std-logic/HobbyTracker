@@ -120,3 +120,13 @@ QString Books::DataList::yearString(const SubListContainer& sublist)
 	}
 	return Helper::yearString(years);
 }
+
+int Books::DataList::findIndexById(const QString& id)
+{
+	for (size_t i = 0; i < _data_list.size(); ++i) {
+		if (id == _data_list[i].id()) {
+			return i;
+		}
+	}
+	return -1;
+}

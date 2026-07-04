@@ -3,13 +3,13 @@
 #include <QFile>
 #include <QTextStream>
 
-void Csv::Storage::createFile(const Settings& csv_settings)
+void Csv::Storage::createFile(size_t index, const Settings& csv_settings)
 {
-	if (QFile::exists(csv_settings.fileName())) {
+	if (QFile::exists(csv_settings.fileName(index))) {
 		return;
 	}
 
-	QFile file(csv_settings.fileName());
+	QFile file(csv_settings.fileName(index));
 	if (!file.open(QFile::WriteOnly | QFile::Text)) {
 		return;
 	}
@@ -18,7 +18,7 @@ void Csv::Storage::createFile(const Settings& csv_settings)
 	stream.setEncoding(csv_settings.encoding());
 	stream.setGenerateByteOrderMark(csv_settings.addBom());
 
-	auto header = csv_settings.header();
+	auto header = csv_settings.header(index);
 	if (!header.isEmpty()) {
 		for (int column = 0; column < header.size(); ++column) {
 			stream << header[column];
@@ -32,11 +32,11 @@ void Csv::Storage::createFile(const Settings& csv_settings)
 	file.close();
 }
 
-Csv::Data Csv::Storage::readFile(const Settings& csv_settings)
+Csv::Data Csv::Storage::readFile(size_t index, const Settings& csv_settings)
 {
 	Data csv_data;
 
-	QFile file(csv_settings.fileName());
+	QFile file(csv_settings.fileName(index));
 	if (!file.open(QFile::ReadOnly | QFile::Text)) {
 		return csv_data;
 	}
@@ -56,9 +56,9 @@ Csv::Data Csv::Storage::readFile(const Settings& csv_settings)
 	return csv_data;
 }
 
-bool Csv::Storage::writeFile(const Settings& csv_settings, const Data& csv_data)
+bool Csv::Storage::writeFile(size_t index, const Settings& csv_settings, const Data& csv_data)
 {
-	QFile file(csv_settings.fileName());
+	QFile file(csv_settings.fileName(index));
 	if (!file.open(QFile::WriteOnly | QFile::Text)) {
 		return false;
 	}
@@ -67,7 +67,7 @@ bool Csv::Storage::writeFile(const Settings& csv_settings, const Data& csv_data)
 	stream.setEncoding(csv_settings.encoding());
 	stream.setGenerateByteOrderMark(csv_settings.addBom());
 
-	auto header = csv_settings.header();
+	auto header = csv_settings.header(index);
 	if (!header.isEmpty()) {
 		for (int column = 0; column < header.size(); ++column) {
 			stream << header[column];

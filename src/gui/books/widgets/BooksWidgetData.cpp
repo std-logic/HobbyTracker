@@ -10,8 +10,7 @@ Books::WidgetData::WidgetData(size_t index, const DataList& list, QWidget* paren
 	, _index{index}
 	, _data_list{list}
 {
-	if (_index < _data_list.size()) { _data = _data_list[_index]; }
-
+	initData();
 	initCommonParams();
 	initWidgets();
 	copyDataToGui();
@@ -19,6 +18,11 @@ Books::WidgetData::WidgetData(size_t index, const DataList& list, QWidget* paren
 	// strictly after initialization finished, because we need only real changes
 	connect(_combo_author_tr, &Base::ComboEdit::currentIndexChanged,
 			this, &WidgetData::authorTrChanged);
+}
+
+void Books::WidgetData::initData()
+{
+	if (_index < _data_list.size()) { _data = _data_list[_index]; }
 }
 
 void Books::WidgetData::initCommonParams()
@@ -74,7 +78,7 @@ bool Books::WidgetData::copyGuiToData()
 {
 	_data.setAuthorTr(_combo_author_tr->currentText());
 	if (_data.authorTr().isEmpty()) {
-		emit showMessage(tr("Введён некорректный автор!"));
+		emit showMessage(tr("Не введён автор!"));
 		return false;
 	}
 
@@ -82,7 +86,7 @@ bool Books::WidgetData::copyGuiToData()
 
 	_data.setTitleTr(_edit_title_tr->text());
 	if (_data.titleTr().isEmpty()) {
-		emit showMessage(tr("Введено некорректное название!"));
+		emit showMessage(tr("Не введено название!"));
 		return false;
 	}
 
@@ -90,13 +94,13 @@ bool Books::WidgetData::copyGuiToData()
 
 	_data.setGenre(_combo_genre->currentText());
 	if (_data.genre().isEmpty()) {
-		emit showMessage(tr("Введён некорректный жанр!"));
+		emit showMessage(tr("Не введён жанр!"));
 		return false;
 	}
 
 	_data.setYear(_edit_year->text().toUInt());
 	if ((_data.year() < 1) || (2100 < _data.year())) {
-		emit showMessage(tr("Введён некорректный год!"));
+		emit showMessage(tr("Не введён год!"));
 		return false;
 	}
 

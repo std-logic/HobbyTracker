@@ -1,11 +1,16 @@
 #include "BooksWidgetMain.h"
 #include "BooksWidgetControl.h"
 #include "BooksWidgetSummary.h"
-#include "BooksWidgetList.h"
+#include "BooksWidgetData.h"
+#include "BooksWidgetDataList.h"
 #include "BooksWidgetChart.h"
 #include "BooksWidgetSettings.h"
-#include "BooksWidgetData.h"
-#include "../data/BooksConverter.h"
+#include "../common/BooksCommon.h"
+#include "../data/BooksDataConverter.h"
+
+#include <gui/base/data/BaseExtraConverter.h>
+#include <gui/base/widgets/BaseWidgetExtra.h>
+#include <gui/base/widgets/BaseWidgetExtraList.h>
 
 #include <storage/Storage.h>
 
@@ -32,21 +37,30 @@ void Books::WidgetMain::initWidgets()
 
 	addWidget(_widget_summary = new WidgetSummary(this), 1, Qt::AlignTop);
 
-	addWidget(_widget_list = new WidgetList(this), 100);
+	addWidget(_widget_data_list = new WidgetDataList(this), 100);
+
+	addWidget(_widget_extra_list = new Base::WidgetExtraList(this), 100);
 
 	addWidget(_widget_chart = new WidgetChart(this), 100);
 }
 
 void Books::WidgetMain::initConnections()
 {
-	connect(_widget_control, &WidgetControl::showList,
-			_widget_list, &WidgetList::setVisible);
-	connect(_widget_control, &WidgetControl::collapseList,
-			_widget_list, &WidgetList::collapseAll);
-	connect(_widget_control, &WidgetControl::expandList,
-			_widget_list, &WidgetList::expandAll);
-	connect(_widget_control, &WidgetControl::setListViewMode,
-			_widget_list, &WidgetList::setViewMode);
+	connect(_widget_control, &WidgetControl::showDataList,
+			_widget_data_list, &WidgetDataList::setVisible);
+	connect(_widget_control, &WidgetControl::collapseDataList,
+			_widget_data_list, &WidgetDataList::collapseAll);
+	connect(_widget_control, &WidgetControl::expandDataList,
+			_widget_data_list, &WidgetDataList::expandAll);
+	connect(_widget_control, &WidgetControl::setDataListViewMode,
+			_widget_data_list, &WidgetDataList::setViewMode);
+
+	connect(_widget_control, &WidgetControl::showExtraList,
+			_widget_extra_list, &Base::WidgetExtraList::setVisible);
+	connect(_widget_control, &WidgetControl::collapseExtraList,
+			_widget_extra_list, &Base::WidgetExtraList::collapseAll);
+	connect(_widget_control, &WidgetControl::expandExtraList,
+			_widget_extra_list, &Base::WidgetExtraList::expandAll);
 
 	connect(_widget_control, &WidgetControl::showChart,
 			_widget_chart, &WidgetChart::setVisible);
@@ -57,18 +71,27 @@ void Books::WidgetMain::initConnections()
 			this, &WidgetMain::saveCsvData);
 	connect(_widget_control, &WidgetControl::addData,
 			this, &WidgetMain::addData);
+	connect(_widget_control, &WidgetControl::addExtra,
+			this, &WidgetMain::addExtra);
 	connect(_widget_control, &WidgetControl::showSettings,
 			this, &WidgetMain::showSettings);
 
 	connect(this, &WidgetMain::highlightButtonSave,
 			_widget_control, &WidgetControl::highlightButtonSave);
 
-	connect(_widget_list, &WidgetList::needUpdate,
-			this, &WidgetMain::updateList);
-	connect(_widget_list, &WidgetList::editData,
+	connect(_widget_data_list, &WidgetDataList::needUpdate,
+			this, &WidgetMain::updateDataList);
+	connect(_widget_data_list, &WidgetDataList::editData,
 			this, &WidgetMain::editData);
-	connect(_widget_list, &WidgetList::deleteData,
+	connect(_widget_data_list, &WidgetDataList::deleteData,
 			this, &WidgetMain::deleteData);
+
+	connect(_widget_extra_list, &Base::WidgetExtraList::needUpdate,
+			this, &WidgetMain::updateExtraList);
+	connect(_widget_extra_list, &Base::WidgetExtraList::editData,
+			this, &WidgetMain::editExtra);
+	connect(_widget_extra_list, &Base::WidgetExtraList::deleteData,
+			this, &WidgetMain::deleteExtra);
 
 	connect(_widget_chart, &WidgetChart::needUpdate,
 			this, &WidgetMain::updateChart);
@@ -95,21 +118,26 @@ void Books::WidgetMain::saveSettings(const Settings& settings)
 
 void Books::WidgetMain::readCsvData(const Csv::Settings& csv_settings)
 {
-	auto csv_data = Storage::readCsv(csv_settings);
-	_data_list = Converter::conv(csv_data);
-
+	auto csv_data = Storage::readCsv(CsvFileData, csv_settings);
+	_data_list = DataConverter::conv(csv_data);
 	updateAll();
+
+	csv_data = Storage::readCsv(CsvFileExtra, csv_settings);
+	_extra_list = Base::ExtraConverter::conv(csv_data);
+	updateExtraList();
 }
 
 void Books::WidgetMain::saveCsvData()
 {
-	auto csv_data = Converter::conv(_data_list.value());
-	auto write_ok = Storage::writeCsv(_settings.csvSettings(), csv_data);
+	auto csv_data = DataConverter::conv(_data_list.value());
+	auto write_data_ok = Storage::writeCsv(CsvFileData, _settings.csvSettings(), csv_data);
 
-	if (write_ok) {
+	csv_data = Base::ExtraConverter::conv(_extra_list.value());
+	auto write_extra_ok = Storage::writeCsv(CsvFileExtra, _settings.csvSettings(), csv_data);
+
+	if (write_data_ok && write_extra_ok) {
 		emit highlightButtonSave(false);
-		emit showMessage(tr("Данные сохранены в файл %1")
-						 .arg(_settings.csvSettings().fileName()));
+		emit showMessage(tr("Данные сохранены"));
 	} else {
 		emit showMessage(tr("Ошибка записи в файл!"));
 	}
@@ -122,11 +150,8 @@ void Books::WidgetMain::addData()
 
 void Books::WidgetMain::editData(const QString& id)
 {
-	for (size_t i = 0; i < _data_list.value().size(); ++i) {
-		if (id == _data_list.value()[i].id()) {
-			showData(i);
-			break;
-		}
+	if (auto i = _data_list.value().findIndexById(id); i >= 0) {
+		showData(i);
 	}
 }
 
@@ -157,11 +182,8 @@ void Books::WidgetMain::saveData(size_t index, const Data& data)
 
 void Books::WidgetMain::deleteData(const QString& id)
 {
-	for (size_t i = 0; i < _data_list.value().size(); ++i) {
-		if (id == _data_list.value()[i].id()) {
-			deleteDataAtIndex(i);
-			break;
-		}
+	if (auto i = _data_list.value().findIndexById(id); i >= 0) {
+		deleteDataAtIndex(i);
 	}
 }
 
@@ -180,10 +202,69 @@ void Books::WidgetMain::deleteDataAtIndex(size_t index)
 	}
 }
 
+void Books::WidgetMain::addExtra()
+{
+	showExtra(_extra_list.value().size());
+}
+
+void Books::WidgetMain::editExtra(const QString& id)
+{
+	if (auto i = _extra_list.value().findIndexById(id); i >= 0) {
+		showExtra(i);
+	}
+}
+
+void Books::WidgetMain::showExtra(size_t index)
+{
+	if (!_widget_extra) {
+		_widget_extra = new Base::WidgetExtra(index, _extra_list.value(), this);
+		connect(_widget_extra, &Base::WidgetExtra::showMessage,
+				this, &WidgetMain::showMessage);
+		connect(_widget_extra, &Base::WidgetExtra::saveExtra,
+				this, &WidgetMain::saveExtra);
+	}
+	_widget_extra->open();
+}
+
+void Books::WidgetMain::saveExtra(size_t index, const Base::Extra& extra)
+{
+	if (index < _extra_list.value().size()) {
+		if (_extra_list.value()[index] == extra) { return; }
+		_extra_list.value()[index] = extra;
+	} else {
+		_extra_list.value().add(extra);
+	}
+
+	updateExtraList();
+	emit highlightButtonSave(true);
+}
+
+void Books::WidgetMain::deleteExtra(const QString& id)
+{
+	if (auto i = _extra_list.value().findIndexById(id); i >= 0) {
+		deleteExtraAtIndex(i);
+	}
+}
+
+void Books::WidgetMain::deleteExtraAtIndex(size_t index)
+{
+	auto ans = QMessageBox::question(
+			this,
+			tr("Удаление данных"),
+			tr("Удалить запись \"%1\"?")
+				.arg(_extra_list.value()[index].title()));
+
+	if (ans == QMessageBox::Yes) {
+		_extra_list.value().del(index);
+		updateExtraList();
+		emit highlightButtonSave(true);
+	}
+}
+
 void Books::WidgetMain::updateAll()
 {
 	updateSummary();
-	updateList();
+	updateDataList();
 	updateChart();
 }
 
@@ -192,9 +273,14 @@ void Books::WidgetMain::updateSummary()
 	if (_data_list.has_value()) { _widget_summary->update(_data_list.value()); }
 }
 
-void Books::WidgetMain::updateList()
+void Books::WidgetMain::updateDataList()
 {
-	if (_data_list.has_value()) { _widget_list->update(_data_list.value()); }
+	if (_data_list.has_value()) { _widget_data_list->update(_data_list.value()); }
+}
+
+void Books::WidgetMain::updateExtraList()
+{
+	if (_extra_list.has_value()) { _widget_extra_list->update(_extra_list.value()); }
 }
 
 void Books::WidgetMain::updateChart()

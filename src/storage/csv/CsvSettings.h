@@ -3,6 +3,8 @@
 #include <QString>
 #include <QStringList>
 
+#include <vector>
+
 class QSettings;
 
 namespace Csv
@@ -17,10 +19,31 @@ public:
 	void load(QSettings* settings, const QString& group_name);
 
 	template<typename T>
-	inline void setFileName(T&& file_name)
-	{ _file_name = std::forward<T>(file_name); }
-	inline QString fileName() const
-	{ return _file_name; }
+	inline void setHeader(size_t index, T&& header)
+	{
+		if (index < _header.size()) {
+			_header[index] = std::forward<T>(header);
+		} else {
+			_header.emplace_back(std::forward<T>(header));
+		}
+	}
+	inline QStringList header(size_t index) const
+	{ return (index < _header.size()) ?_header[index] : QStringList(); }
+
+	template<typename T>
+	inline void setFileName(size_t index, T&& file_name)
+	{
+		if (index < _file_name.size()) {
+			_file_name[index] = std::forward<T>(file_name);
+		} else {
+			_file_name.emplace_back(std::forward<T>(file_name));
+		}
+	}
+	inline QString fileName(size_t index) const
+	{ return (index < _file_name.size()) ?_file_name[index] : QString(); }
+
+	inline size_t numOfFiles() const
+	{ return _file_name.size(); }
 
 	inline void setEncoding(QStringConverter::Encoding encoding)
 	{ _encoding = encoding; }
@@ -47,20 +70,14 @@ public:
 	inline int skipAtStart() const
 	{ return _skip_at_start; }
 
-	template<typename T>
-	inline void setHeader(T&& header)
-	{ _header = std::forward<T>(header); }
-	inline QStringList header() const
-	{ return _header; }
-
 private:
-	QString _file_name;
+	std::vector<QStringList> _header; // not stored in file, but convenient to have nearby
+	std::vector<QString> _file_name;
 	QStringConverter::Encoding _encoding = QStringConverter::Utf8;
 	bool _add_bom = true;
 	QChar _delimiter = ';';
 	QChar _ending = '\n';
 	int _skip_at_start = 1;
-	QStringList _header;
 };
 
 } // namespace Csv

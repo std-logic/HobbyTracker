@@ -7,12 +7,12 @@ namespace Books
 
 class DataList;
 
-class WidgetList : public Base::WidgetTree
+class WidgetDataList : public Base::WidgetTree
 {
 	Q_OBJECT
 public:
-	explicit WidgetList(QWidget* parent = nullptr);
-	~WidgetList() = default;
+	explicit WidgetDataList(QWidget* parent = nullptr);
+	~WidgetDataList() = default;
 
 	void update(const DataList& list);
 

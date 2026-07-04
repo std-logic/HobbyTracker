@@ -4,6 +4,8 @@
 
 #include <QGroupBox>
 
+#include <vector>
+
 class QGridLayout;
 class QHBoxLayout;
 class QPushButton;
@@ -32,13 +34,13 @@ private:
 	void copyGuiToSettings();
 
 private slots:
-	void chooseFile();
+	void chooseFile(size_t index);
 	void loadData();
 	
 private:
 	QGridLayout* _layout_main = nullptr;
-	QLineEdit* _edit_file_name = nullptr;
-	QPushButton* _button_choose_file = nullptr;
+	std::vector<QLineEdit*> _edit_file_name;
+	std::vector<QPushButton*> _button_choose_file;
 	QComboBox* _combo_encoding = nullptr;
 	QComboBox* _combo_delimiter = nullptr;
 	QLineEdit* _edit_skip_at_start = nullptr;

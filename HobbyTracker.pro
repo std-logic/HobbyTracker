@@ -27,6 +27,8 @@ SOURCES += \
 	src/main.cpp \
 	src/HobbyTracker.cpp \
 	src/gui/MainWindow.cpp \
+	src/gui/base/data/BaseExtraConverter.cpp \
+	src/gui/base/data/BaseExtraList.cpp \
 	src/gui/base/data/BaseSettings.cpp \
 	src/gui/base/widgets/BaseButtonAdd.cpp \
 	src/gui/base/widgets/BaseButtonCollapse.cpp \
@@ -39,19 +41,21 @@ SOURCES += \
 	src/gui/base/widgets/BaseWidgetControl.cpp \
 	src/gui/base/widgets/BaseWidgetCsvSettings.cpp \
 	src/gui/base/widgets/BaseWidgetData.cpp \
+	src/gui/base/widgets/BaseWidgetExtra.cpp \
+	src/gui/base/widgets/BaseWidgetExtraList.cpp \
 	src/gui/base/widgets/BaseWidgetMain.cpp \
 	src/gui/base/widgets/BaseWidgetRating.cpp \
 	src/gui/base/widgets/BaseWidgetSettings.cpp \
 	src/gui/base/widgets/BaseWidgetSummary.cpp \
 	src/gui/base/widgets/BaseWidgetTree.cpp \
 	src/gui/base/widgets/BaseWidgetTreeItem.cpp \
-	src/gui/books/data/BooksConverter.cpp \
+	src/gui/books/data/BooksDataConverter.cpp \
 	src/gui/books/data/BooksDataList.cpp \
 	src/gui/books/data/BooksSettings.cpp \
 	src/gui/books/widgets/BooksWidgetChart.cpp \
 	src/gui/books/widgets/BooksWidgetControl.cpp \
 	src/gui/books/widgets/BooksWidgetData.cpp \
-	src/gui/books/widgets/BooksWidgetList.cpp \
+	src/gui/books/widgets/BooksWidgetDataList.cpp \
 	src/gui/books/widgets/BooksWidgetMain.cpp \
 	src/gui/books/widgets/BooksWidgetSettings.cpp \
 	src/gui/books/widgets/BooksWidgetSummary.cpp \
@@ -66,6 +70,9 @@ HEADERS += \
 	src/common/Helper.h \
 	src/gui/MainWindow.h \
 	src/gui/base/data/BaseDataList.h \
+	src/gui/base/data/BaseExtra.h \
+	src/gui/base/data/BaseExtraConverter.h \
+	src/gui/base/data/BaseExtraList.h \
 	src/gui/base/data/BaseSettings.h \
 	src/gui/base/widgets/BaseButtonAdd.h \
 	src/gui/base/widgets/BaseButtonCollapse.h \
@@ -78,6 +85,8 @@ HEADERS += \
 	src/gui/base/widgets/BaseWidgetControl.h \
 	src/gui/base/widgets/BaseWidgetCsvSettings.h \
 	src/gui/base/widgets/BaseWidgetData.h \
+	src/gui/base/widgets/BaseWidgetExtra.h \
+	src/gui/base/widgets/BaseWidgetExtraList.h \
 	src/gui/base/widgets/BaseWidgetMain.h \
 	src/gui/base/widgets/BaseWidgetRating.h \
 	src/gui/base/widgets/BaseWidgetSettings.h \
@@ -85,14 +94,14 @@ HEADERS += \
 	src/gui/base/widgets/BaseWidgetTree.h \
 	src/gui/base/widgets/BaseWidgetTreeItem.h \
 	src/gui/books/common/BooksCommon.h \
-	src/gui/books/data/BooksConverter.h \
 	src/gui/books/data/BooksData.h \
+	src/gui/books/data/BooksDataConverter.h \
 	src/gui/books/data/BooksDataList.h \
 	src/gui/books/data/BooksSettings.h \
 	src/gui/books/widgets/BooksWidgetChart.h \
 	src/gui/books/widgets/BooksWidgetControl.h \
 	src/gui/books/widgets/BooksWidgetData.h \
-	src/gui/books/widgets/BooksWidgetList.h \
+	src/gui/books/widgets/BooksWidgetDataList.h \
 	src/gui/books/widgets/BooksWidgetMain.h \
 	src/gui/books/widgets/BooksWidgetSettings.h \
 	src/gui/books/widgets/BooksWidgetSummary.h \
