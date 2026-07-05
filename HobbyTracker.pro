@@ -59,6 +59,9 @@ SOURCES += \
 	src/gui/books/widgets/BooksWidgetMain.cpp \
 	src/gui/books/widgets/BooksWidgetSettings.cpp \
 	src/gui/books/widgets/BooksWidgetSummary.cpp \
+	src/gui/games/data/GamesDataConverter.cpp \
+	src/gui/games/data/GamesDataList.cpp \
+	src/gui/games/data/GamesSettings.cpp \
 	src/gui/games/widgets/GamesWidgetMain.cpp \
 	src/storage/Storage.cpp \
 	src/storage/csv/CsvSettings.cpp \
@@ -69,6 +72,7 @@ HEADERS += \
 	src/common/Global.h \
 	src/common/Helper.h \
 	src/gui/MainWindow.h \
+	src/gui/base/data/BaseData.h \
 	src/gui/base/data/BaseDataList.h \
 	src/gui/base/data/BaseExtra.h \
 	src/gui/base/data/BaseExtraConverter.h \
@@ -105,6 +109,11 @@ HEADERS += \
 	src/gui/books/widgets/BooksWidgetMain.h \
 	src/gui/books/widgets/BooksWidgetSettings.h \
 	src/gui/books/widgets/BooksWidgetSummary.h \
+	src/gui/games/common/GamesCommon.h \
+	src/gui/games/data/GamesData.h \
+	src/gui/games/data/GamesDataConverter.h \
+	src/gui/games/data/GamesDataList.h \
+	src/gui/games/data/GamesSettings.h \
 	src/gui/games/widgets/GamesWidgetMain.h \
 	src/storage/Storage.h \
 	src/storage/csv/CsvData.h \

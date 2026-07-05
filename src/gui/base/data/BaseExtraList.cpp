@@ -1,8 +1,8 @@
 #include "BaseExtraList.h"
 
-Base::ExtraList::ExtraByGroups Base::ExtraList::extraByGroups() const
+Base::ExtraList::SublistsByStrings Base::ExtraList::extraByGroups() const
 {
-	ExtraByGroups list;
+	SublistsByStrings list;
 	for (const auto& data : _data_list) {
 		list[data.group()].push_back(&data);
 	}
@@ -16,14 +16,4 @@ Base::ExtraList::ListOfStrings Base::ExtraList::listOfGroups() const
 		list.insert(data.group());
 	}
 	return list;
-}
-
-int Base::ExtraList::findIndexById(const QString& id)
-{
-	for (size_t i = 0; i < _data_list.size(); ++i) {
-		if (id == _data_list[i].id()) {
-			return i;
-		}
-	}
-	return -1;
 }

@@ -3,12 +3,12 @@
 #include <common/Global.h>
 #include <common/Helper.h>
 
-#include <QString>
+#include <gui/base/data/BaseData.h>
 
 namespace Books
 {
 
-class Data
+class Data : public Base::Data
 {
 public:
 	Data() = default;
@@ -16,7 +16,7 @@ public:
 	void clear()
 	{ *this = Data(); }
 
-	inline QString id() const
+	inline QString id() const override
 	{ return autorAndTitleTr(); }
 
 	template<typename T>

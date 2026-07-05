@@ -1,62 +1,45 @@
-#include "BooksDataList.h"
+#include "GamesDataList.h"
 
 #include <unordered_set>
 
-Books::DataList::Summary Books::DataList::summary() const
+Games::DataList::Summary Games::DataList::summary() const
 {
 	Summary sum;
-	std::unordered_set<QString> list_authors, list_genres;
+	std::unordered_set<QString> list_series, list_genres, list_developers;
 	for (const auto& data : _data_list) {
-		list_authors.insert(data.author());
+		list_series.insert(data.series());
 		list_genres.insert(data.genre());
+		list_developers.insert(data.developer());
 		Helper::checkMinMax(data.year(), &sum.min_year, &sum.max_year);
 		sum.rating += data.rating();
 	}
-	sum.authors_num = list_authors.size();
-	sum.books_num = _data_list.size();
+	sum.series_num = list_series.size();
+	sum.games_num = _data_list.size();
 	sum.genres_num = list_genres.size();
-	if (sum.books_num) { sum.rating /= sum.books_num; }
+	sum.developers_num = list_developers.size();
+	if (sum.games_num) { sum.rating /= sum.games_num; }
 	return sum;
 }
 
-Books::DataList::SublistsByStrings Books::DataList::booksByAuthors() const
+Games::DataList::SublistsByStrings Games::DataList::gamesBySeries() const
 {
 	SublistsByStrings list;
 	for (const auto& data : _data_list) {
-		list[data.author()].push_back(&data);
+		list[data.series()].push_back(&data);
 	}
 	return list;
 }
 
-Books::DataList::ListOfStrings Books::DataList::listOfAuthorsTr() const
+Games::DataList::ListOfStrings Games::DataList::listOfSeries() const
 {
 	ListOfStrings list;
 	for (const auto& data : _data_list) {
-		list.insert(data.authorTr());
+		list.insert(data.series());
 	}
 	return list;
 }
 
-Books::DataList::ListOfStrings Books::DataList::listOfAuthorsOrig() const
-{
-	ListOfStrings list;
-	for (const auto& data : _data_list) {
-		list.insert(data.authorOrig());
-	}
-	return list;
-}
-
-QString Books::DataList::findAuthorOrigByTr(const QString& author_tr) const
-{
-	for (const auto& data : _data_list) {
-		if (author_tr == data.authorTr()) {
-			return data.authorOrig();
-		}
-	}
-	return QString();
-}
-
-Books::DataList::SublistsByStrings Books::DataList::booksByGenres() const
+Games::DataList::SublistsByStrings Games::DataList::gamesByGenres() const
 {
 	SublistsByStrings list;
 	for (const auto& data : _data_list) {
@@ -65,7 +48,7 @@ Books::DataList::SublistsByStrings Books::DataList::booksByGenres() const
 	return list;
 }
 
-Books::DataList::ListOfStrings Books::DataList::listOfGenres() const
+Games::DataList::ListOfStrings Games::DataList::listOfGenres() const
 {
 	ListOfStrings list;
 	for (const auto& data : _data_list) {
@@ -74,7 +57,25 @@ Books::DataList::ListOfStrings Books::DataList::listOfGenres() const
 	return list;
 }
 
-Books::DataList::SublistsByStrings Books::DataList::booksByYears(uint32_t step) const
+Games::DataList::SublistsByStrings Games::DataList::gamesByDevelopers() const
+{
+	SublistsByStrings list;
+	for (const auto& data : _data_list) {
+		list[data.developer()].push_back(&data);
+	}
+	return list;
+}
+
+Games::DataList::ListOfStrings Games::DataList::listOfDevelopers() const
+{
+	ListOfStrings list;
+	for (const auto& data : _data_list) {
+		list.insert(data.developer());
+	}
+	return list;
+}
+
+Games::DataList::SublistsByStrings Games::DataList::gamesByYears(uint32_t step) const
 {
 	SublistsByStrings list;
 	for (const auto& data : _data_list) {
@@ -83,7 +84,7 @@ Books::DataList::SublistsByStrings Books::DataList::booksByYears(uint32_t step) 
 	return list;
 }
 
-Books::DataList::NumbersByStrings Books::DataList::numbersByYears(uint32_t step,
+Games::DataList::NumbersByStrings Games::DataList::numbersByYears(uint32_t step,
 		RangeTypes range_type, uint32_t required_min, uint32_t required_max) const
 {
 	return numbersInRange(step, range_type, required_min, required_max,
@@ -91,7 +92,7 @@ Books::DataList::NumbersByStrings Books::DataList::numbersByYears(uint32_t step,
 			[](uint32_t val, uint32_t step) { return Helper::epochString(val, step); });
 }
 
-Books::DataList::SublistsByIntegers Books::DataList::booksByRatings() const
+Games::DataList::SublistsByIntegers Games::DataList::gamesByRatings() const
 {
 	SublistsByIntegers list;
 	for (const auto& data : _data_list) {
@@ -100,7 +101,7 @@ Books::DataList::SublistsByIntegers Books::DataList::booksByRatings() const
 	return list;
 }
 
-Books::DataList::NumbersByIntegers Books::DataList::numbersByRatings() const
+Games::DataList::NumbersByIntegers Games::DataList::numbersByRatings() const
 {
 	NumbersByIntegers list;
 	for (const auto& data : _data_list) {
@@ -109,7 +110,7 @@ Books::DataList::NumbersByIntegers Books::DataList::numbersByRatings() const
 	return list;
 }
 
-QString Books::DataList::yearString(const SubListContainer& sublist)
+QString Games::DataList::yearString(const SubListContainer& sublist)
 {
 	std::pair<uint32_t, uint32_t> years(Global::undefined_value, Global::undefined_value);
 	for (auto data : sublist) {

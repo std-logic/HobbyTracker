@@ -1,18 +1,18 @@
-#include "BooksSettings.h"
-#include "BooksDataConverter.h"
-#include "../common/BooksCommon.h"
+#include "GamesSettings.h"
+#include "GamesDataConverter.h"
+#include "../common/GamesCommon.h"
 
 #include <common/Helper.h>
 #include <gui/base/data/BaseExtraConverter.h>
 
 #include <QSettings>
 
-Books::Settings::Settings()
+Games::Settings::Settings()
 	: Base::Settings{settings_group_name}
 {
 }
 
-void Books::Settings::save() const
+void Games::Settings::save() const
 {
 	QSettings settings(Helper::stdPathSettings(), QSettings::IniFormat);
 
@@ -23,7 +23,7 @@ void Books::Settings::save() const
 	settings.endGroup();
 }
 
-void Books::Settings::load()
+void Games::Settings::load()
 {
 	QSettings settings(Helper::stdPathSettings(), QSettings::IniFormat);
 

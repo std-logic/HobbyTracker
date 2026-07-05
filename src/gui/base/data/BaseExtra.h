@@ -1,11 +1,13 @@
 #pragma once
 
+#include "BaseData.h"
+
 #include <QString>
 
 namespace Base
 {
 
-class Extra
+class Extra : public Data
 {
 public:
 	Extra() = default;
@@ -13,7 +15,7 @@ public:
 	void clear()
 	{ *this = Extra(); }
 
-	inline QString id() const
+	inline QString id() const override
 	{ return group() + title(); }
 
 	template<typename T>

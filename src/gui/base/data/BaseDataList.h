@@ -1,15 +1,18 @@
 #pragma once
 
+#include "BaseData.h"
+
 #include <common/Helper.h>
 
-#include <cstdint>
 #include <vector>
+#include <unordered_map>
+#include <map>
 #include <set>
 
 namespace Base
 {
 
-template <typename T>
+template <std::derived_from<Data> T>
 class DataList
 {
 public:
@@ -18,6 +21,10 @@ public:
 
 	using ListContainer = std::vector<T>;
 	using SubListContainer = std::vector<const T*>;
+	using SublistsByStrings = std::unordered_map<QString, SubListContainer>;
+	using SublistsByIntegers = std::unordered_map<uint32_t, SubListContainer>;
+	using NumbersByStrings = std::map<QString, uint32_t>;
+	using NumbersByIntegers = std::map<uint32_t, uint32_t>;
 	using ListOfStrings = std::set<QString>;
 
 	ListContainer::iterator begin() noexcept
@@ -44,7 +51,14 @@ public:
 	inline void del(size_t index)
 	{ _data_list.erase(_data_list.begin() + index); }
 
-	using NumbersInRange = std::map<QString, uint32_t>;
+	int findIndexById(const QString& id)
+	{
+		for (size_t i = 0; i < _data_list.size(); ++i) {
+			if (id == _data_list[i].id()) { return i; }
+		}
+		return -1;
+	}
+
 	enum class RangeTypes
 	{
 		Discrete,
@@ -58,11 +72,11 @@ public:
 	// funcIn - lambda for extraction required member of data (must return uint32_t)
 	// funcOut - lambda for creating key for list (must return QString)
 	template<typename FuncIn, typename FuncOut>
-	NumbersInRange numbersInRange(uint32_t step,
+	NumbersByStrings numbersInRange(uint32_t step,
 			RangeTypes range_type, uint32_t required_min, uint32_t required_max,
 			FuncIn&& funcIn, FuncOut&& funcOut) const
 	{
-		NumbersInRange list;
+		NumbersByStrings list;
 		auto [real_min, real_max] = Helper::initMinMax();
 		for (const auto& data : _data_list) {
 			auto val = funcIn(data);
