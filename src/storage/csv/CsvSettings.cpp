@@ -23,7 +23,7 @@ void Csv::Settings::load(QSettings* settings, const QString& group_name)
 	for (size_t i = 0; i < 100; ++i) {
 		auto value_name = "file_name_" + QString::number(i);
 		if (settings->contains(value_name)) {
-			_file_name.emplace_back(settings->value(value_name).toString());
+			setFileName(i, settings->value(value_name).toString());
 		} else {
 			break;
 		}

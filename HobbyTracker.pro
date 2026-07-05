@@ -62,7 +62,13 @@ SOURCES += \
 	src/gui/games/data/GamesDataConverter.cpp \
 	src/gui/games/data/GamesDataList.cpp \
 	src/gui/games/data/GamesSettings.cpp \
+	src/gui/games/widgets/GamesWidgetChart.cpp \
+	src/gui/games/widgets/GamesWidgetControl.cpp \
+	src/gui/games/widgets/GamesWidgetData.cpp \
+	src/gui/games/widgets/GamesWidgetDataList.cpp \
 	src/gui/games/widgets/GamesWidgetMain.cpp \
+	src/gui/games/widgets/GamesWidgetSettings.cpp \
+	src/gui/games/widgets/GamesWidgetSummary.cpp \
 	src/storage/Storage.cpp \
 	src/storage/csv/CsvSettings.cpp \
 	src/storage/csv/CsvStorage.cpp
@@ -114,7 +120,13 @@ HEADERS += \
 	src/gui/games/data/GamesDataConverter.h \
 	src/gui/games/data/GamesDataList.h \
 	src/gui/games/data/GamesSettings.h \
+	src/gui/games/widgets/GamesWidgetChart.h \
+	src/gui/games/widgets/GamesWidgetControl.h \
+	src/gui/games/widgets/GamesWidgetData.h \
+	src/gui/games/widgets/GamesWidgetDataList.h \
 	src/gui/games/widgets/GamesWidgetMain.h \
+	src/gui/games/widgets/GamesWidgetSettings.h \
+	src/gui/games/widgets/GamesWidgetSummary.h \
 	src/storage/Storage.h \
 	src/storage/csv/CsvData.h \
 	src/storage/csv/CsvSettings.h \

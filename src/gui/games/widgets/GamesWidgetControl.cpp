@@ -1,5 +1,5 @@
-#include "BooksWidgetControl.h"
-#include "../common/BooksCommon.h"
+#include "GamesWidgetControl.h"
+#include "../common/GamesCommon.h"
 
 #include <gui/base/widgets/BaseButtonAdd.h>
 #include <gui/base/widgets/BaseButtonCollapse.h>
@@ -10,18 +10,18 @@
 #include <QPushButton>
 #include <QComboBox>
 
-Books::WidgetControl::WidgetControl(QWidget* parent)
+Games::WidgetControl::WidgetControl(QWidget* parent)
 	: Base::WidgetControl{parent}
 {
 	initWidgets();
 }
 
-void Books::WidgetControl::start()
+void Games::WidgetControl::start()
 {
 	_button_data_list->setChecked(true);
 }
 
-void Books::WidgetControl::initWidgets()
+void Games::WidgetControl::initWidgets()
 {
 	addButtonSave();
 
@@ -46,10 +46,11 @@ void Books::WidgetControl::initWidgets()
 				this, &WidgetControl::expandDataList);
 
 		addWidget(_combo_data_list_view_mode = new QComboBox(this));
-		_combo_data_list_view_mode->addItem(tr("По авторам"), static_cast<int>(DataListViewModes::ByAuthors));
+		_combo_data_list_view_mode->addItem(tr("По сериям"), static_cast<int>(DataListViewModes::BySeries));
 		_combo_data_list_view_mode->addItem(tr("По жанрам"), static_cast<int>(DataListViewModes::ByGenres));
+		_combo_data_list_view_mode->addItem(tr("По разработчикам"), static_cast<int>(DataListViewModes::ByDevelopers));
+		_combo_data_list_view_mode->addItem(tr("По годам"), static_cast<int>(DataListViewModes::ByYears));
 		_combo_data_list_view_mode->addItem(tr("По десятилетиям"), static_cast<int>(DataListViewModes::ByDecades));
-		_combo_data_list_view_mode->addItem(tr("По столетиям"), static_cast<int>(DataListViewModes::ByCenturies));
 		_combo_data_list_view_mode->addItem(tr("По оценкам"), static_cast<int>(DataListViewModes::ByRatings));
 		_combo_data_list_view_mode->addItem(tr("Простой список"), static_cast<int>(DataListViewModes::Simple));
 		connect(_combo_data_list_view_mode, &QComboBox::currentIndexChanged, this, [this](int index) {
@@ -100,8 +101,8 @@ void Books::WidgetControl::initWidgets()
 				this, &WidgetControl::showChart);
 
 		addWidget(_combo_chart_view_mode = new QComboBox(this));
+		_combo_chart_view_mode->addItem(tr("По годам"), static_cast<int>(ChartViewModes::ByYears));
 		_combo_chart_view_mode->addItem(tr("По десятилетиям"), static_cast<int>(ChartViewModes::ByDecades));
-		_combo_chart_view_mode->addItem(tr("По столетиям"), static_cast<int>(ChartViewModes::ByCenturies));
 		_combo_chart_view_mode->addItem(tr("По оценкам"), static_cast<int>(ChartViewModes::ByRatings));
 		connect(_combo_chart_view_mode, &QComboBox::currentIndexChanged, this, [this](int index) {
 			emit setChartViewMode(_combo_chart_view_mode->itemData(index).toInt());

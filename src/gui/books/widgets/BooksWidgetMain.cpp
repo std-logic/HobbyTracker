@@ -13,6 +13,7 @@
 #include <gui/base/widgets/BaseWidgetExtraList.h>
 
 #include <storage/Storage.h>
+#include <storage/csv/CsvData.h>
 
 #include <QMessageBox>
 
@@ -76,9 +77,6 @@ void Books::WidgetMain::initConnections()
 	connect(_widget_control, &WidgetControl::showSettings,
 			this, &WidgetMain::showSettings);
 
-	connect(this, &WidgetMain::highlightButtonSave,
-			_widget_control, &WidgetControl::highlightButtonSave);
-
 	connect(_widget_data_list, &WidgetDataList::needUpdate,
 			this, &WidgetMain::updateDataList);
 	connect(_widget_data_list, &WidgetDataList::editData,
@@ -136,7 +134,7 @@ void Books::WidgetMain::saveCsvData()
 	auto write_extra_ok = Storage::writeCsv(CsvFileExtra, _settings.csvSettings(), csv_data);
 
 	if (write_data_ok && write_extra_ok) {
-		emit highlightButtonSave(false);
+		_widget_control->highlightButtonSave(false);
 		emit showMessage(tr("Данные сохранены"));
 	} else {
 		emit showMessage(tr("Ошибка записи в файл!"));
@@ -177,7 +175,7 @@ void Books::WidgetMain::saveData(size_t index, const Data& data)
 	}
 
 	updateAll();
-	emit highlightButtonSave(true);
+	_widget_control->highlightButtonSave(true);
 }
 
 void Books::WidgetMain::deleteData(const QString& id)
@@ -198,7 +196,7 @@ void Books::WidgetMain::deleteDataAtIndex(size_t index)
 	if (ans == QMessageBox::Yes) {
 		_data_list.value().del(index);
 		updateAll();
-		emit highlightButtonSave(true);
+		_widget_control->highlightButtonSave(true);
 	}
 }
 
@@ -236,7 +234,7 @@ void Books::WidgetMain::saveExtra(size_t index, const Base::Extra& extra)
 	}
 
 	updateExtraList();
-	emit highlightButtonSave(true);
+	_widget_control->highlightButtonSave(true);
 }
 
 void Books::WidgetMain::deleteExtra(const QString& id)
@@ -257,7 +255,7 @@ void Books::WidgetMain::deleteExtraAtIndex(size_t index)
 	if (ans == QMessageBox::Yes) {
 		_extra_list.value().del(index);
 		updateExtraList();
-		emit highlightButtonSave(true);
+		_widget_control->highlightButtonSave(true);
 	}
 }
 

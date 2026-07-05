@@ -3,7 +3,6 @@
 #include "../data/BooksDataList.h"
 #include "../data/BooksSettings.h"
 
-#include <storage/csv/CsvData.h>
 #include <gui/base/data/BaseExtraList.h>
 #include <gui/base/widgets/BaseWidgetMain.h>
 
@@ -35,9 +34,6 @@ public:
 	static QString getName() { return tr("Литература"); };
 
 	void start() override;
-
-signals:
-	void highlightButtonSave(bool on);
 
 private:
 	void initWidgets();
