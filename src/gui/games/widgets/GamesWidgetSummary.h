@@ -26,8 +26,8 @@ private:
 private:
 	QLabel* _label_series_num = nullptr;
 	QLabel* _label_games_num = nullptr;
-	QLabel* _label_genres_num = nullptr;
 	QLabel* _label_developers_num = nullptr;
+	QLabel* _label_genres_num = nullptr;
 	QLabel* _label_years = nullptr;
 	QLabel* _label_rating = nullptr;
 };

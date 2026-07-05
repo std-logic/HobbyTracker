@@ -20,8 +20,8 @@ signals:
 
 private:
 	void showBySeries(const DataList& list);
-	void showByGenres(const DataList& list);
 	void showByDevelopers(const DataList& list);
+	void showByGenres(const DataList& list);
 	void showByYears(const DataList& list);
 	void showByDecades(const DataList& list);
 	void showByRatings(const DataList& list);
@@ -30,10 +30,10 @@ private:
 private:
 	static const int WIDTH_TITLE = 0; // stretched
 	static const int WIDTH_COUNT = 50;
-	static const int WIDTH_GENRE = 170;
-	static const int WIDTH_DEVELOPER = 170;
+	static const int WIDTH_DEVELOPER = 200;
+	static const int WIDTH_GENRE = 130;
 	static const int WIDTH_YEAR = 90;
-	static const int WIDTH_RATING = 80;
+	static const int WIDTH_RATING = 70;
 };
 
 } // namespace Games

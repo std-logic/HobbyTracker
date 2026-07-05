@@ -6,8 +6,8 @@ namespace Games
 enum class DataListViewModes
 {
 	BySeries,
-	ByGenres,
 	ByDevelopers,
+	ByGenres,
 	ByYears,
 	ByDecades,
 	ByRatings,

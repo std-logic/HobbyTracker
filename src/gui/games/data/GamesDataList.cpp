@@ -5,18 +5,18 @@
 Games::DataList::Summary Games::DataList::summary() const
 {
 	Summary sum;
-	std::unordered_set<QString> list_series, list_genres, list_developers;
+	std::unordered_set<QString> list_series, list_developers, list_genres;
 	for (const auto& data : _data_list) {
 		list_series.insert(data.series());
-		list_genres.insert(data.genre());
 		list_developers.insert(data.developer());
+		list_genres.insert(data.genre());
 		Helper::checkMinMax(data.year(), &sum.min_year, &sum.max_year);
 		sum.rating += data.rating();
 	}
 	sum.series_num = list_series.size();
 	sum.games_num = _data_list.size();
-	sum.genres_num = list_genres.size();
 	sum.developers_num = list_developers.size();
+	sum.genres_num = list_genres.size();
 	if (sum.games_num) { sum.rating /= sum.games_num; }
 	return sum;
 }
@@ -39,24 +39,6 @@ Games::DataList::ListOfStrings Games::DataList::listOfSeries() const
 	return list;
 }
 
-Games::DataList::SublistsByStrings Games::DataList::gamesByGenres() const
-{
-	SublistsByStrings list;
-	for (const auto& data : _data_list) {
-		list[data.genre()].push_back(&data);
-	}
-	return list;
-}
-
-Games::DataList::ListOfStrings Games::DataList::listOfGenres() const
-{
-	ListOfStrings list;
-	for (const auto& data : _data_list) {
-		list.insert(data.genre());
-	}
-	return list;
-}
-
 Games::DataList::SublistsByStrings Games::DataList::gamesByDevelopers() const
 {
 	SublistsByStrings list;
@@ -71,6 +53,24 @@ Games::DataList::ListOfStrings Games::DataList::listOfDevelopers() const
 	ListOfStrings list;
 	for (const auto& data : _data_list) {
 		list.insert(data.developer());
+	}
+	return list;
+}
+
+Games::DataList::SublistsByStrings Games::DataList::gamesByGenres() const
+{
+	SublistsByStrings list;
+	for (const auto& data : _data_list) {
+		list[data.genre()].push_back(&data);
+	}
+	return list;
+}
+
+Games::DataList::ListOfStrings Games::DataList::listOfGenres() const
+{
+	ListOfStrings list;
+	for (const auto& data : _data_list) {
+		list.insert(data.genre());
 	}
 	return list;
 }

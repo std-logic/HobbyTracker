@@ -47,8 +47,8 @@ void Games::WidgetControl::initWidgets()
 
 		addWidget(_combo_data_list_view_mode = new QComboBox(this));
 		_combo_data_list_view_mode->addItem(tr("По сериям"), static_cast<int>(DataListViewModes::BySeries));
-		_combo_data_list_view_mode->addItem(tr("По жанрам"), static_cast<int>(DataListViewModes::ByGenres));
 		_combo_data_list_view_mode->addItem(tr("По разработчикам"), static_cast<int>(DataListViewModes::ByDevelopers));
+		_combo_data_list_view_mode->addItem(tr("По жанрам"), static_cast<int>(DataListViewModes::ByGenres));
 		_combo_data_list_view_mode->addItem(tr("По годам"), static_cast<int>(DataListViewModes::ByYears));
 		_combo_data_list_view_mode->addItem(tr("По десятилетиям"), static_cast<int>(DataListViewModes::ByDecades));
 		_combo_data_list_view_mode->addItem(tr("По оценкам"), static_cast<int>(DataListViewModes::ByRatings));

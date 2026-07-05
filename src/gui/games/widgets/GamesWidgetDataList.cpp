@@ -14,8 +14,8 @@ void Games::WidgetDataList::update(const DataList& list)
 	clear();
 	switch (static_cast<DataListViewModes>(_view_mode)) {
 		case DataListViewModes::BySeries:		showBySeries(list);			break;
-		case DataListViewModes::ByGenres:		showByGenres(list);			break;
 		case DataListViewModes::ByDevelopers:	showByDevelopers(list);		break;
+		case DataListViewModes::ByGenres:		showByGenres(list);			break;
 		case DataListViewModes::ByYears:		showByYears(list);			break;
 		case DataListViewModes::ByDecades:		showByDecades(list);		break;
 		case DataListViewModes::ByRatings:		showByRatings(list);		break;
@@ -26,9 +26,9 @@ void Games::WidgetDataList::update(const DataList& list)
 
 void Games::WidgetDataList::showBySeries(const DataList& list)
 {
-	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_DEVELOPER, CLMN_YEAR, CLMN_RATING};
-	initColumns({tr("Серия / Название"), tr("К-во"), tr("Жанр"), tr("Разработчик"), tr("Год"), tr("Оценка")},
-				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_DEVELOPER, WIDTH_YEAR, WIDTH_RATING});
+	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_DEVELOPER, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
+	initColumns({tr("Серия / Название"), tr("К-во"), tr("Разработчик"), tr("Жанр"), tr("Год"), tr("Оценка")},
+				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_DEVELOPER, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
 	auto games_by_series = list.gamesBySeries();
@@ -43,35 +43,8 @@ void Games::WidgetDataList::showBySeries(const DataList& list)
 			auto item_game = new Base::WidgetTreeItem(item_series);
 			item_game->setText(CLMN_TITLE, game->title());
 			item_game->setToolTip(CLMN_TITLE, game->summaryString());
+			item_game->setText(CLMN_DEVELOPER, game->developer());
 			item_game->setText(CLMN_GENRE, game->genre());
-			item_game->setText(CLMN_DEVELOPER, game->developer());
-			item_game->setText(CLMN_YEAR, game->yearString());
-			item_game->setRating(CLMN_RATING, game->rating());
-			item_game->setId(game->id());
-		}
-	}
-}
-
-void Games::WidgetDataList::showByGenres(const DataList& list)
-{
-	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_DEVELOPER, CLMN_YEAR, CLMN_RATING};
-	initColumns({tr("Жанр / Название"), tr("К-во"), tr("Разработчик"), tr("Год"), tr("Оценка")},
-				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_DEVELOPER, WIDTH_YEAR, WIDTH_RATING});
-	initSorting(CLMN_TITLE);
-
-	auto games_by_genres = list.gamesByGenres();
-
-	for (const auto& [genre, games] : games_by_genres) {
-		auto item_genre = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
-		item_genre->setText(CLMN_TITLE, genre);
-		item_genre->setNumb(CLMN_COUNT, games.size());
-		item_genre->setText(CLMN_YEAR, DataList::yearString(games));
-
-		for (const auto game : games) {
-			auto item_game = new Base::WidgetTreeItem(item_genre);
-			item_game->setText(CLMN_TITLE, game->title());
-			item_game->setToolTip(CLMN_TITLE, game->summaryString());
-			item_game->setText(CLMN_DEVELOPER, game->developer());
 			item_game->setText(CLMN_YEAR, game->yearString());
 			item_game->setRating(CLMN_RATING, game->rating());
 			item_game->setId(game->id());
@@ -106,11 +79,38 @@ void Games::WidgetDataList::showByDevelopers(const DataList& list)
 	}
 }
 
+void Games::WidgetDataList::showByGenres(const DataList& list)
+{
+	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_DEVELOPER, CLMN_YEAR, CLMN_RATING};
+	initColumns({tr("Жанр / Название"), tr("К-во"), tr("Разработчик"), tr("Год"), tr("Оценка")},
+				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_DEVELOPER, WIDTH_YEAR, WIDTH_RATING});
+	initSorting(CLMN_TITLE);
+
+	auto games_by_genres = list.gamesByGenres();
+
+	for (const auto& [genre, games] : games_by_genres) {
+		auto item_genre = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
+		item_genre->setText(CLMN_TITLE, genre);
+		item_genre->setNumb(CLMN_COUNT, games.size());
+		item_genre->setText(CLMN_YEAR, DataList::yearString(games));
+
+		for (const auto game : games) {
+			auto item_game = new Base::WidgetTreeItem(item_genre);
+			item_game->setText(CLMN_TITLE, game->title());
+			item_game->setToolTip(CLMN_TITLE, game->summaryString());
+			item_game->setText(CLMN_DEVELOPER, game->developer());
+			item_game->setText(CLMN_YEAR, game->yearString());
+			item_game->setRating(CLMN_RATING, game->rating());
+			item_game->setId(game->id());
+		}
+	}
+}
+
 void Games::WidgetDataList::showByYears(const DataList& list)
 {
-	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_DEVELOPER, CLMN_RATING};
-	initColumns({tr("Год / Название"), tr("К-во"), tr("Жанр"), tr("Разработчик"), tr("Оценка")},
-				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_DEVELOPER, WIDTH_RATING});
+	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_DEVELOPER, CLMN_GENRE, CLMN_RATING};
+	initColumns({tr("Год / Название"), tr("К-во"), tr("Разработчик"), tr("Жанр"), tr("Оценка")},
+				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_DEVELOPER, WIDTH_GENRE, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
 	auto games_by_years = list.gamesByYears(1);
@@ -124,8 +124,8 @@ void Games::WidgetDataList::showByYears(const DataList& list)
 			auto item_game = new Base::WidgetTreeItem(item_year);
 			item_game->setText(CLMN_TITLE, game->title());
 			item_game->setToolTip(CLMN_TITLE, game->summaryString());
-			item_game->setText(CLMN_GENRE, game->genre());
 			item_game->setText(CLMN_DEVELOPER, game->developer());
+			item_game->setText(CLMN_GENRE, game->genre());
 			item_game->setRating(CLMN_RATING, game->rating());
 			item_game->setId(game->id());
 		}
@@ -134,9 +134,9 @@ void Games::WidgetDataList::showByYears(const DataList& list)
 
 void Games::WidgetDataList::showByDecades(const DataList& list)
 {
-	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_DEVELOPER, CLMN_YEAR, CLMN_RATING};
-	initColumns({tr("Десятилетие / Название"), tr("К-во"), tr("Жанр"), tr("Разработчик"), tr("Год"), tr("Оценка")},
-				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_DEVELOPER, WIDTH_YEAR, WIDTH_RATING});
+	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_DEVELOPER, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
+	initColumns({tr("Десятилетие / Название"), tr("К-во"), tr("Разработчик"), tr("Жанр"), tr("Год"), tr("Оценка")},
+				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_DEVELOPER, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
 	auto games_by_years = list.gamesByYears(10);
@@ -151,8 +151,8 @@ void Games::WidgetDataList::showByDecades(const DataList& list)
 			auto item_game = new Base::WidgetTreeItem(item_decade);
 			item_game->setText(CLMN_TITLE, game->title());
 			item_game->setToolTip(CLMN_TITLE, game->summaryString());
-			item_game->setText(CLMN_GENRE, game->genre());
 			item_game->setText(CLMN_DEVELOPER, game->developer());
+			item_game->setText(CLMN_GENRE, game->genre());
 			item_game->setText(CLMN_YEAR, game->yearString());
 			item_game->setRating(CLMN_RATING, game->rating());
 			item_game->setId(game->id());
@@ -162,9 +162,9 @@ void Games::WidgetDataList::showByDecades(const DataList& list)
 
 void Games::WidgetDataList::showByRatings(const DataList& list)
 {
-	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_DEVELOPER, CLMN_YEAR};
-	initColumns({tr("Оценка / Название"), tr("К-во"), tr("Жанр"), tr("Разработчик"), tr("Год")},
-				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_DEVELOPER, WIDTH_YEAR});
+	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_DEVELOPER, CLMN_GENRE, CLMN_YEAR};
+	initColumns({tr("Оценка / Название"), tr("К-во"), tr("Разработчик"), tr("Жанр"), tr("Год")},
+				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_DEVELOPER, WIDTH_GENRE, WIDTH_YEAR});
 	initSorting(CLMN_TITLE);
 
 	auto games_by_ratings = list.gamesByRatings();
@@ -179,8 +179,8 @@ void Games::WidgetDataList::showByRatings(const DataList& list)
 			auto item_game = new Base::WidgetTreeItem(item_rating);
 			item_game->setText(CLMN_TITLE, game->title());
 			item_game->setToolTip(CLMN_TITLE, game->summaryString());
-			item_game->setText(CLMN_GENRE, game->genre());
 			item_game->setText(CLMN_DEVELOPER, game->developer());
+			item_game->setText(CLMN_GENRE, game->genre());
 			item_game->setText(CLMN_YEAR, game->yearString());
 			item_game->setId(game->id());
 		}
@@ -189,17 +189,17 @@ void Games::WidgetDataList::showByRatings(const DataList& list)
 
 void Games::WidgetDataList::showSimple(const DataList& list)
 {
-	enum Columns {CLMN_TITLE, CLMN_GENRE, CLMN_DEVELOPER, CLMN_YEAR, CLMN_RATING};
-	initColumns({tr("Название"), tr("Жанр"), tr("Разработчик"), tr("Год"), tr("Оценка")},
-				{WIDTH_TITLE, WIDTH_GENRE, WIDTH_DEVELOPER, WIDTH_YEAR, WIDTH_RATING});
+	enum Columns {CLMN_TITLE, CLMN_DEVELOPER, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
+	initColumns({tr("Название"), tr("Разработчик"), tr("Жанр"), tr("Год"), tr("Оценка")},
+				{WIDTH_TITLE, WIDTH_DEVELOPER, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
 	for (const auto& book : list) {
 		auto item_book = new Base::WidgetTreeItem(this);
 		item_book->setText(CLMN_TITLE, book.title());
 		item_book->setToolTip(CLMN_TITLE, book.summaryString());
-		item_book->setText(CLMN_GENRE, book.genre());
 		item_book->setText(CLMN_DEVELOPER, book.developer());
+		item_book->setText(CLMN_GENRE, book.genre());
 		item_book->setText(CLMN_YEAR, book.yearString());
 		item_book->setRating(CLMN_RATING, book.rating());
 		item_book->setId(book.id());

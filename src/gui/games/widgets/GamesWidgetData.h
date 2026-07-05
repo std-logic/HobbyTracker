@@ -39,8 +39,8 @@ private slots:
 private:
 	Base::ComboEdit* _combo_series = nullptr;
 	QLineEdit* _edit_title = nullptr;
-	Base::ComboEdit* _combo_genre = nullptr;
 	Base::ComboEdit* _combo_developer = nullptr;
+	Base::ComboEdit* _combo_genre = nullptr;
 	QLineEdit* _edit_year = nullptr;
 	Base::WidgetRating* _widget_rating = nullptr;
 

@@ -34,9 +34,9 @@ void Games::WidgetData::initWidgets()
 
 	addWidget(tr("Название:"), _edit_title = new QLineEdit(this));
 
-	addWidget(tr("Жанр:"), _combo_genre = new Base::ComboEdit(this));
-
 	addWidget(tr("Разработчик:"), _combo_developer = new Base::ComboEdit(this));
+
+	addWidget(tr("Жанр:"), _combo_genre = new Base::ComboEdit(this));
 
 	addWidget(tr("Год:"), _edit_year = new QLineEdit(this));
 	_edit_year->setValidator(new QIntValidator(1900, 2100, _edit_year));
@@ -51,11 +51,11 @@ void Games::WidgetData::copyDataToGui()
 
 	_edit_title->setText(_data.title());
 
-	_combo_genre->addList(_data_list.listOfGenres());
-	_combo_genre->lineEdit()->setText(_data.genre());
-
 	_combo_developer->addList(_data_list.listOfDevelopers());
 	_combo_developer->lineEdit()->setText(_data.developer());
+
+	_combo_genre->addList(_data_list.listOfGenres());
+	_combo_genre->lineEdit()->setText(_data.genre());
 
 	_edit_year->setText(_data.yearString());
 
@@ -76,15 +76,15 @@ bool Games::WidgetData::copyGuiToData()
 		return false;
 	}
 
-	_data.setGenre(_combo_genre->currentText());
-	if (_data.genre().isEmpty()) {
-		emit showMessage(tr("Не введён жанр!"));
-		return false;
-	}
-
 	_data.setDeveloper(_combo_developer->currentText());
 	if (_data.developer().isEmpty()) {
 		emit showMessage(tr("Не введён разработчик!"));
+		return false;
+	}
+
+	_data.setGenre(_combo_genre->currentText());
+	if (_data.genre().isEmpty()) {
+		emit showMessage(tr("Не введён жанр!"));
 		return false;
 	}
 

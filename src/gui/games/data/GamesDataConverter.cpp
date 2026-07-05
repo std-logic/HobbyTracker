@@ -9,8 +9,8 @@ QStringList Games::DataConverter::getDefaultCsvHeader()
 
 	header[CLMN_SERIES]			= tr("Серия");
 	header[CLMN_TITLE]			= tr("Игра");
-	header[CLMN_GENRE]			= tr("Жанр");
 	header[CLMN_DEVELOPER]		= tr("Разработчик");
+	header[CLMN_GENRE]			= tr("Жанр");
 	header[CLMN_YEAR]			= tr("Год");
 	header[CLMN_RATING]			= tr("Оценка");
 
@@ -32,11 +32,11 @@ Games::DataList Games::DataConverter::conv(const Csv::Data& csv_data)
 		if (CLMN_TITLE < line_size) {
 			data.setTitle(line[CLMN_TITLE]);
 		}
-		if (CLMN_GENRE < line_size) {
-			data.setGenre(line[CLMN_GENRE]);
-		}
 		if (CLMN_DEVELOPER < line_size) {
 			data.setDeveloper(line[CLMN_DEVELOPER]);
+		}
+		if (CLMN_GENRE < line_size) {
+			data.setGenre(line[CLMN_GENRE]);
 		}
 		if (CLMN_YEAR < line_size) {
 			auto year = line[CLMN_YEAR].toUInt(&conv_ok);
@@ -62,8 +62,8 @@ Csv::Data Games::DataConverter::conv(const DataList& data_list)
 
 		line[CLMN_SERIES]		= data.series();
 		line[CLMN_TITLE]		= data.title();
-		line[CLMN_GENRE]		= data.genre();
 		line[CLMN_DEVELOPER]	= data.developer();
+		line[CLMN_GENRE]		= data.genre();
 		line[CLMN_YEAR]			= QString::number(data.year());
 		line[CLMN_RATING]		= QString::number(data.rating());
 

@@ -32,16 +32,16 @@ public:
 	{ return _title; }
 
 	template<typename T>
-	inline void setGenre(T&& genre)
-	{ _genre = std::forward<T>(genre); }
-	inline QString genre() const
-	{ return _genre; }
-
-	template<typename T>
 	inline void setDeveloper(T&& developer)
 	{ _developer = std::forward<T>(developer); }
 	inline QString developer() const
 	{ return _developer; }
+
+	template<typename T>
+	inline void setGenre(T&& genre)
+	{ _genre = std::forward<T>(genre); }
+	inline QString genre() const
+	{ return _genre; }
 
 	inline void setYear(uint32_t year)
 	{ _year = year; }
@@ -59,8 +59,8 @@ public:
 	{
 		QString text;
 		text += _title;
-		text += QStringLiteral("\n\nЖанр: %1").arg(_genre);
-		text += QStringLiteral("\nРазработчик: %1").arg(_developer);
+		text += QStringLiteral("\n\nРазработчик: %1").arg(_developer);
+		text += QStringLiteral("\nЖанр: %1").arg(_genre);
 		text += QStringLiteral("\nГод: %1").arg(yearString());
 		text += QStringLiteral("\nОценка: %1").arg(_rating);
 		return text;
@@ -70,8 +70,8 @@ public:
 	{
 		return	(_series == other.series()) &&
 				(_title == other.title()) &&
-				(_genre == other.genre()) &&
 				(_developer == other.developer()) &&
+				(_genre == other.genre()) &&
 				(_year == other.year()) &&
 				(_rating == other.rating());
 	}
@@ -79,8 +79,8 @@ public:
 private:
 	QString _series;
 	QString _title;
-	QString _genre;
 	QString _developer;
+	QString _genre;
 	uint32_t _year = Global::undefined_value;
 	uint32_t _rating = Global::undefined_value;
 };

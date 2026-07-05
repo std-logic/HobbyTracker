@@ -19,9 +19,9 @@ void Games::WidgetSummary::update(const DataList& list)
 
 	_label_games_num->setText(QString::number(summary.games_num));
 
-	_label_genres_num->setText(QString::number(summary.genres_num));
-
 	_label_developers_num->setText(QString::number(summary.developers_num));
+
+	_label_genres_num->setText(QString::number(summary.genres_num));
 
 	_label_years->setText(Helper::yearString(summary.min_year, summary.max_year));
 
@@ -34,9 +34,9 @@ void Games::WidgetSummary::initWidgets()
 
 	addWidget(tr("Игр:"), _label_games_num = new QLabel(this));
 
-	addWidget(tr("Жанров:"), _label_genres_num = new QLabel(this));
-
 	addWidget(tr("Разработчиков:"), _label_developers_num = new QLabel(this));
+
+	addWidget(tr("Жанров:"), _label_genres_num = new QLabel(this));
 
 	addWidget(tr("Годы:"), _label_years = new QLabel(this));
 
