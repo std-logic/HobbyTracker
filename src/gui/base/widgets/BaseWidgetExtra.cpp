@@ -33,17 +33,16 @@ void Base::WidgetExtra::initWidgets()
 	addWidget(tr("Запись:"), _edit_title = new QLineEdit(this));
 
 	addWidget(tr("Комментарий:"), _edit_notes = new QLineEdit(this));
+	_edit_notes->setPlaceholderText(tr("Необязательное поле"));
 }
 
 void Base::WidgetExtra::copyDataToGui()
 {
-	_combo_group->addList(_data_list.listOfGroups());
-	_combo_group->lineEdit()->setText(_data.group());
+	_combo_group->setTextAndList(_data.group(), _data_list.listOfGroups());
 
 	_edit_title->setText(_data.title());
 
 	_edit_notes->setText(_data.notes());
-	_edit_notes->setPlaceholderText(tr("Необязательное поле"));
 }
 
 bool Base::WidgetExtra::copyGuiToData()

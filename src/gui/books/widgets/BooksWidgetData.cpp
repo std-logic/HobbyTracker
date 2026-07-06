@@ -54,18 +54,15 @@ void Books::WidgetData::initWidgets()
 
 void Books::WidgetData::copyDataToGui()
 {
-	_combo_author_tr->addList(_data_list.listOfAuthorsTr());
-	_combo_author_tr->lineEdit()->setText(_data.authorTr());
+	_combo_author_tr->setTextAndList(_data.authorTr(), _data_list.listOfAuthorsTr());
 
-	_combo_author_orig->addList(_data_list.listOfAuthorsOrig());
-	_combo_author_orig->lineEdit()->setText(_data.authorOrig());
+	_combo_author_orig->setTextAndList(_data.authorOrig(), _data_list.listOfAuthorsOrig());
 
 	_edit_title_tr->setText(_data.titleTr());
 
 	_edit_title_orig->setText(_data.titleOrig());
 
-	_combo_genre->addList(_data_list.listOfGenres());
-	_combo_genre->lineEdit()->setText(_data.genre());
+	_combo_genre->setTextAndList(_data.genre(), _data_list.listOfGenres());
 
 	_edit_year->setText(_data.yearString());
 

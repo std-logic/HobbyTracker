@@ -15,6 +15,7 @@ public:
 	virtual ~ComboEdit() = default;
 
 	void addList(const std::set<QString>& list_of_strings);
+	void setTextAndList(const QString& text, const std::set<QString>& list_of_strings);
 
 signals:
 

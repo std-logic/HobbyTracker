@@ -12,10 +12,21 @@ Books::Settings::Settings()
 {
 }
 
-void Books::Settings::save() const
+void Books::Settings::checkFirstRun()
 {
 	QSettings settings(Helper::stdPathSettings(), QSettings::IniFormat);
 
+	if (!settings.childGroups().contains(_group_name)) {
+		for (int i = 0; i < NumOfCsvFiles; ++i) {
+			_csv_settings.setFileName(i, Helper::stdPath(csv_file_names[i]));
+		}
+		save();
+	}
+}
+
+void Books::Settings::save() const
+{
+	QSettings settings(Helper::stdPathSettings(), QSettings::IniFormat);
 	settings.beginGroup(_group_name);
 
 	_csv_settings.save(&settings, "csv");
@@ -25,16 +36,9 @@ void Books::Settings::save() const
 
 void Books::Settings::load()
 {
+	checkFirstRun();
+
 	QSettings settings(Helper::stdPathSettings(), QSettings::IniFormat);
-
-	// create group automatically if it doesn't exists (first run)
-	if (!settings.childGroups().contains(_group_name)) {
-		for (int i = 0; i < NumOfCsvFiles; ++i) {
-			_csv_settings.setFileName(i, Helper::stdPath(csv_file_names[i]));
-		}
-		save();
-	}
-
 	settings.beginGroup(_group_name);
 
 	_csv_settings.load(&settings, "csv");

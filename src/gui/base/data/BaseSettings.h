@@ -11,6 +11,7 @@ public:
 	Settings(const QString& group_name);
 	virtual ~Settings() = default;
 
+	virtual void checkFirstRun() = 0;
 	virtual void save() const = 0;
 	virtual void load() = 0;
 

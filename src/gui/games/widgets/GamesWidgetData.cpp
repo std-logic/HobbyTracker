@@ -46,16 +46,13 @@ void Games::WidgetData::initWidgets()
 
 void Games::WidgetData::copyDataToGui()
 {
-	_combo_series->addList(_data_list.listOfSeries());
-	_combo_series->lineEdit()->setText(_data.series());
+	_combo_series->setTextAndList(_data.series(), _data_list.listOfSeries());
 
 	_edit_title->setText(_data.title());
 
-	_combo_developer->addList(_data_list.listOfDevelopers());
-	_combo_developer->lineEdit()->setText(_data.developer());
+	_combo_developer->setTextAndList(_data.developer(), _data_list.listOfDevelopers());
 
-	_combo_genre->addList(_data_list.listOfGenres());
-	_combo_genre->lineEdit()->setText(_data.genre());
+	_combo_genre->setTextAndList(_data.genre(), _data_list.listOfGenres());
 
 	_edit_year->setText(_data.yearString());
 

@@ -127,10 +127,10 @@ void Books::WidgetMain::readCsvData(const Csv::Settings& csv_settings)
 
 void Books::WidgetMain::saveCsvData()
 {
-	auto csv_data = DataConverter::conv(_data_list.value());
+	auto csv_data = DataConverter::conv(_data_list);
 	auto write_data_ok = Storage::writeCsv(CsvFileData, _settings.csvSettings(), csv_data);
 
-	csv_data = Base::ExtraConverter::conv(_extra_list.value());
+	csv_data = Base::ExtraConverter::conv(_extra_list);
 	auto write_extra_ok = Storage::writeCsv(CsvFileExtra, _settings.csvSettings(), csv_data);
 
 	if (write_data_ok && write_extra_ok) {
@@ -143,12 +143,12 @@ void Books::WidgetMain::saveCsvData()
 
 void Books::WidgetMain::addData()
 {
-	showData(_data_list.value().size());
+	showData(_data_list.size());
 }
 
 void Books::WidgetMain::editData(const QString& id)
 {
-	if (auto i = _data_list.value().findIndexById(id); i >= 0) {
+	if (auto i = _data_list.findIndexById(id); i >= 0) {
 		showData(i);
 	}
 }
@@ -156,7 +156,7 @@ void Books::WidgetMain::editData(const QString& id)
 void Books::WidgetMain::showData(size_t index)
 {
 	if (!_widget_data) {
-		_widget_data = new WidgetData(index, _data_list.value(), this);
+		_widget_data = new WidgetData(index, _data_list, this);
 		connect(_widget_data, &WidgetData::showMessage,
 				this, &WidgetMain::showMessage);
 		connect(_widget_data, &WidgetData::saveData,
@@ -167,11 +167,11 @@ void Books::WidgetMain::showData(size_t index)
 
 void Books::WidgetMain::saveData(size_t index, const Data& data)
 {
-	if (index < _data_list.value().size()) {
-		if (_data_list.value()[index] == data) { return; }
-		_data_list.value()[index] = data;
+	if (index < _data_list.size()) {
+		if (_data_list[index] == data) { return; }
+		_data_list[index] = data;
 	} else {
-		_data_list.value().add(data);
+		_data_list.add(data);
 	}
 
 	updateAll();
@@ -180,34 +180,26 @@ void Books::WidgetMain::saveData(size_t index, const Data& data)
 
 void Books::WidgetMain::deleteData(const QString& id)
 {
-	if (auto i = _data_list.value().findIndexById(id); i >= 0) {
-		deleteDataAtIndex(i);
-	}
-}
+	if (auto i = _data_list.findIndexById(id); i >= 0) {
+		auto ans = QMessageBox::question(this, tr("Удаление данных"),
+			tr("Удалить произведение \"%1\"?").arg(_data_list[i].autorAndTitleTr()));
 
-void Books::WidgetMain::deleteDataAtIndex(size_t index)
-{
-	auto ans = QMessageBox::question(
-			this,
-			tr("Удаление данных"),
-			tr("Удалить произведение \"%1\"?")
-				.arg(_data_list.value()[index].autorAndTitleTr()));
-
-	if (ans == QMessageBox::Yes) {
-		_data_list.value().del(index);
-		updateAll();
-		_widget_control->highlightButtonSave(true);
+		if (ans == QMessageBox::Yes) {
+			_data_list.del(i);
+			updateAll();
+			_widget_control->highlightButtonSave(true);
+		}
 	}
 }
 
 void Books::WidgetMain::addExtra()
 {
-	showExtra(_extra_list.value().size());
+	showExtra(_extra_list.size());
 }
 
 void Books::WidgetMain::editExtra(const QString& id)
 {
-	if (auto i = _extra_list.value().findIndexById(id); i >= 0) {
+	if (auto i = _extra_list.findIndexById(id); i >= 0) {
 		showExtra(i);
 	}
 }
@@ -215,7 +207,7 @@ void Books::WidgetMain::editExtra(const QString& id)
 void Books::WidgetMain::showExtra(size_t index)
 {
 	if (!_widget_extra) {
-		_widget_extra = new Base::WidgetExtra(index, _extra_list.value(), this);
+		_widget_extra = new Base::WidgetExtra(index, _extra_list, this);
 		connect(_widget_extra, &Base::WidgetExtra::showMessage,
 				this, &WidgetMain::showMessage);
 		connect(_widget_extra, &Base::WidgetExtra::saveExtra,
@@ -226,11 +218,11 @@ void Books::WidgetMain::showExtra(size_t index)
 
 void Books::WidgetMain::saveExtra(size_t index, const Base::Extra& extra)
 {
-	if (index < _extra_list.value().size()) {
-		if (_extra_list.value()[index] == extra) { return; }
-		_extra_list.value()[index] = extra;
+	if (index < _extra_list.size()) {
+		if (_extra_list[index] == extra) { return; }
+		_extra_list[index] = extra;
 	} else {
-		_extra_list.value().add(extra);
+		_extra_list.add(extra);
 	}
 
 	updateExtraList();
@@ -239,23 +231,15 @@ void Books::WidgetMain::saveExtra(size_t index, const Base::Extra& extra)
 
 void Books::WidgetMain::deleteExtra(const QString& id)
 {
-	if (auto i = _extra_list.value().findIndexById(id); i >= 0) {
-		deleteExtraAtIndex(i);
-	}
-}
+	if (auto i = _extra_list.findIndexById(id); i >= 0) {
+		auto ans = QMessageBox::question(this, tr("Удаление данных"),
+			tr("Удалить запись \"%1\"?").arg(_extra_list[i].title()));
 
-void Books::WidgetMain::deleteExtraAtIndex(size_t index)
-{
-	auto ans = QMessageBox::question(
-			this,
-			tr("Удаление данных"),
-			tr("Удалить запись \"%1\"?")
-				.arg(_extra_list.value()[index].title()));
-
-	if (ans == QMessageBox::Yes) {
-		_extra_list.value().del(index);
-		updateExtraList();
-		_widget_control->highlightButtonSave(true);
+		if (ans == QMessageBox::Yes) {
+			_extra_list.del(i);
+			updateExtraList();
+			_widget_control->highlightButtonSave(true);
+		}
 	}
 }
 
@@ -268,20 +252,20 @@ void Books::WidgetMain::updateAll()
 
 void Books::WidgetMain::updateSummary()
 {
-	if (_data_list.has_value()) { _widget_summary->update(_data_list.value()); }
+	_widget_summary->update(_data_list);
 }
 
 void Books::WidgetMain::updateDataList()
 {
-	if (_data_list.has_value()) { _widget_data_list->update(_data_list.value()); }
+	_widget_data_list->update(_data_list);
 }
 
 void Books::WidgetMain::updateExtraList()
 {
-	if (_extra_list.has_value()) { _widget_extra_list->update(_extra_list.value()); }
+	_widget_extra_list->update(_extra_list);
 }
 
 void Books::WidgetMain::updateChart()
 {
-	if (_data_list.has_value()) { _widget_chart->update(_data_list.value()); }
+	_widget_chart->update(_data_list);
 }

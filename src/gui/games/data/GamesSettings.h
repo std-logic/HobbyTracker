@@ -11,6 +11,7 @@ class Settings : public Base::Settings
 public:
 	Settings();
 
+	void checkFirstRun() override;
 	void save() const override;
 	void load() override;
 

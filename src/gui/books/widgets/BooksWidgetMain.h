@@ -50,14 +50,12 @@ private slots:
 	void showData(size_t index);
 	void saveData(size_t index, const Data& data);
 	void deleteData(const QString& id);
-	void deleteDataAtIndex(size_t index);
 
 	void addExtra();
 	void editExtra(const QString& id);
 	void showExtra(size_t index);
 	void saveExtra(size_t index, const Base::Extra& extra);
 	void deleteExtra(const QString& id);
-	void deleteExtraAtIndex(size_t index);
 
 	void updateAll();
 	void updateSummary();
@@ -75,8 +73,8 @@ private:
 	QPointer<WidgetData> _widget_data;
 	QPointer<Base::WidgetExtra> _widget_extra;
 
-	std::optional<DataList> _data_list;
-	std::optional<Base::ExtraList> _extra_list;
+	DataList _data_list;
+	Base::ExtraList _extra_list;
 	Settings _settings;
 };
 
