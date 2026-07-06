@@ -49,6 +49,9 @@ SOURCES += \
 	src/gui/base/widgets/BaseWidgetSummary.cpp \
 	src/gui/base/widgets/BaseWidgetTree.cpp \
 	src/gui/base/widgets/BaseWidgetTreeItem.cpp \
+	src/gui/bike/data/BikeDataConverter.cpp \
+	src/gui/bike/data/BikeDataList.cpp \
+	src/gui/bike/data/BikeSettings.cpp \
 	src/gui/books/data/BooksDataConverter.cpp \
 	src/gui/books/data/BooksDataList.cpp \
 	src/gui/books/data/BooksSettings.cpp \
@@ -103,6 +106,11 @@ HEADERS += \
 	src/gui/base/widgets/BaseWidgetSummary.h \
 	src/gui/base/widgets/BaseWidgetTree.h \
 	src/gui/base/widgets/BaseWidgetTreeItem.h \
+	src/gui/bike/common/BikeCommon.h \
+	src/gui/bike/data/BikeData.h \
+	src/gui/bike/data/BikeDataConverter.h \
+	src/gui/bike/data/BikeDataList.h \
+	src/gui/bike/data/BikeSettings.h \
 	src/gui/books/common/BooksCommon.h \
 	src/gui/books/data/BooksData.h \
 	src/gui/books/data/BooksDataConverter.h \
