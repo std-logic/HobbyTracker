@@ -4,6 +4,7 @@
 
 #include <QElapsedTimer>
 
+namespace Bike { class WidgetMain; }
 namespace Books { class WidgetMain; }
 namespace Games { class WidgetMain; }
 
@@ -34,6 +35,7 @@ private slots:
 	void showMessage(const QString& text, int timeout = 5000);
 
 private:
+	Bike::WidgetMain* _bike;
 	Books::WidgetMain* _books;
 	Games::WidgetMain* _games;
 

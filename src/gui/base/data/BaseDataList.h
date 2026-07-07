@@ -45,6 +45,9 @@ public:
 	inline auto size() const noexcept
 	{ return _data_list.size(); }
 
+	inline bool empty() const noexcept
+	{ return _data_list.empty(); }
+
 	inline void add(const T& data)
 	{ _data_list.push_back(data); }
 

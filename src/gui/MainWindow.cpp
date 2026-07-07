@@ -1,4 +1,5 @@
 #include "MainWindow.h"
+#include "bike/widgets/BikeWidgetMain.h"
 #include "books/widgets/BooksWidgetMain.h"
 #include "games/widgets/GamesWidgetMain.h"
 
@@ -21,6 +22,7 @@ void MainWindow::start()
 	showDefaultTitle();
 	showLoadingStart();
 
+	_bike->start();
 	_books->start();
 	_games->start();
 
@@ -52,6 +54,9 @@ void MainWindow::initCentralWidget()
 	central_widget->addTab(_games = new Games::WidgetMain, Games::WidgetMain::getName());
 	connect(_games, &Books::WidgetMain::showMessage, this, &MainWindow::showMessage);
 
+	central_widget->addTab(_bike = new Bike::WidgetMain, Bike::WidgetMain::getName());
+	connect(_bike, &Books::WidgetMain::showMessage, this, &MainWindow::showMessage);
+
 	setCentralWidget(central_widget);
 }
 
@@ -71,8 +76,7 @@ void MainWindow::showLoadingStart()
 
 void MainWindow::showLoadingFinish()
 {
-	statusBar()->showMessage(tr("Базы данных загружены за %1 мс")
-							 .arg(_loading_timer.elapsed()), 10000);
+	showMessage(tr("Базы данных загружены за %1 мс").arg(_loading_timer.elapsed()), 10000);
 }
 
 void MainWindow::showMessage(const QString& text, int timeout)

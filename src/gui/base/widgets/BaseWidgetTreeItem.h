@@ -24,7 +24,8 @@ public:
 
 	void setRating(int column, const QVariant& value);
 
-	void setBold(bool enable);
+	void setBold(int column, bool enable);
+	void setBoldEverywhere(bool enable);
 	void setBackgroundEverywhere(const QBrush& brush);
 
 signals:

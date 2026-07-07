@@ -17,14 +17,14 @@ Base::WidgetSummary::WidgetSummary(QWidget* parent)
 	_layout_main->setSpacing(Global::Sizes::default_spacing);
 }
 
-void Base::WidgetSummary::addWidget(QLabel* widget)
+void Base::WidgetSummary::addWidget(QLabel* widget, int spacing)
 {
 	_layout_main->addWidget(widget);
 
-	addSpacing();
+	addSpacing(spacing);
 }
 
-void Base::WidgetSummary::addWidget(const QString& label_text, QLabel* widget)
+void Base::WidgetSummary::addWidget(const QString& label_text, QLabel* widget, int spacing)
 {
 	auto label = new QLabel(label_text, this);
 	label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -35,7 +35,7 @@ void Base::WidgetSummary::addWidget(const QString& label_text, QLabel* widget)
 	widget->setStyleSheet(Global::Stylesheets::label_value);
 	_layout_main->addWidget(widget);
 
-	addSpacing();
+	addSpacing(spacing);
 }
 
 void Base::WidgetSummary::addStretch(int stretch)
@@ -45,5 +45,5 @@ void Base::WidgetSummary::addStretch(int stretch)
 
 void Base::WidgetSummary::addSpacing(int size)
 {
-	_layout_main->addSpacing(size);
+	if (size) { _layout_main->addSpacing(size); }
 }

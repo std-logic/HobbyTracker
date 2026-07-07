@@ -12,6 +12,7 @@ Books::WidgetDataList::WidgetDataList(QWidget* parent)
 void Books::WidgetDataList::update(const DataList& list)
 {
 	clear();
+	setRootIsDecorated(static_cast<DataListViewModes>(_view_mode) != DataListViewModes::Simple);
 	switch (static_cast<DataListViewModes>(_view_mode)) {
 		case DataListViewModes::ByAuthors:		showByAuthors(list);		break;
 		case DataListViewModes::ByGenres:		showByGenres(list);			break;

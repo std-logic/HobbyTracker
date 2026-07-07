@@ -12,6 +12,7 @@ Games::WidgetDataList::WidgetDataList(QWidget* parent)
 void Games::WidgetDataList::update(const DataList& list)
 {
 	clear();
+	setRootIsDecorated(static_cast<DataListViewModes>(_view_mode) != DataListViewModes::Simple);
 	switch (static_cast<DataListViewModes>(_view_mode)) {
 		case DataListViewModes::BySeries:		showBySeries(list);			break;
 		case DataListViewModes::ByDevelopers:	showByDevelopers(list);		break;

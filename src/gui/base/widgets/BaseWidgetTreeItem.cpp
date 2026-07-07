@@ -45,18 +45,23 @@ void Base::WidgetTreeItem::setRating(int column, const QVariant& value)
 	setBackground(column, Helper::ratingColor(rating));
 }
 
-void Base::WidgetTreeItem::setBold(bool enable)
+void Base::WidgetTreeItem::setBold(int column, bool enable)
 {
-	for (auto i = 0; i < columnCount(); ++i) {
-		auto default_font = font(i);
-		default_font.setBold(enable);
-		setFont(i, default_font);
+	auto default_font = font(column);
+	default_font.setBold(enable);
+	setFont(column, default_font);
+}
+
+void Base::WidgetTreeItem::setBoldEverywhere(bool enable)
+{
+	for (auto column = 0; column < treeWidget()->columnCount(); ++column) {
+		setBold(column, enable);
 	}
 }
 
 void Base::WidgetTreeItem::setBackgroundEverywhere(const QBrush& brush)
 {
-	for (auto i = 0; i < treeWidget()->columnCount(); ++i) {
-		setBackground(i, brush);
+	for (auto column = 0; column < treeWidget()->columnCount(); ++column) {
+		setBackground(column, brush);
 	}
 }
