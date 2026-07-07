@@ -38,8 +38,6 @@ public:
 
 	SublistsByIntegers booksByRatings() const;
 	NumbersByIntegers numbersByRatings() const;
-
-	static QString yearString(const SubListContainer& sublist);
 };
 
 } // namespace Books

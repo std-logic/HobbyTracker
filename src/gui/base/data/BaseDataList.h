@@ -80,7 +80,7 @@ public:
 			FuncIn&& funcIn, FuncOut&& funcOut) const
 	{
 		NumbersByStrings list;
-		auto [real_min, real_max] = Helper::initMinMax();
+		uint32_t real_min = Global::undefined_value, real_max = Global::undefined_value;
 		for (const auto& data : _data_list) {
 			auto val = funcIn(data);
 			Helper::checkMinMax(val, &real_min, &real_max);

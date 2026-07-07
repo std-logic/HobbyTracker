@@ -37,7 +37,7 @@ void Books::WidgetDataList::showByAuthors(const DataList& list)
 		auto item_author = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_author->setText(CLMN_TITLE, author);
 		item_author->setNumb(CLMN_COUNT, books.size());
-		item_author->setText(CLMN_YEAR, DataList::yearString(books));
+		item_author->setText(CLMN_YEAR, Helper::yearString(books));
 
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_author);
@@ -64,7 +64,7 @@ void Books::WidgetDataList::showByGenres(const DataList& list)
 		auto item_genre = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_genre->setText(CLMN_TITLE, genre);
 		item_genre->setNumb(CLMN_COUNT, books.size());
-		item_genre->setText(CLMN_YEAR, DataList::yearString(books));
+		item_genre->setText(CLMN_YEAR, Helper::yearString(books));
 
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_genre);
@@ -90,7 +90,7 @@ void Books::WidgetDataList::showByDecades(const DataList& list)
 		auto item_decade = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_decade->setText(CLMN_TITLE, decade);
 		item_decade->setNumb(CLMN_COUNT, books.size());
-		item_decade->setText(CLMN_YEAR, DataList::yearString(books));
+		item_decade->setText(CLMN_YEAR, Helper::yearString(books));
 
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_decade);
@@ -117,7 +117,7 @@ void Books::WidgetDataList::showByCenturies(const DataList& list)
 		auto item_century = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_century->setText(CLMN_TITLE, century);
 		item_century->setNumb(CLMN_COUNT, books.size());
-		item_century->setText(CLMN_YEAR, DataList::yearString(books));
+		item_century->setText(CLMN_YEAR, Helper::yearString(books));
 
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_century);
@@ -144,7 +144,7 @@ void Books::WidgetDataList::showByRatings(const DataList& list)
 		auto item_rating = new Base::WidgetTreeItem(this, Helper::ratingColor(rating));
 		item_rating->setNumb(CLMN_TITLE, rating);
 		item_rating->setNumb(CLMN_COUNT, books.size());
-		item_rating->setText(CLMN_YEAR, DataList::yearString(books));
+		item_rating->setText(CLMN_YEAR, Helper::yearString(books));
 
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_rating);

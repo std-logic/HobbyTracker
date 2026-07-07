@@ -11,6 +11,7 @@ namespace Helper
 	{
 		return QCoreApplication::applicationDirPath() + '/' + file_name;
 	}
+
 	inline QString stdPathSettings()
 	{
 		return stdPath(Global::settings_file_name);
@@ -27,10 +28,6 @@ namespace Helper
 		}
 	}
 
-	inline std::pair<uint32_t, uint32_t> initMinMax()
-	{
-		return {Global::undefined_value, Global::undefined_value};
-	}
 	inline void checkMinMax(uint32_t val, uint32_t* min, uint32_t* max)
 	{
 		if (val != Global::undefined_value) {
@@ -48,6 +45,7 @@ namespace Helper
 		}
 		return curr_min_year;
 	}
+
 	inline auto checkMaxYear(uint32_t curr_max_year, uint32_t year)
 	{
 		if (year != Global::undefined_value) {
@@ -57,6 +55,7 @@ namespace Helper
 		}
 		return curr_max_year;
 	}
+
 	inline QString yearString(uint32_t min_year, uint32_t max_year)
 	{
 		return	(min_year == Global::undefined_value) ? QString() :
@@ -66,10 +65,19 @@ namespace Helper
 					.arg(min_year, 4, 10, QChar('0'))
 					.arg(max_year, 4, 10, QChar('0'));
 	}
-	inline QString yearString(std::pair<uint32_t, uint32_t> min_max_year)
+
+	template<typename T>
+	concept has_year_func = requires(T a) { a.year(); };
+	template<has_year_func T>
+	inline QString yearString(std::vector<const T*> list)
 	{
-		return yearString(min_max_year.first, min_max_year.second);
+		uint32_t min_year = Global::undefined_value, max_year = Global::undefined_value;
+		for (auto data : list) {
+			checkMinMax(data->year(), &min_year, &max_year);
+		}
+		return yearString(min_year, max_year);
 	}
+
 	inline QString yearString(uint32_t year)
 	{
 		return	(year == Global::undefined_value) ?

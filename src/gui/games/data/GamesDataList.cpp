@@ -109,12 +109,3 @@ Games::DataList::NumbersByIntegers Games::DataList::numbersByRatings() const
 	}
 	return list;
 }
-
-QString Games::DataList::yearString(const SubListContainer& sublist)
-{
-	std::pair<uint32_t, uint32_t> years(Global::undefined_value, Global::undefined_value);
-	for (auto data : sublist) {
-		Helper::checkMinMax(data->year(), &years.first, &years.second);
-	}
-	return Helper::yearString(years);
-}

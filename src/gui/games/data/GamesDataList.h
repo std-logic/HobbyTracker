@@ -40,8 +40,6 @@ public:
 
 	SublistsByIntegers gamesByRatings() const;
 	NumbersByIntegers numbersByRatings() const;
-
-	static QString yearString(const SubListContainer& sublist);
 };
 
 } // namespace Games
