@@ -26,6 +26,8 @@ public:
 	using NumbersByStrings = std::map<QString, uint32_t>;
 	using NumbersByIntegers = std::map<uint32_t, uint32_t>;
 	using ListOfStrings = std::set<QString>;
+	using DataMethodReturningString = QString (T::*)() const;
+	using DataMethodReturningInteger = uint32_t (T::*)() const;
 
 	ListContainer::iterator begin() noexcept
 	{ return _data_list.begin(); }
@@ -60,6 +62,77 @@ public:
 			if (id == _data_list[i].id()) { return i; }
 		}
 		return -1;
+	}
+
+	// Return items, grouped by string values from method (typical for using in WidgetTree)
+	SublistsByStrings sublistsByStrings(DataMethodReturningString method) const
+	{
+		SublistsByStrings list;
+		for (const auto& data : _data_list) {
+			list[(data.*method)()].push_back(&data);
+		}
+		return list;
+	}
+
+	// Return items, grouped by epoch strings (years, decades, centuries) from method
+	SublistsByStrings sublistsByEpochStrings(DataMethodReturningInteger method, uint32_t step) const
+	{
+		SublistsByStrings list;
+		for (const auto& data : _data_list) {
+			list[Helper::epochString((data.*method)(), step)].push_back(&data);
+		}
+		return list;
+	}
+
+	// Return items, grouped by integer values from method (typical for using in WidgetTree)
+	SublistsByIntegers sublistsByIntegers(DataMethodReturningInteger method) const
+	{
+		SublistsByIntegers list;
+		for (const auto& data : _data_list) {
+			list[(data.*method)()].push_back(&data);
+		}
+		return list;
+	}
+
+	// Return list of string values from method (typical for using in ComboEdit)
+	ListOfStrings listOfStrings(DataMethodReturningString method) const
+	{
+		ListOfStrings list;
+		for (const auto& data : _data_list) {
+			list.insert((data.*method)());
+		}
+		return list;
+	}
+
+	// Return numbers of items with the same string values of method (typical for using in WidgetChart)
+	NumbersByStrings numbersByStrings(DataMethodReturningString method) const
+	{
+		NumbersByStrings list;
+		for (const auto& data : _data_list) {
+			++list[(data.*method)()];
+		}
+		return list;
+	}
+
+	// Return numbers of items with the same integer values of method (typical for using in WidgetChart)
+	NumbersByIntegers numbersByIntegers(DataMethodReturningInteger method) const
+	{
+		NumbersByIntegers list;
+		for (const auto& data : _data_list) {
+			++list[(data.*method)()];
+		}
+		return list;
+	}
+
+	// Return map of <method_key, method_val> integer values (typical for using in WidgetChart)
+	NumbersByIntegers numbersByIntegers(DataMethodReturningInteger method_key,
+										DataMethodReturningInteger method_val) const
+	{
+		NumbersByIntegers list;
+		for (const auto& data : _data_list) {
+			list[(data.*method_key)()] = (data.*method_val)();
+		}
+		return list;
 	}
 
 	enum class RangeTypes

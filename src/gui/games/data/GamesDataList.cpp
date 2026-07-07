@@ -23,65 +23,37 @@ Games::DataList::Summary Games::DataList::summary() const
 
 Games::DataList::SublistsByStrings Games::DataList::gamesBySeries() const
 {
-	SublistsByStrings list;
-	for (const auto& data : _data_list) {
-		list[data.series()].push_back(&data);
-	}
-	return list;
+	return sublistsByStrings(&Data::series);
 }
 
 Games::DataList::ListOfStrings Games::DataList::listOfSeries() const
 {
-	ListOfStrings list;
-	for (const auto& data : _data_list) {
-		list.insert(data.series());
-	}
-	return list;
+	return listOfStrings(&Data::series);
 }
 
 Games::DataList::SublistsByStrings Games::DataList::gamesByDevelopers() const
 {
-	SublistsByStrings list;
-	for (const auto& data : _data_list) {
-		list[data.developer()].push_back(&data);
-	}
-	return list;
+	return sublistsByStrings(&Data::developer);
 }
 
 Games::DataList::ListOfStrings Games::DataList::listOfDevelopers() const
 {
-	ListOfStrings list;
-	for (const auto& data : _data_list) {
-		list.insert(data.developer());
-	}
-	return list;
+	return listOfStrings(&Data::developer);
 }
 
 Games::DataList::SublistsByStrings Games::DataList::gamesByGenres() const
 {
-	SublistsByStrings list;
-	for (const auto& data : _data_list) {
-		list[data.genre()].push_back(&data);
-	}
-	return list;
+	return sublistsByStrings(&Data::genre);
 }
 
 Games::DataList::ListOfStrings Games::DataList::listOfGenres() const
 {
-	ListOfStrings list;
-	for (const auto& data : _data_list) {
-		list.insert(data.genre());
-	}
-	return list;
+	return listOfStrings(&Data::genre);
 }
 
 Games::DataList::SublistsByStrings Games::DataList::gamesByYears(uint32_t step) const
 {
-	SublistsByStrings list;
-	for (const auto& data : _data_list) {
-		list[Helper::epochString(data.year(), step)].push_back(&data);
-	}
-	return list;
+	return sublistsByEpochStrings(&Data::year, step);
 }
 
 Games::DataList::NumbersByStrings Games::DataList::numbersByYears(uint32_t step,
@@ -94,18 +66,10 @@ Games::DataList::NumbersByStrings Games::DataList::numbersByYears(uint32_t step,
 
 Games::DataList::SublistsByIntegers Games::DataList::gamesByRatings() const
 {
-	SublistsByIntegers list;
-	for (const auto& data : _data_list) {
-		list[data.rating()].push_back(&data);
-	}
-	return list;
+	return sublistsByIntegers(&Data::rating);
 }
 
 Games::DataList::NumbersByIntegers Games::DataList::numbersByRatings() const
 {
-	NumbersByIntegers list;
-	for (const auto& data : _data_list) {
-		++list[data.rating()];
-	}
-	return list;
+	return numbersByIntegers(&Data::rating);
 }

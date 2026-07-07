@@ -17,18 +17,10 @@ Bike::DataList::Summary Bike::DataList::summary() const
 
 Bike::DataList::NumbersByIntegers Bike::DataList::distByYears() const
 {
-	NumbersByIntegers list;
-	for (const auto& data : _data_list) {
-		list[data.year()] = data.dist();
-	}
-	return list;
+	return numbersByIntegers(&Data::year, &Data::dist);
 }
 
 Bike::DataList::NumbersByIntegers Bike::DataList::timeByYears() const
 {
-	NumbersByIntegers list;
-	for (const auto& data : _data_list) {
-		list[data.year()] = data.time();
-	}
-	return list;
+	return numbersByIntegers(&Data::year, &Data::time);
 }

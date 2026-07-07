@@ -21,29 +21,17 @@ Books::DataList::Summary Books::DataList::summary() const
 
 Books::DataList::SublistsByStrings Books::DataList::booksByAuthors() const
 {
-	SublistsByStrings list;
-	for (const auto& data : _data_list) {
-		list[data.author()].push_back(&data);
-	}
-	return list;
+	return sublistsByStrings(&Data::author);
 }
 
 Books::DataList::ListOfStrings Books::DataList::listOfAuthorsTr() const
 {
-	ListOfStrings list;
-	for (const auto& data : _data_list) {
-		list.insert(data.authorTr());
-	}
-	return list;
+	return listOfStrings(&Data::authorTr);
 }
 
 Books::DataList::ListOfStrings Books::DataList::listOfAuthorsOrig() const
 {
-	ListOfStrings list;
-	for (const auto& data : _data_list) {
-		list.insert(data.authorOrig());
-	}
-	return list;
+	return listOfStrings(&Data::authorOrig);
 }
 
 QString Books::DataList::findAuthorOrigByTr(const QString& author_tr) const
@@ -58,29 +46,17 @@ QString Books::DataList::findAuthorOrigByTr(const QString& author_tr) const
 
 Books::DataList::SublistsByStrings Books::DataList::booksByGenres() const
 {
-	SublistsByStrings list;
-	for (const auto& data : _data_list) {
-		list[data.genre()].push_back(&data);
-	}
-	return list;
+	return sublistsByStrings(&Data::genre);
 }
 
 Books::DataList::ListOfStrings Books::DataList::listOfGenres() const
 {
-	ListOfStrings list;
-	for (const auto& data : _data_list) {
-		list.insert(data.genre());
-	}
-	return list;
+	return listOfStrings(&Data::genre);
 }
 
 Books::DataList::SublistsByStrings Books::DataList::booksByYears(uint32_t step) const
 {
-	SublistsByStrings list;
-	for (const auto& data : _data_list) {
-		list[Helper::epochString(data.year(), step)].push_back(&data);
-	}
-	return list;
+	return sublistsByEpochStrings(&Data::year, step);
 }
 
 Books::DataList::NumbersByStrings Books::DataList::numbersByYears(uint32_t step,
@@ -93,18 +69,10 @@ Books::DataList::NumbersByStrings Books::DataList::numbersByYears(uint32_t step,
 
 Books::DataList::SublistsByIntegers Books::DataList::booksByRatings() const
 {
-	SublistsByIntegers list;
-	for (const auto& data : _data_list) {
-		list[data.rating()].push_back(&data);
-	}
-	return list;
+	return sublistsByIntegers(&Data::rating);
 }
 
 Books::DataList::NumbersByIntegers Books::DataList::numbersByRatings() const
 {
-	NumbersByIntegers list;
-	for (const auto& data : _data_list) {
-		++list[data.rating()];
-	}
-	return list;
+	return numbersByIntegers(&Data::rating);
 }
