@@ -27,7 +27,7 @@ void Bike::WidgetControl::initWidgets()
 	{
 		addSpacing();
 
-		addWidget(_button_data_list = new Base::ButtonShow(tr("Список"), this));
+		addWidget(_button_data_list = new Base::ButtonShow(tr("Пробег"), this));
 		connect(_button_data_list, &Base::ButtonShow::toggled,
 				this, &WidgetControl::showDataList);
 
@@ -40,6 +40,23 @@ void Bike::WidgetControl::initWidgets()
 		});
 	}
 
+	// trip list
+	{
+		addSpacing();
+
+		addWidget(_button_trip_list = new Base::ButtonShow(tr(" Велопоходы "), this));
+		connect(_button_trip_list, &Base::ButtonShow::toggled,
+				this, &WidgetControl::showTripList);
+
+		addWidget(_button_add_trip = new Base::ButtonAdd(this));
+		connect(_button_add_trip, &Base::ButtonAdd::clicked,
+				this, &WidgetControl::addTrip);
+
+		_button_trip_list->addSlaveWidgets({
+			_button_add_trip,
+		});
+	}
+
 	// chart
 	{
 		addSpacing();
@@ -49,8 +66,9 @@ void Bike::WidgetControl::initWidgets()
 				this, &WidgetControl::showChart);
 
 		addWidget(_combo_chart_view_mode = new QComboBox(this));
-		_combo_chart_view_mode->addItem(tr("Пробеги"), static_cast<int>(ChartViewModes::ByDist));
-		_combo_chart_view_mode->addItem(tr("Время"), static_cast<int>(ChartViewModes::ByTime));
+		_combo_chart_view_mode->addItem(tr("По километрам"), static_cast<int>(ChartViewModes::ByDist));
+		_combo_chart_view_mode->addItem(tr("По часам"), static_cast<int>(ChartViewModes::ByTime));
+		_combo_chart_view_mode->addItem(tr("По велопоходам"), static_cast<int>(ChartViewModes::ByTrips));
 		connect(_combo_chart_view_mode, &QComboBox::currentIndexChanged, this, [this](int index) {
 			emit setChartViewMode(_combo_chart_view_mode->itemData(index).toInt());
 		});

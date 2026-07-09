@@ -52,6 +52,8 @@ SOURCES += \
 	src/gui/bike/data/BikeDataConverter.cpp \
 	src/gui/bike/data/BikeDataList.cpp \
 	src/gui/bike/data/BikeSettings.cpp \
+	src/gui/bike/data/BikeTripConverter.cpp \
+	src/gui/bike/data/BikeTripList.cpp \
 	src/gui/bike/widgets/BikeWidgetChart.cpp \
 	src/gui/bike/widgets/BikeWidgetControl.cpp \
 	src/gui/bike/widgets/BikeWidgetData.cpp \
@@ -59,6 +61,8 @@ SOURCES += \
 	src/gui/bike/widgets/BikeWidgetMain.cpp \
 	src/gui/bike/widgets/BikeWidgetSettings.cpp \
 	src/gui/bike/widgets/BikeWidgetSummary.cpp \
+	src/gui/bike/widgets/BikeWidgetTrip.cpp \
+	src/gui/bike/widgets/BikeWidgetTripList.cpp \
 	src/gui/books/data/BooksDataConverter.cpp \
 	src/gui/books/data/BooksDataList.cpp \
 	src/gui/books/data/BooksSettings.cpp \
@@ -118,6 +122,9 @@ HEADERS += \
 	src/gui/bike/data/BikeDataConverter.h \
 	src/gui/bike/data/BikeDataList.h \
 	src/gui/bike/data/BikeSettings.h \
+	src/gui/bike/data/BikeTrip.h \
+	src/gui/bike/data/BikeTripConverter.h \
+	src/gui/bike/data/BikeTripList.h \
 	src/gui/bike/widgets/BikeWidgetChart.h \
 	src/gui/bike/widgets/BikeWidgetControl.h \
 	src/gui/bike/widgets/BikeWidgetData.h \
@@ -125,6 +132,8 @@ HEADERS += \
 	src/gui/bike/widgets/BikeWidgetMain.h \
 	src/gui/bike/widgets/BikeWidgetSettings.h \
 	src/gui/bike/widgets/BikeWidgetSummary.h \
+	src/gui/bike/widgets/BikeWidgetTrip.h \
+	src/gui/bike/widgets/BikeWidgetTripList.h \
 	src/gui/books/common/BooksCommon.h \
 	src/gui/books/data/BooksData.h \
 	src/gui/books/data/BooksDataConverter.h \

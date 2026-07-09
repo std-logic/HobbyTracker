@@ -8,6 +8,7 @@ namespace Bike
 {
 
 class DataList;
+class TripList;
 
 class WidgetSummary : public Base::WidgetSummary
 {
@@ -16,7 +17,7 @@ public:
 	explicit WidgetSummary(QWidget* parent = nullptr);
 	~WidgetSummary() = default;
 
-	void update(const DataList& list);
+	void update(const DataList& list, const TripList& trip_list);
 
 signals:
 
@@ -26,9 +27,11 @@ private:
 private:
 	QLabel* _label_years = nullptr;
 	QLabel* _label_total_dist = nullptr;
-	QLabel* _label_avg_dist = nullptr;
 	QLabel* _label_total_time = nullptr;
-	QLabel* _label_avg_time = nullptr;
+
+	QLabel* _label_trips_num = nullptr;
+	QLabel* _label_trips_total_dist = nullptr;
+	QLabel* _label_trips_total_time = nullptr;
 };
 
 } // namespace Bike

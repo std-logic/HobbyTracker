@@ -15,9 +15,7 @@ public:
 	struct Summary
 	{
 		uint32_t total_dist = 0;
-		double avg_dist = 0.;
 		uint32_t total_time = 0;
-		double avg_time = 0.;
 		uint32_t min_year = Global::undefined_value;
 		uint32_t max_year = Global::undefined_value;
 	};

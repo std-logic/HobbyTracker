@@ -44,7 +44,6 @@ private:
 	QLineEdit* _edit_year = nullptr;
 	Base::WidgetRating* _widget_rating = nullptr;
 
-	size_t _index = 0;
 	DataList _data_list;
 	Data _data;
 };

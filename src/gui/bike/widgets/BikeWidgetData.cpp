@@ -4,8 +4,7 @@
 #include <QValidator>
 
 Bike::WidgetData::WidgetData(size_t index, const DataList& list, QWidget* parent)
-	: Base::WidgetData{parent}
-	, _index{index}
+	: Base::WidgetData{index, list.size(), parent}
 	, _data_list{list}
 {
 	initData();
@@ -16,14 +15,14 @@ Bike::WidgetData::WidgetData(size_t index, const DataList& list, QWidget* parent
 
 void Bike::WidgetData::initData()
 {
-	if (_index < _data_list.size()) { _data = _data_list[_index]; }
+	if (_mode_edit_data) { _data = _data_list[_index]; }
 }
 
 void Bike::WidgetData::initCommonParams()
 {
-	setWindowTitle((_index < _data_list.size()) ?
-					tr("Редактирование данных") :
-					tr("Добавление новых данных"));
+	setWindowTitle(_mode_edit_data ?
+			tr("Редактирование данных") :
+			tr("Добавление новых данных"));
 }
 
 void Bike::WidgetData::initWidgets()
@@ -31,24 +30,26 @@ void Bike::WidgetData::initWidgets()
 	addWidget(tr("Год:"), _edit_year = new QLineEdit(this));
 	_edit_year->setValidator(new QIntValidator(2000, 2100, _edit_year));
 
-	addWidget(tr("Пробег, км:"), _edit_dist = new QLineEdit(this));
+	addWidget(tr("Километров:"), _edit_dist = new QLineEdit(this));
 	_edit_dist->setValidator(new QIntValidator(0, 10000, _edit_dist));
 
-	addWidget(tr("Время, ч:"), _edit_time = new QLineEdit(this));
+	addWidget(tr("Часов:"), _edit_time = new QLineEdit(this));
 	_edit_time->setValidator(new QIntValidator(0, 1000, _edit_time));
 }
 
 void Bike::WidgetData::copyDataToGui()
 {
-	if (_data.year() != Global::undefined_value) {
+	if (_mode_edit_data) {
 		_edit_year->setText(_data.yearString());
 	} else if (!_data_list.empty()) {
 		_edit_year->setText(QString::number(_data_list[_data_list.size()-1].year()+1));
 	}
 
-	_edit_dist->setText(QString::number(_data.dist()));
+	if (_mode_edit_data) {
+		_edit_dist->setText(QString::number(_data.dist()));
 
-	_edit_time->setText(QString::number(_data.time()));
+		_edit_time->setText(QString::number(_data.time()));
+	}
 }
 
 bool Bike::WidgetData::copyGuiToData()

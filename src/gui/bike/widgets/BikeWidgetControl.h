@@ -27,6 +27,9 @@ signals:
 	void showDataList(bool on);
 	void addData();
 
+	void showTripList(bool on);
+	void addTrip();
+
 	void showChart(bool on);
 	void setChartViewMode(int view_mode);
 
@@ -36,6 +39,9 @@ private:
 private:
 	Base::ButtonShow* _button_data_list = nullptr;
 	Base::ButtonAdd* _button_add_data = nullptr;
+
+	Base::ButtonShow* _button_trip_list = nullptr;
+	Base::ButtonAdd* _button_add_trip = nullptr;
 
 	Base::ButtonShow* _button_chart = nullptr;
 	QComboBox* _combo_chart_view_mode = nullptr;

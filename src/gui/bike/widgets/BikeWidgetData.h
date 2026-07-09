@@ -35,7 +35,6 @@ private:
 	QLineEdit* _edit_dist = nullptr;
 	QLineEdit* _edit_time = nullptr;
 
-	size_t _index = 0;
 	DataList _data_list;
 	Data _data;
 };

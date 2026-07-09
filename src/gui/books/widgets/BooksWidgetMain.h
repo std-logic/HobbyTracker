@@ -58,6 +58,7 @@ private slots:
 	void deleteExtra(const QString& id);
 
 	void updateAll();
+	void updateDependentOnData();
 	void updateSummary();
 	void updateDataList();
 	void updateExtraList();

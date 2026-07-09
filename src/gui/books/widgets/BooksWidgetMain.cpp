@@ -118,11 +118,11 @@ void Books::WidgetMain::readCsvData(const Csv::Settings& csv_settings)
 {
 	auto csv_data = Storage::readCsv(CsvFileData, csv_settings);
 	_data_list = DataConverter::conv(csv_data);
-	updateAll();
 
 	csv_data = Storage::readCsv(CsvFileExtra, csv_settings);
 	_extra_list = Base::ExtraConverter::conv(csv_data);
-	updateExtraList();
+
+	updateAll();
 }
 
 void Books::WidgetMain::saveCsvData()
@@ -174,7 +174,7 @@ void Books::WidgetMain::saveData(size_t index, const Data& data)
 		_data_list.add(data);
 	}
 
-	updateAll();
+	updateDependentOnData();
 	_widget_control->highlightButtonSave(true);
 }
 
@@ -186,7 +186,7 @@ void Books::WidgetMain::deleteData(const QString& id)
 
 		if (ans == QMessageBox::Yes) {
 			_data_list.del(i);
-			updateAll();
+			updateDependentOnData();
 			_widget_control->highlightButtonSave(true);
 		}
 	}
@@ -244,6 +244,14 @@ void Books::WidgetMain::deleteExtra(const QString& id)
 }
 
 void Books::WidgetMain::updateAll()
+{
+	updateSummary();
+	updateDataList();
+	updateExtraList();
+	updateChart();
+}
+
+void Books::WidgetMain::updateDependentOnData()
 {
 	updateSummary();
 	updateDataList();

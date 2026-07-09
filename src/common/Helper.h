@@ -28,6 +28,18 @@ namespace Helper
 		}
 	}
 
+	inline QString stringListToString(const QStringList& str_list, const QString& delimiter)
+	{
+		QString str;
+		for (int i = 0; i < str_list.size(); ++i) {
+			str += str_list[i];
+			if (i != (str_list.size() - 1)) {
+				str += delimiter;
+			}
+		}
+		return str;
+	}
+
 	inline void checkMinMax(uint32_t val, uint32_t* min, uint32_t* max)
 	{
 		if (val != Global::undefined_value) {

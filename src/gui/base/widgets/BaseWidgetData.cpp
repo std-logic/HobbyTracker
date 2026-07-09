@@ -8,8 +8,10 @@
 #include <QPushButton>
 #include <QLabel>
 
-Base::WidgetData::WidgetData(QWidget* parent)
+Base::WidgetData::WidgetData(size_t index, size_t data_size, QWidget* parent)
 	: QDialog{parent}
+	, _index{index}
+	, _mode_edit_data{index < data_size}
 {
 	initCommonParams();
 	initWidgets();

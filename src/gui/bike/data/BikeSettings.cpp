@@ -1,5 +1,6 @@
 #include "BikeSettings.h"
 #include "BikeDataConverter.h"
+#include "BikeTripConverter.h"
 #include "../common/BikeCommon.h"
 
 #include <common/Helper.h>
@@ -42,6 +43,7 @@ void Bike::Settings::load()
 
 	_csv_settings.load(&settings, "csv");
 	_csv_settings.setHeader(CsvFileData, DataConverter::getDefaultCsvHeader());
+	_csv_settings.setHeader(CsvFileTrip, TripConverter::getDefaultCsvHeader());
 
 	settings.endGroup();
 }

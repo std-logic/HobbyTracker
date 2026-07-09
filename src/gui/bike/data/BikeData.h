@@ -45,8 +45,8 @@ public:
 
 private:
 	uint32_t _year = Global::undefined_value;
-	uint32_t _dist = 0;
-	uint32_t _time = 0;
+	uint32_t _dist = 0; // km
+	uint32_t _time = 0; // hours
 };
 
 } // namespace Bike

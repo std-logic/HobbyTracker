@@ -6,8 +6,7 @@
 #include <QLineEdit>
 
 Games::WidgetData::WidgetData(size_t index, const DataList& list, QWidget* parent)
-	: Base::WidgetData{parent}
-	, _index{index}
+	: Base::WidgetData{index, list.size(), parent}
 	, _data_list{list}
 {
 	initData();
@@ -18,14 +17,14 @@ Games::WidgetData::WidgetData(size_t index, const DataList& list, QWidget* paren
 
 void Games::WidgetData::initData()
 {
-	if (_index < _data_list.size()) { _data = _data_list[_index]; }
+	if (_mode_edit_data) { _data = _data_list[_index]; }
 }
 
 void Games::WidgetData::initCommonParams()
 {
-	setWindowTitle((_index < _data_list.size()) ?
-					tr("Редактирование данных игры") :
-					tr("Добавление новой игры"));
+	setWindowTitle(_mode_edit_data ?
+			tr("Редактирование данных игры") :
+			tr("Добавление новой игры"));
 }
 
 void Games::WidgetData::initWidgets()

@@ -6,8 +6,7 @@
 #include <QLineEdit>
 
 Books::WidgetData::WidgetData(size_t index, const DataList& list, QWidget* parent)
-	: Base::WidgetData{parent}
-	, _index{index}
+	: Base::WidgetData{index, list.size(), parent}
 	, _data_list{list}
 {
 	initData();
@@ -22,14 +21,14 @@ Books::WidgetData::WidgetData(size_t index, const DataList& list, QWidget* paren
 
 void Books::WidgetData::initData()
 {
-	if (_index < _data_list.size()) { _data = _data_list[_index]; }
+	if (_mode_edit_data) { _data = _data_list[_index]; }
 }
 
 void Books::WidgetData::initCommonParams()
 {
-	setWindowTitle((_index < _data_list.size()) ?
-					tr("Редактирование данных произведения") :
-					tr("Добавление нового произведения"));
+	setWindowTitle(_mode_edit_data ?
+			tr("Редактирование данных произведения") :
+			tr("Добавление нового произведения"));
 }
 
 void Books::WidgetData::initWidgets()

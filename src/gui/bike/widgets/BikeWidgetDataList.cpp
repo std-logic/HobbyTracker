@@ -18,7 +18,7 @@ void Bike::WidgetDataList::update(const DataList& list)
 void Bike::WidgetDataList::showSimple(const DataList& list)
 {
 	enum Columns {CLMN_YEAR, CLMN_DIST, CLMN_TIME};
-	initColumns({tr("Год"), tr("Пробег, км"), tr("Время, ч")},
+	initColumns({tr("Год"), tr("Километров"), tr("Часов")},
 				{WIDTH_YEAR, WIDTH_DIST, WIDTH_TIME});
 	initSorting(CLMN_YEAR);
 

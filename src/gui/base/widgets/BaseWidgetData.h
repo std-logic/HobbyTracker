@@ -12,7 +12,7 @@ class WidgetData : public QDialog
 {
 	Q_OBJECT
 public:
-	explicit WidgetData(QWidget* parent = nullptr);
+	explicit WidgetData(size_t index, size_t data_size, QWidget* parent = nullptr);
 	virtual ~WidgetData() = default;
 
 signals:
@@ -30,6 +30,10 @@ protected:
 private:
 	void initCommonParams();
 	void initWidgets();
+
+protected:
+	size_t _index = 0;
+	bool _mode_edit_data = false;
 
 private:
 	QGridLayout* _layout_main = nullptr;

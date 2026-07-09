@@ -39,7 +39,6 @@ private:
 	QLineEdit* _edit_title = nullptr;
 	QLineEdit* _edit_notes = nullptr;
 
-	size_t _index = 0;
 	ExtraList _data_list;
 	Extra _data;
 };

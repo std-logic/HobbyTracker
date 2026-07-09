@@ -55,8 +55,8 @@ namespace Global
 
 	namespace Sizes
 	{
-		inline const int window_min_width = 960;
-		inline const int window_min_height = 540;
+		inline const int window_min_width = 1280;
+		inline const int window_min_height = 720;
 
 		inline const int font_small = 9;
 		inline const int font_big = 11;

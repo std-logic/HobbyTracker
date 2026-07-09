@@ -4,8 +4,7 @@
 #include <QLineEdit>
 
 Base::WidgetExtra::WidgetExtra(size_t index, const ExtraList& list, QWidget* parent)
-	: Base::WidgetData{parent}
-	, _index{index}
+	: Base::WidgetData{index, list.size(), parent}
 	, _data_list{list}
 {
 	initData();
@@ -16,14 +15,14 @@ Base::WidgetExtra::WidgetExtra(size_t index, const ExtraList& list, QWidget* par
 
 void Base::WidgetExtra::initData()
 {
-	if (_index < _data_list.size()) { _data = _data_list[_index]; }
+	if (_mode_edit_data) { _data = _data_list[_index]; }
 }
 
 void Base::WidgetExtra::initCommonParams()
 {
-	setWindowTitle((_index < _data_list.size()) ?
-					tr("Редактирование записи") :
-					tr("Добавление новой записи"));
+	setWindowTitle(_mode_edit_data ?
+			tr("Редактирование записи") :
+			tr("Добавление новой записи"));
 }
 
 void Base::WidgetExtra::initWidgets()
