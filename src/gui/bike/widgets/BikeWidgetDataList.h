@@ -14,17 +14,17 @@ public:
 	explicit WidgetDataList(QWidget* parent = nullptr);
 	~WidgetDataList() = default;
 
-	void update(const DataList& list);
+	void update(const DataList& data_list);
 
 signals:
 
 private:
-	void showSimple(const DataList& list);
+	void showSimple(const DataList& data_list);
 
 private:
 	static const int WIDTH_YEAR = 150;
-	static const int WIDTH_DIST = 100;
 	static const int WIDTH_TIME = 100;
+	static const int WIDTH_DIST = 100;
 };
 
 } // namespace Bike

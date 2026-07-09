@@ -14,12 +14,12 @@ public:
 	explicit WidgetExtraList(QWidget* parent = nullptr);
 	~WidgetExtraList() = default;
 
-	void update(const ExtraList& list);
+	void update(const ExtraList& data_list);
 
 signals:
 
 private:
-	void showByGroups(const ExtraList& list);
+	void showByGroups(const ExtraList& data_list);
 
 private:
 	static const int WIDTH_TITLE = 0; // stretched

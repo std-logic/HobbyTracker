@@ -7,6 +7,7 @@
 namespace Bike { class WidgetMain; }
 namespace Books { class WidgetMain; }
 namespace Games { class WidgetMain; }
+namespace Trekking { class WidgetMain; }
 
 class MainWindow : public QMainWindow
 {
@@ -38,6 +39,7 @@ private:
 	Bike::WidgetMain* _bike;
 	Books::WidgetMain* _books;
 	Games::WidgetMain* _games;
+	Trekking::WidgetMain* _trekking;
 
 	QElapsedTimer _loading_timer;
 };

@@ -3,9 +3,9 @@
 
 #include <QLineEdit>
 
-Base::WidgetExtra::WidgetExtra(size_t index, const ExtraList& list, QWidget* parent)
-	: Base::WidgetData{index, list.size(), parent}
-	, _data_list{list}
+Base::WidgetExtra::WidgetExtra(size_t index, const ExtraList& data_list, QWidget* parent)
+	: Base::WidgetData{index, data_list.size(), parent}
+	, _data_list{data_list}
 {
 	initData();
 	initCommonParams();

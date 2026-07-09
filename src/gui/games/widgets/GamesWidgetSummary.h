@@ -16,7 +16,7 @@ public:
 	explicit WidgetSummary(QWidget* parent = nullptr);
 	~WidgetSummary() = default;
 
-	void update(const DataList& list);
+	void update(const DataList& data_list);
 
 signals:
 

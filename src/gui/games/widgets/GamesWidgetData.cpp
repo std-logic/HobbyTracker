@@ -5,9 +5,9 @@
 
 #include <QLineEdit>
 
-Games::WidgetData::WidgetData(size_t index, const DataList& list, QWidget* parent)
-	: Base::WidgetData{index, list.size(), parent}
-	, _data_list{list}
+Games::WidgetData::WidgetData(size_t index, const DataList& data_list, QWidget* parent)
+	: Base::WidgetData{index, data_list.size(), parent}
+	, _data_list{data_list}
 {
 	initData();
 	initCommonParams();

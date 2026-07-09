@@ -8,8 +8,8 @@ QStringList Bike::DataConverter::getDefaultCsvHeader()
 	QStringList header(NUM_OF_COLUMNS);
 
 	header[CLMN_YEAR]		= tr("Год");
-	header[CLMN_DIST]		= tr("Пробег, км");
-	header[CLMN_TIME]		= tr("Время, ч");
+	header[CLMN_TIME]		= tr("Часов");
+	header[CLMN_DIST]		= tr("Километров");
 
 	return header;
 }
@@ -27,13 +27,13 @@ Bike::DataList Bike::DataConverter::conv(const Csv::Data& csv_data)
 			auto year = line[CLMN_YEAR].toUInt(&conv_ok);
 			if (conv_ok) { data.setYear(year); }
 		}
-		if (CLMN_DIST < line_size) {
-			auto dist = line[CLMN_DIST].toUInt(&conv_ok);
-			if (conv_ok) { data.setDist(dist); }
-		}
 		if (CLMN_TIME < line_size) {
 			auto time = line[CLMN_TIME].toUInt(&conv_ok);
 			if (conv_ok) { data.setTime(time); }
+		}
+		if (CLMN_DIST < line_size) {
+			auto dist = line[CLMN_DIST].toUInt(&conv_ok);
+			if (conv_ok) { data.setDist(dist); }
 		}
 
 		data_list.add(data);
@@ -50,8 +50,8 @@ Csv::Data Bike::DataConverter::conv(const DataList& data_list)
 		QStringList line(NUM_OF_COLUMNS);
 
 		line[CLMN_YEAR]		= QString::number(data.year());
-		line[CLMN_DIST]		= QString::number(data.dist());
 		line[CLMN_TIME]		= QString::number(data.time());
+		line[CLMN_DIST]		= QString::number(data.dist());
 
 		csv_data.push_back(line);
 	}

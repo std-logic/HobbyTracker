@@ -32,7 +32,7 @@ public:
 	{ return _date_end; }
 
 	inline QString dates() const
-	{ return QStringLiteral("%1-%2").arg(_date_start, _date_end.mid(5)); }
+	{ return QStringLiteral("%1 - %2").arg(_date_start, _date_end.mid(5)); }
 
 	inline uint32_t year() const
 	{
@@ -41,20 +41,21 @@ public:
 				Global::undefined_value;
 	}
 
-	inline void setDist(uint32_t dist)
-	{ _dist = dist; }
-	inline uint32_t dist() const
-	{ return _dist; }
-
 	inline void setTime(uint32_t time)
 	{ _time = time; }
 	inline uint32_t time() const
 	{ return _time; }
 
+	inline void setDist(uint32_t dist)
+	{ _dist = dist; }
+	inline uint32_t dist() const
+	{ return _dist; }
+
 	template<typename T>
 	inline void setCountries(T&& countries)
 	{ _countries = std::forward<T>(countries); }
-	inline void setCountriesFromString(const QString& countries, const QString& delimiter = QStringLiteral(", "))
+	inline void setCountriesFromString(
+			const QString& countries, const QString& delimiter = QStringLiteral(", "))
 	{ _countries = countries.split(delimiter); }
 	inline QStringList countries() const
 	{ return _countries; }
@@ -64,7 +65,8 @@ public:
 	template<typename T>
 	inline void setPlaces(T&& places)
 	{ _places = std::forward<T>(places); }
-	inline void setPlacesFromString(const QString& places, const QString& delimiter = QStringLiteral(", "))
+	inline void setPlacesFromString(
+			const QString& places, const QString& delimiter = QStringLiteral(", "))
 	{ _places = places.split(delimiter); }
 	inline QStringList places() const
 	{ return _places; }
@@ -75,8 +77,8 @@ public:
 	{
 		return	(_date_start == other.dateStart()) &&
 				(_date_end == other.dateEnd()) &&
-				(_dist == other.dist()) &&
 				(_time == other.time()) &&
+				(_dist == other.dist()) &&
 				(_countries == other.countries()) &&
 				(_places == other.places());
 	}
@@ -84,8 +86,8 @@ public:
 private:
 	QString _date_start; // YYYY.MM.DD
 	QString _date_end; // YYYY.MM.DD
-	uint32_t _dist = 0; // km
 	uint32_t _time = 0; // nights
+	uint32_t _dist = 0; // km
 	QStringList _countries;
 	QStringList _places;
 };

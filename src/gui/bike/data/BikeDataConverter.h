@@ -28,8 +28,8 @@ private:
 	enum Columns
 	{
 		CLMN_YEAR,
-		CLMN_DIST,
 		CLMN_TIME,
+		CLMN_DIST,
 		NUM_OF_COLUMNS
 	};
 };

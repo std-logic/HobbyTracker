@@ -8,27 +8,27 @@ Bike::WidgetChart::WidgetChart(QWidget* parent)
 {
 }
 
-void Bike::WidgetChart::update(const DataList& list, const TripList& trip_list)
+void Bike::WidgetChart::update(const DataList& data_list, const TripList& trip_list)
 {
 	clearChart();
 	switch (static_cast<ChartViewModes>(_view_mode)) {
-		case ChartViewModes::ByDist:		showByDist(list);			break;
-		case ChartViewModes::ByTime:		showByTime(list);			break;
+		case ChartViewModes::ByDist:		showByDist(data_list);		break;
+		case ChartViewModes::ByTime:		showByTime(data_list);		break;
 		case ChartViewModes::ByTrips:		showByTrips(trip_list);		break;
 		default: return;
 	}
 }
 
-void Bike::WidgetChart::showByDist(const DataList& list)
+void Bike::WidgetChart::showByDist(const DataList& data_list)
 {
 	chart()->setTitle(tr("Километров по годам"));
-	updateBars(list.distByYears());
+	updateBars(data_list.distByYears());
 }
 
-void Bike::WidgetChart::showByTime(const DataList& list)
+void Bike::WidgetChart::showByTime(const DataList& data_list)
 {
 	chart()->setTitle(tr("Часов по годам"));
-	updateBars(list.timeByYears());
+	updateBars(data_list.timeByYears());
 }
 
 void Bike::WidgetChart::showByTrips(const TripList& trip_list)

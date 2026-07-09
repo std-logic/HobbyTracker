@@ -2,6 +2,7 @@
 #include "bike/widgets/BikeWidgetMain.h"
 #include "books/widgets/BooksWidgetMain.h"
 #include "games/widgets/GamesWidgetMain.h"
+#include "trekking/widgets/TrekkingWidgetMain.h"
 
 #include <common/Global.h>
 
@@ -25,6 +26,7 @@ void MainWindow::start()
 	_bike->start();
 	_books->start();
 	_games->start();
+	_trekking->start();
 
 	showLoadingFinish();
 	show();
@@ -52,10 +54,13 @@ void MainWindow::initCentralWidget()
 	connect(_books, &Books::WidgetMain::showMessage, this, &MainWindow::showMessage);
 
 	central_widget->addTab(_games = new Games::WidgetMain, Games::WidgetMain::getName());
-	connect(_games, &Books::WidgetMain::showMessage, this, &MainWindow::showMessage);
+	connect(_games, &Games::WidgetMain::showMessage, this, &MainWindow::showMessage);
 
 	central_widget->addTab(_bike = new Bike::WidgetMain, Bike::WidgetMain::getName());
-	connect(_bike, &Books::WidgetMain::showMessage, this, &MainWindow::showMessage);
+	connect(_bike, &Bike::WidgetMain::showMessage, this, &MainWindow::showMessage);
+
+	central_widget->addTab(_trekking = new Trekking::WidgetMain, Trekking::WidgetMain::getName());
+	connect(_trekking, &Trekking::WidgetMain::showMessage, this, &MainWindow::showMessage);
 
 	setCentralWidget(central_widget);
 }

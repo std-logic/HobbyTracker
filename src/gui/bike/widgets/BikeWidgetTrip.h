@@ -33,8 +33,8 @@ private slots:
 private:
 	QLineEdit* _edit_date_start = nullptr;
 	QLineEdit* _edit_date_end = nullptr;
-	QLineEdit* _edit_dist = nullptr;
 	QLineEdit* _edit_time = nullptr;
+	QLineEdit* _edit_dist = nullptr;
 	QLineEdit* _edit_countries = nullptr;
 	QLineEdit* _edit_places = nullptr;
 

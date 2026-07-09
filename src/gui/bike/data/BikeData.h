@@ -26,27 +26,27 @@ public:
 	QString yearString() const
 	{ return Helper::yearString(_year); }
 
-	inline void setDist(uint32_t dist)
-	{ _dist = dist; }
-	inline uint32_t dist() const
-	{ return _dist; }
-
 	inline void setTime(uint32_t time)
 	{ _time = time; }
 	inline uint32_t time() const
 	{ return _time; }
 
+	inline void setDist(uint32_t dist)
+	{ _dist = dist; }
+	inline uint32_t dist() const
+	{ return _dist; }
+
 	inline bool operator==(const Data& other) const noexcept
 	{
 		return	(_year == other.year()) &&
-				(_dist == other.dist()) &&
-				(_time == other.time());
+				(_time == other.time()) &&
+				(_dist == other.dist());
 	}
 
 private:
 	uint32_t _year = Global::undefined_value;
-	uint32_t _dist = 0; // km
 	uint32_t _time = 0; // hours
+	uint32_t _dist = 0; // km
 };
 
 } // namespace Bike

@@ -11,9 +11,9 @@ Games::WidgetSummary::WidgetSummary(QWidget* parent)
 	initWidgets();
 }
 
-void Games::WidgetSummary::update(const DataList& list)
+void Games::WidgetSummary::update(const DataList& data_list)
 {
-	auto summary = list.summary();
+	auto summary = data_list.summary();
 
 	_label_series_num->setText(QString::number(summary.series_num));
 

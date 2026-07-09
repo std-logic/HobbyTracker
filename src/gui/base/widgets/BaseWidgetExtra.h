@@ -17,7 +17,7 @@ class WidgetExtra : public WidgetData
 {
 	Q_OBJECT
 public:
-	explicit WidgetExtra(size_t index, const ExtraList& list, QWidget* parent = nullptr);
+	explicit WidgetExtra(size_t index, const ExtraList& data_list, QWidget* parent = nullptr);
 	~WidgetExtra() = default;
 
 signals:

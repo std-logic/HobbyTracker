@@ -15,13 +15,13 @@ public:
 	explicit WidgetChart(QWidget* parent = nullptr);
 	~WidgetChart() = default;
 
-	void update(const DataList& list, const TripList& trip_list);
+	void update(const DataList& data_list, const TripList& trip_list);
 
 signals:
 
 private:
-	void showByDist(const DataList& list);
-	void showByTime(const DataList& list);
+	void showByDist(const DataList& data_list);
+	void showByTime(const DataList& data_list);
 	void showByTrips(const TripList& trip_list);
 };
 

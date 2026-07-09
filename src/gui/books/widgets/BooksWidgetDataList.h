@@ -14,17 +14,17 @@ public:
 	explicit WidgetDataList(QWidget* parent = nullptr);
 	~WidgetDataList() = default;
 
-	void update(const DataList& list);
+	void update(const DataList& data_list);
 
 signals:
 
 private:
-	void showByAuthors(const DataList& list);
-	void showByGenres(const DataList& list);
-	void showByDecades(const DataList& list);
-	void showByCenturies(const DataList& list);
-	void showByRatings(const DataList& list);
-	void showSimple(const DataList& list);
+	void showByAuthors(const DataList& data_list);
+	void showByGenres(const DataList& data_list);
+	void showByDecades(const DataList& data_list);
+	void showByCenturies(const DataList& data_list);
+	void showByRatings(const DataList& data_list);
+	void showSimple(const DataList& data_list);
 
 private:
 	static const int WIDTH_TITLE = 0; // stretched

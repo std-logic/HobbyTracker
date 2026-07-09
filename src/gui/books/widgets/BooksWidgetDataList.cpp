@@ -9,29 +9,29 @@ Books::WidgetDataList::WidgetDataList(QWidget* parent)
 {
 }
 
-void Books::WidgetDataList::update(const DataList& list)
+void Books::WidgetDataList::update(const DataList& data_list)
 {
 	clear();
 	setRootIsDecorated(static_cast<DataListViewModes>(_view_mode) != DataListViewModes::Simple);
 	switch (static_cast<DataListViewModes>(_view_mode)) {
-		case DataListViewModes::ByAuthors:		showByAuthors(list);		break;
-		case DataListViewModes::ByGenres:		showByGenres(list);			break;
-		case DataListViewModes::ByDecades:		showByDecades(list);		break;
-		case DataListViewModes::ByCenturies:	showByCenturies(list);		break;
-		case DataListViewModes::ByRatings:		showByRatings(list);		break;
-		case DataListViewModes::Simple:			showSimple(list);			break;
+		case DataListViewModes::ByAuthors:		showByAuthors(data_list);		break;
+		case DataListViewModes::ByGenres:		showByGenres(data_list);		break;
+		case DataListViewModes::ByDecades:		showByDecades(data_list);		break;
+		case DataListViewModes::ByCenturies:	showByCenturies(data_list);		break;
+		case DataListViewModes::ByRatings:		showByRatings(data_list);		break;
+		case DataListViewModes::Simple:			showSimple(data_list);			break;
 		default: return;
 	}
 }
 
-void Books::WidgetDataList::showByAuthors(const DataList& list)
+void Books::WidgetDataList::showByAuthors(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
 	initColumns({tr("Автор / Название"), tr("К-во"), tr("Жанр"), tr("Год"), tr("Оценка")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
-	auto books_by_authors = list.booksByAuthors();
+	auto books_by_authors = data_list.booksByAuthors();
 
 	for (const auto& [author, books] : books_by_authors) {
 		auto item_author = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
@@ -51,14 +51,14 @@ void Books::WidgetDataList::showByAuthors(const DataList& list)
 	}
 }
 
-void Books::WidgetDataList::showByGenres(const DataList& list)
+void Books::WidgetDataList::showByGenres(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_YEAR, CLMN_RATING};
 	initColumns({tr("Жанр / Название"), tr("К-во"), tr("Год"), tr("Оценка")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
-	auto books_by_genres = list.booksByGenres();
+	auto books_by_genres = data_list.booksByGenres();
 
 	for (const auto& [genre, books] : books_by_genres) {
 		auto item_genre = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
@@ -77,14 +77,14 @@ void Books::WidgetDataList::showByGenres(const DataList& list)
 	}
 }
 
-void Books::WidgetDataList::showByDecades(const DataList& list)
+void Books::WidgetDataList::showByDecades(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
 	initColumns({tr("Десятилетие / Название"), tr("К-во"), tr("Жанр"), tr("Год"), tr("Оценка")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
-	auto books_by_years = list.booksByYears(10);
+	auto books_by_years = data_list.booksByYears(10);
 
 	for (const auto& [decade, books] : books_by_years) {
 		auto item_decade = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
@@ -104,14 +104,14 @@ void Books::WidgetDataList::showByDecades(const DataList& list)
 	}
 }
 
-void Books::WidgetDataList::showByCenturies(const DataList& list)
+void Books::WidgetDataList::showByCenturies(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
 	initColumns({tr("Столетие / Название"), tr("К-во"), tr("Жанр"), tr("Год"), tr("Оценка")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
-	auto books_by_years = list.booksByYears(100);
+	auto books_by_years = data_list.booksByYears(100);
 
 	for (const auto& [century, books] : books_by_years) {
 		auto item_century = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
@@ -131,14 +131,14 @@ void Books::WidgetDataList::showByCenturies(const DataList& list)
 	}
 }
 
-void Books::WidgetDataList::showByRatings(const DataList& list)
+void Books::WidgetDataList::showByRatings(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR};
 	initColumns({tr("Оценка / Название"), tr("К-во"), tr("Жанр"), tr("Год")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR});
 	initSorting(CLMN_TITLE);
 
-	auto books_by_ratings = list.booksByRatings();
+	auto books_by_ratings = data_list.booksByRatings();
 
 	for (const auto& [rating, books] : books_by_ratings) {
 		auto item_rating = new Base::WidgetTreeItem(this, Helper::ratingColor(rating));
@@ -157,14 +157,14 @@ void Books::WidgetDataList::showByRatings(const DataList& list)
 	}
 }
 
-void Books::WidgetDataList::showSimple(const DataList& list)
+void Books::WidgetDataList::showSimple(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
 	initColumns({tr("Название"), tr("Жанр"), tr("Год"), tr("Оценка")},
 				{WIDTH_TITLE, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
-	for (const auto& book : list) {
+	for (const auto& book : data_list) {
 		auto item_book = new Base::WidgetTreeItem(this);
 		item_book->setText(CLMN_TITLE, book.autorAndTitle());
 		item_book->setToolTip(CLMN_TITLE, book.summaryString());

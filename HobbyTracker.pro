@@ -83,6 +83,16 @@ SOURCES += \
 	src/gui/games/widgets/GamesWidgetMain.cpp \
 	src/gui/games/widgets/GamesWidgetSettings.cpp \
 	src/gui/games/widgets/GamesWidgetSummary.cpp \
+	src/gui/trekking/data/TrekkingDataConverter.cpp \
+	src/gui/trekking/data/TrekkingDataList.cpp \
+	src/gui/trekking/data/TrekkingSettings.cpp \
+	src/gui/trekking/widgets/TrekkingWidgetChart.cpp \
+	src/gui/trekking/widgets/TrekkingWidgetControl.cpp \
+	src/gui/trekking/widgets/TrekkingWidgetData.cpp \
+	src/gui/trekking/widgets/TrekkingWidgetDataList.cpp \
+	src/gui/trekking/widgets/TrekkingWidgetMain.cpp \
+	src/gui/trekking/widgets/TrekkingWidgetSettings.cpp \
+	src/gui/trekking/widgets/TrekkingWidgetSummary.cpp \
 	src/storage/Storage.cpp \
 	src/storage/csv/CsvSettings.cpp \
 	src/storage/csv/CsvStorage.cpp
@@ -158,6 +168,18 @@ HEADERS += \
 	src/gui/games/widgets/GamesWidgetMain.h \
 	src/gui/games/widgets/GamesWidgetSettings.h \
 	src/gui/games/widgets/GamesWidgetSummary.h \
+	src/gui/trekking/common/TrekkingCommon.h \
+	src/gui/trekking/data/TrekkingData.h \
+	src/gui/trekking/data/TrekkingDataConverter.h \
+	src/gui/trekking/data/TrekkingDataList.h \
+	src/gui/trekking/data/TrekkingSettings.h \
+	src/gui/trekking/widgets/TrekkingWidgetChart.h \
+	src/gui/trekking/widgets/TrekkingWidgetControl.h \
+	src/gui/trekking/widgets/TrekkingWidgetData.h \
+	src/gui/trekking/widgets/TrekkingWidgetDataList.h \
+	src/gui/trekking/widgets/TrekkingWidgetMain.h \
+	src/gui/trekking/widgets/TrekkingWidgetSettings.h \
+	src/gui/trekking/widgets/TrekkingWidgetSummary.h \
 	src/storage/Storage.h \
 	src/storage/csv/CsvData.h \
 	src/storage/csv/CsvSettings.h \

@@ -27,6 +27,7 @@ public:
 	using NumbersByIntegers = std::map<uint32_t, uint32_t>;
 	using ListOfStrings = std::set<QString>;
 	using DataMethodReturningString = QString (T::*)() const;
+	using DataMethodReturningStringList = QStringList (T::*)() const;
 	using DataMethodReturningInteger = uint32_t (T::*)() const;
 
 	ListContainer::iterator begin() noexcept
@@ -70,6 +71,19 @@ public:
 		SublistsByStrings list;
 		for (const auto& data : _data_list) {
 			list[(data.*method)()].push_back(&data);
+		}
+		return list;
+	}
+
+	// Return items, grouped by string values from method (typical for using in WidgetTree)
+	SublistsByStrings sublistsByStrings(DataMethodReturningStringList method) const
+	{
+		SublistsByStrings list;
+		for (const auto& data : _data_list) {
+			auto str_list = (data.*method)();
+			for (const auto& str : str_list) {
+				list[str].push_back(&data);
+			}
 		}
 		return list;
 	}

@@ -19,7 +19,7 @@ class WidgetData : public Base::WidgetData
 {
 	Q_OBJECT
 public:
-	explicit WidgetData(size_t index, const DataList& list, QWidget* parent = nullptr);
+	explicit WidgetData(size_t index, const DataList& data_list, QWidget* parent = nullptr);
 	~WidgetData() = default;
 
 signals:

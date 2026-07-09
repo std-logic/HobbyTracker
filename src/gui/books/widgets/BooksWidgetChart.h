@@ -14,14 +14,14 @@ public:
 	explicit WidgetChart(QWidget* parent = nullptr);
 	~WidgetChart() = default;
 
-	void update(const DataList& list);
+	void update(const DataList& data_list);
 
 signals:
 
 private:
-	void showByDecades(const DataList& list);
-	void showByCenturies(const DataList& list);
-	void showByRatings(const DataList& list);
+	void showByDecades(const DataList& data_list);
+	void showByCenturies(const DataList& data_list);
+	void showByRatings(const DataList& data_list);
 };
 
 } // namespace Books

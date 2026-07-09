@@ -7,20 +7,20 @@ Base::WidgetExtraList::WidgetExtraList(QWidget* parent)
 {
 }
 
-void Base::WidgetExtraList::update(const ExtraList& list)
+void Base::WidgetExtraList::update(const ExtraList& data_list)
 {
 	clear();
-	showByGroups(list);
+	showByGroups(data_list);
 }
 
-void Base::WidgetExtraList::showByGroups(const ExtraList& list)
+void Base::WidgetExtraList::showByGroups(const ExtraList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_NOTES};
 	initColumns({tr("Список / Запись"), tr("К-во"), tr("Комментарий")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_NOTES});
 	initSorting(CLMN_TITLE);
 
-	auto extra_by_groups = list.extraByGroups();
+	auto extra_by_groups = data_list.extraByGroups();
 
 	for (const auto& [group, extras] : extra_by_groups) {
 		auto item_group = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);

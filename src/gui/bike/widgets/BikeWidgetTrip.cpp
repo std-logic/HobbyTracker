@@ -33,11 +33,11 @@ void Bike::WidgetTrip::initWidgets()
 	addWidget(tr("Финиш:"), _edit_date_end = new QLineEdit(this));
 	_edit_date_end->setPlaceholderText(tr("YYYY.MM.DD"));
 
-	addWidget(tr("Километров:"), _edit_dist = new QLineEdit(this));
-	_edit_dist->setValidator(new QIntValidator(0, 10000, _edit_dist));
-
 	addWidget(tr("Ночёвок:"), _edit_time = new QLineEdit(this));
 	_edit_time->setValidator(new QIntValidator(0, 1000, _edit_time));
+
+	addWidget(tr("Километров:"), _edit_dist = new QLineEdit(this));
+	_edit_dist->setValidator(new QIntValidator(0, 10000, _edit_dist));
 
 	addWidget(tr("Страны:"), _edit_countries = new QLineEdit(this));
 	_edit_countries->setPlaceholderText(tr("Список через запятую"));
@@ -53,9 +53,9 @@ void Bike::WidgetTrip::copyDataToGui()
 
 		_edit_date_end->setText(_data.dateEnd());
 
-		_edit_dist->setText(QString::number(_data.dist()));
-
 		_edit_time->setText(QString::number(_data.time()));
+
+		_edit_dist->setText(QString::number(_data.dist()));
 
 		_edit_countries->setText(_data.countriesToString());
 
@@ -77,17 +77,17 @@ bool Bike::WidgetTrip::copyGuiToData()
 	}
 	_data.setDateEnd(_edit_date_end->text());
 
-	if (_edit_dist->text().isEmpty()) {
-		emit showMessage(tr("Не введён пробег!"));
-		return false;
-	}
-	_data.setDist(_edit_dist->text().toUInt());
-
 	if (_edit_time->text().isEmpty()) {
 		emit showMessage(tr("Не введено количество ночёвок!"));
 		return false;
 	}
 	_data.setTime(_edit_time->text().toUInt());
+
+	if (_edit_dist->text().isEmpty()) {
+		emit showMessage(tr("Не введено количество километров!"));
+		return false;
+	}
+	_data.setDist(_edit_dist->text().toUInt());
 
 	if (_edit_countries->text().isEmpty()) {
 		emit showMessage(tr("Не введены страны!"));

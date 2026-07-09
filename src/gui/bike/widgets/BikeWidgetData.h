@@ -13,7 +13,7 @@ class WidgetData : public Base::WidgetData
 {
 	Q_OBJECT
 public:
-	explicit WidgetData(size_t index, const DataList& list, QWidget* parent = nullptr);
+	explicit WidgetData(size_t index, const DataList& data_list, QWidget* parent = nullptr);
 	~WidgetData() = default;
 
 signals:
@@ -32,8 +32,8 @@ private slots:
 
 private:
 	QLineEdit* _edit_year = nullptr;
-	QLineEdit* _edit_dist = nullptr;
 	QLineEdit* _edit_time = nullptr;
+	QLineEdit* _edit_dist = nullptr;
 
 	DataList _data_list;
 	Data _data;

@@ -9,8 +9,8 @@ QStringList Bike::TripConverter::getDefaultCsvHeader()
 
 	header[CLMN_DATE_START]		= tr("Старт");
 	header[CLMN_DATE_END]		= tr("Финиш");
-	header[CLMN_DIST]			= tr("Пробег, км");
 	header[CLMN_TIME]			= tr("Ночёвок");
+	header[CLMN_DIST]			= tr("Километров");
 	header[CLMN_COUNTRIES]		= tr("Страны");
 	header[CLMN_PLACES]			= tr("Места");
 
@@ -32,13 +32,13 @@ Bike::TripList Bike::TripConverter::conv(const Csv::Data& csv_data)
 		if (CLMN_DATE_END < line_size) {
 			data.setDateEnd(line[CLMN_DATE_END]);
 		}
-		if (CLMN_DIST < line_size) {
-			auto dist = line[CLMN_DIST].toUInt(&conv_ok);
-			if (conv_ok) { data.setDist(dist); }
-		}
 		if (CLMN_TIME < line_size) {
 			auto time = line[CLMN_TIME].toUInt(&conv_ok);
 			if (conv_ok) { data.setTime(time); }
+		}
+		if (CLMN_DIST < line_size) {
+			auto dist = line[CLMN_DIST].toUInt(&conv_ok);
+			if (conv_ok) { data.setDist(dist); }
 		}
 		if (CLMN_COUNTRIES < line_size) {
 			data.setCountriesFromString(line[CLMN_COUNTRIES]);
@@ -62,8 +62,8 @@ Csv::Data Bike::TripConverter::conv(const TripList& data_list)
 
 		line[CLMN_DATE_START]	= data.dateStart();
 		line[CLMN_DATE_END]		= data.dateEnd();
-		line[CLMN_DIST]			= QString::number(data.dist());
 		line[CLMN_TIME]			= QString::number(data.time());
+		line[CLMN_DIST]			= QString::number(data.dist());
 		line[CLMN_COUNTRIES]	= data.countriesToString();
 		line[CLMN_PLACES]		= data.placesToString();
 
