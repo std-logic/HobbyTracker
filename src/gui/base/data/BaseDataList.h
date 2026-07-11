@@ -118,6 +118,19 @@ public:
 		return list;
 	}
 
+	// Return list of string values from method (typical for using in ComboEdit)
+	ListOfStrings listOfStrings(DataMethodReturningStringList method) const
+	{
+		ListOfStrings list;
+		for (const auto& data : _data_list) {
+			auto str_list = (data.*method)();
+			for (const auto& str : str_list) {
+				list.insert(str);
+			}
+		}
+		return list;
+	}
+
 	// Return numbers of items with the same string values of method (typical for using in WidgetChart)
 	NumbersByStrings numbersByStrings(DataMethodReturningString method) const
 	{
@@ -159,12 +172,13 @@ public:
 	// Standard helper for functions, whose need to count
 	// number of items in _data_list by some criteria
 	// and return in container like a std::map<QString, uint32_t>
-	// funcIn - lambda for extraction required member of data (must return uint32_t)
-	// funcOut - lambda for creating key for list (must return QString)
-	template<typename FuncIn, typename FuncOut>
+	// funcIn - lambda to extract required member of data (must return uint32_t)
+	// funcAdd - lambda to calculate the added value (must return uint32_t)
+	// funcOut - lambda to create key for list (must return QString)
+	template<typename FuncIn, typename FuncAdd, typename FuncOut>
 	NumbersByStrings numbersInRange(uint32_t step,
 			RangeTypes range_type, uint32_t required_min, uint32_t required_max,
-			FuncIn&& funcIn, FuncOut&& funcOut) const
+			FuncIn&& funcIn, FuncAdd&& funcAdd, FuncOut&& funcOut) const
 	{
 		NumbersByStrings list;
 		uint32_t real_min = Global::undefined_value, real_max = Global::undefined_value;
@@ -172,11 +186,11 @@ public:
 			auto val = funcIn(data);
 			Helper::checkMinMax(val, &real_min, &real_max);
 			if ((range_type == RangeTypes::LinearWithMin) && (val < required_min)) {
-				++list[QStringLiteral("&lt;%1").arg(required_min)];
+				list[QStringLiteral("&lt;%1").arg(required_min)] += funcAdd(data);
 			} else if ((range_type == RangeTypes::LinearWithMax) && (val >= required_max)) {
-				++list[QStringLiteral("%1+").arg(required_max)];
+				list[QStringLiteral("%1+").arg(required_max)] += funcAdd(data);
 			} else {
-				++list[funcOut(val, step)];
+				list[funcOut(val, step)] += funcAdd(data);
 			}
 		}
 		if (range_type != RangeTypes::Discrete) {
@@ -189,6 +203,15 @@ public:
 			}
 		}
 		return list;
+	}
+	// Same as above, but with trivial funcAdd
+	template<typename FuncIn, typename FuncOut>
+	NumbersByStrings numbersInRange(uint32_t step,
+			RangeTypes range_type, uint32_t required_min, uint32_t required_max,
+			FuncIn&& funcIn, FuncOut&& funcOut) const
+	{
+		return numbersInRange(step, range_type, required_min, required_max,
+				funcIn, [](const T&)->uint32_t { return 1; }, funcOut);
 	}
 
 protected:

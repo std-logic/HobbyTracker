@@ -35,11 +35,7 @@ public:
 	{ return QStringLiteral("%1 - %2").arg(_date_start, _date_end.mid(5)); }
 
 	inline uint32_t year() const
-	{
-		return (_date_start.size() >= 4) ?
-				_date_start.first(4).toUInt() :
-				Global::undefined_value;
-	}
+	{ return (_date_start.size() >= 4) ? _date_start.first(4).toUInt() : Global::undefined_value; }
 
 	inline void setTime(uint32_t time)
 	{ _time = time; }
@@ -65,12 +61,11 @@ public:
 	template<typename T>
 	inline void setCountries(T&& countries)
 	{ _countries = std::forward<T>(countries); }
-	inline void setCountriesFromString(
-			const QString& countries, const QString& delimiter = QStringLiteral(", "))
-	{ _countries = countries.split(delimiter); }
+	inline void setCountriesFromString(const QString& str, const QString& delimiter = ", ")
+	{ _countries = str.split(delimiter); }
 	inline QStringList countries() const
 	{ return _countries; }
-	inline QString countriesToString(const QString& delimiter = QStringLiteral(", ")) const
+	inline QString countriesToString(const QString& delimiter = ", ") const
 	{ return Helper::stringListToString(_countries, delimiter); }
 
 	template<typename T>

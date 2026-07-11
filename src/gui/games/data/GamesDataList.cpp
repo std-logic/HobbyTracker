@@ -5,18 +5,18 @@
 Games::DataList::Summary Games::DataList::summary() const
 {
 	Summary sum;
-	std::unordered_set<QString> list_series, list_developers, list_genres;
+	std::unordered_set<QString> list_of_series, list_of_developers, list_of_genres;
 	for (const auto& data : _data_list) {
-		list_series.insert(data.series());
-		list_developers.insert(data.developer());
-		list_genres.insert(data.genre());
+		list_of_series.insert(data.series());
+		list_of_developers.insert(data.developer());
+		list_of_genres.insert(data.genre());
 		Helper::checkMinMax(data.year(), &sum.min_year, &sum.max_year);
 		sum.rating += data.rating();
 	}
-	sum.series_num = list_series.size();
+	sum.series_num = list_of_series.size();
 	sum.games_num = _data_list.size();
-	sum.developers_num = list_developers.size();
-	sum.genres_num = list_genres.size();
+	sum.developers_num = list_of_developers.size();
+	sum.genres_num = list_of_genres.size();
 	if (sum.games_num) { sum.rating /= sum.games_num; }
 	return sum;
 }

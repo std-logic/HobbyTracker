@@ -73,6 +73,9 @@ SOURCES += \
 	src/gui/books/widgets/BooksWidgetMain.cpp \
 	src/gui/books/widgets/BooksWidgetSettings.cpp \
 	src/gui/books/widgets/BooksWidgetSummary.cpp \
+	src/gui/flights/data/FlightsDataConverter.cpp \
+	src/gui/flights/data/FlightsDataList.cpp \
+	src/gui/flights/data/FlightsSettings.cpp \
 	src/gui/games/data/GamesDataConverter.cpp \
 	src/gui/games/data/GamesDataList.cpp \
 	src/gui/games/data/GamesSettings.cpp \
@@ -156,6 +159,11 @@ HEADERS += \
 	src/gui/books/widgets/BooksWidgetMain.h \
 	src/gui/books/widgets/BooksWidgetSettings.h \
 	src/gui/books/widgets/BooksWidgetSummary.h \
+	src/gui/flights/common/FlightsCommon.h \
+	src/gui/flights/data/FlightsData.h \
+	src/gui/flights/data/FlightsDataConverter.h \
+	src/gui/flights/data/FlightsDataList.h \
+	src/gui/flights/data/FlightsSettings.h \
 	src/gui/games/common/GamesCommon.h \
 	src/gui/games/data/GamesData.h \
 	src/gui/games/data/GamesDataConverter.h \

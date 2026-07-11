@@ -5,16 +5,16 @@
 Books::DataList::Summary Books::DataList::summary() const
 {
 	Summary sum;
-	std::unordered_set<QString> list_authors, list_genres;
+	std::unordered_set<QString> list_of_authors, list_of_genres;
 	for (const auto& data : _data_list) {
-		list_authors.insert(data.author());
-		list_genres.insert(data.genre());
+		list_of_authors.insert(data.author());
+		list_of_genres.insert(data.genre());
 		Helper::checkMinMax(data.year(), &sum.min_year, &sum.max_year);
 		sum.rating += data.rating();
 	}
-	sum.authors_num = list_authors.size();
+	sum.authors_num = list_of_authors.size();
 	sum.books_num = _data_list.size();
-	sum.genres_num = list_genres.size();
+	sum.genres_num = list_of_genres.size();
 	if (sum.books_num) { sum.rating /= sum.books_num; }
 	return sum;
 }
