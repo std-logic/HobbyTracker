@@ -36,6 +36,11 @@ public:
 
 	SublistsByStrings flightsByAirports() const;
 	ListOfStrings listOfAirports(const QString& city) const;
+
+	static uint32_t flightsNumInSublist(const SubListContainer& sublist);
+	static uint32_t countryNumInSublist(const QString& country, const SubListContainer& sublist);
+	static uint32_t cityNumInSublist(const QString& city, const SubListContainer& sublist);
+	static uint32_t airportNumInSublist(const QString& airport, const SubListContainer& sublist);
 };
 
 } // namespace Flights

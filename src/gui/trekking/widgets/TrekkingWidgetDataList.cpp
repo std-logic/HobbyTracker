@@ -7,7 +7,6 @@
 Trekking::WidgetDataList::WidgetDataList(QWidget* parent)
 	: Base::WidgetTree{parent}
 {
-	setRootIsDecorated(false);
 }
 
 void Trekking::WidgetDataList::update(const DataList& data_list)
@@ -32,16 +31,16 @@ void Trekking::WidgetDataList::showSimple(const DataList& data_list)
 				 WIDTH_KIND, WIDTH_COUNTRIES, WIDTH_PLACES});
 	initSorting(CLMN_DATE);
 
-	for (const auto& data : data_list) {
-		auto item_data = new Base::WidgetTreeItem(this);
-		item_data->setText(CLMN_DATE, data.dates());
-		item_data->setNumb(CLMN_TIME, data.time());
-		item_data->setNumb(CLMN_DIST, data.dist());
-		item_data->setNumb(CLMN_PEAK, data.peak());
-		item_data->setText(CLMN_KIND, data.kind());
-		item_data->setText(CLMN_COUNTRIES, data.countriesToString(QStringLiteral(" • ")));
-		item_data->setText(CLMN_PLACES, data.places());
-		item_data->setId(data.id());
+	for (const auto& track : data_list) {
+		auto item_track = new Base::WidgetTreeItem(this);
+		item_track->setText(CLMN_DATE, track.dates());
+		item_track->setNumb(CLMN_TIME, track.time());
+		item_track->setNumb(CLMN_DIST, track.dist());
+		item_track->setNumb(CLMN_PEAK, track.peak());
+		item_track->setText(CLMN_KIND, track.kind());
+		item_track->setText(CLMN_COUNTRIES, track.countriesToString(QStringLiteral(" • ")));
+		item_track->setText(CLMN_PLACES, track.places());
+		item_track->setId(track.id());
 	}
 }
 

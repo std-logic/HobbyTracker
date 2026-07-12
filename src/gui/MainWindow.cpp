@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "bike/widgets/BikeWidgetMain.h"
 #include "books/widgets/BooksWidgetMain.h"
+#include "flights/widgets/FlightsWidgetMain.h"
 #include "games/widgets/GamesWidgetMain.h"
 #include "trekking/widgets/TrekkingWidgetMain.h"
 
@@ -25,6 +26,7 @@ void MainWindow::start()
 
 	_bike->start();
 	_books->start();
+	_flights->start();
 	_games->start();
 	_trekking->start();
 
@@ -61,6 +63,9 @@ void MainWindow::initCentralWidget()
 
 	central_widget->addTab(_trekking = new Trekking::WidgetMain, Trekking::WidgetMain::getName());
 	connect(_trekking, &Trekking::WidgetMain::showMessage, this, &MainWindow::showMessage);
+
+	central_widget->addTab(_flights = new Flights::WidgetMain, Flights::WidgetMain::getName());
+	connect(_flights, &Flights::WidgetMain::showMessage, this, &MainWindow::showMessage);
 
 	setCentralWidget(central_widget);
 }

@@ -51,6 +51,7 @@ public:
 	{ _points = std::forward<T>(points); }
 	inline void addPointFromString(const QString& str, const QString& delimiter = ", ")
 	{
+		if (str.isEmpty()) { return; }
 		auto values = str.split(delimiter);
 		FlightPoint point;
 		if (values.size() >= 1) { point.country = values[0]; }
@@ -72,6 +73,18 @@ public:
 					_points[index].airport;
 		}
 		return QString();
+	}
+	inline QString pointsToString(const QString& delimiter_points = "  →  ",
+								  const QString& delimiter = ", ") const
+	{
+		QString str;
+		for (size_t i = 0; i < _points.size(); ++i) {
+			str += pointToString(i, delimiter);
+			if (i != (_points.size() - 1)) {
+				str += delimiter_points;
+			}
+		}
+		return str;
 	}
 
 	inline uint32_t flightsNum() const
@@ -96,8 +109,9 @@ public:
 	{
 		QStringList list_of_cities;
 		for (const auto& point : _points) {
-			if (!list_of_cities.contains(point.city)) {
-				list_of_cities.append(point.city);
+			QString city_str = point.country + ", " + point.city;
+			if (!list_of_cities.contains(city_str)) {
+				list_of_cities.append(city_str);
 			}
 		}
 		return list_of_cities;
@@ -109,8 +123,9 @@ public:
 	{
 		QStringList list_of_airports;
 		for (const auto& point : _points) {
-			if (!list_of_airports.contains(point.airport)) {
-				list_of_airports.append(point.airport);
+			QString airport_str = point.country + ", " + point.city + ", " + point.airport;
+			if (!list_of_airports.contains(airport_str)) {
+				list_of_airports.append(airport_str);
 			}
 		}
 		return list_of_airports;

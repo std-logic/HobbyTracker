@@ -1,9 +1,11 @@
 #pragma once
 
+#include <cstddef>
+
 namespace Flights
 {
 
-constexpr int max_points_num = 5;
+constexpr size_t max_points_num = 5;
 
 enum class DataListViewModes
 {

@@ -22,7 +22,7 @@ private:
 	void showSimple(const DataList& data_list);
 
 private:
-	static const int WIDTH_YEAR = 150;
+	static const int WIDTH_YEAR = 200;
 	static const int WIDTH_TIME = 100;
 	static const int WIDTH_DIST = 100;
 };

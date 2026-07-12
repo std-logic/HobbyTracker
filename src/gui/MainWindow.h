@@ -6,6 +6,7 @@
 
 namespace Bike { class WidgetMain; }
 namespace Books { class WidgetMain; }
+namespace Flights { class WidgetMain; }
 namespace Games { class WidgetMain; }
 namespace Trekking { class WidgetMain; }
 
@@ -38,6 +39,7 @@ private slots:
 private:
 	Bike::WidgetMain* _bike;
 	Books::WidgetMain* _books;
+	Flights::WidgetMain* _flights;
 	Games::WidgetMain* _games;
 	Trekking::WidgetMain* _trekking;
 

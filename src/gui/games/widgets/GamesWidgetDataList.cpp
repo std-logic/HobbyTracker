@@ -195,14 +195,14 @@ void Games::WidgetDataList::showSimple(const DataList& data_list)
 				{WIDTH_TITLE, WIDTH_DEVELOPER, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
 
-	for (const auto& book : data_list) {
-		auto item_book = new Base::WidgetTreeItem(this);
-		item_book->setText(CLMN_TITLE, book.title());
-		item_book->setToolTip(CLMN_TITLE, book.summaryString());
-		item_book->setText(CLMN_DEVELOPER, book.developer());
-		item_book->setText(CLMN_GENRE, book.genre());
-		item_book->setText(CLMN_YEAR, book.yearString());
-		item_book->setRating(CLMN_RATING, book.rating());
-		item_book->setId(book.id());
+	for (const auto& game : data_list) {
+		auto item_game = new Base::WidgetTreeItem(this);
+		item_game->setText(CLMN_TITLE, game.title());
+		item_game->setToolTip(CLMN_TITLE, game.summaryString());
+		item_game->setText(CLMN_DEVELOPER, game.developer());
+		item_game->setText(CLMN_GENRE, game.genre());
+		item_game->setText(CLMN_YEAR, game.yearString());
+		item_game->setRating(CLMN_RATING, game.rating());
+		item_game->setId(game.id());
 	}
 }

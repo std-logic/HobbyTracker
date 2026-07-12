@@ -80,3 +80,51 @@ Flights::DataList::ListOfStrings Flights::DataList::listOfAirports(const QString
 	}
 	return list;
 }
+
+uint32_t Flights::DataList::flightsNumInSublist(const SubListContainer& sublist)
+{
+	uint32_t flights_num = 0;
+	for (auto data : sublist) {
+		flights_num += data->flightsNum();
+	}
+	return flights_num;
+}
+
+uint32_t Flights::DataList::countryNumInSublist(const QString& country, const SubListContainer& sublist)
+{
+	uint32_t country_num = 0;
+	for (auto data : sublist) {
+		for (size_t point = 0; point < data->pointsNum(); ++point) {
+			if (data->country(point) == country) {
+				++country_num;
+			}
+		}
+	}
+	return country_num;
+}
+
+uint32_t Flights::DataList::cityNumInSublist(const QString& city, const SubListContainer& sublist)
+{
+	uint32_t city_num = 0;
+	for (auto data : sublist) {
+		for (size_t point = 0; point < data->pointsNum(); ++point) {
+			if (data->city(point) == city) {
+				++city_num;
+			}
+		}
+	}
+	return city_num;
+}
+
+uint32_t Flights::DataList::airportNumInSublist(const QString& airport, const SubListContainer& sublist)
+{
+	uint32_t airport_num = 0;
+	for (auto data : sublist) {
+		for (size_t point = 0; point < data->pointsNum(); ++point) {
+			if (data->airport(point) == airport) {
+				++airport_num;
+			}
+		}
+	}
+	return airport_num;
+}

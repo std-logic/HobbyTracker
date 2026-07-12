@@ -76,6 +76,13 @@ SOURCES += \
 	src/gui/flights/data/FlightsDataConverter.cpp \
 	src/gui/flights/data/FlightsDataList.cpp \
 	src/gui/flights/data/FlightsSettings.cpp \
+	src/gui/flights/widgets/FlightsWidgetChart.cpp \
+	src/gui/flights/widgets/FlightsWidgetControl.cpp \
+	src/gui/flights/widgets/FlightsWidgetData.cpp \
+	src/gui/flights/widgets/FlightsWidgetDataList.cpp \
+	src/gui/flights/widgets/FlightsWidgetMain.cpp \
+	src/gui/flights/widgets/FlightsWidgetSettings.cpp \
+	src/gui/flights/widgets/FlightsWidgetSummary.cpp \
 	src/gui/games/data/GamesDataConverter.cpp \
 	src/gui/games/data/GamesDataList.cpp \
 	src/gui/games/data/GamesSettings.cpp \
@@ -164,6 +171,13 @@ HEADERS += \
 	src/gui/flights/data/FlightsDataConverter.h \
 	src/gui/flights/data/FlightsDataList.h \
 	src/gui/flights/data/FlightsSettings.h \
+	src/gui/flights/widgets/FlightsWidgetChart.h \
+	src/gui/flights/widgets/FlightsWidgetControl.h \
+	src/gui/flights/widgets/FlightsWidgetData.h \
+	src/gui/flights/widgets/FlightsWidgetDataList.h \
+	src/gui/flights/widgets/FlightsWidgetMain.h \
+	src/gui/flights/widgets/FlightsWidgetSettings.h \
+	src/gui/flights/widgets/FlightsWidgetSummary.h \
 	src/gui/games/common/GamesCommon.h \
 	src/gui/games/data/GamesData.h \
 	src/gui/games/data/GamesDataConverter.h \
