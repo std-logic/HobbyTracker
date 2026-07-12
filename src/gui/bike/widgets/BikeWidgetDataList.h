@@ -22,9 +22,9 @@ private:
 	void showSimple(const DataList& data_list);
 
 private:
-	static const int WIDTH_YEAR = 200;
-	static const int WIDTH_TIME = 100;
-	static const int WIDTH_DIST = 100;
+	static const int WIDTH_YEAR = 180;
+	static const int WIDTH_TIME = 80;
+	static const int WIDTH_DIST = 80;
 };
 
 } // namespace Bike
