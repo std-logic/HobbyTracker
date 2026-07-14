@@ -28,15 +28,15 @@ void Books::WidgetSummary::update(const DataList& data_list)
 
 void Books::WidgetSummary::initWidgets()
 {
-	addWidget(tr("Авторов:"), _label_authors_num = new QLabel(this));
+	addWidget(tr("Авторов:"), _label_authors_num);
 
-	addWidget(tr("Произведений:"), _label_books_num = new QLabel(this));
+	addWidget(tr("Произведений:"), _label_books_num);
 
-	addWidget(tr("Жанров:"), _label_genres_num = new QLabel(this));
+	addWidget(tr("Жанров:"), _label_genres_num);
 
-	addWidget(tr("Годы:"), _label_years = new QLabel(this));
+	addWidget(tr("Годы:"), _label_years);
 
-	addWidget(tr("Средняя оценка:"), _label_rating = new QLabel(this));
+	addWidget(tr("Средняя оценка:"), _label_rating);
 
 	addStretch();
 }

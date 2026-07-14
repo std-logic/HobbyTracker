@@ -23,50 +23,49 @@ void Bike::WidgetData::initCommonParams()
 	setWindowTitle(_mode_edit_data ?
 			tr("Редактирование данных") :
 			tr("Добавление новых данных"));
+	setMinimumWidth(200);
 }
 
 void Bike::WidgetData::initWidgets()
 {
-	addWidget(tr("Год:"), _edit_year = new QLineEdit(this));
+	add(tr("Год:"), _edit_year);
 	_edit_year->setValidator(new QIntValidator(2000, 2100, _edit_year));
 
-	addWidget(tr("Часов:"), _edit_time = new QLineEdit(this));
-	_edit_time->setValidator(new QIntValidator(0, 1000, _edit_time));
+	add(tr("Часов:"), _edit_time);
+	_edit_time->setValidator(new QIntValidator(0, 10000, _edit_time));
 
-	addWidget(tr("Километров:"), _edit_dist = new QLineEdit(this));
-	_edit_dist->setValidator(new QIntValidator(0, 10000, _edit_dist));
+	add(tr("Километров:"), _edit_dist);
+	_edit_dist->setValidator(new QIntValidator(0, 100000, _edit_dist));
 }
 
 void Bike::WidgetData::copyDataToGui()
 {
 	if (_mode_edit_data) {
 		_edit_year->setText(_data.yearString());
-	} else if (!_data_list.empty()) {
-		_edit_year->setText(QString::number(_data_list[_data_list.size()-1].year()+1));
-	}
 
-	if (_mode_edit_data) {
 		_edit_time->setText(QString::number(_data.time()));
 
 		_edit_dist->setText(QString::number(_data.dist()));
+	} else if (!_data_list.empty()) {
+		_edit_year->setText(QString::number(_data_list[_data_list.size()-1].year()+1));
 	}
 }
 
 bool Bike::WidgetData::copyGuiToData()
 {
-	_data.setYear(_edit_year->text().toUInt());
-	if ((_data.year() < 2000) || (2100 < _data.year())) {
+	if (!_edit_year->hasAcceptableInput()) {
 		emit showMessage(tr("Не введён год!"));
 		return false;
 	}
+	_data.setYear(_edit_year->text().toUInt());
 
-	if (_edit_time->text().isEmpty()) {
+	if (!_edit_time->hasAcceptableInput()) {
 		emit showMessage(tr("Не введено количество часов!"));
 		return false;
 	}
 	_data.setTime(_edit_time->text().toUInt());
 
-	if (_edit_dist->text().isEmpty()) {
+	if (!_edit_dist->hasAcceptableInput()) {
 		emit showMessage(tr("Не введено количество километров!"));
 		return false;
 	}

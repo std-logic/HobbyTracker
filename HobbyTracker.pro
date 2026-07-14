@@ -36,6 +36,7 @@ SOURCES += \
 	src/gui/base/widgets/BaseButtonSave.cpp \
 	src/gui/base/widgets/BaseButtonSettings.cpp \
 	src/gui/base/widgets/BaseButtonShow.cpp \
+	src/gui/base/widgets/BaseComboBox.cpp \
 	src/gui/base/widgets/BaseComboEdit.cpp \
 	src/gui/base/widgets/BaseWidgetChart.cpp \
 	src/gui/base/widgets/BaseWidgetControl.cpp \
@@ -124,6 +125,7 @@ HEADERS += \
 	src/gui/base/widgets/BaseButtonSave.h \
 	src/gui/base/widgets/BaseButtonSettings.h \
 	src/gui/base/widgets/BaseButtonShow.h \
+	src/gui/base/widgets/BaseComboBox.h \
 	src/gui/base/widgets/BaseComboEdit.h \
 	src/gui/base/widgets/BaseWidgetChart.h \
 	src/gui/base/widgets/BaseWidgetControl.h \

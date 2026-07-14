@@ -2,13 +2,11 @@
 
 #include <gui/base/widgets/BaseWidgetControl.h>
 
-class QPushButton;
-class QComboBox;
-
 namespace Base
 {
 class ButtonAdd;
 class ButtonShow;
+class ComboBox;
 }
 
 namespace Bike
@@ -44,7 +42,7 @@ private:
 	Base::ButtonAdd* _button_add_trip = nullptr;
 
 	Base::ButtonShow* _button_chart = nullptr;
-	QComboBox* _combo_chart_view_mode = nullptr;
+	Base::ComboBox* _combo_chart_view_mode = nullptr;
 };
 
 } // namespace Bike

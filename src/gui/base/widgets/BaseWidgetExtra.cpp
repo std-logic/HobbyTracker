@@ -27,11 +27,11 @@ void Base::WidgetExtra::initCommonParams()
 
 void Base::WidgetExtra::initWidgets()
 {
-	addWidget(tr("Список:"), _combo_group = new Base::ComboEdit(this));
+	add(tr("Список:"), _combo_group);
 
-	addWidget(tr("Запись:"), _edit_title = new QLineEdit(this));
+	add(tr("Запись:"), _edit_title);
 
-	addWidget(tr("Комментарий:"), _edit_notes = new QLineEdit(this));
+	add(tr("Комментарий:"), _edit_notes);
 	_edit_notes->setPlaceholderText(tr("Необязательное поле"));
 }
 

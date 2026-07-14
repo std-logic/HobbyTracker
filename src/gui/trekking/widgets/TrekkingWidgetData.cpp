@@ -29,27 +29,27 @@ void Trekking::WidgetData::initCommonParams()
 
 void Trekking::WidgetData::initWidgets()
 {
-	addWidget(tr("Старт:"), _edit_date_start = new QLineEdit(this));
+	add(tr("Старт:"), _edit_date_start);
 	_edit_date_start->setPlaceholderText(tr("YYYY.MM.DD"));
 
-	addWidget(tr("Финиш:"), _edit_date_end = new QLineEdit(this));
+	add(tr("Финиш:"), _edit_date_end);
 	_edit_date_end->setPlaceholderText(tr("YYYY.MM.DD"));
 
-	addWidget(tr("Ночёвок:"), _edit_time = new QLineEdit(this));
+	add(tr("Ночёвок:"), _edit_time);
 	_edit_time->setValidator(new QIntValidator(0, 1000, _edit_time));
 
-	addWidget(tr("Километров:"), _edit_dist = new QLineEdit(this));
+	add(tr("Километров:"), _edit_dist);
 	_edit_dist->setValidator(new QIntValidator(0, 10000, _edit_dist));
 
-	addWidget(tr("Высшая точка:"), _edit_peak = new QLineEdit(this));
+	add(tr("Высшая точка:"), _edit_peak);
 	_edit_peak->setValidator(new QIntValidator(0, 10000, _edit_peak));
 
-	addWidget(tr("Тип:"), _combo_kind = new Base::ComboEdit(this));
+	add(tr("Тип:"), _combo_kind);
 
-	addWidget(tr("Страны:"), _edit_countries = new QLineEdit(this));
+	add(tr("Страны:"), _edit_countries);
 	_edit_countries->setPlaceholderText(tr("Список через запятую"));
 
-	addWidget(tr("Место:"), _edit_places = new QLineEdit(this));
+	add(tr("Место:"), _edit_places);
 }
 
 void Trekking::WidgetData::copyDataToGui()
@@ -87,19 +87,19 @@ bool Trekking::WidgetData::copyGuiToData()
 	}
 	_data.setDateEnd(_edit_date_end->text());
 
-	if (_edit_time->text().isEmpty()) {
+	if (!_edit_time->hasAcceptableInput()) {
 		emit showMessage(tr("Не введено количество ночёвок!"));
 		return false;
 	}
 	_data.setTime(_edit_time->text().toUInt());
 
-	if (_edit_dist->text().isEmpty()) {
+	if (!_edit_dist->hasAcceptableInput()) {
 		emit showMessage(tr("Не введено количество километров!"));
 		return false;
 	}
 	_data.setDist(_edit_dist->text().toUInt());
 
-	if (_edit_peak->text().isEmpty()) {
+	if (!_edit_peak->hasAcceptableInput()) {
 		emit showMessage(tr("Не введена высшая точка!"));
 		return false;
 	}

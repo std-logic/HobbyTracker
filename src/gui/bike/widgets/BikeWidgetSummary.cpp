@@ -33,17 +33,17 @@ void Bike::WidgetSummary::update(const DataList& data_list, const TripList& trip
 
 void Bike::WidgetSummary::initWidgets()
 {
-	addWidget(tr("Годы:"), _label_years = new QLabel(this));
+	addWidget(tr("Годы:"), _label_years);
 
-	addWidget(tr("Всего часов:"), _label_total_time = new QLabel(this));
+	addWidget(tr("Всего часов:"), _label_total_time);
 
-	addWidget(tr("Всего километров:"), _label_total_dist = new QLabel(this));
+	addWidget(tr("Всего километров:"), _label_total_dist);
 
-	addWidget(tr("Велопоходов:"), _label_trips_num = new QLabel(this));
+	addWidget(tr("Велопоходов:"), _label_trips_num);
 
-	addWidget(tr("Ночёвок:"), _label_trips_total_time = new QLabel(this));
+	addWidget(tr("Ночёвок:"), _label_trips_total_time);
 
-	addWidget(tr("Километров:"), _label_trips_total_dist = new QLabel(this));
+	addWidget(tr("Километров:"), _label_trips_total_dist);
 
 	addStretch();
 }

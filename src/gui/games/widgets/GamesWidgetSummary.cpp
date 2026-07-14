@@ -30,17 +30,17 @@ void Games::WidgetSummary::update(const DataList& data_list)
 
 void Games::WidgetSummary::initWidgets()
 {
-	addWidget(tr("Серий:"), _label_series_num = new QLabel(this));
+	addWidget(tr("Серий:"), _label_series_num);
 
-	addWidget(tr("Игр:"), _label_games_num = new QLabel(this));
+	addWidget(tr("Игр:"), _label_games_num);
 
-	addWidget(tr("Разработчиков:"), _label_developers_num = new QLabel(this));
+	addWidget(tr("Разработчиков:"), _label_developers_num);
 
-	addWidget(tr("Жанров:"), _label_genres_num = new QLabel(this));
+	addWidget(tr("Жанров:"), _label_genres_num);
 
-	addWidget(tr("Годы:"), _label_years = new QLabel(this));
+	addWidget(tr("Годы:"), _label_years);
 
-	addWidget(tr("Средняя оценка:"), _label_rating = new QLabel(this));
+	addWidget(tr("Средняя оценка:"), _label_rating);
 
 	addStretch();
 }

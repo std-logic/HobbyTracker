@@ -30,6 +30,12 @@ uint32_t Base::WidgetRating::rating() const
 	return (id < 0) ? 0 : id;
 }
 
+bool Base::WidgetRating::isValid() const
+{
+	auto r = rating();
+	return (1 <= r) && (r <= 10);
+}
+
 void Base::WidgetRating::initWidgets()
 {
 	_layout_main = new QHBoxLayout(this);

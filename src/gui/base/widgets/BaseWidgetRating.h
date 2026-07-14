@@ -20,6 +20,7 @@ public:
 
 	void setRating(uint32_t rating);
 	uint32_t rating() const;
+	bool isValid() const;
 
 signals:
 

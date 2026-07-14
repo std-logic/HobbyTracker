@@ -28,15 +28,15 @@ void Flights::WidgetSummary::update(const DataList& data_list)
 
 void Flights::WidgetSummary::initWidgets()
 {
-	addWidget(tr("Годы:"), _label_years = new QLabel(this));
+	addWidget(tr("Годы:"), _label_years);
 
-	addWidget(tr("Стран:"), _label_countries_num = new QLabel(this));
+	addWidget(tr("Стран:"), _label_countries_num);
 
-	addWidget(tr("Городов:"), _label_cities_num = new QLabel(this));
+	addWidget(tr("Городов:"), _label_cities_num);
 
-	addWidget(tr("Аэропортов:"), _label_airports_num = new QLabel(this));
+	addWidget(tr("Аэропортов:"), _label_airports_num);
 
-	addWidget(tr("Полётов:"), _label_flights_num = new QLabel(this));
+	addWidget(tr("Полётов:"), _label_flights_num);
 
 	addStretch();
 }

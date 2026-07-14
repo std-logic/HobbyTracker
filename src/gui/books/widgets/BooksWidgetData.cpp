@@ -29,26 +29,27 @@ void Books::WidgetData::initCommonParams()
 	setWindowTitle(_mode_edit_data ?
 			tr("Редактирование данных произведения") :
 			tr("Добавление нового произведения"));
+	setMinimumWidth(550);
 }
 
 void Books::WidgetData::initWidgets()
 {
-	addWidget(tr("Автор:"), _combo_author_tr = new Base::ComboEdit(this));
+	add(tr("Автор:"), _combo_author_tr);
 
-	addWidget(tr("Автор (ориг.):"), _combo_author_orig = new Base::ComboEdit(this));
+	add(tr("Автор (ориг.):"), _combo_author_orig);
 	_combo_author_orig->lineEdit()->setPlaceholderText(tr("Необязательное поле"));
 
-	addWidget(tr("Название:"), _edit_title_tr = new QLineEdit(this));
+	add(tr("Название:"), _edit_title_tr);
 
-	addWidget(tr("Название (ориг.):"), _edit_title_orig = new QLineEdit(this));
+	add(tr("Название (ориг.):"), _edit_title_orig);
 	_edit_title_orig->setPlaceholderText(tr("Необязательное поле"));
 
-	addWidget(tr("Жанр:"), _combo_genre = new Base::ComboEdit(this));
+	add(tr("Жанр:"), _combo_genre);
 
-	addWidget(tr("Год:"), _edit_year = new QLineEdit(this));
+	add(tr("Год:"), _edit_year);
 	_edit_year->setValidator(new QIntValidator(1, 2100, _edit_year));
 
-	addWidget(tr("Оценка:"), _widget_rating = new Base::WidgetRating(this));
+	add(tr("Оценка:"), _widget_rating);
 }
 
 void Books::WidgetData::copyDataToGui()
@@ -70,39 +71,39 @@ void Books::WidgetData::copyDataToGui()
 
 bool Books::WidgetData::copyGuiToData()
 {
-	_data.setAuthorTr(_combo_author_tr->currentText());
-	if (_data.authorTr().isEmpty()) {
+	if (_combo_author_tr->currentText().isEmpty()) {
 		emit showMessage(tr("Не введён автор!"));
 		return false;
 	}
+	_data.setAuthorTr(_combo_author_tr->currentText());
 
 	_data.setAuthorOrig(_combo_author_orig->currentText());
 
-	_data.setTitleTr(_edit_title_tr->text());
-	if (_data.titleTr().isEmpty()) {
+	if (_edit_title_tr->text().isEmpty()) {
 		emit showMessage(tr("Не введено название!"));
 		return false;
 	}
+	_data.setTitleTr(_edit_title_tr->text());
 
 	_data.setTitleOrig(_edit_title_orig->text());
 
-	_data.setGenre(_combo_genre->currentText());
-	if (_data.genre().isEmpty()) {
+	if (_combo_genre->currentText().isEmpty()) {
 		emit showMessage(tr("Не введён жанр!"));
 		return false;
 	}
+	_data.setGenre(_combo_genre->currentText());
 
-	_data.setYear(_edit_year->text().toUInt());
-	if ((_data.year() < 1) || (2100 < _data.year())) {
+	if (!_edit_year->hasAcceptableInput()) {
 		emit showMessage(tr("Не введён год!"));
 		return false;
 	}
+	_data.setYear(_edit_year->text().toUInt());
 
-	_data.setRating(_widget_rating->rating());
-	if ((_data.rating() < 1) || (10 < _data.rating())) {
+	if (!_widget_rating->isValid()) {
 		emit showMessage(tr("Не выбрана оценка!"));
 		return false;
 	}
+	_data.setRating(_widget_rating->rating());
 
 	return true;
 }

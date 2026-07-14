@@ -29,18 +29,18 @@ void Games::WidgetData::initCommonParams()
 
 void Games::WidgetData::initWidgets()
 {
-	addWidget(tr("Серия:"), _combo_series = new Base::ComboEdit(this));
+	add(tr("Серия:"), _combo_series);
 
-	addWidget(tr("Название:"), _edit_title = new QLineEdit(this));
+	add(tr("Название:"), _edit_title);
 
-	addWidget(tr("Разработчик:"), _combo_developer = new Base::ComboEdit(this));
+	add(tr("Разработчик:"), _combo_developer);
 
-	addWidget(tr("Жанр:"), _combo_genre = new Base::ComboEdit(this));
+	add(tr("Жанр:"), _combo_genre);
 
-	addWidget(tr("Год:"), _edit_year = new QLineEdit(this));
+	add(tr("Год:"), _edit_year);
 	_edit_year->setValidator(new QIntValidator(1900, 2100, _edit_year));
 
-	addWidget(tr("Оценка:"), _widget_rating = new Base::WidgetRating(this));
+	add(tr("Оценка:"), _widget_rating);
 }
 
 void Games::WidgetData::copyDataToGui()
@@ -60,41 +60,41 @@ void Games::WidgetData::copyDataToGui()
 
 bool Games::WidgetData::copyGuiToData()
 {
-	_data.setSeries(_combo_series->currentText());
-	if (_data.series().isEmpty()) {
+	if (_combo_series->currentText().isEmpty()) {
 		emit showMessage(tr("Не введена серия!"));
 		return false;
 	}
+	_data.setSeries(_combo_series->currentText());
 
-	_data.setTitle(_edit_title->text());
-	if (_data.title().isEmpty()) {
+	if (_edit_title->text().isEmpty()) {
 		emit showMessage(tr("Не введено название!"));
 		return false;
 	}
+	_data.setTitle(_edit_title->text());
 
-	_data.setDeveloper(_combo_developer->currentText());
-	if (_data.developer().isEmpty()) {
+	if (_combo_developer->currentText().isEmpty()) {
 		emit showMessage(tr("Не введён разработчик!"));
 		return false;
 	}
+	_data.setDeveloper(_combo_developer->currentText());
 
-	_data.setGenre(_combo_genre->currentText());
-	if (_data.genre().isEmpty()) {
+	if (_combo_genre->currentText().isEmpty()) {
 		emit showMessage(tr("Не введён жанр!"));
 		return false;
 	}
+	_data.setGenre(_combo_genre->currentText());
 
-	_data.setYear(_edit_year->text().toUInt());
-	if ((_data.year() < 1900) || (2100 < _data.year())) {
+	if (!_edit_year->hasAcceptableInput()) {
 		emit showMessage(tr("Не введён год!"));
 		return false;
 	}
+	_data.setYear(_edit_year->text().toUInt());
 
-	_data.setRating(_widget_rating->rating());
-	if ((_data.rating() < 1) || (10 < _data.rating())) {
+	if (!_widget_rating->isValid()) {
 		emit showMessage(tr("Не выбрана оценка!"));
 		return false;
 	}
+	_data.setRating(_widget_rating->rating());
 
 	return true;
 }

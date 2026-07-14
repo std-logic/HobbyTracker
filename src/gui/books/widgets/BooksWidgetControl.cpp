@@ -1,15 +1,6 @@
 #include "BooksWidgetControl.h"
 #include "../common/BooksCommon.h"
 
-#include <gui/base/widgets/BaseButtonAdd.h>
-#include <gui/base/widgets/BaseButtonCollapse.h>
-#include <gui/base/widgets/BaseButtonExpand.h>
-#include <gui/base/widgets/BaseButtonShow.h>
-
-#include <QLayout>
-#include <QPushButton>
-#include <QComboBox>
-
 Books::WidgetControl::WidgetControl(QWidget* parent)
 	: Base::WidgetControl{parent}
 {
@@ -28,32 +19,17 @@ void Books::WidgetControl::initWidgets()
 	// data list
 	{
 		addSpacing();
-
-		addWidget(_button_data_list = new Base::ButtonShow(tr("Список"), this));
-		connect(_button_data_list, &Base::ButtonShow::toggled,
-				this, &WidgetControl::showDataList);
-
-		addWidget(_button_add_data = new Base::ButtonAdd(this));
-		connect(_button_add_data, &Base::ButtonAdd::clicked,
-				this, &WidgetControl::addData);
-
-		addWidget(_button_collapse_data_list = new Base::ButtonCollapse(this));
-		connect(_button_collapse_data_list, &Base::ButtonCollapse::clicked,
-				this, &WidgetControl::collapseDataList);
-
-		addWidget(_button_expand_data_list = new Base::ButtonExpand(this));
-		connect(_button_expand_data_list, &Base::ButtonExpand::clicked,
-				this, &WidgetControl::expandDataList);
-
-		addWidget(_combo_data_list_view_mode = new QComboBox(this));
-		_combo_data_list_view_mode->addItem(tr("По авторам"), static_cast<int>(DataListViewModes::ByAuthors));
-		_combo_data_list_view_mode->addItem(tr("По жанрам"), static_cast<int>(DataListViewModes::ByGenres));
-		_combo_data_list_view_mode->addItem(tr("По десятилетиям"), static_cast<int>(DataListViewModes::ByDecades));
-		_combo_data_list_view_mode->addItem(tr("По столетиям"), static_cast<int>(DataListViewModes::ByCenturies));
-		_combo_data_list_view_mode->addItem(tr("По оценкам"), static_cast<int>(DataListViewModes::ByRatings));
-		_combo_data_list_view_mode->addItem(tr("Простой список"), static_cast<int>(DataListViewModes::Simple));
-		connect(_combo_data_list_view_mode, &QComboBox::currentIndexChanged, this, [this](int index) {
-			emit setDataListViewMode(_combo_data_list_view_mode->itemData(index).toInt());
+		addButtonShow(_button_data_list, tr("Список"), &WidgetControl::showDataList);
+		addButtonAdd(_button_add_data, &WidgetControl::addData);
+		addButtonCollapse(_button_collapse_data_list, &WidgetControl::collapseDataList);
+		addButtonExpand(_button_expand_data_list, &WidgetControl::expandDataList);
+		addComboBox(_combo_data_list_view_mode, &WidgetControl::setDataListViewMode, {
+				{tr("По авторам"), static_cast<int>(DataListViewModes::ByAuthors)},
+				{tr("По жанрам"), static_cast<int>(DataListViewModes::ByGenres)},
+				{tr("По десятилетиям"), static_cast<int>(DataListViewModes::ByDecades)},
+				{tr("По столетиям"), static_cast<int>(DataListViewModes::ByCenturies)},
+				{tr("По оценкам"), static_cast<int>(DataListViewModes::ByRatings)},
+				{tr("Простой список"), static_cast<int>(DataListViewModes::Simple)},
 		});
 
 		_button_data_list->addSlaveWidgets({
@@ -67,22 +43,10 @@ void Books::WidgetControl::initWidgets()
 	// extra list
 	{
 		addSpacing();
-
-		addWidget(_button_extra_list = new Base::ButtonShow(tr(" Дополнения "), this));
-		connect(_button_extra_list, &Base::ButtonShow::toggled,
-				this, &WidgetControl::showExtraList);
-
-		addWidget(_button_add_extra = new Base::ButtonAdd(this));
-		connect(_button_add_extra, &Base::ButtonAdd::clicked,
-				this, &WidgetControl::addExtra);
-
-		addWidget(_button_collapse_extra_list = new Base::ButtonCollapse(this));
-		connect(_button_collapse_extra_list, &Base::ButtonCollapse::clicked,
-				this, &WidgetControl::collapseExtraList);
-
-		addWidget(_button_expand_extra_list = new Base::ButtonExpand(this));
-		connect(_button_expand_extra_list, &Base::ButtonExpand::clicked,
-				this, &WidgetControl::expandExtraList);
+		addButtonShow(_button_extra_list, tr(" Дополнения "), &WidgetControl::showExtraList);
+		addButtonAdd(_button_add_extra, &WidgetControl::addExtra);
+		addButtonCollapse(_button_collapse_extra_list, &WidgetControl::collapseExtraList);
+		addButtonExpand(_button_expand_extra_list, &WidgetControl::expandExtraList);
 
 		_button_extra_list->addSlaveWidgets({
 			_button_add_extra,
@@ -94,17 +58,11 @@ void Books::WidgetControl::initWidgets()
 	// chart
 	{
 		addSpacing();
-
-		addWidget(_button_chart = new Base::ButtonShow(tr("Статистика"), this));
-		connect(_button_chart, &Base::ButtonShow::toggled,
-				this, &WidgetControl::showChart);
-
-		addWidget(_combo_chart_view_mode = new QComboBox(this));
-		_combo_chart_view_mode->addItem(tr("По десятилетиям"), static_cast<int>(ChartViewModes::ByDecades));
-		_combo_chart_view_mode->addItem(tr("По столетиям"), static_cast<int>(ChartViewModes::ByCenturies));
-		_combo_chart_view_mode->addItem(tr("По оценкам"), static_cast<int>(ChartViewModes::ByRatings));
-		connect(_combo_chart_view_mode, &QComboBox::currentIndexChanged, this, [this](int index) {
-			emit setChartViewMode(_combo_chart_view_mode->itemData(index).toInt());
+		addButtonShow(_button_chart, tr("Статистика"), &WidgetControl::showChart);
+		addComboBox(_combo_chart_view_mode, &WidgetControl::setChartViewMode, {
+				{tr("По десятилетиям"), static_cast<int>(ChartViewModes::ByDecades)},
+				{tr("По столетиям"), static_cast<int>(ChartViewModes::ByCenturies)},
+				{tr("По оценкам"), static_cast<int>(ChartViewModes::ByRatings)}
 		});
 
 		_button_chart->addSlaveWidgets({

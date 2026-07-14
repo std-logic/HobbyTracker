@@ -28,15 +28,15 @@ void Trekking::WidgetSummary::update(const DataList& data_list)
 
 void Trekking::WidgetSummary::initWidgets()
 {
-	addWidget(tr("Годы:"), _label_years = new QLabel(this));
+	addWidget(tr("Годы:"), _label_years);
 
-	addWidget(tr("Походов:"), _label_tracks_num = new QLabel(this));
+	addWidget(tr("Походов:"), _label_tracks_num);
 
-	addWidget(tr("Ночёвок:"), _label_total_time = new QLabel(this));
+	addWidget(tr("Ночёвок:"), _label_total_time);
 
-	addWidget(tr("Километров:"), _label_total_dist = new QLabel(this));
+	addWidget(tr("Километров:"), _label_total_dist);
 
-	addWidget(tr("Высшая точка:"), _label_highest_peak = new QLabel(this));
+	addWidget(tr("Высшая точка:"), _label_highest_peak);
 
 	addStretch();
 }

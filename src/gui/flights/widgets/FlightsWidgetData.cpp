@@ -40,7 +40,7 @@ void Flights::WidgetData::initCommonParams()
 
 void Flights::WidgetData::initWidgets()
 {
-	addWidget(tr("Дата:"), _edit_date = new QLineEdit(this));
+	add(tr("Дата:"), _edit_date);
 	_edit_date->setPlaceholderText(tr("YYYY.MM.DD"));
 
 	for (size_t i = 0; i < max_points_num; ++i) {

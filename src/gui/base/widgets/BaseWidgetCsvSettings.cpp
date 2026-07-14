@@ -45,9 +45,6 @@ void Base::WidgetCsvSettings::initWidgets()
 		layout_file_name->setContentsMargins(0, 0, 0, 0);
 		layout_file_name->setSpacing(Global::Sizes::default_spacing);
 
-		_edit_file_name.emplace_back(new QLineEdit(this));
-		layout_file_name->addWidget(_edit_file_name.back());
-
 		_button_choose_file.emplace_back(
 				new QPushButton(QIcon::fromTheme(QIcon::ThemeIcon::FolderOpen), "", this));
 		_button_choose_file.back()->setToolTip(tr("Выбрать файл..."));
@@ -57,6 +54,9 @@ void Base::WidgetCsvSettings::initWidgets()
 			chooseFile(i);
 		});
 		layout_file_name->addWidget(_button_choose_file.back());
+
+		_edit_file_name.emplace_back(new QLineEdit(this));
+		layout_file_name->addWidget(_edit_file_name.back());
 
 		_layout_main->addLayout(layout_file_name, row_count, 0, 1, 2);
 

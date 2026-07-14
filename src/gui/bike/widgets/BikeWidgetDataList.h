@@ -24,7 +24,7 @@ private:
 private:
 	static const int WIDTH_YEAR = 180;
 	static const int WIDTH_TIME = 80;
-	static const int WIDTH_DIST = 80;
+	static const int WIDTH_DIST = 0; // stretched
 };
 
 } // namespace Bike
