@@ -19,8 +19,6 @@ public:
 
 	void update(const DataList& data_list, const TripList& trip_list);
 
-signals:
-
 private:
 	void initWidgets();
 

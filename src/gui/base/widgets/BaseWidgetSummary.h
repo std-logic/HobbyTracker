@@ -15,8 +15,6 @@ public:
 	explicit WidgetSummary(QWidget* parent = nullptr);
 	virtual ~WidgetSummary() = default;
 
-signals:
-
 protected:
 	void addWidget(QLabel*& widget, int spacing = 30);
 	void addWidget(const QString& label_text, QLabel*& widget, int spacing = 30);

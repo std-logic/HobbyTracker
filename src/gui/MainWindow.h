@@ -8,6 +8,7 @@ namespace Bike { class WidgetMain; }
 namespace Books { class WidgetMain; }
 namespace Flights { class WidgetMain; }
 namespace Games { class WidgetMain; }
+namespace Music { class WidgetMain; }
 namespace Trekking { class WidgetMain; }
 
 class MainWindow : public QMainWindow
@@ -41,6 +42,7 @@ private:
 	Books::WidgetMain* _books;
 	Flights::WidgetMain* _flights;
 	Games::WidgetMain* _games;
+	Music::WidgetMain* _music;
 	Trekking::WidgetMain* _trekking;
 
 	QElapsedTimer _loading_timer;

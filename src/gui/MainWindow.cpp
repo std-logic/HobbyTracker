@@ -3,6 +3,7 @@
 #include "books/widgets/BooksWidgetMain.h"
 #include "flights/widgets/FlightsWidgetMain.h"
 #include "games/widgets/GamesWidgetMain.h"
+#include "music/widgets/MusicWidgetMain.h"
 #include "trekking/widgets/TrekkingWidgetMain.h"
 
 #include <common/Global.h>
@@ -28,6 +29,7 @@ void MainWindow::start()
 	_books->start();
 	_flights->start();
 	_games->start();
+	_music->start();
 	_trekking->start();
 
 	showLoadingFinish();
@@ -51,6 +53,9 @@ void MainWindow::initStatusBar()
 void MainWindow::initCentralWidget()
 {
 	auto central_widget = new QTabWidget(this);
+
+	central_widget->addTab(_music = new Music::WidgetMain, Music::WidgetMain::getName());
+	connect(_music, &Music::WidgetMain::showMessage, this, &MainWindow::showMessage);
 
 	central_widget->addTab(_books = new Books::WidgetMain, Books::WidgetMain::getName());
 	connect(_books, &Books::WidgetMain::showMessage, this, &MainWindow::showMessage);

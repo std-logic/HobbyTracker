@@ -94,6 +94,16 @@ SOURCES += \
 	src/gui/games/widgets/GamesWidgetMain.cpp \
 	src/gui/games/widgets/GamesWidgetSettings.cpp \
 	src/gui/games/widgets/GamesWidgetSummary.cpp \
+	src/gui/music/data/MusicDataConverter.cpp \
+	src/gui/music/data/MusicDataList.cpp \
+	src/gui/music/data/MusicSettings.cpp \
+	src/gui/music/widgets/MusicWidgetChart.cpp \
+	src/gui/music/widgets/MusicWidgetControl.cpp \
+	src/gui/music/widgets/MusicWidgetData.cpp \
+	src/gui/music/widgets/MusicWidgetDataList.cpp \
+	src/gui/music/widgets/MusicWidgetMain.cpp \
+	src/gui/music/widgets/MusicWidgetSettings.cpp \
+	src/gui/music/widgets/MusicWidgetSummary.cpp \
 	src/gui/trekking/data/TrekkingDataConverter.cpp \
 	src/gui/trekking/data/TrekkingDataList.cpp \
 	src/gui/trekking/data/TrekkingSettings.cpp \
@@ -192,6 +202,18 @@ HEADERS += \
 	src/gui/games/widgets/GamesWidgetMain.h \
 	src/gui/games/widgets/GamesWidgetSettings.h \
 	src/gui/games/widgets/GamesWidgetSummary.h \
+	src/gui/music/common/MusicCommon.h \
+	src/gui/music/data/MusicData.h \
+	src/gui/music/data/MusicDataConverter.h \
+	src/gui/music/data/MusicDataList.h \
+	src/gui/music/data/MusicSettings.h \
+	src/gui/music/widgets/MusicWidgetChart.h \
+	src/gui/music/widgets/MusicWidgetControl.h \
+	src/gui/music/widgets/MusicWidgetData.h \
+	src/gui/music/widgets/MusicWidgetDataList.h \
+	src/gui/music/widgets/MusicWidgetMain.h \
+	src/gui/music/widgets/MusicWidgetSettings.h \
+	src/gui/music/widgets/MusicWidgetSummary.h \
 	src/gui/trekking/common/TrekkingCommon.h \
 	src/gui/trekking/data/TrekkingData.h \
 	src/gui/trekking/data/TrekkingDataConverter.h \

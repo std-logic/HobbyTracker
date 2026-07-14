@@ -18,8 +18,6 @@ public:
 
 	void update(const DataList& data_list);
 
-signals:
-
 private:
 	void initWidgets();
 
