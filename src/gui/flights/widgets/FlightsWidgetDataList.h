@@ -23,6 +23,7 @@ private:
 	void showByCountries(const DataList& data_list);
 	void showByCities(const DataList& data_list);
 	void showByAirports(const DataList& data_list);
+	void showAirportsTree(const DataList& data_list);
 	void showSimple(const DataList& data_list);
 
 private:

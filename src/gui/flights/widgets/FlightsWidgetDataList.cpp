@@ -18,6 +18,7 @@ void Flights::WidgetDataList::update(const DataList& data_list)
 		case DataListViewModes::ByCountries:	showByCountries(data_list);		break;
 		case DataListViewModes::ByCities:		showByCities(data_list);		break;
 		case DataListViewModes::ByAirports:		showByAirports(data_list);		break;
+		case DataListViewModes::AirportsTree:	showAirportsTree(data_list);	break;
 		case DataListViewModes::Simple:			showSimple(data_list);			break;
 		default: return;
 	}
@@ -111,6 +112,47 @@ void Flights::WidgetDataList::showByAirports(const DataList& data_list)
 			item_flight->setText(CLMN_DATE, flight->date());
 			item_flight->setText(CLMN_POINTS, flight->pointsToString());
 			item_flight->setId(flight->id());
+		}
+	}
+}
+
+void Flights::WidgetDataList::showAirportsTree(const DataList& data_list)
+{
+	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_POINTS};
+	initColumns({tr("Страна / Город / Аэропорт / Дата"), tr("К-во"), tr("Маршрут")},
+				{WIDTH_DATE, WIDTH_COUNT, WIDTH_POINTS});
+	initSorting(CLMN_DATE);
+
+	auto flights_by_countries = data_list.flightsByCountries();
+	auto flights_by_cities = data_list.flightsByCities();
+	auto flights_by_airports = data_list.flightsByAirports();
+
+	for (const auto& [country, flights_in_country] : flights_by_countries) {
+		auto item_country = new Base::WidgetTreeItem(this, Global::Colors::tree_level_3);
+		item_country->setText(CLMN_DATE, country);
+		item_country->setNumb(CLMN_COUNT, DataList::countryNumInSublist(country, flights_in_country));
+
+		auto list_of_cities = data_list.listOfCities(country);
+		for (const auto& city : list_of_cities) {
+			const auto& flights_in_city = flights_by_cities[country + ", " + city];
+			auto item_city = new Base::WidgetTreeItem(item_country, Global::Colors::tree_level_2);
+			item_city->setText(CLMN_DATE, city);
+			item_city->setNumb(CLMN_COUNT, DataList::cityNumInSublist(city, flights_in_city));
+
+			auto list_of_airports = data_list.listOfAirports(city);
+			for (const auto& airport : list_of_airports) {
+				const auto& flights_in_airport = flights_by_airports[country + ", " + city + ", " + airport];
+				auto item_airport = new Base::WidgetTreeItem(item_city, Global::Colors::tree_level_1);
+				item_airport->setText(CLMN_DATE, airport);
+				item_airport->setNumb(CLMN_COUNT, DataList::airportNumInSublist(airport, flights_in_airport));
+
+				for (const auto flight : flights_in_airport) {
+					auto item_flight = new Base::WidgetTreeItem(item_airport);
+					item_flight->setText(CLMN_DATE, flight->date());
+					item_flight->setText(CLMN_POINTS, flight->pointsToString());
+					item_flight->setId(flight->id());
+				}
+			}
 		}
 	}
 }

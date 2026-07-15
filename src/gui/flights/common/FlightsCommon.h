@@ -13,6 +13,7 @@ enum class DataListViewModes
 	ByCountries,
 	ByCities,
 	ByAirports,
+	AirportsTree,
 	Simple,
 };
 

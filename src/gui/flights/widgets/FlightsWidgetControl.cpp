@@ -28,6 +28,7 @@ void Flights::WidgetControl::initWidgets()
 				{tr("По странам"), static_cast<int>(DataListViewModes::ByCountries)},
 				{tr("По городам"), static_cast<int>(DataListViewModes::ByCities)},
 				{tr("По аэропортам"), static_cast<int>(DataListViewModes::ByAirports)},
+				{tr("Полное древо"), static_cast<int>(DataListViewModes::AirportsTree)},
 				{tr("Простой список"), static_cast<int>(DataListViewModes::Simple)},
 		});
 
