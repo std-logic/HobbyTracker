@@ -24,6 +24,10 @@ void Flights::WidgetSummary::update(const DataList& data_list)
 	_label_airports_num->setText(QString::number(summary.airports_num));
 
 	_label_flights_num->setText(QString::number(summary.flights_num));
+
+	_label_local_num->setText(QString::number(summary.local_num));
+
+	_label_international_num->setText(QString::number(summary.international_num));
 }
 
 void Flights::WidgetSummary::initWidgets()
@@ -36,7 +40,11 @@ void Flights::WidgetSummary::initWidgets()
 
 	addWidget(tr("Аэропортов:"), _label_airports_num);
 
-	addWidget(tr("Полётов:"), _label_flights_num);
+	addWidget(tr("Полётов:"), _label_flights_num, 0);
+
+	addWidget(tr("Внутренних:"), _label_local_num, 0);
+
+	addWidget(tr("Международных:"), _label_international_num);
 
 	addStretch();
 }

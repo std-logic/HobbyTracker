@@ -27,6 +27,8 @@ private:
 	QLabel* _label_cities_num = nullptr;
 	QLabel* _label_airports_num = nullptr;
 	QLabel* _label_flights_num = nullptr;
+	QLabel* _label_local_num = nullptr;
+	QLabel* _label_international_num = nullptr;
 };
 
 } // namespace Flights

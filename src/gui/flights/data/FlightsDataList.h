@@ -17,6 +17,8 @@ public:
 		uint32_t min_year = Global::undefined_value;
 		uint32_t max_year = Global::undefined_value;
 		uint32_t flights_num = 0;
+		uint32_t local_num = 0;
+		uint32_t international_num = 0;
 		uint32_t countries_num = 0;
 		uint32_t cities_num = 0;
 		uint32_t airports_num = 0;

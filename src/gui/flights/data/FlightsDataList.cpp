@@ -13,8 +13,14 @@ Flights::DataList::Summary Flights::DataList::summary() const
 			list_of_countries.insert(data.country(i));
 			list_of_cities.insert(data.city(i));
 			list_of_airports.insert(data.airport(i));
+			if (i > 0) {
+				if (data.country(i) == data.country(i-1)) {
+					++sum.local_num;
+				}
+			}
 		}
 	}
+	sum.international_num = sum.flights_num - sum.local_num;
 	sum.countries_num = list_of_countries.size();
 	sum.cities_num = list_of_cities.size();
 	sum.airports_num = list_of_airports.size();
