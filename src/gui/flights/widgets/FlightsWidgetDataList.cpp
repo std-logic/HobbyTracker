@@ -26,9 +26,9 @@ void Flights::WidgetDataList::update(const DataList& data_list)
 
 void Flights::WidgetDataList::showByYears(const DataList& data_list)
 {
-	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_POINTS};
-	initColumns({tr("Год / Дата"), tr("К-во"), tr("Маршрут")},
-				{WIDTH_DATE, WIDTH_COUNT, WIDTH_POINTS});
+	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_DIST, CLMN_POINTS};
+	initColumns({tr("Год / Дата"), tr("К-во"), tr("Километров"), tr("Маршрут")},
+				{WIDTH_DATE, WIDTH_COUNT, WIDTH_DIST, WIDTH_POINTS});
 	initSorting(CLMN_DATE);
 
 	auto flights_by_years = data_list.flightsByYears();
@@ -41,6 +41,7 @@ void Flights::WidgetDataList::showByYears(const DataList& data_list)
 		for (const auto flight : flights) {
 			auto item_flight = new Base::WidgetTreeItem(item_year);
 			item_flight->setText(CLMN_DATE, flight->date());
+			item_flight->setNumb(CLMN_DIST, flight->distTotal());
 			item_flight->setText(CLMN_POINTS, flight->pointsToString());
 			item_flight->setId(flight->id());
 		}
@@ -49,9 +50,9 @@ void Flights::WidgetDataList::showByYears(const DataList& data_list)
 
 void Flights::WidgetDataList::showByCountries(const DataList& data_list)
 {
-	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_POINTS};
-	initColumns({tr("Страна / Дата"), tr("К-во"), tr("Маршрут")},
-				{WIDTH_DATE, WIDTH_COUNT, WIDTH_POINTS});
+	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_DIST, CLMN_POINTS};
+	initColumns({tr("Страна / Дата"), tr("К-во"), tr("Километров"), tr("Маршрут")},
+				{WIDTH_DATE, WIDTH_COUNT, WIDTH_DIST, WIDTH_POINTS});
 	initSorting(CLMN_DATE);
 
 	auto flights_by_countries = data_list.flightsByCountries();
@@ -64,6 +65,7 @@ void Flights::WidgetDataList::showByCountries(const DataList& data_list)
 		for (const auto flight : flights) {
 			auto item_flight = new Base::WidgetTreeItem(item_country);
 			item_flight->setText(CLMN_DATE, flight->date());
+			item_flight->setNumb(CLMN_DIST, flight->distTotal());
 			item_flight->setText(CLMN_POINTS, flight->pointsToString());
 			item_flight->setId(flight->id());
 		}
@@ -72,9 +74,9 @@ void Flights::WidgetDataList::showByCountries(const DataList& data_list)
 
 void Flights::WidgetDataList::showByCities(const DataList& data_list)
 {
-	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_POINTS};
-	initColumns({tr("Город / Дата"), tr("К-во"), tr("Маршрут")},
-				{WIDTH_DATE, WIDTH_COUNT, WIDTH_POINTS});
+	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_DIST, CLMN_POINTS};
+	initColumns({tr("Город / Дата"), tr("К-во"), tr("Километров"), tr("Маршрут")},
+				{WIDTH_DATE, WIDTH_COUNT, WIDTH_DIST, WIDTH_POINTS});
 	initSorting(CLMN_DATE);
 
 	auto flights_by_cities = data_list.flightsByCities();
@@ -87,6 +89,7 @@ void Flights::WidgetDataList::showByCities(const DataList& data_list)
 		for (const auto flight : flights) {
 			auto item_flight = new Base::WidgetTreeItem(item_city);
 			item_flight->setText(CLMN_DATE, flight->date());
+			item_flight->setNumb(CLMN_DIST, flight->distTotal());
 			item_flight->setText(CLMN_POINTS, flight->pointsToString());
 			item_flight->setId(flight->id());
 		}
@@ -95,9 +98,9 @@ void Flights::WidgetDataList::showByCities(const DataList& data_list)
 
 void Flights::WidgetDataList::showByAirports(const DataList& data_list)
 {
-	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_POINTS};
-	initColumns({tr("Аэропорт / Дата"), tr("К-во"), tr("Маршрут")},
-				{WIDTH_DATE, WIDTH_COUNT, WIDTH_POINTS});
+	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_DIST, CLMN_POINTS};
+	initColumns({tr("Аэропорт / Дата"), tr("К-во"), tr("Километров"), tr("Маршрут")},
+				{WIDTH_DATE, WIDTH_COUNT, WIDTH_DIST, WIDTH_POINTS});
 	initSorting(CLMN_DATE);
 
 	auto flights_by_airports = data_list.flightsByAirports();
@@ -110,6 +113,7 @@ void Flights::WidgetDataList::showByAirports(const DataList& data_list)
 		for (const auto flight : flights) {
 			auto item_flight = new Base::WidgetTreeItem(item_airport);
 			item_flight->setText(CLMN_DATE, flight->date());
+			item_flight->setNumb(CLMN_DIST, flight->distTotal());
 			item_flight->setText(CLMN_POINTS, flight->pointsToString());
 			item_flight->setId(flight->id());
 		}
@@ -118,9 +122,9 @@ void Flights::WidgetDataList::showByAirports(const DataList& data_list)
 
 void Flights::WidgetDataList::showAirportsTree(const DataList& data_list)
 {
-	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_POINTS};
-	initColumns({tr("Страна / Город / Аэропорт / Дата"), tr("К-во"), tr("Маршрут")},
-				{WIDTH_DATE, WIDTH_COUNT, WIDTH_POINTS});
+	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_DIST, CLMN_POINTS};
+	initColumns({tr("Страна / Город / Аэропорт / Дата"), tr("К-во"), tr("Километров"), tr("Маршрут")},
+				{WIDTH_DATE, WIDTH_COUNT, WIDTH_DIST, WIDTH_POINTS});
 	initSorting(CLMN_DATE);
 
 	auto flights_by_countries = data_list.flightsByCountries();
@@ -149,6 +153,7 @@ void Flights::WidgetDataList::showAirportsTree(const DataList& data_list)
 				for (const auto flight : flights_in_airport) {
 					auto item_flight = new Base::WidgetTreeItem(item_airport);
 					item_flight->setText(CLMN_DATE, flight->date());
+					item_flight->setNumb(CLMN_DIST, flight->distTotal());
 					item_flight->setText(CLMN_POINTS, flight->pointsToString());
 					item_flight->setId(flight->id());
 				}
@@ -159,14 +164,15 @@ void Flights::WidgetDataList::showAirportsTree(const DataList& data_list)
 
 void Flights::WidgetDataList::showSimple(const DataList& data_list)
 {
-	enum Columns {CLMN_DATE, CLMN_POINTS};
-	initColumns({tr("Дата"), tr("Маршрут")},
-				{WIDTH_DATE, WIDTH_POINTS});
+	enum Columns {CLMN_DATE, CLMN_DIST, CLMN_POINTS};
+	initColumns({tr("Дата"), tr("Километров"), tr("Маршрут")},
+				{WIDTH_DATE, WIDTH_DIST, WIDTH_POINTS});
 	initSorting(CLMN_DATE);
 
 	for (const auto& flight : data_list) {
 		auto item_flight = new Base::WidgetTreeItem(this);
 		item_flight->setText(CLMN_DATE, flight.date());
+		item_flight->setNumb(CLMN_DIST, flight.distTotal());
 		item_flight->setText(CLMN_POINTS, flight.pointsToString());
 		item_flight->setId(flight.id());
 	}

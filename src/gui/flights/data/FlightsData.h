@@ -18,12 +18,14 @@ public:
 		QString country;
 		QString city;
 		QString airport;
+		uint32_t dist = 0;
 
 		inline bool operator==(const FlightPoint& other) const noexcept
 		{
 			return	(country == other.country) &&
 					(city == other.city) &&
-					(airport == other.airport);
+					(airport == other.airport) &&
+					(dist == other.dist);
 		}
 	};
 	using FlightPoints = std::vector<FlightPoint>;
@@ -49,7 +51,7 @@ public:
 	template<typename T>
 	inline void setPoints(T&& points)
 	{ _points = std::forward<T>(points); }
-	inline void addPointFromString(const QString& str, const QString& delimiter = ", ")
+	void addPointFromString(const QString& str, const QString& delimiter = ", ")
 	{
 		if (str.isEmpty()) { return; }
 		auto values = str.split(delimiter);
@@ -57,6 +59,7 @@ public:
 		if (values.size() >= 1) { point.country = values[0]; }
 		if (values.size() >= 2) { point.city = values[1]; }
 		if (values.size() >= 3) { point.airport = values[2]; }
+		if (values.size() >= 4) { point.dist = values[3].toUInt(); }
 		_points.push_back(point);
 	}
 	inline size_t pointsNum() const
@@ -65,21 +68,23 @@ public:
 	{ return _points; }
 	inline FlightPoint point(size_t index) const
 	{ return _points[index]; }
-	inline QString pointToString(size_t index, const QString& delimiter = ", ") const
+	QString pointToString(size_t index, const QString& delimiter = ", ", bool full = true) const
 	{
+		QString str;
 		if (index < _points.size()) {
-			return	_points[index].country + delimiter +
+			str =	_points[index].country + delimiter +
 					_points[index].city + delimiter +
 					_points[index].airport;
+			if (full) { str += delimiter + QString::number(_points[index].dist); }
 		}
-		return QString();
+		return str;
 	}
-	inline QString pointsToString(const QString& delimiter_points = "  →  ",
-								  const QString& delimiter = ", ") const
+	QString pointsToString(const QString& delimiter_points = "  →  ",
+						   const QString& delimiter = ", ") const
 	{
 		QString str;
 		for (size_t i = 0; i < _points.size(); ++i) {
-			str += pointToString(i, delimiter);
+			str += pointToString(i, delimiter, false);
 			if (i != (_points.size() - 1)) {
 				str += delimiter_points;
 			}
@@ -92,7 +97,7 @@ public:
 
 	inline QString country(size_t index) const
 	{ return _points[index].country; }
-	inline QStringList countries() const
+	QStringList countries() const
 	{
 		QStringList list_of_countries;
 		for (const auto& point : _points) {
@@ -105,7 +110,7 @@ public:
 
 	inline QString city(size_t index) const
 	{ return _points[index].city; }
-	inline QStringList cities() const
+	QStringList cities() const
 	{
 		QStringList list_of_cities;
 		for (const auto& point : _points) {
@@ -119,7 +124,7 @@ public:
 
 	inline QString airport(size_t index) const
 	{ return _points[index].airport; }
-	inline QStringList airports() const
+	QStringList airports() const
 	{
 		QStringList list_of_airports;
 		for (const auto& point : _points) {
@@ -129,6 +134,15 @@ public:
 			}
 		}
 		return list_of_airports;
+	}
+
+	inline uint32_t dist(size_t index) const
+	{ return _points[index].dist; }
+	uint32_t distTotal() const
+	{
+		uint32_t dist_total = 0;
+		for (const auto& point : _points) { dist_total += point.dist; }
+		return dist_total;
 	}
 
 	inline bool operator==(const Data& other) const noexcept

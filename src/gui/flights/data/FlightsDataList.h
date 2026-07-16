@@ -22,6 +22,7 @@ public:
 		uint32_t countries_num = 0;
 		uint32_t cities_num = 0;
 		uint32_t airports_num = 0;
+		uint32_t dist = 0;
 	};
 	Summary summary() const;
 
@@ -43,6 +44,9 @@ public:
 	static uint32_t countryNumInSublist(const QString& country, const SubListContainer& sublist);
 	static uint32_t cityNumInSublist(const QString& city, const SubListContainer& sublist);
 	static uint32_t airportNumInSublist(const QString& airport, const SubListContainer& sublist);
+
+	using DistList = std::unordered_map<QString, uint32_t>;
+	DistList distList() const;
 };
 
 } // namespace Flights

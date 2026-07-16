@@ -9,6 +9,7 @@ Flights::DataList::Summary Flights::DataList::summary() const
 	for (const auto& data : _data_list) {
 		Helper::checkMinMax(data.year(), &sum.min_year, &sum.max_year);
 		sum.flights_num += data.flightsNum();
+		sum.dist += data.distTotal();
 		for (size_t i = 0; i < data.pointsNum(); ++i) {
 			list_of_countries.insert(data.country(i));
 			list_of_cities.insert(data.city(i));
@@ -133,4 +134,20 @@ uint32_t Flights::DataList::airportNumInSublist(const QString& airport, const Su
 		}
 	}
 	return airport_num;
+}
+
+Flights::DataList::DistList Flights::DataList::distList() const
+{
+	DistList dist_list;
+	for (const auto& data : _data_list) {
+		for (size_t i = 1; i < data.pointsNum(); ++i) {
+			uint32_t dist = data.dist(i);
+			if (dist > 0) {
+				QString from = data.airport(i-1);
+				QString to = data.airport(i);
+				dist_list[from+to] = dist_list[to+from] = dist;
+			}
+		}
+	}
+	return dist_list;
 }

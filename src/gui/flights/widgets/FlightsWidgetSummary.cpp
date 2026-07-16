@@ -28,6 +28,8 @@ void Flights::WidgetSummary::update(const DataList& data_list)
 	_label_local_num->setText(QString::number(summary.local_num));
 
 	_label_international_num->setText(QString::number(summary.international_num));
+
+	_label_dist->setText(QString::number(summary.dist));
 }
 
 void Flights::WidgetSummary::initWidgets()
@@ -45,6 +47,8 @@ void Flights::WidgetSummary::initWidgets()
 	addWidget(tr("Внутренних:"), _label_local_num, 0);
 
 	addWidget(tr("Международных:"), _label_international_num);
+
+	addWidget(tr("Километров:"), _label_dist);
 
 	addStretch();
 }

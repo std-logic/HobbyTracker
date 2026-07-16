@@ -29,6 +29,7 @@ private:
 	QLabel* _label_flights_num = nullptr;
 	QLabel* _label_local_num = nullptr;
 	QLabel* _label_international_num = nullptr;
+	QLabel* _label_dist = nullptr;
 };
 
 } // namespace Flights
