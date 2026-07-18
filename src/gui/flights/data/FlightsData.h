@@ -94,6 +94,26 @@ public:
 
 	inline uint32_t flightsNum() const
 	{ return _points.empty() ? 0 : (_points.size() - 1); }
+	QString flightToString(size_t index, const QString& delimiter = "  ↔  ") const
+	{
+		QString str;
+		if (index < flightsNum()) {
+			str =	_points[index].country + ", " + _points[index].city +
+					delimiter +
+					_points[index+1].country + ", " + _points[index+1].city;
+		}
+		return str;
+	}
+	QString flightReversedToString(size_t index, const QString& delimiter = "  ↔  ") const
+	{
+		QString str;
+		if (index < flightsNum()) {
+			str =	_points[index+1].country + ", " + _points[index+1].city +
+					delimiter +
+					_points[index].country + ", " + _points[index].city;
+		}
+		return str;
+	}
 
 	inline QString country(size_t index) const
 	{ return _points[index].country; }

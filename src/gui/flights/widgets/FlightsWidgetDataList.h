@@ -23,11 +23,13 @@ private:
 	void showByCountries(const DataList& data_list);
 	void showByCities(const DataList& data_list);
 	void showByAirports(const DataList& data_list);
+	void showByRoutes(const DataList& data_list);
 	void showAirportsTree(const DataList& data_list);
 	void showSimple(const DataList& data_list);
 
 private:
 	static const int WIDTH_DATE = 280;
+	static const int WIDTH_ROUTE = 450;
 	static const int WIDTH_COUNT = 50;
 	static const int WIDTH_DIST = 80;
 	static const int WIDTH_POINTS = 0; // stretched

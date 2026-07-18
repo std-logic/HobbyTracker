@@ -18,6 +18,7 @@ void Flights::WidgetDataList::update(const DataList& data_list)
 		case DataListViewModes::ByCountries:	showByCountries(data_list);		break;
 		case DataListViewModes::ByCities:		showByCities(data_list);		break;
 		case DataListViewModes::ByAirports:		showByAirports(data_list);		break;
+		case DataListViewModes::ByRoutes:		showByRoutes(data_list);		break;
 		case DataListViewModes::AirportsTree:	showAirportsTree(data_list);	break;
 		case DataListViewModes::Simple:			showSimple(data_list);			break;
 		default: return;
@@ -112,6 +113,30 @@ void Flights::WidgetDataList::showByAirports(const DataList& data_list)
 
 		for (const auto flight : flights) {
 			auto item_flight = new Base::WidgetTreeItem(item_airport);
+			item_flight->setText(CLMN_DATE, flight->date());
+			item_flight->setNumb(CLMN_DIST, flight->distTotal());
+			item_flight->setText(CLMN_POINTS, flight->pointsToString());
+			item_flight->setId(flight->id());
+		}
+	}
+}
+
+void Flights::WidgetDataList::showByRoutes(const DataList& data_list)
+{
+	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_DIST, CLMN_POINTS};
+	initColumns({tr("Маршрут / Дата"), tr("К-во"), tr("Километров"), tr("Маршрут")},
+				{WIDTH_ROUTE, WIDTH_COUNT, WIDTH_DIST, WIDTH_POINTS});
+	initSorting(CLMN_DATE);
+
+	auto flights_by_routes = data_list.flightsByRoutes();
+
+	for (const auto& [route, flights] : flights_by_routes) {
+		auto item_route = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
+		item_route->setText(CLMN_DATE, route);
+		item_route->setNumb(CLMN_COUNT, flights.size());
+
+		for (const auto flight : flights) {
+			auto item_flight = new Base::WidgetTreeItem(item_route);
 			item_flight->setText(CLMN_DATE, flight->date());
 			item_flight->setNumb(CLMN_DIST, flight->distTotal());
 			item_flight->setText(CLMN_POINTS, flight->pointsToString());

@@ -88,6 +88,23 @@ Flights::DataList::ListOfStrings Flights::DataList::listOfAirports(const QString
 	return list;
 }
 
+Flights::DataList::SublistsByStrings Flights::DataList::flightsByRoutes() const
+{
+	SublistsByStrings list;
+	for (const auto& data : _data_list) {
+		for (size_t i = 0; i < data.flightsNum(); ++i) {
+			QString flight_reversed = data.flightReversedToString(i);
+			if (list.contains(flight_reversed)) {
+				list[flight_reversed].push_back(&data);
+			} else {
+				QString flight = data.flightToString(i);
+				list[flight].push_back(&data);
+			}
+		}
+	}
+	return list;
+}
+
 uint32_t Flights::DataList::flightsNumInSublist(const SubListContainer& sublist)
 {
 	uint32_t flights_num = 0;
