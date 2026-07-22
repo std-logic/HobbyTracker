@@ -2,6 +2,8 @@
 
 #include <QWidget>
 
+#include <vector>
+
 class QHBoxLayout;
 class QLabel;
 
@@ -15,6 +17,8 @@ public:
 	explicit WidgetSummary(QWidget* parent = nullptr);
 	virtual ~WidgetSummary() = default;
 
+	void clear();
+
 protected:
 	void addWidget(QLabel*& widget, int spacing = 30);
 	void addWidget(const QString& label_text, QLabel*& widget, int spacing = 30);
@@ -23,6 +27,8 @@ protected:
 
 private:
 	QHBoxLayout* _layout_main = nullptr;
+
+	std::vector<QLabel*> _labels;
 };
 
 } // namespace Base

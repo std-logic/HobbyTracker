@@ -46,6 +46,9 @@ namespace Global
 				"QTreeWidget{"
 				"background-color: rgb(230,230,230);"
 				"color: black;"
+				"}"
+				"QHeaderView::section{"
+				"font-size: 11pt;"
 				"}";
 		inline const char button_highligh[] =
 				"QPushButton{"

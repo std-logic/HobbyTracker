@@ -26,9 +26,9 @@ private:
 private:
 	static const int WIDTH_DATE = 180;
 	static const int WIDTH_COUNT = 50;
-	static const int WIDTH_TIME = 80;
-	static const int WIDTH_DIST = 80;
-	static const int WIDTH_PEAK = 90;
+	static const int WIDTH_TIME = 100;
+	static const int WIDTH_DIST = 100;
+	static const int WIDTH_PEAK = 110;
 	static const int WIDTH_KIND = 140;
 	static const int WIDTH_COUNTRIES = 200;
 	static const int WIDTH_PLACES = 0; // stretched

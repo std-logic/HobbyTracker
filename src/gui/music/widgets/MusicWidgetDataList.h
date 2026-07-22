@@ -30,7 +30,7 @@ private:
 	static const int WIDTH_COUNT = 50;
 	static const int WIDTH_GENRE = 200;
 	static const int WIDTH_COUNTRY = 200;
-	static const int WIDTH_YEAR = 100;
+	static const int WIDTH_YEAR = 130;
 	static const int WIDTH_STATE = 70;
 };
 

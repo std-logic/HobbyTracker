@@ -31,7 +31,7 @@ private:
 	static const int WIDTH_DATE = 280;
 	static const int WIDTH_ROUTE = 450;
 	static const int WIDTH_COUNT = 50;
-	static const int WIDTH_DIST = 80;
+	static const int WIDTH_DIST = 100;
 	static const int WIDTH_POINTS = 0; // stretched
 };
 

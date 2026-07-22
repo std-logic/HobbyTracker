@@ -66,13 +66,15 @@ void Base::WidgetTree::initColumns(const QStringList& labels, const std::vector<
 	}
 }
 
-void Base::WidgetTree::initSorting(int default_column, Qt::SortOrder default_order)
+void Base::WidgetTree::initSorting(int default_column, Qt::SortOrder default_order, bool force)
 {
-	auto header_item = headerItem();
-	for (int column = 0; column < columnCount(); ++column) {
-		if (header_item->text(column) == _sorting_column) {
-			sortByColumn(column, _sorting_order);
-			return;
+	if (!force) {
+		auto header_item = headerItem();
+		for (int column = 0; column < columnCount(); ++column) {
+			if (header_item->text(column) == _sorting_column) {
+				sortByColumn(column, _sorting_order);
+				return;
+			}
 		}
 	}
 	sortByColumn(default_column, default_order);

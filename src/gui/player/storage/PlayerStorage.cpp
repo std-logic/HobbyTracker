@@ -1,0 +1,93 @@
+#include "PlayerStorage.h"
+#include "PlayerXmlParser.h"
+
+#include <algorithm>
+
+Player::Library Player::Storage::readLibrary(const QStringList& file_names)
+{
+	if (file_names.size() == 1) {
+		auto title = createLibraryTitleFromFileName(file_names[0]);
+		auto tracks = readTracks(file_names[0]);
+		return createLibraryFromTracks(title, tracks);
+	} else {
+		auto title = createLibraryTitleFromFileNames(file_names[0], file_names[1]);
+		auto tracks_1 = readTracks(file_names[0]);
+		auto tracks_2 = readTracks(file_names[1]);
+		auto tracks_diff = calcTracksDiff(tracks_1, tracks_2);
+		return createLibraryFromTracks(title, tracks_diff);
+	}
+}
+
+std::vector<Player::Library> Player::Storage::readLibraries(const QStringList& file_names)
+{
+	std::vector<Library> libraries;
+	std::list<Track> prev_tracks, tracks;
+	bool first_file = true;
+	for (const auto& file_name : file_names) {
+		auto title = createLibraryTitleFromFileName(file_name);
+		tracks = readTracks(file_name);
+		if (first_file) {
+			first_file = false;
+			libraries.emplace_back(createLibraryFromTracks(title, tracks));
+		} else {
+			auto tracks_diff = calcTracksDiff(prev_tracks, tracks);
+			libraries.emplace_back(createLibraryFromTracks(title, tracks_diff));
+		}
+		prev_tracks = tracks;
+	}
+	return libraries;
+}
+
+std::list<Player::Track> Player::Storage::readTracks(const QString& file_name)
+{
+	if (!_tracks_cache.contains(file_name)) {
+		if (_tracks_cache.size() >= 20) {
+			_tracks_cache.erase(_tracks_cache.begin()); // on cache overflow we remove some random old data
+		}
+		_tracks_cache[file_name] = XmlParser::readFile(file_name);
+	}
+	return _tracks_cache[file_name];
+}
+
+std::list<Player::Track> Player::Storage::calcTracksDiff(std::list<Track> tracks_1, std::list<Track> tracks_2)
+{
+	for (auto& track : tracks_2) {
+		auto equal_track_it = std::find(tracks_1.begin(), tracks_1.end(), track);
+		if (equal_track_it != tracks_1.end()) {
+			track -= *equal_track_it;
+			tracks_1.erase(equal_track_it);
+		}
+	}
+	return tracks_2;
+}
+
+QString Player::Storage::createLibraryTitleFromFileName(const QString& file_name)
+{
+	return file_name.section("/", -1);
+}
+
+QString Player::Storage::createLibraryTitleFromFileNames(const QString& file_name_1, const QString& file_name_2)
+{
+	return QStringLiteral("%1 → %2").arg(file_name_1.section("/", -1), file_name_2.section("/", -1));
+}
+
+Player::Library Player::Storage::createLibraryFromTracks(const QString& title, const std::list<Track>& tracks)
+{
+	Library library(title);
+
+	for (const auto& track : tracks) {
+		auto& artist = library[track.artist()];
+		if (artist.isTitleEmpty()) {
+			artist.setTitle(track.artist());
+		}
+
+		auto& album = artist[track.album()];
+		if (album.isTitleEmpty()) {
+			album.setTitle(track.album());
+		}
+
+		album.addTrack(track);
+	}
+
+	return library;
+}

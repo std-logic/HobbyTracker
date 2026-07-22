@@ -48,24 +48,24 @@ namespace Helper
 		}
 	}
 
-	inline auto checkMinYear(uint32_t curr_min_year, uint32_t year)
+	inline void checkMinMaxAny(uint32_t val, uint32_t* min, uint32_t* max)
 	{
-		if (year != Global::undefined_value) {
-			if ((curr_min_year > year) || (curr_min_year == Global::undefined_value)) {
-				curr_min_year = year;
-			}
-		}
-		return curr_min_year;
+		if (*min > val) { *min = val; }
+		if (*max < val) { *max = val; }
 	}
 
-	inline auto checkMaxYear(uint32_t curr_max_year, uint32_t year)
+	inline void checkMin(uint32_t val, uint32_t* min)
 	{
-		if (year != Global::undefined_value) {
-			if ((curr_max_year < year) || (curr_max_year == Global::undefined_value)) {
-				curr_max_year = year;
-			}
+		if (val != Global::undefined_value) {
+			if ((*min > val) || (*min == Global::undefined_value)) { *min = val; }
 		}
-		return curr_max_year;
+	}
+
+	inline void checkMax(uint32_t val, uint32_t* max)
+	{
+		if (val != Global::undefined_value) {
+			if ((*max < val) || (*max == Global::undefined_value)) { *max = val; }
+		}
 	}
 
 	inline QString yearString(uint32_t min_year, uint32_t max_year)
@@ -101,13 +101,32 @@ namespace Helper
 	{
 		if (step == 1) {
 			return	(year == Global::undefined_value) ?
-					QStringLiteral("[Неизвестный]") :
+					QStringLiteral("Неизвестные") :
 					QStringLiteral("%1").arg(year, 4, 10, QChar('0'));
 		} else {
 			return	(year == Global::undefined_value) ?
-					QStringLiteral("[Неизвестное]") :
+					QStringLiteral("Неизвестные") :
 					QStringLiteral("%1-е").arg((year / step) * step, 4, 10, QChar('0'));
 		}
+	}
+
+	inline QString sizeString(uint64_t size)
+	{
+		return	(size <= 1024 * 1024 * 1024) ?
+				QStringLiteral("%1 МБ").arg(static_cast<double>(size) / (1024. * 1024.), 0, 'f', 0) :
+				QStringLiteral("%1 ГБ").arg(static_cast<double>(size) / (1024. * 1024. * 1024.), 0, 'f', 2);
+	}
+
+	inline QString timeString(uint32_t time)
+	{
+		return	(time < 60 * 60000) ?
+				QStringLiteral("%1:%2")
+					.arg(time / 60000)
+					.arg((time % 60000) / 1000, 2, 10, QChar('0')) :
+				QStringLiteral("%1:%2:%3")
+					.arg(time / (60 * 60000))
+					.arg((time % (60 * 60000)) / 60000, 2, 10, QChar('0'))
+					.arg((time % 60000) / 1000, 2, 10, QChar('0'));
 	}
 
 	inline QColor ratingColor(uint32_t rating)

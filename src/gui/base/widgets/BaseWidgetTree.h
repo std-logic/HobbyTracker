@@ -23,7 +23,7 @@ signals:
 
 protected:
 	void initColumns(const QStringList& labels, const std::vector<int>& widths = {});
-	void initSorting(int default_column = 0, Qt::SortOrder default_order = Qt::AscendingOrder);
+	void initSorting(int default_column = 0, Qt::SortOrder default_order = Qt::AscendingOrder, bool force = false);
 
 private slots:
 	void sortingChanged(int index, Qt::SortOrder order);

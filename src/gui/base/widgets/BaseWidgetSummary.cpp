@@ -17,10 +17,21 @@ Base::WidgetSummary::WidgetSummary(QWidget* parent)
 	_layout_main->setSpacing(Global::Sizes::default_spacing);
 }
 
+void Base::WidgetSummary::clear()
+{
+	for (auto label : _labels) {
+		label->setText(QStringLiteral("-"));
+	}
+}
+
 void Base::WidgetSummary::addWidget(QLabel*& widget, int spacing)
 {
 	if (widget == nullptr) { widget = new QLabel(this); }
+	widget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+	widget->setText(QStringLiteral("-"));
+	widget->setStyleSheet(Global::Stylesheets::label_value);
 	_layout_main->addWidget(widget);
+	_labels.push_back(widget);
 
 	addSpacing(spacing);
 }
@@ -31,13 +42,7 @@ void Base::WidgetSummary::addWidget(const QString& label_text, QLabel*& widget, 
 	label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	_layout_main->addWidget(label);
 
-	if (widget == nullptr) { widget = new QLabel(this); }
-	widget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-	widget->setText("-");
-	widget->setStyleSheet(Global::Stylesheets::label_value);
-	_layout_main->addWidget(widget);
-
-	addSpacing(spacing);
+	addWidget(widget, spacing);
 }
 
 void Base::WidgetSummary::addStretch(int stretch)

@@ -8,8 +8,6 @@
 #include <QValueAxis>
 #include <QBarCategoryAxis>
 
-#include <ranges>
-
 Base::WidgetChart::WidgetChart(QWidget* parent)
 	: QChartView{parent}
 {
@@ -102,30 +100,39 @@ void Base::WidgetChart::updateBars(const std::map<QString, uint32_t>& values)
 {
 	auto bar_axis_x = getAxisX();
 	auto bar_set = getBarSet();
+	uint32_t max_y = std::numeric_limits<uint32_t>::min();
 	for (const auto& [val_x, val_y] : values) {
 		bar_axis_x->append(val_x);
 		bar_set->append(val_y);
+		if (max_y < val_y) { max_y = val_y; }
 	}
-
-	if (!values.empty()) {
-		auto max_y = *std::ranges::max_element(values | std::views::values);
-		updateAxisYRange(max_y);
-	}
+	updateAxisYRange(max_y);
 }
 
 void Base::WidgetChart::updateBars(const std::map<uint32_t, uint32_t>& values)
 {
 	auto bar_axis_x = getAxisX();
 	auto bar_set = getBarSet();
+	uint32_t max_y = std::numeric_limits<uint32_t>::min();
 	for (const auto& [val_x, val_y] : values) {
 		bar_axis_x->append(QString::number(val_x));
 		bar_set->append(val_y);
+		if (max_y < val_y) { max_y = val_y; }
 	}
+	updateAxisYRange(max_y);
+}
 
-	if (!values.empty()) {
-		auto max_y = *std::ranges::max_element(values | std::views::values);
-		updateAxisYRange(max_y);
+void Base::WidgetChart::updateBars(const std::map<uint32_t, std::pair<QString, uint32_t>>& values)
+{
+	auto bar_axis_x = getAxisX();
+	auto bar_set = getBarSet();
+	uint32_t max_y = std::numeric_limits<uint32_t>::min();
+	for (const auto& [_, val_xy] : values) {
+		bar_axis_x->append(val_xy.first);
+		bar_set->append(val_xy.second);
+		if (max_y < val_xy.second) { max_y = val_xy.second; }
 	}
+	updateAxisYRange(max_y);
 }
 
 void Base::WidgetChart::updateAxisYRange(uint32_t max_y)

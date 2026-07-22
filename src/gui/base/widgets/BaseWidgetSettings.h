@@ -24,6 +24,20 @@ protected:
 	void addLayout(QLayout* layout);
 	void addLayout(const QString& label_text, QLayout* layout);
 
+	template<std::derived_from<QWidget> T>
+	void add(T*& widget)
+	{
+		widget = new T(this);
+		addWidget(widget);
+	}
+
+	template<std::derived_from<QWidget> T>
+	void add(const QString& label_text, T*& widget)
+	{
+		widget = new T(this);
+		addWidget(label_text, widget);
+	}
+
 private:
 	void initCommonParams();
 	void initWidgets();

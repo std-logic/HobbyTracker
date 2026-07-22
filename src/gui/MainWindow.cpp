@@ -4,6 +4,7 @@
 #include "flights/widgets/FlightsWidgetMain.h"
 #include "games/widgets/GamesWidgetMain.h"
 #include "music/widgets/MusicWidgetMain.h"
+#include "player/widgets/PlayerWidgetMain.h"
 #include "trekking/widgets/TrekkingWidgetMain.h"
 
 #include <common/Global.h>
@@ -30,6 +31,7 @@ void MainWindow::start()
 	_flights->start();
 	_games->start();
 	_music->start();
+	_player->start();
 	_trekking->start();
 
 	showLoadingFinish();
@@ -56,6 +58,9 @@ void MainWindow::initCentralWidget()
 
 	central_widget->addTab(_music = new Music::WidgetMain, Music::WidgetMain::getName());
 	connect(_music, &Music::WidgetMain::showMessage, this, &MainWindow::showMessage);
+
+	central_widget->addTab(_player = new Player::WidgetMain, Player::WidgetMain::getName());
+	connect(_player, &Player::WidgetMain::showMessage, this, &MainWindow::showMessage);
 
 	central_widget->addTab(_books = new Books::WidgetMain, Books::WidgetMain::getName());
 	connect(_books, &Books::WidgetMain::showMessage, this, &MainWindow::showMessage);

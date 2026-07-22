@@ -9,6 +9,7 @@
 #include <QWidget>
 
 class QHBoxLayout;
+class QPushButton;
 
 namespace Base
 {
@@ -38,6 +39,20 @@ protected:
 	void addSpacing(int size = 30);
 	void addButtonSave();
 	void addButtonSettings();
+
+	template<typename FuncClick>
+	void addButton(QPushButton*& button, const QString& text, FuncClick&& func_click)
+	{
+		addWidget(button = new QPushButton(text, this));
+		connect(button, &ButtonShow::clicked, this, func_click);
+	}
+
+	template<typename FuncClick>
+	void addButton(QPushButton*& button, const QIcon& icon, const QString& text, FuncClick&& func_click)
+	{
+		addWidget(button = new QPushButton(icon, text, this));
+		connect(button, &ButtonShow::clicked, this, func_click);
+	}
 
 	template<typename FuncShow>
 	void addButtonShow(ButtonShow*& button, const QString& text, FuncShow&& func_show)

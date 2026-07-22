@@ -104,6 +104,16 @@ SOURCES += \
 	src/gui/music/widgets/MusicWidgetMain.cpp \
 	src/gui/music/widgets/MusicWidgetSettings.cpp \
 	src/gui/music/widgets/MusicWidgetSummary.cpp \
+	src/gui/player/data/PlayerLibrary.cpp \
+	src/gui/player/data/PlayerSettings.cpp \
+	src/gui/player/storage/PlayerStorage.cpp \
+	src/gui/player/storage/PlayerXmlParser.cpp \
+	src/gui/player/widgets/PlayerWidgetChart.cpp \
+	src/gui/player/widgets/PlayerWidgetControl.cpp \
+	src/gui/player/widgets/PlayerWidgetDataList.cpp \
+	src/gui/player/widgets/PlayerWidgetMain.cpp \
+	src/gui/player/widgets/PlayerWidgetSettings.cpp \
+	src/gui/player/widgets/PlayerWidgetSummary.cpp \
 	src/gui/trekking/data/TrekkingDataConverter.cpp \
 	src/gui/trekking/data/TrekkingDataList.cpp \
 	src/gui/trekking/data/TrekkingSettings.cpp \
@@ -214,6 +224,20 @@ HEADERS += \
 	src/gui/music/widgets/MusicWidgetMain.h \
 	src/gui/music/widgets/MusicWidgetSettings.h \
 	src/gui/music/widgets/MusicWidgetSummary.h \
+	src/gui/player/common/PlayerCommon.h \
+	src/gui/player/data/PlayerAlbum.h \
+	src/gui/player/data/PlayerArtist.h \
+	src/gui/player/data/PlayerLibrary.h \
+	src/gui/player/data/PlayerSettings.h \
+	src/gui/player/data/PlayerTrack.h \
+	src/gui/player/storage/PlayerStorage.h \
+	src/gui/player/storage/PlayerXmlParser.h \
+	src/gui/player/widgets/PlayerWidgetChart.h \
+	src/gui/player/widgets/PlayerWidgetControl.h \
+	src/gui/player/widgets/PlayerWidgetDataList.h \
+	src/gui/player/widgets/PlayerWidgetMain.h \
+	src/gui/player/widgets/PlayerWidgetSettings.h \
+	src/gui/player/widgets/PlayerWidgetSummary.h \
 	src/gui/trekking/common/TrekkingCommon.h \
 	src/gui/trekking/data/TrekkingData.h \
 	src/gui/trekking/data/TrekkingDataConverter.h \

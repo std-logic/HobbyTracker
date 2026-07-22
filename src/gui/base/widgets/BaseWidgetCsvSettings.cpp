@@ -154,10 +154,7 @@ void Base::WidgetCsvSettings::chooseFile(size_t index)
 			tr("Выберите файл базы данных"),
 			_edit_file_name[index]->text(),
 			QStringLiteral("CSV files (*.csv)"));
-
-	if (file_name.isEmpty()) {
-		return;
-	}
+	if (file_name.isEmpty()) { return; }
 
 	_edit_file_name[index]->setText(file_name);
 }
