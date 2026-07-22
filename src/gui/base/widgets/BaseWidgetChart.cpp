@@ -138,10 +138,11 @@ void Base::WidgetChart::updateBars(const std::map<uint32_t, std::pair<QString, u
 void Base::WidgetChart::updateAxisYRange(uint32_t max_y)
 {
 	auto step_y = calcStepY(max_y);
+	uint32_t add = ((static_cast<double>(max_y % step_y) / step_y) > 0.55) ? 1 : 0;
 
 	auto bar_axis_y = getAxisY();
-	bar_axis_y->setRange(0, ((max_y / step_y) + 1) * step_y);
-	bar_axis_y->setTickCount((max_y / step_y) + 2);
+	bar_axis_y->setRange(0, ((max_y / step_y) + 1 + add) * step_y);
+	bar_axis_y->setTickCount((max_y / step_y) + 2 + add);
 }
 
 uint32_t Base::WidgetChart::calcStepY(uint32_t max_y)
