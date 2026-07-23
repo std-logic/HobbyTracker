@@ -50,7 +50,7 @@ void Player::WidgetSummary::update(const std::vector<Library>& libraries)
 
 void Player::WidgetSummary::initWidgets()
 {
-	addWidget(tr("Файл:"), _label_title);
+	addWidget(tr("Файлы:"), _label_title);
 	addWidget(tr("Годы:"), _label_years);
 	addWidget(tr("Групп:"), _label_artists_num);
 	addWidget(tr("Альбомов:"), _label_albums_num);

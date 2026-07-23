@@ -41,15 +41,17 @@ std::vector<Player::Library> Player::Storage::readLibraries(const QStringList& f
 std::list<Player::Track> Player::Storage::readTracks(const QString& file_name)
 {
 	if (!_tracks_cache.contains(file_name)) {
+		// on cache overflow we remove some random old data
 		if (_tracks_cache.size() >= 20) {
-			_tracks_cache.erase(_tracks_cache.begin()); // on cache overflow we remove some random old data
+			_tracks_cache.erase(_tracks_cache.begin());
 		}
 		_tracks_cache[file_name] = XmlParser::readFile(file_name);
 	}
 	return _tracks_cache[file_name];
 }
 
-std::list<Player::Track> Player::Storage::calcTracksDiff(std::list<Track> tracks_1, std::list<Track> tracks_2)
+std::list<Player::Track> Player::Storage::calcTracksDiff(
+		std::list<Track> tracks_1, std::list<Track> tracks_2)
 {
 	for (auto& track : tracks_2) {
 		auto equal_track_it = std::find(tracks_1.begin(), tracks_1.end(), track);
@@ -66,12 +68,15 @@ QString Player::Storage::createLibraryTitleFromFileName(const QString& file_name
 	return file_name.section("/", -1);
 }
 
-QString Player::Storage::createLibraryTitleFromFileNames(const QString& file_name_1, const QString& file_name_2)
+QString Player::Storage::createLibraryTitleFromFileNames(
+		const QString& file_name_1, const QString& file_name_2)
 {
-	return QStringLiteral("%1 → %2").arg(file_name_1.section("/", -1), file_name_2.section("/", -1));
+	return	QStringLiteral("%1 → %2")
+			.arg(file_name_1.section("/", -1), file_name_2.section("/", -1));
 }
 
-Player::Library Player::Storage::createLibraryFromTracks(const QString& title, const std::list<Track>& tracks)
+Player::Library Player::Storage::createLibraryFromTracks(
+		const QString& title, const std::list<Track>& tracks)
 {
 	Library library(title);
 

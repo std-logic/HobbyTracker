@@ -31,7 +31,9 @@ void Player::WidgetDataList::update(const std::vector<Library>& libraries)
 	if (libraries.empty()) { return; }
 	setRootIsDecorated(static_cast<DataListViewModes>(_view_mode) != DataListViewModes::ByTracks);
 	switch (static_cast<DataListViewModes>(_view_mode)) {
-		case DataListViewModes::History:		showHistory(libraries);			break;
+		case DataListViewModes::HistoryArtists:	showHistoryArtists(libraries);	break;
+		case DataListViewModes::HistoryAlbums:	showHistoryAlbums(libraries);	break;
+		case DataListViewModes::HistoryTracks:	showHistoryTracks(libraries);	break;
 		default: return;
 	}
 }
@@ -202,14 +204,14 @@ void Player::WidgetDataList::showByGenres(const Library& library)
 void Player::WidgetDataList::showSummary(const Library& library)
 {
 	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_PLAY_COUNT};
-	initColumns({tr("Трек"), tr("Год"), tr("Прослушиваний")},
+	initColumns({tr("Топ"), tr("Год"), tr("Прослушиваний")},
 				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_PLAY_COUNT});
 	initSorting(-1, Qt::AscendingOrder, true);
 
 	auto [played_artists, played_albums, played_tracks] = library.playedCount();
-	auto top_artists = library.topArtists(TOP_SIZE_FOR_SUMMARY);
-	auto top_albums = library.topAlbums(TOP_SIZE_FOR_SUMMARY);
-	auto top_tracks = library.topTracks(TOP_SIZE_FOR_SUMMARY);
+	auto top_artists = library.topArtists(TOP_SIZE);
+	auto top_albums = library.topAlbums(TOP_SIZE);
+	auto top_tracks = library.topTracks(TOP_SIZE);
 	auto artists_count = library.artistsCount();
 	auto albums_count = library.albumsCount();
 	auto tracks_count = library.tracksCount();
@@ -264,10 +266,10 @@ void Player::WidgetDataList::showSummary(const Library& library)
 	expandAll();
 }
 
-void Player::WidgetDataList::showHistory(const std::vector<Library>& libraries)
+void Player::WidgetDataList::showHistoryArtists(const std::vector<Library>& libraries)
 {
 	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_PLAY_COUNT};
-	initColumns({tr("Трек"), tr("Год"), tr("Прослушиваний")},
+	initColumns({tr("Топ"), tr("Год"), tr("Прослушиваний")},
 				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_PLAY_COUNT});
 	initSorting(-1, Qt::AscendingOrder, true);
 
@@ -276,53 +278,85 @@ void Player::WidgetDataList::showHistory(const std::vector<Library>& libraries)
 		const auto& library = libraries[i];
 
 		auto [played_artists, played_albums, played_tracks] = library.playedCount();
-		auto top_artists = library.topArtists(TOP_SIZE_FOR_HISTORY);
-		auto top_albums = library.topAlbums(TOP_SIZE_FOR_HISTORY);
-		auto top_tracks = library.topTracks(TOP_SIZE_FOR_HISTORY);
+		auto top_artists = library.topArtists(TOP_SIZE);
 		auto artists_count = library.artistsCount();
-		auto albums_count = library.albumsCount();
-		auto tracks_count = library.tracksCount();
 
-		auto item_library = new Base::WidgetTreeItem(this, Global::Colors::tree_level_2);
-		item_library->setText(CLMN_TITLE, tr("%1 → %2")
-				.arg(prev_library.titleOnlyDate(), library.titleOnlyDate()));
+		auto item_library = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
+		item_library->setText(CLMN_TITLE, tr("%1 → %2: Топ групп (прослушано %3/%4 - %5%)")
+				.arg(prev_library.titleOnlyDate(), library.titleOnlyDate())
+				.arg(played_artists).arg(artists_count).arg(100*played_artists/artists_count));
 		item_library->setNumb(CLMN_PLAY_COUNT, library.playCount());
 
-		// artists
-		auto item_top_artists = new Base::WidgetTreeItem(item_library, Global::Colors::tree_level_1);
-		item_top_artists->setText(CLMN_TITLE, tr("Топ групп (прослушано %1/%2 - %3%)")
-				.arg(played_artists).arg(artists_count).arg(100*played_artists/artists_count));
-
 		for (int place = 0; auto [artist, play_count] : top_artists) {
-			auto item_artist = new Base::WidgetTreeItem(item_top_artists);
+			auto item_artist = new Base::WidgetTreeItem(item_library);
 			item_artist->setText(CLMN_TITLE, QStringLiteral("%1. %2")
 					.arg(++place, 2, 10, QChar('0')).arg(artist->title()));
 			item_artist->setToolTip(CLMN_TITLE, artist->summaryString());
 			item_artist->setText(CLMN_YEAR, artist->yearString());
 			item_artist->setNumb(CLMN_PLAY_COUNT, play_count);
 		}
+	}
 
-		// albums
-		auto item_top_albums = new Base::WidgetTreeItem(item_library, Global::Colors::tree_level_1);
-		item_top_albums->setText(CLMN_TITLE, tr("Топ альбомов (прослушано %1/%2 - %3%)")
+	expandAll();
+}
+
+void Player::WidgetDataList::showHistoryAlbums(const std::vector<Library>& libraries)
+{
+	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_PLAY_COUNT};
+	initColumns({tr("Топ"), tr("Год"), tr("Прослушиваний")},
+				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_PLAY_COUNT});
+	initSorting(-1, Qt::AscendingOrder, true);
+
+	for (unsigned int i = 1; i < libraries.size(); ++i) {
+		const auto& prev_library = libraries[i-1];
+		const auto& library = libraries[i];
+
+		auto [played_artists, played_albums, played_tracks] = library.playedCount();
+		auto top_albums = library.topAlbums(TOP_SIZE);
+		auto albums_count = library.albumsCount();
+
+		auto item_library = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
+		item_library->setText(CLMN_TITLE, tr("%1 → %2: Топ альбомов (прослушано %3/%4 - %5%)")
+				.arg(prev_library.titleOnlyDate(), library.titleOnlyDate())
 				.arg(played_albums).arg(albums_count).arg(100*played_albums/albums_count));
+		item_library->setNumb(CLMN_PLAY_COUNT, library.playCount());
 
 		for (int place = 0; auto [album, play_count] : top_albums) {
-			auto item_album = new Base::WidgetTreeItem(item_top_albums);
+			auto item_album = new Base::WidgetTreeItem(item_library);
 			item_album->setText(CLMN_TITLE, QStringLiteral("%1. [%2] %3")
 					.arg(++place, 2, 10, QChar('0')).arg(album->artist(), album->title()));
 			item_album->setToolTip(CLMN_TITLE, album->summaryString());
 			item_album->setText(CLMN_YEAR, album->yearString());
 			item_album->setNumb(CLMN_PLAY_COUNT, play_count);
 		}
+	}
 
-		// tracks
-		auto item_top_tracks = new Base::WidgetTreeItem(item_library, Global::Colors::tree_level_1);
-		item_top_tracks->setText(CLMN_TITLE, tr("Топ треков (прослушано %1/%2 - %3%)")
+	expandAll();
+}
+
+void Player::WidgetDataList::showHistoryTracks(const std::vector<Library>& libraries)
+{
+	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_PLAY_COUNT};
+	initColumns({tr("Топ"), tr("Год"), tr("Прослушиваний")},
+				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_PLAY_COUNT});
+	initSorting(-1, Qt::AscendingOrder, true);
+
+	for (unsigned int i = 1; i < libraries.size(); ++i) {
+		const auto& prev_library = libraries[i-1];
+		const auto& library = libraries[i];
+
+		auto [played_artists, played_albums, played_tracks] = library.playedCount();
+		auto top_tracks = library.topTracks(TOP_SIZE);
+		auto tracks_count = library.tracksCount();
+
+		auto item_library = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
+		item_library->setText(CLMN_TITLE, tr("%1 → %2: Топ треков (прослушано %3/%4 - %5%)")
+				.arg(prev_library.titleOnlyDate(), library.titleOnlyDate())
 				.arg(played_tracks).arg(tracks_count).arg(100*played_tracks/tracks_count));
+		item_library->setNumb(CLMN_PLAY_COUNT, library.playCount());
 
 		for (int place = 0; auto [track, play_count] : top_tracks) {
-			auto item_track = new Base::WidgetTreeItem(item_top_tracks);
+			auto item_track = new Base::WidgetTreeItem(item_library);
 			if (track->artist() == QStringLiteral("Разное")) {
 				item_track->setText(CLMN_TITLE, QStringLiteral("%1. [%2] %3")
 						.arg(++place, 2, 10, QChar('0')).arg(track->artist(), track->title()));

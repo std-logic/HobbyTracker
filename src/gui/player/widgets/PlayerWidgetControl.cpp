@@ -68,7 +68,9 @@ void Player::WidgetControl::initWidgets()
 				{tr("Сводка"), static_cast<int>(DataListViewModes::Summary)},
 		});
 		addComboBox(_combo_data_list_view_mode_libraries, &WidgetControl::setDataListViewMode, {
-				{tr("История"), static_cast<int>(DataListViewModes::History)},
+				{tr("История по группам"), static_cast<int>(DataListViewModes::HistoryArtists)},
+				{tr("История по альбомам"), static_cast<int>(DataListViewModes::HistoryAlbums)},
+				{tr("История по трекам"), static_cast<int>(DataListViewModes::HistoryTracks)},
 		});
 
 		_button_data_list->addSlaveWidgets({

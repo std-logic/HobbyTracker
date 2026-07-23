@@ -26,11 +26,12 @@ private:
 	void showByBestTracks(const Library& library);
 	void showByGenres(const Library& library);
 	void showSummary(const Library& library);
-	void showHistory(const std::vector<Library>& libraries);
+	void showHistoryArtists(const std::vector<Library>& libraries);
+	void showHistoryAlbums(const std::vector<Library>& libraries);
+	void showHistoryTracks(const std::vector<Library>& libraries);
 
 private:
-	static const int TOP_SIZE_FOR_SUMMARY = 10;
-	static const int TOP_SIZE_FOR_HISTORY = 3;
+	static const int TOP_SIZE = 10;
 
 	static const int WIDTH_TITLE = 0; // stretched
 	static const int WIDTH_YEAR = 120;

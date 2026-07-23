@@ -18,7 +18,9 @@ enum class DataListViewModes
 	ByBestTracks,
 	ByGenres,
 	Summary,
-	History,
+	HistoryArtists,
+	HistoryAlbums,
+	HistoryTracks,
 };
 
 enum class ChartViewModes
