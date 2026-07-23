@@ -111,6 +111,7 @@ void Music::WidgetMain::saveSettings(const Settings& settings)
 {
 	_settings = settings;
 	_settings.save();
+	emit showMessage(tr("Настройки сохранены"));
 	readCsvData(_settings.csvSettings());
 }
 
