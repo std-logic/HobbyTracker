@@ -13,41 +13,32 @@ Flights::WidgetSummary::WidgetSummary(QWidget* parent)
 
 void Flights::WidgetSummary::update(const DataList& data_list)
 {
+	if (data_list.empty()) {
+		clear();
+		return;
+	}
+
 	auto summary = data_list.summary();
 
 	_label_years->setText(Helper::yearString(summary.min_year, summary.max_year));
-
 	_label_countries_num->setText(QString::number(summary.countries_num));
-
 	_label_cities_num->setText(QString::number(summary.cities_num));
-
 	_label_airports_num->setText(QString::number(summary.airports_num));
-
 	_label_flights_num->setText(QString::number(summary.flights_num));
-
 	_label_local_num->setText(QString::number(summary.local_num));
-
 	_label_international_num->setText(QString::number(summary.international_num));
-
 	_label_dist->setText(QString::number(summary.dist));
 }
 
 void Flights::WidgetSummary::initWidgets()
 {
 	addWidget(tr("Годы:"), _label_years);
-
 	addWidget(tr("Стран:"), _label_countries_num);
-
 	addWidget(tr("Городов:"), _label_cities_num);
-
 	addWidget(tr("Аэропортов:"), _label_airports_num);
-
 	addWidget(tr("Полётов:"), _label_flights_num, 0);
-
 	addWidget(tr("Внутренних:"), _label_local_num, 0);
-
 	addWidget(tr("Международных:"), _label_international_num);
-
 	addWidget(tr("Километров:"), _label_dist);
 
 	addStretch();
