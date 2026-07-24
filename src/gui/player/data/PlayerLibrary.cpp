@@ -75,19 +75,13 @@ Player::Library::GenresData Player::Library::genres() const
 	for (const auto& [artist_title, artist] : _artists) {
 		for (const auto& [album_title, album] : artist) {
 			for (const auto& track : album) {
-				auto genre_title = track.genre();
-				auto& item = genres[genre_title];
-				item.first[track.artist()][track.album()].push_back(&track);
-				item.second++;
-				if (genre_title.contains(QStringLiteral("Rock"))) {
-					auto& item_rock = genres[QStringLiteral("* Rock")];
-					item_rock.first[track.artist()][track.album()].push_back(&track);
-					item_rock.second++;
-				} else if (genre_title.contains(QStringLiteral("Metal"))) {
-					auto& item_metal = genres[QStringLiteral("* Metal")];
-					item_metal.first[track.artist()][track.album()].push_back(&track);
-					item_metal.second++;
-				}
+				auto& item_genre = genres[track.genre()];
+				if (item_genre.isTitleEmpty()) { item_genre.setTitle(_title); }
+				auto& item_artist = item_genre[track.artist()];
+				if (item_artist.isTitleEmpty()) { item_artist.setTitle(track.artist()); }
+				auto& item_album = item_artist[track.album()];
+				if (item_album.isTitleEmpty()) { item_album.setTitle(track.album()); }
+				item_album.addTrack(track);
 			}
 		}
 	}
@@ -101,6 +95,7 @@ Player::Library::FormatsData Player::Library::formats() const
 		for (const auto& [album_title, album] : artist) {
 			for (const auto& track : album) {
 				auto& item_format = formats[track.format()];
+				if (item_format.isTitleEmpty()) { item_format.setTitle(_title); }
 				auto& item_artist = item_format[track.artist()];
 				if (item_artist.isTitleEmpty()) { item_artist.setTitle(track.artist()); }
 				auto& item_album = item_artist[track.album()];

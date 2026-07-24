@@ -49,6 +49,8 @@ public:
 		title_cropped.remove(QStringLiteral("winamp_")).remove(QStringLiteral(".xml"));
 		return title_cropped;
 	}
+	inline bool isTitleEmpty() const noexcept
+	{ return _title.isEmpty(); }
 
 	auto minYear() const
 	{
@@ -114,10 +116,7 @@ public:
 
 	std::tuple<int, int, int> playedCount() const;
 
-	using GenresTracksData = std::vector<const Track*>;
-	using GenresAlbumsData = std::map<QString, GenresTracksData>;
-	using GenresArtistsData = std::map<QString, GenresAlbumsData>;
-	using GenresData = std::map<QString, std::pair<GenresArtistsData, int>>;
+	using GenresData = std::map<QString, Library>;
 	GenresData genres() const;
 
 	using FormatsData = std::map<QString, Library>;

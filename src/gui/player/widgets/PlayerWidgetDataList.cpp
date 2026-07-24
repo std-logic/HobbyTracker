@@ -158,44 +158,47 @@ void Player::WidgetDataList::showByBestTracks(const Library& library)
 
 void Player::WidgetDataList::showByGenres(const Library& library)
 {
-	enum Columns {CLMN_TITLE, CLMN_TRACKS};
-	initColumns({tr("Жанр / Группа / Альбом / Трек"), tr("Треков")},
-				{WIDTH_TITLE, WIDTH_TRACKS});
-	initSorting(CLMN_TRACKS, Qt::DescendingOrder, true);
+	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_ARTISTS, CLMN_ALBUMS, CLMN_TRACKS, CLMN_PLAY_COUNT};
+	initColumns({tr("Жанр / Группа / Альбом / Трек"), tr("Год"), tr("Групп"),
+				 tr("Альбомов"), tr("Треков"), tr("Прослушиваний")},
+				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_ARTISTS, WIDTH_ALBUMS, WIDTH_TRACKS, WIDTH_PLAY_COUNT});
+	initSorting(CLMN_TITLE);
 
 	auto genres = library.genres();
 
-	for (const auto& [genre_title, genre_pair] : genres) {
-		auto& artists_map = genre_pair.first;
-		auto tracks_num = genre_pair.second;
+	for (const auto& [genre_title, genre_library] : genres) {
 		auto item_genre = new Base::WidgetTreeItem(this, Global::Colors::tree_level_3);
 		item_genre->setText(CLMN_TITLE, genre_title);
-		item_genre->setNumb(CLMN_TRACKS, tracks_num);
+		item_genre->setToolTip(CLMN_TITLE, genre_library.summaryString());
+		item_genre->setText(CLMN_YEAR, genre_library.yearString());
+		item_genre->setNumb(CLMN_ARTISTS, genre_library.artistsCount());
+		item_genre->setNumb(CLMN_ALBUMS, genre_library.albumsCount());
+		item_genre->setNumb(CLMN_TRACKS, genre_library.tracksCount());
+		item_genre->setNumb(CLMN_PLAY_COUNT, genre_library.playCount());
 
-		for (const auto& [artist_title, albums_map] : artists_map) {
+		for (const auto& [artist_title, artist] : genre_library) {
 			auto item_artist = new Base::WidgetTreeItem(item_genre, Global::Colors::tree_level_2);
-			if (genre_title.startsWith('*') && (artist_title != QStringLiteral("Разное"))) {
-				// "* Rock"/"* Metal"
-				item_artist->setText(CLMN_TITLE, QStringLiteral("%1 [%2]")
-						.arg(artist_title, (*albums_map.begin()).second.front()->genre()));
-			} else {
-				item_artist->setText(CLMN_TITLE, artist_title);
-			}
+			item_artist->setText(CLMN_TITLE, artist_title);
+			item_artist->setToolTip(CLMN_TITLE, artist.summaryString());
+			item_artist->setText(CLMN_YEAR, artist.yearString());
+			item_artist->setNumb(CLMN_ALBUMS, artist.albumsCount());
+			item_artist->setNumb(CLMN_TRACKS, artist.tracksCount());
+			item_artist->setNumb(CLMN_PLAY_COUNT, artist.playCount());
 
-			for (const auto& [album_title, tracks] : albums_map) {
+			for (const auto& [album_title, album] : artist) {
 				auto item_album = new Base::WidgetTreeItem(item_artist, Global::Colors::tree_level_1);
-				if (genre_title.startsWith('*') && (artist_title == QStringLiteral("Разное"))) {
-					// "* Rock"/"* Metal"
-					item_album->setText(CLMN_TITLE, QStringLiteral("%1 [%2]")
-							.arg(album_title, tracks.front()->genre()));
-				} else {
-					item_album->setText(CLMN_TITLE, album_title);
-				}
+				item_album->setText(CLMN_TITLE, album_title);
+				item_album->setToolTip(CLMN_TITLE, album.summaryString());
+				item_album->setText(CLMN_YEAR, album.yearString());
+				item_album->setNumb(CLMN_TRACKS, album.tracksCount());
+				item_album->setNumb(CLMN_PLAY_COUNT, album.playCount());
 
-				for (auto track : tracks) {
+				for (const auto& track : album) {
 					auto item_track = new Base::WidgetTreeItem(item_album);
-					item_track->setText(CLMN_TITLE, track->titleWithTrackNumber());
-					item_track->setToolTip(CLMN_TITLE, track->summaryString());
+					item_track->setText(CLMN_TITLE, track.titleWithTrackNumber());
+					item_track->setToolTip(CLMN_TITLE, track.summaryString());
+					item_track->setText(CLMN_YEAR, track.yearString());
+					item_track->setNumb(CLMN_PLAY_COUNT, track.playCount());
 				}
 			}
 		}
@@ -204,10 +207,10 @@ void Player::WidgetDataList::showByGenres(const Library& library)
 
 void Player::WidgetDataList::showByFormats(const Library& library)
 {
-	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_ALBUMS, CLMN_TRACKS, CLMN_PLAY_COUNT};
-	initColumns({tr("Формат / Группа / Альбом / Трек"), tr("Год"), tr("Альбомов"),
-				 tr("Треков"), tr("Прослушиваний")},
-				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_ALBUMS, WIDTH_TRACKS, WIDTH_PLAY_COUNT});
+	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_ARTISTS, CLMN_ALBUMS, CLMN_TRACKS, CLMN_PLAY_COUNT};
+	initColumns({tr("Формат / Группа / Альбом / Трек"), tr("Год"), tr("Групп"),
+				 tr("Альбомов"), tr("Треков"), tr("Прослушиваний")},
+				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_ARTISTS, WIDTH_ALBUMS, WIDTH_TRACKS, WIDTH_PLAY_COUNT});
 	initSorting(CLMN_TITLE);
 
 	auto formats = library.formats();
@@ -217,6 +220,7 @@ void Player::WidgetDataList::showByFormats(const Library& library)
 		item_format->setText(CLMN_TITLE, format_title);
 		item_format->setToolTip(CLMN_TITLE, format_library.summaryString());
 		item_format->setText(CLMN_YEAR, format_library.yearString());
+		item_format->setNumb(CLMN_ARTISTS, format_library.artistsCount());
 		item_format->setNumb(CLMN_ALBUMS, format_library.albumsCount());
 		item_format->setNumb(CLMN_TRACKS, format_library.tracksCount());
 		item_format->setNumb(CLMN_PLAY_COUNT, format_library.playCount());

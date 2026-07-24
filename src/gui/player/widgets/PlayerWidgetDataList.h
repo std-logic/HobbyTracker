@@ -37,6 +37,7 @@ private:
 
 	static const int WIDTH_TITLE = 0; // stretched
 	static const int WIDTH_YEAR = 120;
+	static const int WIDTH_ARTISTS = 100;
 	static const int WIDTH_ALBUMS = 100;
 	static const int WIDTH_TRACKS = 100;
 	static const int WIDTH_PLAY_COUNT = 130;
