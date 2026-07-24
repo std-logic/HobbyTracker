@@ -17,6 +17,7 @@ enum class DataListViewModes
 	ByTracks,
 	ByBestTracks,
 	ByGenres,
+	ByFormats,
 	Summary,
 	HistoryArtists,
 	HistoryAlbums,

@@ -120,6 +120,9 @@ public:
 	using GenresData = std::map<QString, std::pair<GenresArtistsData, int>>;
 	GenresData genres() const;
 
+	using FormatsData = std::map<QString, Library>;
+	FormatsData formats() const;
+
 	struct Summary
 	{
 		QString title;

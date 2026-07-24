@@ -94,6 +94,24 @@ Player::Library::GenresData Player::Library::genres() const
 	return genres;
 }
 
+Player::Library::FormatsData Player::Library::formats() const
+{
+	FormatsData formats;
+	for (const auto& [artist_title, artist] : _artists) {
+		for (const auto& [album_title, album] : artist) {
+			for (const auto& track : album) {
+				auto& item_format = formats[track.format()];
+				auto& item_artist = item_format[track.artist()];
+				if (item_artist.isTitleEmpty()) { item_artist.setTitle(track.artist()); }
+				auto& item_album = item_artist[track.album()];
+				if (item_album.isTitleEmpty()) { item_album.setTitle(track.album()); }
+				item_album.addTrack(track);
+			}
+		}
+	}
+	return formats;
+}
+
 Player::Library::Summary Player::Library::summary() const
 {
 	Summary sum;

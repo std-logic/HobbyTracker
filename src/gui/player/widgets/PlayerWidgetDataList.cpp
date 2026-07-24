@@ -20,6 +20,7 @@ void Player::WidgetDataList::update(const Library& library)
 		case DataListViewModes::ByTracks:		showByTracks(library);			break;
 		case DataListViewModes::ByBestTracks:	showByBestTracks(library);		break;
 		case DataListViewModes::ByGenres:		showByGenres(library);			break;
+		case DataListViewModes::ByFormats:		showByFormats(library);			break;
 		case DataListViewModes::Summary:		showSummary(library);			break;
 		default: return;
 	}
@@ -158,7 +159,7 @@ void Player::WidgetDataList::showByBestTracks(const Library& library)
 void Player::WidgetDataList::showByGenres(const Library& library)
 {
 	enum Columns {CLMN_TITLE, CLMN_TRACKS};
-	initColumns({tr("Жанр"), tr("Треков")},
+	initColumns({tr("Жанр / Группа / Альбом / Трек"), tr("Треков")},
 				{WIDTH_TITLE, WIDTH_TRACKS});
 	initSorting(CLMN_TRACKS, Qt::DescendingOrder, true);
 
@@ -195,6 +196,54 @@ void Player::WidgetDataList::showByGenres(const Library& library)
 					auto item_track = new Base::WidgetTreeItem(item_album);
 					item_track->setText(CLMN_TITLE, track->titleWithTrackNumber());
 					item_track->setToolTip(CLMN_TITLE, track->summaryString());
+				}
+			}
+		}
+	}
+}
+
+void Player::WidgetDataList::showByFormats(const Library& library)
+{
+	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_ALBUMS, CLMN_TRACKS, CLMN_PLAY_COUNT};
+	initColumns({tr("Формат / Группа / Альбом / Трек"), tr("Год"), tr("Альбомов"),
+				 tr("Треков"), tr("Прослушиваний")},
+				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_ALBUMS, WIDTH_TRACKS, WIDTH_PLAY_COUNT});
+	initSorting(CLMN_TITLE);
+
+	auto formats = library.formats();
+
+	for (const auto& [format_title, format_library] : formats) {
+		auto item_format = new Base::WidgetTreeItem(this, Global::Colors::tree_level_3);
+		item_format->setText(CLMN_TITLE, format_title);
+		item_format->setToolTip(CLMN_TITLE, format_library.summaryString());
+		item_format->setText(CLMN_YEAR, format_library.yearString());
+		item_format->setNumb(CLMN_ALBUMS, format_library.albumsCount());
+		item_format->setNumb(CLMN_TRACKS, format_library.tracksCount());
+		item_format->setNumb(CLMN_PLAY_COUNT, format_library.playCount());
+
+		for (const auto& [artist_title, artist] : format_library) {
+			auto item_artist = new Base::WidgetTreeItem(item_format, Global::Colors::tree_level_2);
+			item_artist->setText(CLMN_TITLE, artist_title);
+			item_artist->setToolTip(CLMN_TITLE, artist.summaryString());
+			item_artist->setText(CLMN_YEAR, artist.yearString());
+			item_artist->setNumb(CLMN_ALBUMS, artist.albumsCount());
+			item_artist->setNumb(CLMN_TRACKS, artist.tracksCount());
+			item_artist->setNumb(CLMN_PLAY_COUNT, artist.playCount());
+
+			for (const auto& [album_title, album] : artist) {
+				auto item_album = new Base::WidgetTreeItem(item_artist, Global::Colors::tree_level_1);
+				item_album->setText(CLMN_TITLE, album_title);
+				item_album->setToolTip(CLMN_TITLE, album.summaryString());
+				item_album->setText(CLMN_YEAR, album.yearString());
+				item_album->setNumb(CLMN_TRACKS, album.tracksCount());
+				item_album->setNumb(CLMN_PLAY_COUNT, album.playCount());
+
+				for (const auto& track : album) {
+					auto item_track = new Base::WidgetTreeItem(item_album);
+					item_track->setText(CLMN_TITLE, track.titleWithTrackNumber());
+					item_track->setToolTip(CLMN_TITLE, track.summaryString());
+					item_track->setText(CLMN_YEAR, track.yearString());
+					item_track->setNumb(CLMN_PLAY_COUNT, track.playCount());
 				}
 			}
 		}

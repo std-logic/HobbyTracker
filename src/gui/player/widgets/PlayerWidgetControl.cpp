@@ -65,6 +65,7 @@ void Player::WidgetControl::initWidgets()
 				{tr("По трекам"), static_cast<int>(DataListViewModes::ByTracks)},
 				{tr("По лучшим трекам"), static_cast<int>(DataListViewModes::ByBestTracks)},
 				{tr("По жанрам"), static_cast<int>(DataListViewModes::ByGenres)},
+				{tr("По форматам"), static_cast<int>(DataListViewModes::ByFormats)},
 				{tr("Сводка"), static_cast<int>(DataListViewModes::Summary)},
 		});
 		addComboBox(_combo_data_list_view_mode_libraries, &WidgetControl::setDataListViewMode, {
