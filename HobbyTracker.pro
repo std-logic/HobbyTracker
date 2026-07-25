@@ -74,6 +74,9 @@ SOURCES += \
 	src/gui/books/widgets/BooksWidgetMain.cpp \
 	src/gui/books/widgets/BooksWidgetSettings.cpp \
 	src/gui/books/widgets/BooksWidgetSummary.cpp \
+	src/gui/concerts/data/ConcertsDataConverter.cpp \
+	src/gui/concerts/data/ConcertsDataList.cpp \
+	src/gui/concerts/data/ConcertsSettings.cpp \
 	src/gui/flights/data/FlightsDataConverter.cpp \
 	src/gui/flights/data/FlightsDataList.cpp \
 	src/gui/flights/data/FlightsSettings.cpp \
@@ -188,6 +191,11 @@ HEADERS += \
 	src/gui/books/widgets/BooksWidgetMain.h \
 	src/gui/books/widgets/BooksWidgetSettings.h \
 	src/gui/books/widgets/BooksWidgetSummary.h \
+	src/gui/concerts/common/ConcertsCommon.h \
+	src/gui/concerts/data/ConcertsData.h \
+	src/gui/concerts/data/ConcertsDataConverter.h \
+	src/gui/concerts/data/ConcertsDataList.h \
+	src/gui/concerts/data/ConcertsSettings.h \
 	src/gui/flights/common/FlightsCommon.h \
 	src/gui/flights/data/FlightsData.h \
 	src/gui/flights/data/FlightsDataConverter.h \

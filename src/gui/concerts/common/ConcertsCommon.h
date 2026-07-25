@@ -1,0 +1,33 @@
+#pragma once
+
+namespace Concerts
+{
+
+enum class DataListViewModes
+{
+	ByYears,
+	ByArtists,
+	ByKinds,
+	ByCountries,
+	ByCities,
+	ByPlaces,
+	PlacesTree,
+	Simple,
+};
+
+enum CsvFiles
+{
+	CsvFileData,
+	CsvFileExtra,
+	NumOfCsvFiles
+};
+
+inline const char* csv_file_names[NumOfCsvFiles] =
+{
+	"hobby_concerts_data.csv",
+	"hobby_concerts_extra.csv"
+};
+
+inline const char settings_group_name[] = "concerts";
+
+} // namespace Concerts
