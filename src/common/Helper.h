@@ -40,6 +40,12 @@ namespace Helper
 		return str;
 	}
 
+	inline QString startWithCapital(QString str)
+	{
+		if (!str.isEmpty()) { str[0] = str[0].toUpper(); }
+		return str;
+	}
+
 	inline void checkMinMax(uint32_t val, uint32_t* min, uint32_t* max)
 	{
 		if (val != Global::undefined_value) {

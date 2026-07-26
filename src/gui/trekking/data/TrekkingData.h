@@ -62,7 +62,7 @@ public:
 	inline void setCountries(T&& countries)
 	{ _countries = std::forward<T>(countries); }
 	inline void setCountriesFromString(const QString& str, const QString& delimiter = ", ")
-	{ _countries = str.split(delimiter); }
+	{ _countries = str.split(delimiter, Qt::SkipEmptyParts); }
 	inline QStringList countries() const
 	{ return _countries; }
 	inline QString countriesToString(const QString& delimiter = ", ") const

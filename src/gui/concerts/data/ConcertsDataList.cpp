@@ -13,7 +13,7 @@ Concerts::DataList::Summary Concerts::DataList::summary() const
 		}
 		list_of_countries.insert(data.country());
 		list_of_cities.insert(data.city());
-		list_of_places.insert(data.place());
+		list_of_places.insert(data.cityPlace());
 		Helper::checkMinMax(data.year(), &sum.min_year, &sum.max_year);
 	}
 	sum.concerts_num = _data_list.size();
@@ -47,6 +47,11 @@ Concerts::DataList::ListOfStrings Concerts::DataList::listOfArtists() const
 	return listOfStrings(&Data::artists);
 }
 
+Concerts::DataList::ListOfStrings Concerts::DataList::listOfDescriptions() const
+{
+	return listOfStrings(&Data::description);
+}
+
 Concerts::DataList::SublistsByStrings Concerts::DataList::concertsByCountries() const
 {
 	return sublistsByStrings(&Data::country);
@@ -59,7 +64,7 @@ Concerts::DataList::ListOfStrings Concerts::DataList::listOfCountries() const
 
 Concerts::DataList::SublistsByStrings Concerts::DataList::concertsByCities() const
 {
-	return sublistsByStrings(&Data::city);
+	return sublistsByStrings(&Data::countryCity);
 }
 
 Concerts::DataList::ListOfStrings Concerts::DataList::listOfCities(const QString& country) const
@@ -75,7 +80,7 @@ Concerts::DataList::ListOfStrings Concerts::DataList::listOfCities(const QString
 
 Concerts::DataList::SublistsByStrings Concerts::DataList::concertsByPlaces() const
 {
-	return sublistsByStrings(&Data::place);
+	return sublistsByStrings(&Data::countryCityPlace);
 }
 
 Concerts::DataList::ListOfStrings Concerts::DataList::listOfPlaces(const QString& city) const

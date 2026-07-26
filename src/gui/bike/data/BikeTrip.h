@@ -51,7 +51,7 @@ public:
 	inline void setCountries(T&& countries)
 	{ _countries = std::forward<T>(countries); }
 	inline void setCountriesFromString(const QString& str, const QString& delimiter = ", ")
-	{ _countries = str.split(delimiter); }
+	{ _countries = str.split(delimiter, Qt::SkipEmptyParts); }
 	inline QStringList countries() const
 	{ return _countries; }
 	inline QString countriesToString(const QString& delimiter = ", ") const
@@ -61,7 +61,7 @@ public:
 	inline void setPlaces(T&& places)
 	{ _places = std::forward<T>(places); }
 	inline void setPlacesFromString(const QString& str, const QString& delimiter = ", ")
-	{ _places = str.split(delimiter); }
+	{ _places = str.split(delimiter, Qt::SkipEmptyParts); }
 	inline QStringList places() const
 	{ return _places; }
 	inline QString placesToString(const QString& delimiter = ", ") const

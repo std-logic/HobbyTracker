@@ -9,7 +9,7 @@ QStringList Concerts::DataConverter::getDefaultCsvHeader()
 
 	header[CLMN_DATE]			= tr("Дата");
 	header[CLMN_ARTISTS]		= tr("Группы");
-	header[CLMN_KINDS]			= tr("Типы");
+	header[CLMN_DESCRIPTION]	= tr("Описание");
 	header[CLMN_COUNTRY]		= tr("Страна");
 	header[CLMN_CITY]			= tr("Город");
 	header[CLMN_PLACE]			= tr("Место");
@@ -31,8 +31,8 @@ Concerts::DataList Concerts::DataConverter::conv(const Csv::Data& csv_data)
 		if (CLMN_ARTISTS < line_size) {
 			data.setArtistsFromString(line[CLMN_ARTISTS]);
 		}
-		if (CLMN_KINDS < line_size) {
-			data.setKindsFromString(line[CLMN_KINDS]);
+		if (CLMN_DESCRIPTION < line_size) {
+			data.setDescription(line[CLMN_DESCRIPTION]);
 		}
 		if (CLMN_COUNTRY < line_size) {
 			data.setCountry(line[CLMN_COUNTRY]);
@@ -59,7 +59,7 @@ Csv::Data Concerts::DataConverter::conv(const DataList& data_list)
 
 		line[CLMN_DATE]			= data.date();
 		line[CLMN_ARTISTS]		= data.artistsToString();
-		line[CLMN_KINDS]		= data.kindsToString();
+		line[CLMN_DESCRIPTION]	= data.description();
 		line[CLMN_COUNTRY]		= data.country();
 		line[CLMN_CITY]			= data.city();
 		line[CLMN_PLACE]		= data.place();

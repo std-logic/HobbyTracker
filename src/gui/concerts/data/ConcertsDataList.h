@@ -32,6 +32,8 @@ public:
 	SublistsByStrings concertsByArtists() const;
 	ListOfStrings listOfArtists() const;
 
+	ListOfStrings listOfDescriptions() const;
+
 	SublistsByStrings concertsByCountries() const;
 	ListOfStrings listOfCountries() const;
 

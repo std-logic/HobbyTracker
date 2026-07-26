@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../common/ConcertsCommon.h"
-
 #include <common/Global.h>
 #include <common/Helper.h>
 
@@ -34,21 +32,29 @@ public:
 	inline void setArtists(T&& artists)
 	{ _artists = std::forward<T>(artists); }
 	inline void setArtistsFromString(const QString& str, const QString& delimiter = ", ")
-	{ _artists = str.split(delimiter); }
+	{ _artists = str.split(delimiter, Qt::SkipEmptyParts); }
 	inline QStringList artists() const
 	{ return _artists; }
 	inline QString artistsToString(const QString& delimiter = ", ") const
 	{ return Helper::stringListToString(_artists, delimiter); }
 
 	template<typename T>
-	inline void setKinds(T&& kinds)
-	{ _kinds = std::forward<T>(kinds); }
-	inline void setKindsFromString(const QString& str, const QString& delimiter = ", ")
-	{ _kinds = str.split(delimiter); }
-	inline QStringList kinds() const
-	{ return _kinds; }
-	inline QString kindsToString(const QString& delimiter = ", ") const
-	{ return Helper::stringListToString(_kinds, delimiter); }
+	inline void setDescription(T&& description)
+	{ _description = std::forward<T>(description); }
+	inline QString description() const
+	{ return _description; }
+
+	QString artistsAndDescriptionToString(const QString& delimiter = ", ") const
+	{
+		QString str;
+		if (!_artists.empty()) {
+			str = artistsToString(delimiter);
+			if (!_description.isEmpty()) { str += " (" + _description + ")"; }
+		} else if (!_description.isEmpty()) {
+			str = Helper::startWithCapital(_description);
+		}
+		return str;
+	}
 
 	template<typename T>
 	inline void setCountry(T&& country)
@@ -68,11 +74,18 @@ public:
 	inline QString place() const
 	{ return _place; }
 
+	inline QString countryCity() const
+	{ return _country + ", " + _city; }
+	inline QString cityPlace() const
+	{ return _city + ", " + _place; }
+	inline QString countryCityPlace() const
+	{ return _country + ", " + _city + ", " + _place; }
+
 	inline bool operator==(const Data& other) const noexcept
 	{
 		return	(_date == other.date()) &&
 				(_artists == other.artists()) &&
-				(_kinds == other.kinds()) &&
+				(_description == other.description()) &&
 				(_country == other.country()) &&
 				(_city == other.city()) &&
 				(_place == other.place());
@@ -81,7 +94,7 @@ public:
 private:
 	QString _date; // YYYY.MM.DD
 	QStringList _artists;
-	QStringList _kinds;
+	QString _description;
 	QString _country;
 	QString _city;
 	QString _place;

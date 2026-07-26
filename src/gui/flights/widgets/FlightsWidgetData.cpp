@@ -75,19 +75,15 @@ void Flights::WidgetData::initWidgets()
 		layout_point->setSpacing(Global::Sizes::default_spacing);
 
 		_widgets_point[i].combo_country = new Base::ComboEdit(this);
-		// _widgets_point[i].combo_country->setFixedWidth(150);
 		layout_point->addWidget(_widgets_point[i].combo_country, 2);
 
 		_widgets_point[i].combo_city = new Base::ComboEdit(this);
-		// _widgets_point[i].combo_city->setFixedWidth(150);
 		layout_point->addWidget(_widgets_point[i].combo_city, 2);
 
 		_widgets_point[i].combo_airport = new Base::ComboEdit(this);
-		// _widgets_point[i].combo_airport->setFixedWidth(60);
 		layout_point->addWidget(_widgets_point[i].combo_airport, 1);
 
 		_widgets_point[i].edit_dist = new QLineEdit(QStringLiteral("0"), this);
-		// _widgets_point[i].edit_dist->setFixedWidth(60);
 		layout_point->addWidget(_widgets_point[i].edit_dist, 1);
 
 		addLayout(layout_point);

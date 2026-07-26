@@ -54,7 +54,7 @@ public:
 	void addPointFromString(const QString& str, const QString& delimiter = ", ")
 	{
 		if (str.isEmpty()) { return; }
-		auto values = str.split(delimiter);
+		auto values = str.split(delimiter, Qt::SkipEmptyParts);
 		FlightPoint point;
 		if (values.size() >= 1) { point.country = values[0]; }
 		if (values.size() >= 2) { point.city = values[1]; }

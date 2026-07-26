@@ -7,7 +7,7 @@ enum class DataListViewModes
 {
 	ByYears,
 	ByArtists,
-	ByKinds,
+	ByTags,
 	ByCountries,
 	ByCities,
 	ByPlaces,

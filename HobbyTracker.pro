@@ -77,6 +77,13 @@ SOURCES += \
 	src/gui/concerts/data/ConcertsDataConverter.cpp \
 	src/gui/concerts/data/ConcertsDataList.cpp \
 	src/gui/concerts/data/ConcertsSettings.cpp \
+	src/gui/concerts/widgets/ConcertsWidgetChart.cpp \
+	src/gui/concerts/widgets/ConcertsWidgetControl.cpp \
+	src/gui/concerts/widgets/ConcertsWidgetData.cpp \
+	src/gui/concerts/widgets/ConcertsWidgetDataList.cpp \
+	src/gui/concerts/widgets/ConcertsWidgetMain.cpp \
+	src/gui/concerts/widgets/ConcertsWidgetSettings.cpp \
+	src/gui/concerts/widgets/ConcertsWidgetSummary.cpp \
 	src/gui/flights/data/FlightsDataConverter.cpp \
 	src/gui/flights/data/FlightsDataList.cpp \
 	src/gui/flights/data/FlightsSettings.cpp \
@@ -196,6 +203,13 @@ HEADERS += \
 	src/gui/concerts/data/ConcertsDataConverter.h \
 	src/gui/concerts/data/ConcertsDataList.h \
 	src/gui/concerts/data/ConcertsSettings.h \
+	src/gui/concerts/widgets/ConcertsWidgetChart.h \
+	src/gui/concerts/widgets/ConcertsWidgetControl.h \
+	src/gui/concerts/widgets/ConcertsWidgetData.h \
+	src/gui/concerts/widgets/ConcertsWidgetDataList.h \
+	src/gui/concerts/widgets/ConcertsWidgetMain.h \
+	src/gui/concerts/widgets/ConcertsWidgetSettings.h \
+	src/gui/concerts/widgets/ConcertsWidgetSummary.h \
 	src/gui/flights/common/FlightsCommon.h \
 	src/gui/flights/data/FlightsData.h \
 	src/gui/flights/data/FlightsDataConverter.h \
