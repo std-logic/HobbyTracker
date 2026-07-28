@@ -59,6 +59,7 @@ private slots:
 
 	void updateAll();
 	void updateDependentOnData();
+	void updateDependentOnExtra();
 	void updateSummary();
 	void updateDataList();
 	void updateExtraList();

@@ -47,6 +47,20 @@ Concerts::DataList::ListOfStrings Concerts::DataList::listOfArtists() const
 	return listOfStrings(&Data::artists);
 }
 
+Concerts::DataList::SublistsByStrings Concerts::DataList::concertsByTags(
+		const QString& title, const QStringList& tags) const
+{
+	SublistsByStrings list;
+	for (const auto& data : _data_list) {
+		for (const auto& tag : tags) {
+			if (data.description().contains(tag, Qt::CaseInsensitive)) {
+				list[title].push_back(&data);
+			}
+		}
+	}
+	return list;
+}
+
 Concerts::DataList::ListOfStrings Concerts::DataList::listOfDescriptions() const
 {
 	return listOfStrings(&Data::description);

@@ -2,6 +2,7 @@
 #include "../common/ConcertsCommon.h"
 #include "../data/ConcertsDataList.h"
 
+#include <gui/base/data/BaseExtraList.h>
 #include <gui/base/widgets/BaseWidgetTreeItem.h>
 
 Concerts::WidgetDataList::WidgetDataList(QWidget* parent)
@@ -9,19 +10,19 @@ Concerts::WidgetDataList::WidgetDataList(QWidget* parent)
 {
 }
 
-void Concerts::WidgetDataList::update(const DataList& data_list)
+void Concerts::WidgetDataList::update(const DataList& data_list, const Base::ExtraList& extra_list)
 {
 	clear();
 	setRootIsDecorated(static_cast<DataListViewModes>(_view_mode) != DataListViewModes::Simple);
 	switch (static_cast<DataListViewModes>(_view_mode)) {
-		case DataListViewModes::ByYears:		showByYears(data_list);			break;
-		case DataListViewModes::ByArtists:		showByArtists(data_list);		break;
-		case DataListViewModes::ByTags:			showByTags(data_list);			break;
-		case DataListViewModes::ByCountries:	showByCountries(data_list);		break;
-		case DataListViewModes::ByCities:		showByCities(data_list);		break;
-		case DataListViewModes::ByPlaces:		showByPlaces(data_list);		break;
-		case DataListViewModes::PlacesTree:		showPlacesTree(data_list);		break;
-		case DataListViewModes::Simple:			showSimple(data_list);			break;
+		case DataListViewModes::ByYears:		showByYears(data_list);					break;
+		case DataListViewModes::ByArtists:		showByArtists(data_list);				break;
+		case DataListViewModes::ByTags:			showByTags(data_list, extra_list);		break;
+		case DataListViewModes::ByCountries:	showByCountries(data_list);				break;
+		case DataListViewModes::ByCities:		showByCities(data_list);				break;
+		case DataListViewModes::ByPlaces:		showByPlaces(data_list);				break;
+		case DataListViewModes::PlacesTree:		showPlacesTree(data_list);				break;
+		case DataListViewModes::Simple:			showSimple(data_list);					break;
 		default: return;
 	}
 }
@@ -78,9 +79,38 @@ void Concerts::WidgetDataList::showByArtists(const DataList& data_list)
 	}
 }
 
-void Concerts::WidgetDataList::showByTags(const DataList& data_list)
+void Concerts::WidgetDataList::showByTags(const DataList& data_list, const Base::ExtraList& extra_list)
 {
+	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE};
+	initColumns({tr("Тип / Дата"), tr("К-во"), tr("Группы"), tr("Страна"), tr("Город"), tr("Место")},
+				{WIDTH_DATE_SMALL, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_COUNTRY, WIDTH_CITY, WIDTH_PLACE});
+	initSorting(CLMN_DATE);
 
+	for (const auto& extra : extra_list) {
+		if (extra.group() == tr("[Теги]")) {
+			auto name = extra.notes();
+			auto tags = extra.title().split(", ", Qt::SkipEmptyParts);
+			auto concerts_by_tags = data_list.concertsByTags(name, tags);
+
+			if (!concerts_by_tags.empty()) {
+				for (const auto& [tag, concerts] : concerts_by_tags) {
+					auto item_tag = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
+					item_tag->setText(CLMN_DATE, tag);
+					item_tag->setNumb(CLMN_COUNT, concerts.size());
+
+					for (const auto concert : concerts) {
+						auto item_concert = new Base::WidgetTreeItem(item_tag);
+						item_concert->setText(CLMN_DATE, concert->date());
+						item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString());
+						item_concert->setText(CLMN_COUNTRY, concert->country());
+						item_concert->setText(CLMN_CITY, concert->city());
+						item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert->place()));
+						item_concert->setId(concert->id());
+					}
+				}
+			}
+		}
+	}
 }
 
 void Concerts::WidgetDataList::showByCountries(const DataList& data_list)

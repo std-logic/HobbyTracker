@@ -209,6 +209,11 @@ void Concerts::WidgetMain::showExtra(size_t index)
 {
 	if (!_widget_extra) {
 		_widget_extra = new Base::WidgetExtra(index, _extra_list, this);
+		_widget_extra->addSpecialGroup(
+				tr("[Теги]"),
+				tr("Перечисление через запятую тегов,\nпо которым происходит поиск в описаниях концертов"),
+				tr("Общее название для концертов с данными тегами")
+		);
 		connect(_widget_extra, &Base::WidgetExtra::showMessage,
 				this, &WidgetMain::showMessage);
 		connect(_widget_extra, &Base::WidgetExtra::saveExtra,
@@ -226,7 +231,7 @@ void Concerts::WidgetMain::saveExtra(size_t index, const Base::Extra& extra)
 		_extra_list.add(extra);
 	}
 
-	updateExtraList();
+	updateDependentOnExtra();
 	_widget_control->highlightButtonSave(true);
 }
 
@@ -238,7 +243,7 @@ void Concerts::WidgetMain::deleteExtra(const QString& id)
 
 		if (ans == QMessageBox::Yes) {
 			_extra_list.del(i);
-			updateExtraList();
+			updateDependentOnExtra();
 			_widget_control->highlightButtonSave(true);
 		}
 	}
@@ -259,6 +264,12 @@ void Concerts::WidgetMain::updateDependentOnData()
 	updateChart();
 }
 
+void Concerts::WidgetMain::updateDependentOnExtra()
+{
+	updateDataList();
+	updateExtraList();
+}
+
 void Concerts::WidgetMain::updateSummary()
 {
 	_widget_summary->update(_data_list);
@@ -266,7 +277,7 @@ void Concerts::WidgetMain::updateSummary()
 
 void Concerts::WidgetMain::updateDataList()
 {
-	_widget_data_list->update(_data_list);
+	_widget_data_list->update(_data_list, _extra_list);
 }
 
 void Concerts::WidgetMain::updateExtraList()

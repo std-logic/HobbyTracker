@@ -32,6 +32,7 @@ public:
 	SublistsByStrings concertsByArtists() const;
 	ListOfStrings listOfArtists() const;
 
+	SublistsByStrings concertsByTags(const QString& title, const QStringList& tags) const;
 	ListOfStrings listOfDescriptions() const;
 
 	SublistsByStrings concertsByCountries() const;
