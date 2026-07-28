@@ -11,6 +11,26 @@ Base::WidgetExtra::WidgetExtra(size_t index, const ExtraList& data_list, QWidget
 	initCommonParams();
 	initWidgets();
 	copyDataToGui();
+
+	// strictly after initialization finished, because we need only real changes
+	connect(_combo_group, &Base::ComboEdit::currentTextChanged,
+			this, &WidgetExtra::groupChanged);
+}
+
+void Base::WidgetExtra::addSpecialGroup(
+		const QString& group, const QString& title_tip, const QString& notes_tip)
+{
+	_special_groups[group] = {title_tip, notes_tip};
+	for (int i = 0; i < _combo_group->count(); ++i) {
+		if (group == _combo_group->itemText(i)) {
+			if (group == _combo_group->currentText()) {
+				groupChanged(group);
+			}
+			return;
+		}
+	}
+	_combo_group->addItem(group);
+	if (!_mode_edit_data) { _combo_group->setCurrentIndex(-1); }
 }
 
 void Base::WidgetExtra::initData()
@@ -69,4 +89,11 @@ void Base::WidgetExtra::save()
 		emit saveExtra(_index, _data);
 		close();
 	}
+}
+
+void Base::WidgetExtra::groupChanged(const QString& group)
+{
+	bool is_special = _special_groups.contains(group);
+	_edit_title->setToolTip(is_special ? _special_groups[group].first : QStringLiteral());
+	_edit_notes->setToolTip(is_special ? _special_groups[group].second : QStringLiteral());
 }
