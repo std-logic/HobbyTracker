@@ -37,9 +37,25 @@ Concerts::DataList::NumbersByStrings Concerts::DataList::numbersByYears(uint32_t
 			[](uint32_t val, uint32_t step) { return Helper::epochString(val, step); });
 }
 
-Concerts::DataList::SublistsByStrings Concerts::DataList::concertsByArtists() const
+Concerts::DataList::SublistsByStrings Concerts::DataList::concertsByArtists(const Synonyms& synonyms) const
 {
-	return sublistsByStrings(&Data::artists);
+	SublistsByStrings list;
+	for (const auto& data : _data_list) {
+		auto artists = data.artists();
+		for (const auto& artist : artists) {
+			if (synonyms.contains(artist)) {
+				auto& sublist = list[synonyms.at(artist)];
+				if (!sublist.empty() && (sublist.back()->id() == data.id())) {
+					continue;
+				} else {
+					sublist.push_back(&data);
+				}
+			} else {
+				list[artist].push_back(&data);
+			}
+		}
+	}
+	return list;
 }
 
 Concerts::DataList::ListOfStrings Concerts::DataList::listOfArtists() const
@@ -81,7 +97,8 @@ Concerts::DataList::SublistsByStrings Concerts::DataList::concertsByCities() con
 	return sublistsByStrings(&Data::countryCity);
 }
 
-Concerts::DataList::ListOfStrings Concerts::DataList::listOfCities(const QString& country) const
+Concerts::DataList::ListOfStrings Concerts::DataList::listOfCities(
+		const QString& country) const
 {
 	ListOfStrings list;
 	for (const auto& data : _data_list) {
@@ -92,12 +109,22 @@ Concerts::DataList::ListOfStrings Concerts::DataList::listOfCities(const QString
 	return list;
 }
 
-Concerts::DataList::SublistsByStrings Concerts::DataList::concertsByPlaces() const
+Concerts::DataList::SublistsByStrings Concerts::DataList::concertsByPlaces(
+		const Synonyms& synonyms) const
 {
-	return sublistsByStrings(&Data::countryCityPlace);
+	SublistsByStrings list;
+	for (const auto& data : _data_list) {
+		auto place = data.place();
+		auto key = synonyms.contains(place) ?
+				data.countryCityPlace(synonyms.at(place)) :
+				data.countryCityPlace();
+		list[key].push_back(&data);
+	}
+	return list;
 }
 
-Concerts::DataList::ListOfStrings Concerts::DataList::listOfPlaces(const QString& city) const
+Concerts::DataList::ListOfStrings Concerts::DataList::listOfPlaces(
+		const QString& city) const
 {
 	ListOfStrings list;
 	for (const auto& data : _data_list) {
@@ -106,4 +133,34 @@ Concerts::DataList::ListOfStrings Concerts::DataList::listOfPlaces(const QString
 		}
 	}
 	return list;
+}
+
+Concerts::DataList::ListOfStrings Concerts::DataList::listOfPlaces(
+		const QString& city, const Synonyms& synonyms) const
+{
+	ListOfStrings list;
+	for (const auto& data : _data_list) {
+		if (data.city() == city) {
+			auto place = synonyms.contains(data.place()) ?
+					synonyms.at(data.place()) :
+					data.place();
+			list.insert(place);
+		}
+	}
+	return list;
+}
+
+Concerts::DataList::Synonyms Concerts::DataList::getSynonyms(
+		const QString& group, const Base::ExtraList& extra_list)
+{
+	Synonyms synonyms;
+	for (const auto& extra : extra_list) {
+		if (extra.group() == group) {
+			auto names = extra.title().split(", ", Qt::SkipEmptyParts);
+			for (const auto& name : names) {
+				synonyms[name] = extra.notes();
+			}
+		}
+	}
+	return synonyms;
 }

@@ -16,12 +16,12 @@ void Concerts::WidgetDataList::update(const DataList& data_list, const Base::Ext
 	setRootIsDecorated(static_cast<DataListViewModes>(_view_mode) != DataListViewModes::Simple);
 	switch (static_cast<DataListViewModes>(_view_mode)) {
 		case DataListViewModes::ByYears:		showByYears(data_list);					break;
-		case DataListViewModes::ByArtists:		showByArtists(data_list);				break;
+		case DataListViewModes::ByArtists:		showByArtists(data_list, extra_list);	break;
 		case DataListViewModes::ByTags:			showByTags(data_list, extra_list);		break;
 		case DataListViewModes::ByCountries:	showByCountries(data_list);				break;
 		case DataListViewModes::ByCities:		showByCities(data_list);				break;
-		case DataListViewModes::ByPlaces:		showByPlaces(data_list);				break;
-		case DataListViewModes::PlacesTree:		showPlacesTree(data_list);				break;
+		case DataListViewModes::ByPlaces:		showByPlaces(data_list, extra_list);	break;
+		case DataListViewModes::PlacesTree:		showPlacesTree(data_list, extra_list);	break;
 		case DataListViewModes::Simple:			showSimple(data_list);					break;
 		default: return;
 	}
@@ -53,14 +53,15 @@ void Concerts::WidgetDataList::showByYears(const DataList& data_list)
 	}
 }
 
-void Concerts::WidgetDataList::showByArtists(const DataList& data_list)
+void Concerts::WidgetDataList::showByArtists(const DataList& data_list, const Base::ExtraList& extra_list)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE};
 	initColumns({tr("Группа / Дата"), tr("К-во"), tr("Группы"), tr("Страна"), tr("Город"), tr("Место")},
 				{WIDTH_DATE_MEDIUM, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_COUNTRY, WIDTH_CITY, WIDTH_PLACE});
 	initSorting(CLMN_DATE);
 
-	auto concerts_by_artists = data_list.concertsByArtists();
+	auto synonyms = DataList::getSynonyms(tr("[Синонимы для групп]"), extra_list);
+	auto concerts_by_artists = data_list.concertsByArtists(synonyms);
 
 	for (const auto& [artist, concerts] : concerts_by_artists) {
 		auto item_artist = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
@@ -162,14 +163,15 @@ void Concerts::WidgetDataList::showByCities(const DataList& data_list)
 	}
 }
 
-void Concerts::WidgetDataList::showByPlaces(const DataList& data_list)
+void Concerts::WidgetDataList::showByPlaces(const DataList& data_list, const Base::ExtraList& extra_list)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS};
 	initColumns({tr("Место / Дата"), tr("К-во"), tr("Группы")},
 				{WIDTH_DATE_BIG, WIDTH_COUNT, WIDTH_ARTISTS});
 	initSorting(CLMN_DATE);
 
-	auto concerts_by_places = data_list.concertsByPlaces();
+	auto synonyms = DataList::getSynonyms(tr("[Синонимы для мест]"), extra_list);
+	auto concerts_by_places = data_list.concertsByPlaces(synonyms);
 
 	for (const auto& [place, concerts] : concerts_by_places) {
 		auto item_place = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
@@ -185,16 +187,17 @@ void Concerts::WidgetDataList::showByPlaces(const DataList& data_list)
 	}
 }
 
-void Concerts::WidgetDataList::showPlacesTree(const DataList& data_list)
+void Concerts::WidgetDataList::showPlacesTree(const DataList& data_list, const Base::ExtraList& extra_list)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS};
 	initColumns({tr("Страна / Город / Место / Дата"), tr("К-во"), tr("Группы")},
 				{WIDTH_DATE_BIG, WIDTH_COUNT, WIDTH_ARTISTS});
 	initSorting(CLMN_DATE);
 
+	auto synonyms = DataList::getSynonyms(tr("[Синонимы для мест]"), extra_list);
 	auto concerts_by_countries = data_list.concertsByCountries();
 	auto concerts_by_cities = data_list.concertsByCities();
-	auto concerts_by_places = data_list.concertsByPlaces();
+	auto concerts_by_places = data_list.concertsByPlaces(synonyms);
 
 	for (const auto& [country, concerts_in_country] : concerts_by_countries) {
 		auto item_country = new Base::WidgetTreeItem(this, Global::Colors::tree_level_3);
@@ -208,7 +211,7 @@ void Concerts::WidgetDataList::showPlacesTree(const DataList& data_list)
 			item_city->setText(CLMN_DATE, city);
 			item_city->setNumb(CLMN_COUNT, concerts_in_city.size());
 
-			auto list_of_places = data_list.listOfPlaces(city);
+			auto list_of_places = data_list.listOfPlaces(city, synonyms);
 			for (const auto& place : list_of_places) {
 				const auto& concerts_in_place = concerts_by_places[country + ", " + city + ", " + place];
 				auto item_place = new Base::WidgetTreeItem(item_city, Global::Colors::tree_level_1);

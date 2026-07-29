@@ -211,8 +211,18 @@ void Concerts::WidgetMain::showExtra(size_t index)
 		_widget_extra = new Base::WidgetExtra(index, _extra_list, this);
 		_widget_extra->addSpecialGroup(
 				tr("[Теги]"),
-				tr("Перечисление через запятую тегов,\nпо которым происходит поиск в описаниях концертов"),
+				tr("Перечисление через запятую тегов,\nкоторые ищутся в описаниях концертов"),
 				tr("Общее название для концертов с данными тегами")
+		);
+		_widget_extra->addSpecialGroup(
+				tr("[Синонимы для групп]"),
+				tr("Перечисление через запятую групп,\nкоторые должны объединяться в одну"),
+				tr("Общее название для вышеуказанных групп")
+		);
+		_widget_extra->addSpecialGroup(
+				tr("[Синонимы для мест]"),
+				tr("Перечисление через запятую мест,\nкоторые должны объединяться в одно"),
+				tr("Общее название для вышеуказанных мест")
 		);
 		connect(_widget_extra, &Base::WidgetExtra::showMessage,
 				this, &WidgetMain::showMessage);

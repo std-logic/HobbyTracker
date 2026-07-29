@@ -80,6 +80,8 @@ public:
 	{ return _city + ", " + _place; }
 	inline QString countryCityPlace() const
 	{ return _country + ", " + _city + ", " + _place; }
+	inline QString countryCityPlace(const QString& place_synonym) const
+	{ return _country + ", " + _city + ", " + place_synonym; }
 
 	inline bool operator==(const Data& other) const noexcept
 	{

@@ -25,12 +25,12 @@ signals:
 
 private:
 	void showByYears(const DataList& data_list);
-	void showByArtists(const DataList& data_list);
+	void showByArtists(const DataList& data_list, const Base::ExtraList& extra_list);
 	void showByTags(const DataList& data_list, const Base::ExtraList& extra_list);
 	void showByCountries(const DataList& data_list);
 	void showByCities(const DataList& data_list);
-	void showByPlaces(const DataList& data_list);
-	void showPlacesTree(const DataList& data_list);
+	void showByPlaces(const DataList& data_list, const Base::ExtraList& extra_list);
+	void showPlacesTree(const DataList& data_list, const Base::ExtraList& extra_list);
 	void showSimple(const DataList& data_list);
 
 private:
