@@ -7,9 +7,9 @@
 #include "BaseComboBox.h"
 
 #include <QWidget>
+#include <QCheckBox>
 
 class QHBoxLayout;
-class QPushButton;
 
 namespace Base
 {
@@ -89,6 +89,13 @@ protected:
 		addWidget(combo = new ComboBox(this));
 		for (const auto& [text, data] : items) { combo->addItem(text, data); }
 		connect(combo, &ComboBox::currentDataChanged, this, func_data_changed);
+	}
+
+	template<typename FuncChanged>
+	void addCheckBox(QCheckBox*& check, const QString& text, FuncChanged&& func_changed)
+	{
+		addWidget(check = new QCheckBox(text, this));
+		connect(check, &QCheckBox::checkStateChanged, this, func_changed);
 	}
 
 private:

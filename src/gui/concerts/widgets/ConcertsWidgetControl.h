@@ -11,6 +11,8 @@ class ButtonShow;
 class ComboBox;
 }
 
+class QCheckBox;
+
 namespace Concerts
 {
 
@@ -29,6 +31,7 @@ signals:
 	void collapseDataList();
 	void expandDataList();
 	void setDataListViewMode(int view_mode);
+	void setFavoritesState(Qt::CheckState state);
 
 	void showExtraList(bool on);
 	void addExtra();
@@ -47,6 +50,7 @@ private:
 	Base::ButtonCollapse* _button_collapse_data_list = nullptr;
 	Base::ButtonExpand* _button_expand_data_list = nullptr;
 	Base::ComboBox* _combo_data_list_view_mode = nullptr;
+	QCheckBox* _check_favorites = nullptr;
 
 	Base::ButtonShow* _button_extra_list = nullptr;
 	Base::ButtonAdd* _button_add_extra = nullptr;

@@ -1,6 +1,8 @@
 #include "ConcertsWidgetControl.h"
 #include "../common/ConcertsCommon.h"
 
+#include <QCheckBox>
+
 Concerts::WidgetControl::WidgetControl(QWidget* parent)
 	: Base::WidgetControl{parent}
 {
@@ -33,12 +35,14 @@ void Concerts::WidgetControl::initWidgets()
 				{tr("Полное древо"), static_cast<int>(DataListViewModes::PlacesTree)},
 				{tr("Простой список"), static_cast<int>(DataListViewModes::Simple)},
 		});
+		addCheckBox(_check_favorites, tr("Только избранные"), &WidgetControl::setFavoritesState);
 
 		_button_data_list->addSlaveWidgets({
 			_button_add_data,
 			_button_collapse_data_list,
 			_button_expand_data_list,
-			_combo_data_list_view_mode
+			_combo_data_list_view_mode,
+			_check_favorites,
 		});
 	}
 
@@ -53,7 +57,7 @@ void Concerts::WidgetControl::initWidgets()
 		_button_extra_list->addSlaveWidgets({
 			_button_add_extra,
 			_button_collapse_extra_list,
-			_button_expand_extra_list
+			_button_expand_extra_list,
 		});
 	}
 

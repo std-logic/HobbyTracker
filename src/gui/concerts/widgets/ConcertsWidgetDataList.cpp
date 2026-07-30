@@ -27,6 +27,18 @@ void Concerts::WidgetDataList::update(const DataList& data_list, const Base::Ext
 	}
 }
 
+void Concerts::WidgetDataList::setFavoritesState(Qt::CheckState state)
+{
+	bool favorites_state = (state == Qt::Checked);
+	if (_favorites_state == favorites_state) { return; }
+	_favorites_state = favorites_state;
+
+	if ((static_cast<DataListViewModes>(_view_mode) == DataListViewModes::ByArtists) ||
+		(static_cast<DataListViewModes>(_view_mode) == DataListViewModes::ByPlaces)) {
+		emit needUpdate();
+	}
+}
+
 void Concerts::WidgetDataList::showByYears(const DataList& data_list)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE};
@@ -60,10 +72,15 @@ void Concerts::WidgetDataList::showByArtists(const DataList& data_list, const Ba
 				{WIDTH_DATE_MEDIUM, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_COUNTRY, WIDTH_CITY, WIDTH_PLACE});
 	initSorting(CLMN_DATE);
 
+	auto favorites = _favorites_state ?
+			DataList::getFavorites(tr("[Избранные группы]"), extra_list) :
+			DataList::Favorites();
 	auto synonyms = DataList::getSynonyms(tr("[Синонимы для групп]"), extra_list);
 	auto concerts_by_artists = data_list.concertsByArtists(synonyms);
 
 	for (const auto& [artist, concerts] : concerts_by_artists) {
+		if (_favorites_state && !favorites.contains(artist)) { continue; }
+
 		auto item_artist = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_artist->setText(CLMN_DATE, artist);
 		item_artist->setNumb(CLMN_COUNT, concerts.size());
@@ -170,10 +187,15 @@ void Concerts::WidgetDataList::showByPlaces(const DataList& data_list, const Bas
 				{WIDTH_DATE_BIG, WIDTH_COUNT, WIDTH_ARTISTS});
 	initSorting(CLMN_DATE);
 
+	auto favorites = _favorites_state ?
+			DataList::getFavorites(tr("[Избранные места]"), extra_list) :
+			DataList::Favorites();
 	auto synonyms = DataList::getSynonyms(tr("[Синонимы для мест]"), extra_list);
 	auto concerts_by_places = data_list.concertsByPlaces(synonyms);
 
 	for (const auto& [place, concerts] : concerts_by_places) {
+		if (_favorites_state && !favorites.contains(place)) { continue; }
+
 		auto item_place = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_place->setText(CLMN_DATE, place);
 		item_place->setNumb(CLMN_COUNT, concerts.size());

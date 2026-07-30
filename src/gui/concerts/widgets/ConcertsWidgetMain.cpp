@@ -55,6 +55,8 @@ void Concerts::WidgetMain::initConnections()
 			_widget_data_list, &WidgetDataList::expandAll);
 	connect(_widget_control, &WidgetControl::setDataListViewMode,
 			_widget_data_list, &WidgetDataList::setViewMode);
+	connect(_widget_control, &WidgetControl::setFavoritesState,
+			_widget_data_list, &WidgetDataList::setFavoritesState);
 
 	connect(_widget_control, &WidgetControl::showExtraList,
 			_widget_extra_list, &Base::WidgetExtraList::setVisible);
@@ -223,6 +225,18 @@ void Concerts::WidgetMain::showExtra(size_t index)
 				tr("[Синонимы для мест]"),
 				tr("Перечисление через запятую мест,\nкоторые должны объединяться в одно"),
 				tr("Общее название для вышеуказанных мест")
+		);
+		_widget_extra->addSpecialGroup(
+				tr("[Избранные группы]"),
+				tr("Если «Только избранные» включены, в режиме «По группам»\n"
+				   "будут отображаться только те, что добавлены здесь"),
+				""
+		);
+		_widget_extra->addSpecialGroup(
+				tr("[Избранные места]"),
+				tr("Если «Только избранные» включены, в режиме «По местам»\n"
+				   "будут отображаться только те, что добавлены здесь"),
+				""
 		);
 		connect(_widget_extra, &Base::WidgetExtra::showMessage,
 				this, &WidgetMain::showMessage);

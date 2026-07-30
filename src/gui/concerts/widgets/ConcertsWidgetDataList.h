@@ -21,6 +21,9 @@ public:
 
 	void update(const DataList& data_list, const Base::ExtraList& extra_list);
 
+public slots:
+	void setFavoritesState(Qt::CheckState state);
+
 signals:
 
 private:
@@ -42,6 +45,8 @@ private:
 	static const int WIDTH_COUNTRY = 120;
 	static const int WIDTH_CITY = 170;
 	static const int WIDTH_PLACE = 260;
+
+	bool _favorites_state = false;
 };
 
 } // namespace Concerts
