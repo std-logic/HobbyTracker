@@ -49,7 +49,7 @@ void Bike::WidgetControl::initWidgets()
 		});
 
 		_button_chart->addSlaveWidgets({
-			_combo_chart_view_mode
+			_combo_chart_view_mode,
 		});
 	}
 

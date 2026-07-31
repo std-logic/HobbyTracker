@@ -46,7 +46,7 @@ void Base::WidgetRating::initWidgets()
 	_group_buttons->setExclusive(true);
 
 	for (int i = 0; i < 10; ++i) {
-		_layout_main->addWidget(_buttons[i] = new QPushButton(QStringLiteral("%1").arg(i+1), this));
+		_layout_main->addWidget(_buttons[i] = new QPushButton(QString::number(i+1), this));
 		_buttons[i]->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
 		_buttons[i]->setCheckable(true);
 		_buttons[i]->setFocusPolicy(Qt::NoFocus);

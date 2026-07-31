@@ -14,6 +14,7 @@ namespace Player
 
 class Library
 {
+	Q_DECLARE_TR_FUNCTIONS(Library)
 public:
 	Library() = default;
 	Library(const QString& title) : _title(title) {}

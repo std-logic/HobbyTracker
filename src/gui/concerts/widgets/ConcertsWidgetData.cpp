@@ -101,7 +101,6 @@ bool Concerts::WidgetData::copyGuiToData()
 	}
 	_data.setPlace(_combo_place->currentText());
 
-
 	return true;
 }
 

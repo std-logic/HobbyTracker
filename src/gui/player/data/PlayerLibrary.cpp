@@ -131,13 +131,13 @@ Player::Library::Summary Player::Library::summary() const
 QString Player::Library::summaryString() const
 {
 	QString text;
-	text += QString("Файл: %1").arg(_title);
-	text += QString("\nГод: %1").arg(yearString());
-	text += QString("\nГрупп: %1").arg(artistsCount());
-	text += QString("\nАльбомов: %1").arg(albumsCount());
-	text += QString("\nТреков: %1").arg(tracksCount());
-	text += QString("\nПрослушиваний: %1").arg(playCount());
-	text += QString("\nДлина: %1").arg(Helper::timeString(time()));
-	text += QString("\nРазмер: %1").arg(Helper::sizeString(size()));
+	text += tr("Файл: %1").arg(_title);
+	text += tr("\nГод: %1").arg(yearString());
+	text += tr("\nГрупп: %1").arg(artistsCount());
+	text += tr("\nАльбомов: %1").arg(albumsCount());
+	text += tr("\nТреков: %1").arg(tracksCount());
+	text += tr("\nПрослушиваний: %1").arg(playCount());
+	text += tr("\nДлина: %1").arg(Helper::timeString(time()));
+	text += tr("\nРазмер: %1").arg(Helper::sizeString(size()));
 	return text;
 }

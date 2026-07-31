@@ -10,6 +10,7 @@ namespace Games
 
 class Data : public Base::Data
 {
+	Q_DECLARE_TR_FUNCTIONS(Data)
 public:
 	Data() = default;
 
@@ -59,10 +60,10 @@ public:
 	{
 		QString text;
 		text += _title;
-		text += QStringLiteral("\n\nРазработчик: %1").arg(_developer);
-		text += QStringLiteral("\nЖанр: %1").arg(_genre);
-		text += QStringLiteral("\nГод: %1").arg(yearString());
-		text += QStringLiteral("\nОценка: %1").arg(_rating);
+		text += tr("\n\nРазработчик: %1").arg(_developer);
+		text += tr("\nЖанр: %1").arg(_genre);
+		text += tr("\nГод: %1").arg(yearString());
+		text += tr("\nОценка: %1").arg(_rating);
 		return text;
 	}
 

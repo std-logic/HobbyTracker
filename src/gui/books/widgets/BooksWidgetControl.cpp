@@ -36,7 +36,7 @@ void Books::WidgetControl::initWidgets()
 			_button_add_data,
 			_button_collapse_data_list,
 			_button_expand_data_list,
-			_combo_data_list_view_mode
+			_combo_data_list_view_mode,
 		});
 	}
 
@@ -51,7 +51,7 @@ void Books::WidgetControl::initWidgets()
 		_button_extra_list->addSlaveWidgets({
 			_button_add_extra,
 			_button_collapse_extra_list,
-			_button_expand_extra_list
+			_button_expand_extra_list,
 		});
 	}
 
@@ -66,7 +66,7 @@ void Books::WidgetControl::initWidgets()
 		});
 
 		_button_chart->addSlaveWidgets({
-			_combo_chart_view_mode
+			_combo_chart_view_mode,
 		});
 	}
 

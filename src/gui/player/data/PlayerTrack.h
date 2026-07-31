@@ -10,6 +10,7 @@ namespace Player
 
 class Track
 {
+	Q_DECLARE_TR_FUNCTIONS(Track)
 public:
 	Track() = default;
 	Track(const QString& title) : _title(title) {}
@@ -119,16 +120,16 @@ public:
 	QString summaryString() const
 	{
 		QString text;
-		text += QString("Трек: %1").arg(_title);
-		if (_year != Global::undefined_value) { text += QString("\nГод: %1").arg(yearString()); }
-		text += QString("\nПрослушиваний: %1").arg(_play_count);
-		text += QString("\nЖанр: %1").arg(_genre);
-		text += QString("\nДлина: %1").arg(Helper::timeString(_time));
-		text += QString("\nРазмер: %1").arg(Helper::sizeString(_size));
-		text += QString("\nБитрейт: %1 кбит/с (%2)").arg(_bitrate).arg(_format);
-		if (!_composer.isEmpty()) { text += QString("\nКомпозитор: %1").arg(_composer); }
-		if (!_publisher.isEmpty()) { text += QString("\nИздатель: %1").arg(_publisher); }
-		if (!_comments.isEmpty()) { text += QString("\n\n%1").arg(_comments); }
+		text += tr("Трек: ") + _title;
+		if (_year != Global::undefined_value) { text += tr("\nГод: ") + yearString(); }
+		text += tr("\nПрослушиваний: %1").arg(_play_count);
+		text += tr("\nЖанр: ") + _genre;
+		text += tr("\nДлина: ") + Helper::timeString(_time);
+		text += tr("\nРазмер: ") + Helper::sizeString(_size);
+		text += tr("\nБитрейт: %1 кбит/с (%2)").arg(_bitrate).arg(_format);
+		if (!_composer.isEmpty()) { text += tr("\nКомпозитор: ") + _composer; }
+		if (!_publisher.isEmpty()) { text += tr("\nИздатель: ") + _publisher; }
+		if (!_comments.isEmpty()) { text += QStringLiteral("\n\n") + _comments; }
 		return text;
 	}
 

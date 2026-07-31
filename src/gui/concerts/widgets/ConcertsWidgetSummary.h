@@ -23,11 +23,11 @@ private:
 
 private:
 	QLabel* _label_years = nullptr;
-	QLabel* _label_concerts_num = nullptr;
-	QLabel* _label_artists_num = nullptr;
 	QLabel* _label_countries_num = nullptr;
 	QLabel* _label_cities_num = nullptr;
 	QLabel* _label_places_num = nullptr;
+	QLabel* _label_artists_num = nullptr;
+	QLabel* _label_concerts_num = nullptr;
 };
 
 } // namespace Concerts

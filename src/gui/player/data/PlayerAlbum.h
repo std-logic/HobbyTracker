@@ -14,6 +14,7 @@ namespace Player
 
 class Album
 {
+	Q_DECLARE_TR_FUNCTIONS(Album)
 public:
 	Album() = default;
 	Album(const QString& title) : _title(title) {}
@@ -97,16 +98,16 @@ public:
 	QString summaryString() const
 	{
 		QString text;
-		text += QString("Альбом: %1").arg(_title);
+		text += tr("Альбом: ") + _title;
 		QString year_str = yearString();
-		if (!year_str.isEmpty()) { text += QString("\nГод: %1").arg(year_str); }
-		text += QString("\nТреков: %1").arg(tracksCount());
-		text += QString("\nПрослушиваний: %1").arg(playCount());
-		text += QString("\nЖанр: %1").arg(genre());
-		text += QString("\nДлина: %1").arg(Helper::timeString(time()));
-		text += QString("\nРазмер: %1").arg(Helper::sizeString(size()));
+		if (!year_str.isEmpty()) { text += tr("\nГод: ") + year_str; }
+		text += tr("\nТреков: %1").arg(tracksCount());
+		text += tr("\nПрослушиваний: %1").arg(playCount());
+		text += tr("\nЖанр: ") + genre();
+		text += tr("\nДлина: ") + Helper::timeString(time());
+		text += tr("\nРазмер: ") + Helper::sizeString(size());
 		QString publ_str = publisher();
-		if (!publ_str.isEmpty()) { text += QString("\nИздатель: %1").arg(publ_str); }
+		if (!publ_str.isEmpty()) { text += tr("\nИздатель: ") + publ_str; }
 		return text;
 	}
 

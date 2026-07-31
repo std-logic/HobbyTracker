@@ -56,7 +56,8 @@ void Concerts::WidgetDataList::showByYears(const DataList& data_list)
 		for (const auto concert : concerts) {
 			auto item_concert = new Base::WidgetTreeItem(item_year);
 			item_concert->setText(CLMN_DATE, concert->date());
-			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString());
+			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
+			item_concert->setToolTip(CLMN_ARTISTS, concert->summaryString());
 			item_concert->setText(CLMN_COUNTRY, concert->country());
 			item_concert->setText(CLMN_CITY, concert->city());
 			item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert->place()));
@@ -88,7 +89,8 @@ void Concerts::WidgetDataList::showByArtists(const DataList& data_list, const Ba
 		for (const auto concert : concerts) {
 			auto item_concert = new Base::WidgetTreeItem(item_artist);
 			item_concert->setText(CLMN_DATE, concert->date());
-			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString());
+			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
+			item_concert->setToolTip(CLMN_ARTISTS, concert->summaryString());
 			item_concert->setText(CLMN_COUNTRY, concert->country());
 			item_concert->setText(CLMN_CITY, concert->city());
 			item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert->place()));
@@ -119,7 +121,8 @@ void Concerts::WidgetDataList::showByTags(const DataList& data_list, const Base:
 					for (const auto concert : concerts) {
 						auto item_concert = new Base::WidgetTreeItem(item_tag);
 						item_concert->setText(CLMN_DATE, concert->date());
-						item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString());
+						item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
+						item_concert->setToolTip(CLMN_ARTISTS, concert->summaryString());
 						item_concert->setText(CLMN_COUNTRY, concert->country());
 						item_concert->setText(CLMN_CITY, concert->city());
 						item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert->place()));
@@ -148,7 +151,8 @@ void Concerts::WidgetDataList::showByCountries(const DataList& data_list)
 		for (const auto concert : concerts) {
 			auto item_concert = new Base::WidgetTreeItem(item_country);
 			item_concert->setText(CLMN_DATE, concert->date());
-			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString());
+			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
+			item_concert->setToolTip(CLMN_ARTISTS, concert->summaryString());
 			item_concert->setText(CLMN_CITY, concert->city());
 			item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert->place()));
 			item_concert->setId(concert->id());
@@ -173,7 +177,8 @@ void Concerts::WidgetDataList::showByCities(const DataList& data_list)
 		for (const auto concert : concerts) {
 			auto item_concert = new Base::WidgetTreeItem(item_city);
 			item_concert->setText(CLMN_DATE, concert->date());
-			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString());
+			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
+			item_concert->setToolTip(CLMN_ARTISTS, concert->summaryString());
 			item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert->place()));
 			item_concert->setId(concert->id());
 		}
@@ -203,7 +208,8 @@ void Concerts::WidgetDataList::showByPlaces(const DataList& data_list, const Bas
 		for (const auto concert : concerts) {
 			auto item_concert = new Base::WidgetTreeItem(item_place);
 			item_concert->setText(CLMN_DATE, concert->date());
-			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString());
+			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
+			item_concert->setToolTip(CLMN_ARTISTS, concert->summaryString());
 			item_concert->setId(concert->id());
 		}
 	}
@@ -243,7 +249,8 @@ void Concerts::WidgetDataList::showPlacesTree(const DataList& data_list, const B
 				for (const auto concert : concerts_in_place) {
 					auto item_concert = new Base::WidgetTreeItem(item_place);
 					item_concert->setText(CLMN_DATE, concert->date());
-					item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString());
+					item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
+					item_concert->setToolTip(CLMN_ARTISTS, concert->summaryString());
 					item_concert->setId(concert->id());
 				}
 			}
@@ -261,7 +268,8 @@ void Concerts::WidgetDataList::showSimple(const DataList& data_list)
 	for (const auto& concert : data_list) {
 		auto item_concert = new Base::WidgetTreeItem(this);
 		item_concert->setText(CLMN_DATE, concert.date());
-		item_concert->setText(CLMN_ARTISTS, concert.artistsAndDescriptionToString());
+		item_concert->setText(CLMN_ARTISTS, concert.artistsAndDescriptionToString(QStringLiteral(" • ")));
+		item_concert->setToolTip(CLMN_ARTISTS, concert.summaryString());
 		item_concert->setText(CLMN_COUNTRY, concert.country());
 		item_concert->setText(CLMN_CITY, concert.city());
 		item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert.place()));

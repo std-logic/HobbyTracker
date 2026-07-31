@@ -10,6 +10,7 @@ namespace Books
 
 class Data : public Base::Data
 {
+	Q_DECLARE_TR_FUNCTIONS(Data)
 public:
 	Data() = default;
 
@@ -91,9 +92,9 @@ public:
 		if (!_author_orig.isEmpty() || !_title_orig.isEmpty()) {
 			text += QStringLiteral("\n(%1)").arg(autorAndTitleOrig());
 		}
-		text += QStringLiteral("\n\nЖанр: %1").arg(_genre);
-		text += QStringLiteral("\nГод: %1").arg(yearString());
-		text += QStringLiteral("\nОценка: %1").arg(_rating);
+		text += tr("\n\nЖанр: %1").arg(_genre);
+		text += tr("\nГод: %1").arg(yearString());
+		text += tr("\nОценка: %1").arg(_rating);
 		return text;
 	}
 

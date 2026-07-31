@@ -10,6 +10,7 @@ namespace Concerts
 
 class Data : public Base::Data
 {
+	Q_DECLARE_TR_FUNCTIONS(Data)
 public:
 	Data() = default;
 
@@ -82,6 +83,22 @@ public:
 	{ return _country + ", " + _city + ", " + _place; }
 	inline QString countryCityPlace(const QString& place_synonym) const
 	{ return _country + ", " + _city + ", " + place_synonym; }
+
+	QString summaryString() const
+	{
+		QString text;
+		text += tr("Дата: ") + _date;
+		if (!_artists.isEmpty()) {
+			text += tr("\nГруппы: ") + artistsToString(QStringLiteral(" • "));
+		}
+		if (!_description.isEmpty()) {
+			text += tr("\nОписание: ") + Helper::startWithCapital(_description);
+		}
+		text += tr("\nСтрана: ") + _country;
+		text += tr("\nГород: ") + _city;
+		text += tr("\nМесто: ") + Helper::startWithCapital(_place);
+		return text;
+	}
 
 	inline bool operator==(const Data& other) const noexcept
 	{
