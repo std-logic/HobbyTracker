@@ -104,6 +104,10 @@ SOURCES += \
 	src/gui/games/widgets/GamesWidgetMain.cpp \
 	src/gui/games/widgets/GamesWidgetSettings.cpp \
 	src/gui/games/widgets/GamesWidgetSummary.cpp \
+	src/gui/movies/data/MoviesDataConverter.cpp \
+	src/gui/movies/data/MoviesDataList.cpp \
+	src/gui/movies/data/MoviesFavoritesConverter.cpp \
+	src/gui/movies/data/MoviesSettings.cpp \
 	src/gui/music/data/MusicDataConverter.cpp \
 	src/gui/music/data/MusicDataList.cpp \
 	src/gui/music/data/MusicSettings.cpp \
@@ -234,6 +238,12 @@ HEADERS += \
 	src/gui/games/widgets/GamesWidgetMain.h \
 	src/gui/games/widgets/GamesWidgetSettings.h \
 	src/gui/games/widgets/GamesWidgetSummary.h \
+	src/gui/movies/common/MoviesCommon.h \
+	src/gui/movies/data/MoviesData.h \
+	src/gui/movies/data/MoviesDataConverter.h \
+	src/gui/movies/data/MoviesDataList.h \
+	src/gui/movies/data/MoviesFavoritesConverter.h \
+	src/gui/movies/data/MoviesSettings.h \
 	src/gui/music/common/MusicCommon.h \
 	src/gui/music/data/MusicData.h \
 	src/gui/music/data/MusicDataConverter.h \
