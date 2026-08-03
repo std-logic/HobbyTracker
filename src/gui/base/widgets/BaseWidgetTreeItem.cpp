@@ -65,3 +65,10 @@ void Base::WidgetTreeItem::setBackgroundEverywhere(const QBrush& brush)
 		setBackground(column, brush);
 	}
 }
+
+void Base::WidgetTreeItem::setToolTipEverywhere(const QString& str)
+{
+	for (auto column = 0; column < treeWidget()->columnCount(); ++column) {
+		setToolTip(column, str);
+	}
+}

@@ -7,7 +7,7 @@ QStringList Movies::FavoritesConverter::getDefaultCsvHeader()
 {
 	QStringList header(NUM_OF_COLUMNS);
 
-	header[CLMN_TITLE_TR]		= tr("Название (пер.)");
+	header[CLMN_TITLE_TR]		= tr("Название");
 	header[CLMN_TITLE_ORIG]		= tr("Название (ориг.)");
 	header[CLMN_YEAR]			= tr("Год");
 	header[CLMN_GENRES]			= tr("Жанр");
@@ -22,7 +22,6 @@ QStringList Movies::FavoritesConverter::getDefaultCsvHeader()
 Movies::DataList Movies::FavoritesConverter::conv(const Csv::Data& csv_data)
 {
 	DataList data_list;
-	bool conv_ok;
 
 	for (const auto& line : csv_data) {
 		int line_size = line.size();
@@ -35,8 +34,7 @@ Movies::DataList Movies::FavoritesConverter::conv(const Csv::Data& csv_data)
 			data.setTitleOrig(line[CLMN_TITLE_ORIG]);
 		}
 		if (CLMN_YEAR < line_size) {
-			auto year = line[CLMN_YEAR].toUInt(&conv_ok);
-			if (conv_ok) { data.setYear(year); }
+			data.setYearFromString(line[CLMN_YEAR]);
 		}
 		if (CLMN_GENRES < line_size) {
 			data.setGenresFromString(line[CLMN_GENRES]);

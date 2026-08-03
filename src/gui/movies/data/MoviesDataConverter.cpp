@@ -65,8 +65,7 @@ Movies::DataList Movies::DataConverter::conv(const Csv::Data& csv_data)
 			data.setKind(line[CLMN_KIND]);
 		}
 		if (CLMN_YEAR < line_size) {
-			auto year = line[CLMN_YEAR].toUInt(&conv_ok);
-			if (conv_ok) { data.setYear(year); }
+			data.setYearFromString(line[CLMN_YEAR]);
 		}
 		if (CLMN_GENRES < line_size) {
 			data.setGenresFromString(line[CLMN_GENRES]);

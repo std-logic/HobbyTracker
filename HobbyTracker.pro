@@ -108,6 +108,13 @@ SOURCES += \
 	src/gui/movies/data/MoviesDataList.cpp \
 	src/gui/movies/data/MoviesFavoritesConverter.cpp \
 	src/gui/movies/data/MoviesSettings.cpp \
+	src/gui/movies/widgets/MoviesWidgetChart.cpp \
+	src/gui/movies/widgets/MoviesWidgetControl.cpp \
+	src/gui/movies/widgets/MoviesWidgetData.cpp \
+	src/gui/movies/widgets/MoviesWidgetDataList.cpp \
+	src/gui/movies/widgets/MoviesWidgetMain.cpp \
+	src/gui/movies/widgets/MoviesWidgetSettings.cpp \
+	src/gui/movies/widgets/MoviesWidgetSummary.cpp \
 	src/gui/music/data/MusicDataConverter.cpp \
 	src/gui/music/data/MusicDataList.cpp \
 	src/gui/music/data/MusicSettings.cpp \
@@ -244,6 +251,13 @@ HEADERS += \
 	src/gui/movies/data/MoviesDataList.h \
 	src/gui/movies/data/MoviesFavoritesConverter.h \
 	src/gui/movies/data/MoviesSettings.h \
+	src/gui/movies/widgets/MoviesWidgetChart.h \
+	src/gui/movies/widgets/MoviesWidgetControl.h \
+	src/gui/movies/widgets/MoviesWidgetData.h \
+	src/gui/movies/widgets/MoviesWidgetDataList.h \
+	src/gui/movies/widgets/MoviesWidgetMain.h \
+	src/gui/movies/widgets/MoviesWidgetSettings.h \
+	src/gui/movies/widgets/MoviesWidgetSummary.h \
 	src/gui/music/common/MusicCommon.h \
 	src/gui/music/data/MusicData.h \
 	src/gui/music/data/MusicDataConverter.h \

@@ -6,13 +6,13 @@ namespace Movies
 enum class DataListViewModes
 {
 	Simple,
-	ByDirectors,
-	ByWriters,
-	ByActors,
 	ByGenres,
 	ByCountries,
 	ByYears,
 	ByDecades,
+	ByDirectors,
+	ByWriters,
+	ByActors,
 	ByRatings,
 };
 

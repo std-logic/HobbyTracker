@@ -26,7 +26,7 @@ public:
 	};
 	Summary summary() const;
 
-	void setFavorites(const DataList& favorites);
+	void setFavorites(const DataList& favorites_list);
 	DataList getFavorites() const;
 
 	SublistsByStrings moviesByKinds() const;

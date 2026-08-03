@@ -14,7 +14,7 @@ Movies::DataList::Summary Movies::DataList::summary() const
 		if (data.kind() == QStringLiteral("Мультсериал")) { ++sum.animation_series_num; }
 		auto countries = data.countries();
 		for (const auto& country : countries) { list_of_countries.insert(country); }
-		Helper::checkMinMax(data.year(), &sum.min_year, &sum.max_year);
+		Helper::checkMinMax(data.yearStart(), &sum.min_year, &sum.max_year);
 		sum.rating += data.rating();
 	}
 	sum.viewed_num = _data_list.size();
@@ -23,39 +23,37 @@ Movies::DataList::Summary Movies::DataList::summary() const
 	return sum;
 }
 
-void Movies::DataList::setFavorites(const DataList& favorites)
+void Movies::DataList::setFavorites(const DataList& favorites_list)
 {
 	std::unordered_map<QString, const Data*> favorites_map;
-	for (const auto& favorites_data : favorites) {
-		favorites_map[favorites_data.titleTr()] = &favorites_data;
+	for (const auto& favorites_data : favorites_list) {
+		favorites_map[favorites_data.id()] = &favorites_data;
 	}
 
 	for (auto& data : _data_list) {
-		if (favorites_map.contains(data.titleTr())) {
-			auto favorites_data = favorites_map[data.titleTr()];
-			if (data.year() == favorites_data->year()) {
-				data.setFavorite(true);
-				data.setTitleOrig(favorites_data->titleOrig());
-				data.setGenres(favorites_data->genres());
-				data.setCountries(favorites_data->countries());
-				data.setDirectors(favorites_data->directors());
-				data.setWriters(favorites_data->writers());
-				data.setActors(favorites_data->actors());
-			}
+		if (favorites_map.contains(data.id())) {
+			auto favorites_data = favorites_map[data.id()];
+			data.setFavorite(true);
+			data.setTitleOrig(favorites_data->titleOrig());
+			data.setGenres(favorites_data->genres());
+			data.setCountries(favorites_data->countries());
+			data.setDirectors(favorites_data->directors());
+			data.setWriters(favorites_data->writers());
+			data.setActors(favorites_data->actors());
 		}
 	}
 }
 
 Movies::DataList Movies::DataList::getFavorites() const
 {
-	DataList favorites;
+	DataList favorites_list;
 	for (const auto& data : _data_list) {
 		if (data.isFavorite()) {
-			favorites.add(data);
+			favorites_list.add(data);
 		}
 	}
-	std::ranges::sort(favorites, {}, &Data::titleTr);
-	return favorites;
+	std::ranges::sort(favorites_list, {}, &Data::titleTr);
+	return favorites_list;
 }
 
 Movies::DataList::SublistsByStrings Movies::DataList::moviesByKinds() const
@@ -120,14 +118,14 @@ Movies::DataList::ListOfStrings Movies::DataList::listOfActors() const
 
 Movies::DataList::SublistsByStrings Movies::DataList::moviesByYears(uint32_t step) const
 {
-	return sublistsByEpochStrings(&Data::year, step);
+	return sublistsByEpochStrings(&Data::yearStart, step);
 }
 
 Movies::DataList::NumbersByStrings Movies::DataList::numbersByYears(uint32_t step,
 		RangeTypes range_type, uint32_t required_min, uint32_t required_max) const
 {
 	return numbersInRange(step, range_type, required_min, required_max,
-			[](const Data& data) { return data.year(); },
+			[](const Data& data) { return data.yearStart(); },
 			[](uint32_t val, uint32_t step) { return Helper::epochString(val, step); });
 }
 

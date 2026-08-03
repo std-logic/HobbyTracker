@@ -18,13 +18,15 @@ public:
 	{ *this = Data(); }
 
 	inline QString id() const override
-	{ return _view_date + _title_tr + QString::number(_year); }
+	{ return _title_tr + QString::number(_year_start); }
 
 	template<typename T>
 	inline void setViewDate(T&& view_date)
 	{ _view_date = std::forward<T>(view_date); }
 	inline QString viewDate() const
 	{ return _view_date; }
+	inline QString viewDateWithoutSeconds() const
+	{ return (_view_date.size() >= 19) ? _view_date.first(16) : _view_date; }
 	inline uint32_t viewYear() const
 	{ return (_view_date.size() >= 4) ? _view_date.first(4).toUInt() : Global::undefined_value; }
 
@@ -104,14 +106,21 @@ public:
 	inline uint32_t time() const
 	{ return _time; }
 	QString timeString() const
-	{ return Helper::timeString(_time * 60); }
+	{ return Helper::timeString(_time * 60000); }
 
-	inline void setYear(uint32_t year)
-	{ _year = year; }
-	inline uint32_t year() const
-	{ return _year; }
+	inline void setYear(uint32_t year_start, uint32_t year_end = Global::undefined_value)
+	{ _year_start = year_start;  _year_end = year_end;}
+	void setYearFromString(const QString& str)
+	{
+		_year_start = (str.size() >= 4) ? str.first(4).toUInt() : Global::undefined_value;
+		_year_end = (str.size() == 9) ? str.last(4).toUInt() : Global::undefined_value;
+	}
+	inline uint32_t yearStart() const
+	{ return _year_start; }
+	inline uint32_t yearEnd() const
+	{ return _year_end; }
 	QString yearString() const
-	{ return Helper::yearString(_year); }
+	{ return Helper::yearString(_year_start, _year_end); }
 
 	inline void setRating(uint32_t rating)
 	{ _rating = rating; }
@@ -128,11 +137,17 @@ public:
 		QString text;
 		text += title();
 		text += tr("\n\nТип: ") + _kind;
-		text += tr("\nЖанры: ") + genresToString();
-		text += tr("\nСтраны: ") + countriesToString();
-		text += tr("\nРежиссёр: ") + directorsToString();
-		text += tr("\nСценарист: ") + writersToString();
-		text += tr("\nАктёры: ") + actorsToString();
+		text += tr("\nЖанр: ") + genresToString();
+		text += tr("\nСтрана: ") + countriesToString();
+		if (!_directors.isEmpty()) {
+			text += tr("\nРежиссёр: ") + directorsToString();
+		}
+		if (!_writers.isEmpty()) {
+			text += tr("\nСценарист: ") + writersToString();
+		}
+		if (!_actors.isEmpty()) {
+			text += tr("\nАктёры: ") + actorsToString();
+		}
 		text += tr("\nДлительность: ") + timeString();
 		text += tr("\nГод: ") + yearString();
 		text += tr("\nОценка: %1 (%2)").arg(_rating).arg(_view_date);
@@ -151,15 +166,16 @@ public:
 				(_writers == other.writers()) &&
 				(_actors == other.actors()) &&
 				(_time == other.time()) &&
-				(_year == other.year()) &&
+				(_year_start == other.yearStart()) &&
+				(_year_end == other.yearEnd()) &&
 				(_rating == other.rating()) &&
 				(_favorite == other.isFavorite());
 	}
 
 private:
-	QString _view_date; // YYYY.MM.DD
+	QString _view_date; // YYYY.MM.DD HH:MM:SS
 	QString _title_tr;
-	QString _title_orig;
+	QString _title_orig; // can be empty
 	QString _kind;
 	QStringList _genres;
 	QStringList _countries;
@@ -167,7 +183,8 @@ private:
 	QStringList _writers;
 	QStringList _actors;
 	uint32_t _time = 0; // minutes
-	uint32_t _year = Global::undefined_value;
+	uint32_t _year_start = Global::undefined_value;
+	uint32_t _year_end = Global::undefined_value; // only for series
 	uint32_t _rating = Global::undefined_value;
 	bool _favorite = false;
 };

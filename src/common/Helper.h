@@ -77,7 +77,7 @@ namespace Helper
 	inline QString yearString(uint32_t min_year, uint32_t max_year)
 	{
 		return	(min_year == Global::undefined_value) ? QString() :
-				(min_year == max_year) ?
+				((max_year == Global::undefined_value) || (min_year == max_year)) ?
 				QStringLiteral("%1").arg(min_year, 4, 10, QChar('0')) :
 				QStringLiteral("%1-%2")
 					.arg(min_year, 4, 10, QChar('0'))

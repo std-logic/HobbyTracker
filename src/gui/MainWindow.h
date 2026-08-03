@@ -9,6 +9,7 @@ namespace Books { class WidgetMain; }
 namespace Concerts { class WidgetMain; }
 namespace Flights { class WidgetMain; }
 namespace Games { class WidgetMain; }
+namespace Movies { class WidgetMain; }
 namespace Music { class WidgetMain; }
 namespace Player { class WidgetMain; }
 namespace Trekking { class WidgetMain; }
@@ -45,6 +46,7 @@ private:
 	Concerts::WidgetMain* _concerts;
 	Flights::WidgetMain* _flights;
 	Games::WidgetMain* _games;
+	Movies::WidgetMain* _movies;
 	Music::WidgetMain* _music;
 	Player::WidgetMain* _player;
 	Trekking::WidgetMain* _trekking;

@@ -27,6 +27,7 @@ public:
 	void setBold(int column, bool enable);
 	void setBoldEverywhere(bool enable);
 	void setBackgroundEverywhere(const QBrush& brush);
+	void setToolTipEverywhere(const QString& str);
 
 signals:
 
