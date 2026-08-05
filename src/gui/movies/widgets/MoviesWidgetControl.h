@@ -40,7 +40,7 @@ signals:
 	void showChart(bool on);
 	void setChartViewMode(int view_mode);
 
-	void setFavoritesState(Qt::CheckState state);
+	void setFavoritesOnly(Qt::CheckState state);
 
 private:
 	void initWidgets();

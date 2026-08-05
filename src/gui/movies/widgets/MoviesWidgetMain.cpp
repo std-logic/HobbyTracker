@@ -69,6 +69,13 @@ void Movies::WidgetMain::initConnections()
 	connect(_widget_control, &WidgetControl::setChartViewMode,
 			_widget_chart, &WidgetChart::setViewMode);
 
+	connect(_widget_control, &WidgetControl::setFavoritesOnly,
+			_widget_data_list, &WidgetDataList::setFavoritesOnly);
+	connect(_widget_control, &WidgetControl::setFavoritesOnly,
+			_widget_chart, &WidgetChart::setFavoritesOnly);
+	connect(_widget_control, &WidgetControl::setFavoritesOnly,
+			_widget_summary, &WidgetSummary::setFavoritesOnly);
+
 	connect(_widget_control, &WidgetControl::saveCsvData,
 			this, &WidgetMain::saveCsvData);
 	connect(_widget_control, &WidgetControl::addData,
@@ -77,6 +84,9 @@ void Movies::WidgetMain::initConnections()
 			this, &WidgetMain::addExtra);
 	connect(_widget_control, &WidgetControl::showSettings,
 			this, &WidgetMain::showSettings);
+
+	connect(_widget_summary, &WidgetSummary::needUpdate,
+			this, &WidgetMain::updateSummary);
 
 	connect(_widget_data_list, &WidgetDataList::needUpdate,
 			this, &WidgetMain::updateDataList);
@@ -133,16 +143,20 @@ void Movies::WidgetMain::readCsvData(const Csv::Settings& csv_settings)
 
 void Movies::WidgetMain::saveCsvData()
 {
-	auto csv_data = DataConverter::conv(_data_list);
-	auto write_data_ok = Storage::writeCsv(CsvFileData, _settings.csvSettings(), csv_data);
+	auto csv_settings = _settings.csvSettings();
 
-	csv_data = FavoritesConverter::conv(_data_list.getFavorites());
-	auto write_favorites_ok = Storage::writeCsv(CsvFileFavorites, _settings.csvSettings(), csv_data);
+	// we don't write main data file at this moment
+	// auto csv_data = DataConverter::conv(_data_list);
+	// auto write_data_ok = Storage::writeCsv(CsvFileData, csv_settings, csv_data);
+
+	auto favorites_list = _data_list.getFavorites();
+	auto csv_data = FavoritesConverter::conv(favorites_list);
+	auto write_favorites_ok = Storage::writeCsv(CsvFileFavorites, csv_settings, csv_data);
 
 	csv_data = Base::ExtraConverter::conv(_extra_list);
-	auto write_extra_ok = Storage::writeCsv(CsvFileExtra, _settings.csvSettings(), csv_data);
+	auto write_extra_ok = Storage::writeCsv(CsvFileExtra, csv_settings, csv_data);
 
-	if (write_data_ok && write_favorites_ok && write_extra_ok) {
+	if (/*write_data_ok && */write_favorites_ok && write_extra_ok) {
 		_widget_control->highlightButtonSave(false);
 		emit showMessage(tr("Данные сохранены"));
 	} else {
@@ -191,7 +205,7 @@ void Movies::WidgetMain::deleteData(const QString& id)
 {
 	if (auto i = _data_list.findIndexById(id); i >= 0) {
 		auto ans = QMessageBox::question(this, tr("Удаление данных"),
-			tr("Удалить произведение \"%1\"?").arg(_data_list[i].titleTr()));
+			tr("Удалить \"%1\"?").arg(_data_list[i].title()));
 
 		if (ans == QMessageBox::Yes) {
 			_data_list.del(i);

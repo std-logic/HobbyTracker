@@ -19,6 +19,9 @@ public:
 
 	void clear();
 
+signals:
+	void needUpdate();
+
 protected:
 	void addWidget(QLabel*& widget, int spacing = 30);
 	void addWidget(const QString& label_text, QLabel*& widget, int spacing = 30);

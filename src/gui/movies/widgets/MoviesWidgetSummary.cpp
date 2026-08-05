@@ -18,7 +18,7 @@ void Movies::WidgetSummary::update(const DataList& data_list)
 		return;
 	}
 
-	auto summary = data_list.summary();
+	auto summary = data_list.summary(_favorites_only);
 
 	_label_viewed_num->setText(QString::number(summary.viewed_num));
 	_label_movies_num->setText(QString::number(summary.movies_num));
@@ -28,6 +28,15 @@ void Movies::WidgetSummary::update(const DataList& data_list)
 	_label_countries_num->setText(QString::number(summary.countries_num));
 	_label_years->setText(Helper::yearString(summary.min_year, summary.max_year));
 	_label_rating->setText(QString::number(summary.rating, 'f', 1));
+}
+
+void Movies::WidgetSummary::setFavoritesOnly(Qt::CheckState state)
+{
+	bool favorites_only = (state == Qt::Checked);
+	if (_favorites_only == favorites_only) { return; }
+	_favorites_only = favorites_only;
+
+	emit needUpdate();
 }
 
 void Movies::WidgetSummary::initWidgets()

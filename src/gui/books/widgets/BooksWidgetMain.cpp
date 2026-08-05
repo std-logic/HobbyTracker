@@ -183,7 +183,7 @@ void Books::WidgetMain::deleteData(const QString& id)
 {
 	if (auto i = _data_list.findIndexById(id); i >= 0) {
 		auto ans = QMessageBox::question(this, tr("Удаление данных"),
-			tr("Удалить произведение \"%1\"?").arg(_data_list[i].autorAndTitleTr()));
+			tr("Удалить \"%1\"?").arg(_data_list[i].autorAndTitleTr()));
 
 		if (ans == QMessageBox::Yes) {
 			_data_list.del(i);

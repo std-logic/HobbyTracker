@@ -29,6 +29,7 @@ public:
 	using DataMethodReturningString = QString (T::*)() const;
 	using DataMethodReturningStringList = QStringList (T::*)() const;
 	using DataMethodReturningInteger = uint32_t (T::*)() const;
+	using DataMethodReturningBool = bool (T::*)() const;
 
 	ListContainer::iterator begin() noexcept
 	{ return _data_list.begin(); }
@@ -75,6 +76,18 @@ public:
 		return list;
 	}
 
+	// Return items, grouped by string values from method with condition (typical for using in WidgetTree)
+	SublistsByStrings sublistsByStrings(DataMethodReturningString method,
+			DataMethodReturningBool condition, bool condition_on) const
+	{
+		SublistsByStrings list;
+		for (const auto& data : _data_list) {
+			if (condition_on && !(data.*condition)()) { continue; }
+			list[(data.*method)()].push_back(&data);
+		}
+		return list;
+	}
+
 	// Return items, grouped by string values from method (typical for using in WidgetTree)
 	SublistsByStrings sublistsByStrings(DataMethodReturningStringList method) const
 	{
@@ -88,11 +101,39 @@ public:
 		return list;
 	}
 
-	// Return items, grouped by epoch strings (years, decades, centuries) from method
-	SublistsByStrings sublistsByEpochStrings(DataMethodReturningInteger method, uint32_t step) const
+	// Return items, grouped by string values from method with condition (typical for using in WidgetTree)
+	SublistsByStrings sublistsByStrings(DataMethodReturningStringList method,
+			DataMethodReturningBool condition, bool condition_on) const
 	{
 		SublistsByStrings list;
 		for (const auto& data : _data_list) {
+			if (condition_on && !(data.*condition)()) { continue; }
+			auto str_list = (data.*method)();
+			for (const auto& str : str_list) {
+				list[str].push_back(&data);
+			}
+		}
+		return list;
+	}
+
+	// Return items, grouped by epoch strings (years, decades, centuries) from method
+	SublistsByStrings sublistsByEpochStrings(DataMethodReturningInteger method,
+											 uint32_t step) const
+	{
+		SublistsByStrings list;
+		for (const auto& data : _data_list) {
+			list[Helper::epochString((data.*method)(), step)].push_back(&data);
+		}
+		return list;
+	}
+
+	// Return items, grouped by epoch strings (years, decades, centuries) from method with condition
+	SublistsByStrings sublistsByEpochStrings(DataMethodReturningInteger method, uint32_t step,
+			DataMethodReturningBool condition, bool condition_on) const
+	{
+		SublistsByStrings list;
+		for (const auto& data : _data_list) {
+			if (condition_on && !(data.*condition)()) { continue; }
 			list[Helper::epochString((data.*method)(), step)].push_back(&data);
 		}
 		return list;
@@ -103,6 +144,18 @@ public:
 	{
 		SublistsByIntegers list;
 		for (const auto& data : _data_list) {
+			list[(data.*method)()].push_back(&data);
+		}
+		return list;
+	}
+
+	// Return items, grouped by integer values from method with condition (typical for using in WidgetTree)
+	SublistsByIntegers sublistsByIntegers(DataMethodReturningInteger method,
+			DataMethodReturningBool condition, bool condition_on) const
+	{
+		SublistsByIntegers list;
+		for (const auto& data : _data_list) {
+			if (condition_on && !(data.*condition)()) { continue; }
 			list[(data.*method)()].push_back(&data);
 		}
 		return list;
@@ -141,6 +194,18 @@ public:
 		return list;
 	}
 
+	// Return numbers of items with the same string values of method with condition (typical for using in WidgetChart)
+	NumbersByStrings numbersByStrings(DataMethodReturningString method,
+			DataMethodReturningBool condition, bool condition_on) const
+	{
+		NumbersByStrings list;
+		for (const auto& data : _data_list) {
+			if (condition_on && !(data.*condition)()) { continue; }
+			++list[(data.*method)()];
+		}
+		return list;
+	}
+
 	// Return numbers of items with the same integer values of method (typical for using in WidgetChart)
 	NumbersByIntegers numbersByIntegers(DataMethodReturningInteger method) const
 	{
@@ -151,12 +216,37 @@ public:
 		return list;
 	}
 
-	// Return map of <method_key, method_val> integer values (typical for using in WidgetChart)
-	NumbersByIntegers numbersByIntegers(DataMethodReturningInteger method_key,
-										DataMethodReturningInteger method_val) const
+	// Return numbers of items with the same integer values of method with condition (typical for using in WidgetChart)
+	NumbersByIntegers numbersByIntegers(DataMethodReturningInteger method,
+			DataMethodReturningBool condition, bool condition_on) const
 	{
 		NumbersByIntegers list;
 		for (const auto& data : _data_list) {
+			if (condition_on && !(data.*condition)()) { continue; }
+			++list[(data.*method)()];
+		}
+		return list;
+	}
+
+	// Return map of <method_key, method_val> integer values (typical for using in WidgetChart)
+	NumbersByIntegers numbersByIntegers(DataMethodReturningInteger method_key,
+			DataMethodReturningInteger method_val) const
+	{
+		NumbersByIntegers list;
+		for (const auto& data : _data_list) {
+			list[(data.*method_key)()] = (data.*method_val)();
+		}
+		return list;
+	}
+
+	// Return map of <method_key, method_val> integer values with condition (typical for using in WidgetChart)
+	NumbersByIntegers numbersByIntegers(DataMethodReturningInteger method_key,
+			DataMethodReturningInteger method_val,
+			DataMethodReturningBool condition, bool condition_on) const
+	{
+		NumbersByIntegers list;
+		for (const auto& data : _data_list) {
+			if (condition_on && !(data.*condition)()) { continue; }
 			list[(data.*method_key)()] = (data.*method_val)();
 		}
 		return list;
@@ -175,14 +265,16 @@ public:
 	// funcIn - lambda to extract required member of data (must return uint32_t)
 	// funcAdd - lambda to calculate the added value (must return uint32_t)
 	// funcOut - lambda to create key for list (must return QString)
-	template<typename FuncIn, typename FuncAdd, typename FuncOut>
+	// funcCondition - lambda to check data validity condition (must return bool)
+	template<typename FuncIn, typename FuncAdd, typename FuncOut, typename FuncCondition>
 	NumbersByStrings numbersInRange(uint32_t step,
 			RangeTypes range_type, uint32_t required_min, uint32_t required_max,
-			FuncIn&& funcIn, FuncAdd&& funcAdd, FuncOut&& funcOut) const
+			FuncIn&& funcIn, FuncAdd&& funcAdd, FuncOut&& funcOut, FuncCondition&& funcCondition) const
 	{
 		NumbersByStrings list;
 		uint32_t real_min = Global::undefined_value, real_max = Global::undefined_value;
 		for (const auto& data : _data_list) {
+			if (!funcCondition(data)) { continue; }
 			auto val = funcIn(data);
 			Helper::checkMinMax(val, &real_min, &real_max);
 			if ((range_type == RangeTypes::LinearWithMin) && (val < required_min)) {
@@ -204,14 +296,31 @@ public:
 		}
 		return list;
 	}
-	// Same as above, but with trivial funcAdd
+	// Same as above, but with trivial funcCondition
+	template<typename FuncIn, typename FuncAdd, typename FuncOut>
+	NumbersByStrings numbersInRange(uint32_t step,
+			RangeTypes range_type, uint32_t required_min, uint32_t required_max,
+			FuncIn&& funcIn, FuncAdd&& funcAdd, FuncOut&& funcOut) const
+	{
+		return numbersInRange(step, range_type, required_min, required_max,
+				funcIn,
+				funcAdd,
+				funcOut,
+				[](const T&)->bool { return true; }
+		);
+	}
+	// Same as above, but with trivial funcAdd and funcCondition
 	template<typename FuncIn, typename FuncOut>
 	NumbersByStrings numbersInRange(uint32_t step,
 			RangeTypes range_type, uint32_t required_min, uint32_t required_max,
 			FuncIn&& funcIn, FuncOut&& funcOut) const
 	{
 		return numbersInRange(step, range_type, required_min, required_max,
-				funcIn, [](const T&)->uint32_t { return 1; }, funcOut);
+				funcIn,
+				[](const T&)->uint32_t { return 1; },
+				funcOut,
+				[](const T&)->bool { return true; }
+		);
 	}
 
 protected:

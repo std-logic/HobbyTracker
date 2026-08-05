@@ -106,7 +106,11 @@ public:
 	inline uint32_t time() const
 	{ return _time; }
 	QString timeString() const
-	{ return Helper::timeString(_time * 60000); }
+	{
+		return	(_time < 60) ?
+				tr("%1 мин").arg(_time) :
+				tr("%1 ч %2 мин").arg(_time / 60).arg(_time % 60);
+	}
 
 	inline void setYear(uint32_t year_start, uint32_t year_end = Global::undefined_value)
 	{ _year_start = year_start;  _year_end = year_end;}
@@ -115,6 +119,8 @@ public:
 		_year_start = (str.size() >= 4) ? str.first(4).toUInt() : Global::undefined_value;
 		_year_end = (str.size() == 9) ? str.last(4).toUInt() : Global::undefined_value;
 	}
+	inline uint32_t year() const
+	{ return _year_start; }
 	inline uint32_t yearStart() const
 	{ return _year_start; }
 	inline uint32_t yearEnd() const
@@ -146,11 +152,11 @@ public:
 			text += tr("\nСценарист: ") + writersToString();
 		}
 		if (!_actors.isEmpty()) {
-			text += tr("\nАктёры: ") + actorsToString();
+			text += tr("\nАктёры: ") + Helper::stringListToStringWithBreaks(_actors, ", ", 5);
 		}
 		text += tr("\nДлительность: ") + timeString();
 		text += tr("\nГод: ") + yearString();
-		text += tr("\nОценка: %1 (%2)").arg(_rating).arg(_view_date);
+		text += tr("\nОценка: %1").arg(_rating);
 		return text;
 	}
 

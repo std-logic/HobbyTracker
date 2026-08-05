@@ -145,9 +145,9 @@ private:
 	uint32_t _track_number = Global::undefined_value;
 	uint32_t _year = Global::undefined_value;
 	uint32_t _play_count = 0;
-	uint32_t _size = 0;
-	uint32_t _time = 0;
-	uint32_t _bitrate = 0;
+	uint32_t _size = 0; // bytes
+	uint32_t _time = 0; // ms
+	uint32_t _bitrate = 0; // kbit/s
 };
 
 } // namespace Player

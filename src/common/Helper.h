@@ -40,6 +40,22 @@ namespace Helper
 		return str;
 	}
 
+	inline QString stringListToStringWithBreaks(
+			const QStringList& str_list, const QString& delimiter, int num_in_line)
+	{
+		QString str;
+		for (int i = 0; i < str_list.size(); ++i) {
+			str += str_list[i];
+			if (i != (str_list.size() - 1)) {
+				str += delimiter;
+				if ((i+1) % num_in_line == 0) {
+					str += QChar('\n');
+				}
+			}
+		}
+		return str;
+	}
+
 	inline QString startWithCapital(QString str)
 	{
 		if (!str.isEmpty()) { str[0] = str[0].toUpper(); }
@@ -127,10 +143,10 @@ namespace Helper
 	{
 		return	(time < 60 * 60000) ?
 				QStringLiteral("%1:%2")
-					.arg(time / 60000)
+					.arg(time / 60000, 2, 10, QChar('0'))
 					.arg((time % 60000) / 1000, 2, 10, QChar('0')) :
 				QStringLiteral("%1:%2:%3")
-					.arg(time / (60 * 60000))
+					.arg(time / (60 * 60000), 2, 10, QChar('0'))
 					.arg((time % (60 * 60000)) / 60000, 2, 10, QChar('0'))
 					.arg((time % 60000) / 1000, 2, 10, QChar('0'));
 	}

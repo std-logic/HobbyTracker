@@ -3,11 +3,13 @@
 #include <unordered_set>
 #include <unordered_map>
 
-Movies::DataList::Summary Movies::DataList::summary() const
+Movies::DataList::Summary Movies::DataList::summary(bool favorites_only) const
 {
 	Summary sum;
 	std::unordered_set<QString> list_of_countries;
 	for (const auto& data : _data_list) {
+		if (favorites_only && !data.isFavorite()) { continue; }
+		++sum.viewed_num;
 		if (data.kind() == QStringLiteral("Фильм")) { ++sum.movies_num; }
 		if (data.kind() == QStringLiteral("Сериал")) { ++sum.series_num; }
 		if (data.kind() == QStringLiteral("Мультфильм")) { ++sum.animation_num; }
@@ -17,7 +19,6 @@ Movies::DataList::Summary Movies::DataList::summary() const
 		Helper::checkMinMax(data.yearStart(), &sum.min_year, &sum.max_year);
 		sum.rating += data.rating();
 	}
-	sum.viewed_num = _data_list.size();
 	sum.countries_num = list_of_countries.size();
 	if (sum.viewed_num) { sum.rating /= sum.viewed_num; }
 	return sum;
@@ -56,9 +57,9 @@ Movies::DataList Movies::DataList::getFavorites() const
 	return favorites_list;
 }
 
-Movies::DataList::SublistsByStrings Movies::DataList::moviesByKinds() const
+Movies::DataList::SublistsByStrings Movies::DataList::moviesByKinds(bool favorites_only) const
 {
-	return sublistsByStrings(&Data::kind);
+	return sublistsByStrings(&Data::kind, &Data::isFavorite, favorites_only);
 }
 
 Movies::DataList::ListOfStrings Movies::DataList::listOfKinds() const
@@ -66,9 +67,9 @@ Movies::DataList::ListOfStrings Movies::DataList::listOfKinds() const
 	return listOfStrings(&Data::kind);
 }
 
-Movies::DataList::SublistsByStrings Movies::DataList::moviesByGenres() const
+Movies::DataList::SublistsByStrings Movies::DataList::moviesByGenres(bool favorites_only) const
 {
-	return sublistsByStrings(&Data::genres);
+	return sublistsByStrings(&Data::genres, &Data::isFavorite, favorites_only);
 }
 
 Movies::DataList::ListOfStrings Movies::DataList::listOfGenres() const
@@ -76,9 +77,9 @@ Movies::DataList::ListOfStrings Movies::DataList::listOfGenres() const
 	return listOfStrings(&Data::genres);
 }
 
-Movies::DataList::SublistsByStrings Movies::DataList::moviesByCountries() const
+Movies::DataList::SublistsByStrings Movies::DataList::moviesByCountries(bool favorites_only) const
 {
-	return sublistsByStrings(&Data::countries);
+	return sublistsByStrings(&Data::countries, &Data::isFavorite, favorites_only);
 }
 
 Movies::DataList::ListOfStrings Movies::DataList::listOfCountries() const
@@ -86,9 +87,9 @@ Movies::DataList::ListOfStrings Movies::DataList::listOfCountries() const
 	return listOfStrings(&Data::countries);
 }
 
-Movies::DataList::SublistsByStrings Movies::DataList::moviesByDirectors() const
+Movies::DataList::SublistsByStrings Movies::DataList::moviesByDirectors(bool favorites_only) const
 {
-	return sublistsByStrings(&Data::directors);
+	return sublistsByStrings(&Data::directors, &Data::isFavorite, favorites_only);
 }
 
 Movies::DataList::ListOfStrings Movies::DataList::listOfDirectors() const
@@ -96,9 +97,9 @@ Movies::DataList::ListOfStrings Movies::DataList::listOfDirectors() const
 	return listOfStrings(&Data::directors);
 }
 
-Movies::DataList::SublistsByStrings Movies::DataList::moviesByWriters() const
+Movies::DataList::SublistsByStrings Movies::DataList::moviesByWriters(bool favorites_only) const
 {
-	return sublistsByStrings(&Data::writers);
+	return sublistsByStrings(&Data::writers, &Data::isFavorite, favorites_only);
 }
 
 Movies::DataList::ListOfStrings Movies::DataList::listOfWriters() const
@@ -106,9 +107,9 @@ Movies::DataList::ListOfStrings Movies::DataList::listOfWriters() const
 	return listOfStrings(&Data::writers);
 }
 
-Movies::DataList::SublistsByStrings Movies::DataList::moviesByActors() const
+Movies::DataList::SublistsByStrings Movies::DataList::moviesByActors(bool favorites_only) const
 {
-	return sublistsByStrings(&Data::actors);
+	return sublistsByStrings(&Data::actors, &Data::isFavorite, favorites_only);
 }
 
 Movies::DataList::ListOfStrings Movies::DataList::listOfActors() const
@@ -116,30 +117,34 @@ Movies::DataList::ListOfStrings Movies::DataList::listOfActors() const
 	return listOfStrings(&Data::actors);
 }
 
-Movies::DataList::SublistsByStrings Movies::DataList::moviesByYears(uint32_t step) const
+Movies::DataList::SublistsByStrings Movies::DataList::moviesByYears(uint32_t step, bool favorites_only) const
 {
-	return sublistsByEpochStrings(&Data::yearStart, step);
+	return sublistsByEpochStrings(&Data::yearStart, step, &Data::isFavorite, favorites_only);
 }
 
 Movies::DataList::NumbersByStrings Movies::DataList::numbersByYears(uint32_t step,
-		RangeTypes range_type, uint32_t required_min, uint32_t required_max) const
+		RangeTypes range_type, uint32_t required_min, uint32_t required_max,
+		bool favorites_only) const
 {
 	return numbersInRange(step, range_type, required_min, required_max,
 			[](const Data& data) { return data.yearStart(); },
-			[](uint32_t val, uint32_t step) { return Helper::epochString(val, step); });
+			[](const Data&)->uint32_t { return 1; },
+			[](uint32_t val, uint32_t step) { return Helper::epochString(val, step); },
+			[favorites_only](const Data& data)->bool { return !favorites_only || data.isFavorite(); }
+	);
 }
 
-Movies::DataList::SublistsByIntegers Movies::DataList::moviesByRatings() const
+Movies::DataList::SublistsByIntegers Movies::DataList::moviesByRatings(bool favorites_only) const
 {
-	return sublistsByIntegers(&Data::rating);
+	return sublistsByIntegers(&Data::rating, &Data::isFavorite, favorites_only);
 }
 
-Movies::DataList::NumbersByIntegers Movies::DataList::numbersByRatings() const
+Movies::DataList::NumbersByIntegers Movies::DataList::numbersByRatings(bool favorites_only) const
 {
-	return numbersByIntegers(&Data::rating);
+	return numbersByIntegers(&Data::rating, &Data::isFavorite, favorites_only);
 }
 
-Movies::DataList::NumbersByIntegers Movies::DataList::numbersByViewDates() const
+Movies::DataList::NumbersByIntegers Movies::DataList::numbersByViewDates(bool favorites_only) const
 {
-	return numbersByIntegers(&Data::viewYear);
+	return numbersByIntegers(&Data::viewYear, &Data::isFavorite, favorites_only);
 }

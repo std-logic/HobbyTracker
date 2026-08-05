@@ -6,6 +6,7 @@ namespace Movies
 enum class DataListViewModes
 {
 	Simple,
+	ByKinds,
 	ByGenres,
 	ByCountries,
 	ByYears,
@@ -18,10 +19,10 @@ enum class DataListViewModes
 
 enum class ChartViewModes
 {
+	ByViewDates,
 	ByYears,
 	ByDecades,
 	ByRatings,
-	ByViewDates,
 };
 
 enum CsvFiles

@@ -4,7 +4,11 @@
 #include <gui/base/widgets/BaseWidgetRating.h>
 
 #include <QLineEdit>
+#include <QPlainTextEdit>
 #include <QCheckBox>
+#include <QPushButton>
+#include <QHBoxLayout>
+#include <QDateTime>
 
 Movies::WidgetData::WidgetData(size_t index, const DataList& data_list, QWidget* parent)
 	: Base::WidgetData{index, data_list.size(), parent}
@@ -26,7 +30,7 @@ void Movies::WidgetData::initCommonParams()
 	setWindowTitle(_mode_edit_data ?
 			tr("Редактирование данных произведения") :
 			tr("Добавление нового произведения"));
-	setMinimumWidth(800);
+	setMinimumWidth(500);
 }
 
 void Movies::WidgetData::initWidgets()
@@ -52,6 +56,8 @@ void Movies::WidgetData::initWidgets()
 
 	add(tr("Актёры:"), _edit_actors);
 	_edit_actors->setPlaceholderText(tr("Список через запятую"));
+	_edit_actors->setFixedHeight(72);
+	_edit_actors->setStyleSheet("QPlainTextEdit{background-color: white;}");
 
 	add(tr("Длительность:"), _edit_time);
 
@@ -59,8 +65,21 @@ void Movies::WidgetData::initWidgets()
 
 	add(tr("Оценка:"), _widget_rating);
 
-	add(tr("Дата:"), _edit_view_date);
+	auto layout_view_date = new QHBoxLayout();
+	layout_view_date->setContentsMargins(0, 0, 0, 0);
+	layout_view_date->setSpacing(1);
+
+	_edit_view_date = new QLineEdit(this);
 	_edit_view_date->setPlaceholderText(tr("YYYY.MM.DD HH:MM:SS"));
+	layout_view_date->addWidget(_edit_view_date, 9);
+
+	_button_update_view_date = new QPushButton(
+			QIcon::fromTheme(QIcon::ThemeIcon::ViewRefresh), "", this);
+	connect(_button_update_view_date, &QPushButton::clicked,
+			this, &WidgetData::updateViewDate);
+	layout_view_date->addWidget(_button_update_view_date, 1);
+
+	addLayout(tr("Дата:"), layout_view_date);
 
 	add(tr("Избранное:"), _check_favorite);
 }
@@ -82,7 +101,7 @@ void Movies::WidgetData::copyDataToGui()
 
 		_edit_writers->setText(_data.writersToString());
 
-		_edit_actors->setText(_data.actorsToString());
+		_edit_actors->setPlainText(_data.actorsToString());
 
 		_edit_time->setText(QString::number(_data.time()));
 
@@ -132,17 +151,14 @@ bool Movies::WidgetData::copyGuiToData()
 	}
 	_data.setDirectorsFromString(_edit_directors->text());
 
-	if (_edit_writers->text().isEmpty()) {
-		emit showMessage(tr("Не введён сценарист!"));
-		return false;
-	}
 	_data.setWritersFromString(_edit_writers->text());
 
-	if (_edit_actors->text().isEmpty()) {
+	auto actors = _edit_actors->toPlainText().trimmed();
+	if (actors.isEmpty()) {
 		emit showMessage(tr("Не введены актёры!"));
 		return false;
 	}
-	_data.setActorsFromString(_edit_actors->text());
+	_data.setActorsFromString(actors);
 
 	if (_edit_time->text().isEmpty()) {
 		emit showMessage(tr("Не введена длительность!"));
@@ -150,7 +166,7 @@ bool Movies::WidgetData::copyGuiToData()
 	}
 	_data.setTime(_edit_time->text().toUInt());
 
-	if (!_edit_year->text().isEmpty()) {
+	if (_edit_year->text().isEmpty()) {
 		emit showMessage(tr("Не введён год!"));
 		return false;
 	}
@@ -179,4 +195,9 @@ void Movies::WidgetData::save()
 		emit saveData(_index, _data);
 		close();
 	}
+}
+
+void Movies::WidgetData::updateViewDate()
+{
+	_edit_view_date->setText(QDateTime::currentDateTime().toString("yyyy.MM.dd HH:mm:ss"));
 }

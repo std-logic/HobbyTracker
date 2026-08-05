@@ -16,13 +16,19 @@ public:
 
 	void update(const DataList& data_list);
 
+public slots:
+	void setFavoritesOnly(Qt::CheckState state);
+
 signals:
 
 private:
+	void showByViewDates(const DataList& data_list);
 	void showByYears(const DataList& data_list);
 	void showByDecades(const DataList& data_list);
 	void showByRatings(const DataList& data_list);
-	void showByViewDates(const DataList& data_list);
+
+private:
+	bool _favorites_only = false;
 };
 
 } // namespace Movies

@@ -27,6 +27,7 @@ void Movies::WidgetControl::initWidgets()
 		addButtonExpand(_button_expand_data_list, &WidgetControl::expandDataList);
 		addComboBox(_combo_data_list_view_mode, &WidgetControl::setDataListViewMode, {
 				{tr("Простой список"), static_cast<int>(DataListViewModes::Simple)},
+				{tr("По типам"), static_cast<int>(DataListViewModes::ByKinds)},
 				{tr("По жанрам"), static_cast<int>(DataListViewModes::ByGenres)},
 				{tr("По странам"), static_cast<int>(DataListViewModes::ByCountries)},
 				{tr("По годам"), static_cast<int>(DataListViewModes::ByYears)},
@@ -65,10 +66,10 @@ void Movies::WidgetControl::initWidgets()
 		addSpacing();
 		addButtonShow(_button_chart, tr("Статистика"), &WidgetControl::showChart);
 		addComboBox(_combo_chart_view_mode, &WidgetControl::setChartViewMode, {
+				{tr("По годам просмотра"), static_cast<int>(ChartViewModes::ByViewDates)},
 				{tr("По годам"), static_cast<int>(ChartViewModes::ByYears)},
 				{tr("По десятилетиям"), static_cast<int>(ChartViewModes::ByDecades)},
 				{tr("По оценкам"), static_cast<int>(ChartViewModes::ByRatings)},
-				{tr("По годам просмотра"), static_cast<int>(ChartViewModes::ByViewDates)},
 		});
 
 		_button_chart->addSlaveWidgets({
@@ -77,7 +78,7 @@ void Movies::WidgetControl::initWidgets()
 	}
 
 	addSpacing();
-	addCheckBox(_check_favorites, tr("Только избранные"), &WidgetControl::setFavoritesState);
+	addCheckBox(_check_favorites, tr("Только избранные"), &WidgetControl::setFavoritesOnly);
 
 	addButtonSettings();
 }

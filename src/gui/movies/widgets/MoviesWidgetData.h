@@ -5,7 +5,9 @@
 #include <gui/base/widgets/BaseWidgetData.h>
 
 class QLineEdit;
+class QPlainTextEdit;
 class QCheckBox;
+class QPushButton;
 
 namespace Base
 {
@@ -36,6 +38,7 @@ private:
 
 private slots:
 	void save() override;
+	void updateViewDate();
 
 private:
 	QLineEdit* _edit_title_tr = nullptr;
@@ -45,11 +48,12 @@ private:
 	QLineEdit* _edit_countries = nullptr;
 	QLineEdit* _edit_directors = nullptr;
 	QLineEdit* _edit_writers = nullptr;
-	QLineEdit* _edit_actors = nullptr;
+	QPlainTextEdit* _edit_actors = nullptr;
 	QLineEdit* _edit_time = nullptr;
 	QLineEdit* _edit_year = nullptr;
 	Base::WidgetRating* _widget_rating = nullptr;
 	QLineEdit* _edit_view_date = nullptr;
+	QPushButton* _button_update_view_date = nullptr;
 	QCheckBox* _check_favorite = nullptr;
 
 	DataList _data_list;
