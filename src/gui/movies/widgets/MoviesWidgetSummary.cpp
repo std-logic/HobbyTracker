@@ -48,7 +48,7 @@ void Movies::WidgetSummary::initWidgets()
 	addWidget(tr("Мультсериалов:"), _label_animation_series_num);
 	addWidget(tr("Стран:"), _label_countries_num);
 	addWidget(tr("Годы:"), _label_years);
-	addWidget(tr("Оценка:"), _label_rating, 0);
+	addWidget(tr("Оценки:"), _label_rating, 0);
 
 	addStretch();
 }

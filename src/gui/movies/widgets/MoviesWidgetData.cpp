@@ -1,6 +1,7 @@
 #include "MoviesWidgetData.h"
 
 #include <gui/base/widgets/BaseComboEdit.h>
+#include <gui/base/widgets/BaseWidgetDateTimeEdit.h>
 #include <gui/base/widgets/BaseWidgetRating.h>
 
 #include <QLineEdit>
@@ -65,21 +66,7 @@ void Movies::WidgetData::initWidgets()
 
 	add(tr("Оценка:"), _widget_rating);
 
-	auto layout_view_date = new QHBoxLayout();
-	layout_view_date->setContentsMargins(0, 0, 0, 0);
-	layout_view_date->setSpacing(1);
-
-	_edit_view_date = new QLineEdit(this);
-	_edit_view_date->setPlaceholderText(tr("YYYY.MM.DD HH:MM:SS"));
-	layout_view_date->addWidget(_edit_view_date, 9);
-
-	_button_update_view_date = new QPushButton(
-			QIcon::fromTheme(QIcon::ThemeIcon::ViewRefresh), "", this);
-	connect(_button_update_view_date, &QPushButton::clicked,
-			this, &WidgetData::updateViewDate);
-	layout_view_date->addWidget(_button_update_view_date, 1);
-
-	addLayout(tr("Дата:"), layout_view_date);
+	add(tr("Дата:"), _edit_view_date);
 
 	add(tr("Избранное:"), _check_favorite);
 }
@@ -178,7 +165,7 @@ bool Movies::WidgetData::copyGuiToData()
 	}
 	_data.setRating(_widget_rating->rating());
 
-	if (_edit_view_date->text().isEmpty()) {
+	if (!_edit_view_date->isValid()) {
 		emit showMessage(tr("Не введена дата!"));
 		return false;
 	}
@@ -195,9 +182,4 @@ void Movies::WidgetData::save()
 		emit saveData(_index, _data);
 		close();
 	}
-}
-
-void Movies::WidgetData::updateViewDate()
-{
-	_edit_view_date->setText(QDateTime::currentDateTime().toString("yyyy.MM.dd HH:mm:ss"));
 }

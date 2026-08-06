@@ -42,6 +42,8 @@ SOURCES += \
 	src/gui/base/widgets/BaseWidgetControl.cpp \
 	src/gui/base/widgets/BaseWidgetCsvSettings.cpp \
 	src/gui/base/widgets/BaseWidgetData.cpp \
+	src/gui/base/widgets/BaseWidgetDateEdit.cpp \
+	src/gui/base/widgets/BaseWidgetDateTimeEdit.cpp \
 	src/gui/base/widgets/BaseWidgetExtra.cpp \
 	src/gui/base/widgets/BaseWidgetExtraList.cpp \
 	src/gui/base/widgets/BaseWidgetMain.cpp \
@@ -172,6 +174,8 @@ HEADERS += \
 	src/gui/base/widgets/BaseWidgetControl.h \
 	src/gui/base/widgets/BaseWidgetCsvSettings.h \
 	src/gui/base/widgets/BaseWidgetData.h \
+	src/gui/base/widgets/BaseWidgetDateEdit.h \
+	src/gui/base/widgets/BaseWidgetDateTimeEdit.h \
 	src/gui/base/widgets/BaseWidgetExtra.h \
 	src/gui/base/widgets/BaseWidgetExtraList.h \
 	src/gui/base/widgets/BaseWidgetMain.h \

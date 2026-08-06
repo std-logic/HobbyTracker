@@ -20,6 +20,7 @@ public:
 		uint32_t total_dist = 0;
 		uint32_t total_time = 0;
 		uint32_t highest_peak = 0;
+		uint32_t countries_num = 0;
 	};
 	Summary summary() const;
 

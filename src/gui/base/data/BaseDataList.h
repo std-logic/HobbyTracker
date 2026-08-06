@@ -55,6 +55,17 @@ public:
 	inline void add(const T& data)
 	{ _data_list.push_back(data); }
 
+	bool set(size_t index, const T& data)
+	{
+		if (index < _data_list.size()) {
+			if (_data_list[index] == data) { return false; }
+			_data_list[index] = data;
+		} else {
+			_data_list.push_back(data);
+		}
+		return true;
+	}
+
 	inline void del(size_t index)
 	{ _data_list.erase(_data_list.begin() + index); }
 

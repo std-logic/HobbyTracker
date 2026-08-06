@@ -56,7 +56,7 @@ void Player::WidgetSummary::initWidgets()
 	addWidget(tr("Альбомов:"), _label_albums_num);
 	addWidget(tr("Треков:"), _label_tracks_num);
 	addWidget(tr("Жанров:"), _label_genres_num);
-	addWidget(tr("Прослушиваний:"), _label_play_count);
+	addWidget(tr("Прослушиваний:"), _label_play_count, 0);
 
 	addStretch();
 }

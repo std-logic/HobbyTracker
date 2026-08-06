@@ -43,11 +43,11 @@ void Games::WidgetDataList::showBySeries(const DataList& data_list)
 		for (const auto game : games) {
 			auto item_game = new Base::WidgetTreeItem(item_series);
 			item_game->setText(CLMN_TITLE, game->title());
-			item_game->setToolTip(CLMN_TITLE, game->summaryString());
 			item_game->setText(CLMN_DEVELOPER, game->developer());
 			item_game->setText(CLMN_GENRE, game->genre());
 			item_game->setText(CLMN_YEAR, game->yearString());
 			item_game->setRating(CLMN_RATING, game->rating());
+			item_game->setToolTipEverywhere(game->summaryString());
 			item_game->setId(game->id());
 		}
 	}
@@ -71,10 +71,10 @@ void Games::WidgetDataList::showByDevelopers(const DataList& data_list)
 		for (const auto game : games) {
 			auto item_game = new Base::WidgetTreeItem(item_developer);
 			item_game->setText(CLMN_TITLE, game->title());
-			item_game->setToolTip(CLMN_TITLE, game->summaryString());
 			item_game->setText(CLMN_GENRE, game->genre());
 			item_game->setText(CLMN_YEAR, game->yearString());
 			item_game->setRating(CLMN_RATING, game->rating());
+			item_game->setToolTipEverywhere(game->summaryString());
 			item_game->setId(game->id());
 		}
 	}
@@ -98,10 +98,10 @@ void Games::WidgetDataList::showByGenres(const DataList& data_list)
 		for (const auto game : games) {
 			auto item_game = new Base::WidgetTreeItem(item_genre);
 			item_game->setText(CLMN_TITLE, game->title());
-			item_game->setToolTip(CLMN_TITLE, game->summaryString());
 			item_game->setText(CLMN_DEVELOPER, game->developer());
 			item_game->setText(CLMN_YEAR, game->yearString());
 			item_game->setRating(CLMN_RATING, game->rating());
+			item_game->setToolTipEverywhere(game->summaryString());
 			item_game->setId(game->id());
 		}
 	}
@@ -124,10 +124,10 @@ void Games::WidgetDataList::showByYears(const DataList& data_list)
 		for (const auto game : games) {
 			auto item_game = new Base::WidgetTreeItem(item_year);
 			item_game->setText(CLMN_TITLE, game->title());
-			item_game->setToolTip(CLMN_TITLE, game->summaryString());
 			item_game->setText(CLMN_DEVELOPER, game->developer());
 			item_game->setText(CLMN_GENRE, game->genre());
 			item_game->setRating(CLMN_RATING, game->rating());
+			item_game->setToolTipEverywhere(game->summaryString());
 			item_game->setId(game->id());
 		}
 	}
@@ -151,11 +151,11 @@ void Games::WidgetDataList::showByDecades(const DataList& data_list)
 		for (const auto game : games) {
 			auto item_game = new Base::WidgetTreeItem(item_decade);
 			item_game->setText(CLMN_TITLE, game->title());
-			item_game->setToolTip(CLMN_TITLE, game->summaryString());
 			item_game->setText(CLMN_DEVELOPER, game->developer());
 			item_game->setText(CLMN_GENRE, game->genre());
 			item_game->setText(CLMN_YEAR, game->yearString());
 			item_game->setRating(CLMN_RATING, game->rating());
+			item_game->setToolTipEverywhere(game->summaryString());
 			item_game->setId(game->id());
 		}
 	}
@@ -179,10 +179,10 @@ void Games::WidgetDataList::showByRatings(const DataList& data_list)
 		for (const auto game : games) {
 			auto item_game = new Base::WidgetTreeItem(item_rating);
 			item_game->setText(CLMN_TITLE, game->title());
-			item_game->setToolTip(CLMN_TITLE, game->summaryString());
 			item_game->setText(CLMN_DEVELOPER, game->developer());
 			item_game->setText(CLMN_GENRE, game->genre());
 			item_game->setText(CLMN_YEAR, game->yearString());
+			item_game->setToolTipEverywhere(game->summaryString());
 			item_game->setId(game->id());
 		}
 	}
@@ -198,11 +198,11 @@ void Games::WidgetDataList::showSimple(const DataList& data_list)
 	for (const auto& game : data_list) {
 		auto item_game = new Base::WidgetTreeItem(this);
 		item_game->setText(CLMN_TITLE, game.title());
-		item_game->setToolTip(CLMN_TITLE, game.summaryString());
 		item_game->setText(CLMN_DEVELOPER, game.developer());
 		item_game->setText(CLMN_GENRE, game.genre());
 		item_game->setText(CLMN_YEAR, game.yearString());
 		item_game->setRating(CLMN_RATING, game.rating());
+		item_game->setToolTipEverywhere(game.summaryString());
 		item_game->setId(game.id());
 	}
 }

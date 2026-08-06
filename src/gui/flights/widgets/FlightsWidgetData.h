@@ -10,6 +10,7 @@ class QLineEdit;
 namespace Base
 {
 class ComboEdit;
+class WidgetDateEdit;
 }
 
 namespace Flights
@@ -40,7 +41,7 @@ private slots:
 	void airportChanged(size_t point, const QString& airport);
 
 private:
-	QLineEdit* _edit_date = nullptr;
+	Base::WidgetDateEdit* _edit_date = nullptr;
 	struct FlightPoint
 	{
 		Base::ComboEdit* combo_country = nullptr;

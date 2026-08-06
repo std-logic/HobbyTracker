@@ -22,8 +22,6 @@ public:
 	uint32_t rating() const;
 	bool isValid() const;
 
-signals:
-
 private:
 	void initWidgets();
 

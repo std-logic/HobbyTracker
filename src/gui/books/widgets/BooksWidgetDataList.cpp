@@ -42,10 +42,10 @@ void Books::WidgetDataList::showByAuthors(const DataList& data_list)
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_author);
 			item_book->setText(CLMN_TITLE, book->title());
-			item_book->setToolTip(CLMN_TITLE, book->summaryString());
 			item_book->setText(CLMN_GENRE, book->genre());
 			item_book->setText(CLMN_YEAR, book->yearString());
 			item_book->setRating(CLMN_RATING, book->rating());
+			item_book->setToolTipEverywhere(book->summaryString());
 			item_book->setId(book->id());
 		}
 	}
@@ -69,9 +69,9 @@ void Books::WidgetDataList::showByGenres(const DataList& data_list)
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_genre);
 			item_book->setText(CLMN_TITLE, book->autorAndTitle());
-			item_book->setToolTip(CLMN_TITLE, book->summaryString());
 			item_book->setText(CLMN_YEAR, book->yearString());
 			item_book->setRating(CLMN_RATING, book->rating());
+			item_book->setToolTipEverywhere(book->summaryString());
 			item_book->setId(book->id());
 		}
 	}
@@ -95,10 +95,10 @@ void Books::WidgetDataList::showByDecades(const DataList& data_list)
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_decade);
 			item_book->setText(CLMN_TITLE, book->autorAndTitle());
-			item_book->setToolTip(CLMN_TITLE, book->summaryString());
 			item_book->setText(CLMN_GENRE, book->genre());
 			item_book->setText(CLMN_YEAR, book->yearString());
 			item_book->setRating(CLMN_RATING, book->rating());
+			item_book->setToolTipEverywhere(book->summaryString());
 			item_book->setId(book->id());
 		}
 	}
@@ -122,10 +122,10 @@ void Books::WidgetDataList::showByCenturies(const DataList& data_list)
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_century);
 			item_book->setText(CLMN_TITLE, book->autorAndTitle());
-			item_book->setToolTip(CLMN_TITLE, book->summaryString());
 			item_book->setText(CLMN_GENRE, book->genre());
 			item_book->setText(CLMN_YEAR, book->yearString());
 			item_book->setRating(CLMN_RATING, book->rating());
+			item_book->setToolTipEverywhere(book->summaryString());
 			item_book->setId(book->id());
 		}
 	}
@@ -149,9 +149,9 @@ void Books::WidgetDataList::showByRatings(const DataList& data_list)
 		for (const auto book : books) {
 			auto item_book = new Base::WidgetTreeItem(item_rating);
 			item_book->setText(CLMN_TITLE, book->autorAndTitle());
-			item_book->setToolTip(CLMN_TITLE, book->summaryString());
 			item_book->setText(CLMN_GENRE, book->genre());
 			item_book->setText(CLMN_YEAR, book->yearString());
+			item_book->setToolTipEverywhere(book->summaryString());
 			item_book->setId(book->id());
 		}
 	}
@@ -167,10 +167,10 @@ void Books::WidgetDataList::showSimple(const DataList& data_list)
 	for (const auto& book : data_list) {
 		auto item_book = new Base::WidgetTreeItem(this);
 		item_book->setText(CLMN_TITLE, book.autorAndTitle());
-		item_book->setToolTip(CLMN_TITLE, book.summaryString());
 		item_book->setText(CLMN_GENRE, book.genre());
 		item_book->setText(CLMN_YEAR, book.yearString());
 		item_book->setRating(CLMN_RATING, book.rating());
+		item_book->setToolTipEverywhere(book.summaryString());
 		item_book->setId(book.id());
 	}
 }

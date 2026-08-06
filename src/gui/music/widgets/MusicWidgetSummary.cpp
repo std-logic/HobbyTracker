@@ -33,7 +33,7 @@ void Music::WidgetSummary::initWidgets()
 	addWidget(tr("Активно:"), _label_actives_num);
 	addWidget(tr("Жанров:"), _label_genres_num);
 	addWidget(tr("Стран:"), _label_countries_num);
-	addWidget(tr("Годы:"), _label_years);
+	addWidget(tr("Годы:"), _label_years, 0);
 
 	addStretch();
 }

@@ -1,6 +1,7 @@
 #include "TrekkingWidgetData.h"
 
 #include <gui/base/widgets/BaseComboEdit.h>
+#include <gui/base/widgets/BaseWidgetDateEdit.h>
 
 #include <QLineEdit>
 #include <QValidator>
@@ -30,10 +31,8 @@ void Trekking::WidgetData::initCommonParams()
 void Trekking::WidgetData::initWidgets()
 {
 	add(tr("Старт:"), _edit_date_start);
-	_edit_date_start->setPlaceholderText(tr("YYYY.MM.DD"));
 
 	add(tr("Финиш:"), _edit_date_end);
-	_edit_date_end->setPlaceholderText(tr("YYYY.MM.DD"));
 
 	add(tr("Ночёвок:"), _edit_time);
 	_edit_time->setValidator(new QIntValidator(0, 1000, _edit_time));
@@ -75,13 +74,13 @@ void Trekking::WidgetData::copyDataToGui()
 
 bool Trekking::WidgetData::copyGuiToData()
 {
-	if (_edit_date_start->text().isEmpty()) {
+	if (!_edit_date_start->isValid()) {
 		emit showMessage(tr("Не введена дата старта!"));
 		return false;
 	}
 	_data.setDateStart(_edit_date_start->text());
 
-	if (_edit_date_end->text().isEmpty()) {
+	if (!_edit_date_end->isValid()) {
 		emit showMessage(tr("Не введена дата финиша!"));
 		return false;
 	}

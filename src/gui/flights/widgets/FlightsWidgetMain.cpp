@@ -11,8 +11,6 @@
 #include <storage/Storage.h>
 #include <storage/csv/CsvData.h>
 
-#include <QMessageBox>
-
 Flights::WidgetMain::WidgetMain(QWidget* parent)
 	: Base::WidgetMain{parent}
 {
@@ -31,11 +29,8 @@ void Flights::WidgetMain::start()
 void Flights::WidgetMain::initWidgets()
 {
 	addWidget(_widget_control = new WidgetControl(this), 0, Qt::AlignTop);
-
 	addWidget(_widget_summary = new WidgetSummary(this), 1, Qt::AlignTop);
-
 	addWidget(_widget_data_list = new WidgetDataList(this), 100);
-
 	addWidget(_widget_chart = new WidgetChart(this), 100);
 }
 
@@ -138,24 +133,16 @@ void Flights::WidgetMain::showData(size_t index)
 
 void Flights::WidgetMain::saveData(size_t index, const Data& data)
 {
-	if (index < _data_list.size()) {
-		if (_data_list[index] == data) { return; }
-		_data_list[index] = data;
-	} else {
-		_data_list.add(data);
+	if (_data_list.set(index, data)) {
+		updateAll();
+		_widget_control->highlightButtonSave(true);
 	}
-
-	updateAll();
-	_widget_control->highlightButtonSave(true);
 }
 
 void Flights::WidgetMain::deleteData(const QString& id)
 {
 	if (auto i = _data_list.findIndexById(id); i >= 0) {
-		auto ans = QMessageBox::question(this, tr("Удаление данных"),
-			tr("Удалить полёт за %1?").arg(_data_list[i].date()));
-
-		if (ans == QMessageBox::Yes) {
+		if (askDel(tr("Удалить полёт за %1?").arg(_data_list[i].date()))) {
 			_data_list.del(i);
 			updateAll();
 			_widget_control->highlightButtonSave(true);

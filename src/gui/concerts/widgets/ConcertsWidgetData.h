@@ -9,6 +9,7 @@ class QLineEdit;
 namespace Base
 {
 class ComboEdit;
+class WidgetDateEdit;
 }
 
 namespace Concerts
@@ -38,7 +39,7 @@ private slots:
 	void cityChanged(const QString& city);
 
 private:
-	QLineEdit* _edit_date = nullptr;
+	Base::WidgetDateEdit* _edit_date = nullptr;
 	QLineEdit* _edit_artists = nullptr;
 	Base::ComboEdit* _combo_description = nullptr;
 	Base::ComboEdit* _combo_country = nullptr;

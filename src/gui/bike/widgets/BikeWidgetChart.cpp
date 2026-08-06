@@ -21,18 +21,18 @@ void Bike::WidgetChart::update(const DataList& data_list, const TripList& trip_l
 
 void Bike::WidgetChart::showByDist(const DataList& data_list)
 {
-	chart()->setTitle(tr("Километров по годам"));
+	chart()->setTitle(tr("Распределение километров по годам"));
 	updateBars(data_list.distByYears());
 }
 
 void Bike::WidgetChart::showByTime(const DataList& data_list)
 {
-	chart()->setTitle(tr("Часов по годам"));
+	chart()->setTitle(tr("Распределение часов по годам"));
 	updateBars(data_list.timeByYears());
 }
 
 void Bike::WidgetChart::showByTrips(const TripList& trip_list)
 {
-	chart()->setTitle(tr("Велопоходов по годам"));
+	chart()->setTitle(tr("Распределение велопоходов по годам"));
 	updateBars(trip_list.numbersByYears(1, TripList::RangeTypes::Linear));
 }

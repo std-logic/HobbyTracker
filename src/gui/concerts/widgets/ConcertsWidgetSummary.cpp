@@ -35,7 +35,7 @@ void Concerts::WidgetSummary::initWidgets()
 	addWidget(tr("Городов:"), _label_cities_num);
 	addWidget(tr("Мест:"), _label_places_num);
 	addWidget(tr("Групп:"), _label_artists_num);
-	addWidget(tr("Концертов:"), _label_concerts_num);
+	addWidget(tr("Концертов:"), _label_concerts_num, 0);
 
 	addStretch();
 }

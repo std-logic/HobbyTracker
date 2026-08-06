@@ -30,6 +30,7 @@ void Bike::WidgetSummary::update(const DataList& data_list, const TripList& trip
 	_label_trips_num->setText(QString::number(trip_summary.trips_num));
 	_label_trips_total_time->setText(QString::number(trip_summary.total_time));
 	_label_trips_total_dist->setText(QString::number(trip_summary.total_dist));
+	_label_countries_num->setText(QString::number(trip_summary.countries_num));
 }
 
 void Bike::WidgetSummary::initWidgets()
@@ -40,6 +41,7 @@ void Bike::WidgetSummary::initWidgets()
 	addWidget(tr("Велопоходов:"), _label_trips_num);
 	addWidget(tr("Ночёвок:"), _label_trips_total_time);
 	addWidget(tr("Километров:"), _label_trips_total_dist);
+	addWidget(tr("Стран:"), _label_countries_num, 0);
 
 	addStretch();
 }

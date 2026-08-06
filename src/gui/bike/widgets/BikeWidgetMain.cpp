@@ -14,8 +14,6 @@
 #include <storage/Storage.h>
 #include <storage/csv/CsvData.h>
 
-#include <QMessageBox>
-
 Bike::WidgetMain::WidgetMain(QWidget* parent)
 	: Base::WidgetMain{parent}
 {
@@ -34,13 +32,9 @@ void Bike::WidgetMain::start()
 void Bike::WidgetMain::initWidgets()
 {
 	addWidget(_widget_control = new WidgetControl(this), 0, Qt::AlignTop);
-
 	addWidget(_widget_summary = new WidgetSummary(this), 1, Qt::AlignTop);
-
 	addWidget(_widget_data_list = new WidgetDataList(this), 100);
-
 	addWidget(_widget_trip_list = new WidgetTripList(this), 100);
-
 	addWidget(_widget_chart = new WidgetChart(this), 100);
 }
 
@@ -157,24 +151,16 @@ void Bike::WidgetMain::showData(size_t index)
 
 void Bike::WidgetMain::saveData(size_t index, const Data& data)
 {
-	if (index < _data_list.size()) {
-		if (_data_list[index] == data) { return; }
-		_data_list[index] = data;
-	} else {
-		_data_list.add(data);
+	if (_data_list.set(index, data)) {
+		updateDependentOnData();
+		_widget_control->highlightButtonSave(true);
 	}
-
-	updateDependentOnData();
-	_widget_control->highlightButtonSave(true);
 }
 
 void Bike::WidgetMain::deleteData(const QString& id)
 {
 	if (auto i = _data_list.findIndexById(id); i >= 0) {
-		auto ans = QMessageBox::question(this, tr("Удаление данных"),
-			tr("Удалить данные за %1-й год?").arg(_data_list[i].year()));
-
-		if (ans == QMessageBox::Yes) {
+		if (askDel(tr("Удалить данные за %1-й год?").arg(_data_list[i].year()))) {
 			_data_list.del(i);
 			updateDependentOnData();
 			_widget_control->highlightButtonSave(true);
@@ -208,24 +194,16 @@ void Bike::WidgetMain::showTrip(size_t index)
 
 void Bike::WidgetMain::saveTrip(size_t index, const Trip& trip)
 {
-	if (index < _trip_list.size()) {
-		if (_trip_list[index] == trip) { return; }
-		_trip_list[index] = trip;
-	} else {
-		_trip_list.add(trip);
+	if (_trip_list.set(index, trip)) {
+		updateDependentOnTrip();
+		_widget_control->highlightButtonSave(true);
 	}
-
-	updateDependentOnTrip();
-	_widget_control->highlightButtonSave(true);
 }
 
 void Bike::WidgetMain::deleteTrip(const QString& id)
 {
 	if (auto i = _trip_list.findIndexById(id); i >= 0) {
-		auto ans = QMessageBox::question(this, tr("Удаление данных"),
-			tr("Удалить велопоход за %1?").arg(_trip_list[i].dates()));
-
-		if (ans == QMessageBox::Yes) {
+		if (askDel(tr("Удалить велопоход за %1?").arg(_trip_list[i].dates()))) {
 			_trip_list.del(i);
 			updateDependentOnTrip();
 			_widget_control->highlightButtonSave(true);

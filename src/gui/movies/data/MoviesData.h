@@ -59,7 +59,7 @@ public:
 	inline QStringList genres() const
 	{ return _genres; }
 	inline QString genresToString(const QString& delimiter = ", ") const
-	{ return Helper::stringListToString(_genres, delimiter); }
+	{ return _genres.join(delimiter); }
 
 	template<typename T>
 	inline void setCountries(T&& countries)
@@ -69,7 +69,7 @@ public:
 	inline QStringList countries() const
 	{ return _countries; }
 	inline QString countriesToString(const QString& delimiter = ", ") const
-	{ return Helper::stringListToString(_countries, delimiter); }
+	{ return _countries.join(delimiter); }
 
 	template<typename T>
 	inline void setDirectors(T&& directors)
@@ -79,7 +79,7 @@ public:
 	inline QStringList directors() const
 	{ return _directors; }
 	inline QString directorsToString(const QString& delimiter = ", ") const
-	{ return Helper::stringListToString(_directors, delimiter); }
+	{ return _directors.join(delimiter); }
 
 	template<typename T>
 	inline void setWriters(T&& writers)
@@ -89,7 +89,7 @@ public:
 	inline QStringList writers() const
 	{ return _writers; }
 	inline QString writersToString(const QString& delimiter = ", ") const
-	{ return Helper::stringListToString(_writers, delimiter); }
+	{ return _writers.join(delimiter); }
 
 	template<typename T>
 	inline void setActors(T&& actors)
@@ -99,7 +99,7 @@ public:
 	inline QStringList actors() const
 	{ return _actors; }
 	inline QString actorsToString(const QString& delimiter = ", ") const
-	{ return Helper::stringListToString(_actors, delimiter); }
+	{ return _actors.join(delimiter); }
 
 	inline void setTime(uint32_t time)
 	{ _time = time; }

@@ -14,6 +14,6 @@ void Flights::WidgetChart::update(const DataList& data_list)
 
 void Flights::WidgetChart::showByYears(const DataList& data_list)
 {
-	chart()->setTitle(tr("Полётов по годам"));
+	chart()->setTitle(tr("Распределение полётов по годам"));
 	updateBars(data_list.numbersByYears(1, DataList::RangeTypes::Linear));
 }

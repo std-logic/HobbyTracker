@@ -9,6 +9,7 @@ class QLineEdit;
 namespace Base
 {
 class ComboEdit;
+class WidgetDateEdit;
 }
 
 namespace Trekking
@@ -36,8 +37,8 @@ private slots:
 	void save() override;
 
 private:
-	QLineEdit* _edit_date_start = nullptr;
-	QLineEdit* _edit_date_end = nullptr;
+	Base::WidgetDateEdit* _edit_date_start = nullptr;
+	Base::WidgetDateEdit* _edit_date_end = nullptr;
 	QLineEdit* _edit_time = nullptr;
 	QLineEdit* _edit_dist = nullptr;
 	QLineEdit* _edit_peak = nullptr;

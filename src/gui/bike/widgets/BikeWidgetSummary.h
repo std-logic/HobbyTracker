@@ -30,6 +30,7 @@ private:
 	QLabel* _label_trips_num = nullptr;
 	QLabel* _label_trips_total_time = nullptr;
 	QLabel* _label_trips_total_dist = nullptr;
+	QLabel* _label_countries_num = nullptr;
 };
 
 } // namespace Bike

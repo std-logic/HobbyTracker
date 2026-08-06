@@ -1,6 +1,7 @@
 #include "ConcertsWidgetData.h"
 
 #include <gui/base/widgets/BaseComboEdit.h>
+#include <gui/base/widgets/BaseWidgetDateEdit.h>
 
 #include <QLineEdit>
 
@@ -35,7 +36,6 @@ void Concerts::WidgetData::initCommonParams()
 void Concerts::WidgetData::initWidgets()
 {
 	add(tr("Дата:"), _edit_date);
-	_edit_date->setPlaceholderText(tr("YYYY.MM.DD"));
 
 	add(tr("Группы:"), _edit_artists);
 	_edit_artists->setPlaceholderText(tr("Список через запятую"));
@@ -73,7 +73,7 @@ void Concerts::WidgetData::copyDataToGui()
 
 bool Concerts::WidgetData::copyGuiToData()
 {
-	if (_edit_date->text().isEmpty()) {
+	if (!_edit_date->isValid()) {
 		emit showMessage(tr("Не введена дата!"));
 		return false;
 	}

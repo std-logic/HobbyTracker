@@ -33,7 +33,7 @@ void Books::WidgetSummary::initWidgets()
 	addWidget(tr("Произведений:"), _label_books_num);
 	addWidget(tr("Жанров:"), _label_genres_num);
 	addWidget(tr("Годы:"), _label_years);
-	addWidget(tr("Средняя оценка:"), _label_rating);
+	addWidget(tr("Оценки:"), _label_rating, 0);
 
 	addStretch();
 }

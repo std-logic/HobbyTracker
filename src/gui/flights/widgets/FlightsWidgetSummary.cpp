@@ -39,7 +39,7 @@ void Flights::WidgetSummary::initWidgets()
 	addWidget(tr("Полётов:"), _label_flights_num, 0);
 	addWidget(tr("Внутренних:"), _label_local_num, 0);
 	addWidget(tr("Международных:"), _label_international_num);
-	addWidget(tr("Километров:"), _label_dist);
+	addWidget(tr("Километров:"), _label_dist, 0);
 
 	addStretch();
 }

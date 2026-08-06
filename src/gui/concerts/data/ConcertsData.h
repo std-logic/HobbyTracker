@@ -37,7 +37,7 @@ public:
 	inline QStringList artists() const
 	{ return _artists; }
 	inline QString artistsToString(const QString& delimiter = ", ") const
-	{ return Helper::stringListToString(_artists, delimiter); }
+	{ return _artists.join(delimiter); }
 
 	template<typename T>
 	inline void setDescription(T&& description)

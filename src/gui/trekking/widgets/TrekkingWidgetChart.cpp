@@ -14,6 +14,6 @@ void Trekking::WidgetChart::update(const DataList& data_list)
 
 void Trekking::WidgetChart::showByYears(const DataList& data_list)
 {
-	chart()->setTitle(tr("Походов по годам"));
+	chart()->setTitle(tr("Распределение походов по годам"));
 	updateBars(data_list.numbersByYears(1, DataList::RangeTypes::Linear));
 }

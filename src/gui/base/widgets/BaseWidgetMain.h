@@ -23,6 +23,10 @@ protected:
 	void addWidget(QWidget* widget, int stretch = 0, Qt::Alignment alignment = Qt::Alignment());
 	void addStretch(int stretch = 0);
 
+	bool ask(const QString& title, const QString& text);
+	inline bool askDel(const QString& text)
+	{ return ask(tr("Удаление данных"), text); }
+
 private:
 	QVBoxLayout* _layout_main = nullptr;
 };

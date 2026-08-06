@@ -16,8 +16,6 @@
 #include <storage/Storage.h>
 #include <storage/csv/CsvData.h>
 
-#include <QMessageBox>
-
 Movies::WidgetMain::WidgetMain(QWidget* parent)
 	: Base::WidgetMain{parent}
 {
@@ -36,13 +34,9 @@ void Movies::WidgetMain::start()
 void Movies::WidgetMain::initWidgets()
 {
 	addWidget(_widget_control = new WidgetControl(this), 0, Qt::AlignTop);
-
 	addWidget(_widget_summary = new WidgetSummary(this), 1, Qt::AlignTop);
-
 	addWidget(_widget_data_list = new WidgetDataList(this), 100);
-
 	addWidget(_widget_extra_list = new Base::WidgetExtraList(this), 100);
-
 	addWidget(_widget_chart = new WidgetChart(this), 100);
 }
 
@@ -190,24 +184,16 @@ void Movies::WidgetMain::showData(size_t index)
 
 void Movies::WidgetMain::saveData(size_t index, const Data& data)
 {
-	if (index < _data_list.size()) {
-		if (_data_list[index] == data) { return; }
-		_data_list[index] = data;
-	} else {
-		_data_list.add(data);
+	if (_data_list.set(index, data)) {
+		updateDependentOnData();
+		_widget_control->highlightButtonSave(true);
 	}
-
-	updateDependentOnData();
-	_widget_control->highlightButtonSave(true);
 }
 
 void Movies::WidgetMain::deleteData(const QString& id)
 {
 	if (auto i = _data_list.findIndexById(id); i >= 0) {
-		auto ans = QMessageBox::question(this, tr("Удаление данных"),
-			tr("Удалить \"%1\"?").arg(_data_list[i].title()));
-
-		if (ans == QMessageBox::Yes) {
+		if (askDel(tr("Удалить \"%1\"?").arg(_data_list[i].title()))) {
 			_data_list.del(i);
 			updateDependentOnData();
 			_widget_control->highlightButtonSave(true);
@@ -241,24 +227,16 @@ void Movies::WidgetMain::showExtra(size_t index)
 
 void Movies::WidgetMain::saveExtra(size_t index, const Base::Extra& extra)
 {
-	if (index < _extra_list.size()) {
-		if (_extra_list[index] == extra) { return; }
-		_extra_list[index] = extra;
-	} else {
-		_extra_list.add(extra);
+	if (_extra_list.set(index, extra)) {
+		updateExtraList();
+		_widget_control->highlightButtonSave(true);
 	}
-
-	updateExtraList();
-	_widget_control->highlightButtonSave(true);
 }
 
 void Movies::WidgetMain::deleteExtra(const QString& id)
 {
 	if (auto i = _extra_list.findIndexById(id); i >= 0) {
-		auto ans = QMessageBox::question(this, tr("Удаление данных"),
-			tr("Удалить запись \"%1\"?").arg(_extra_list[i].title()));
-
-		if (ans == QMessageBox::Yes) {
+		if (askDel(tr("Удалить запись \"%1\"?").arg(_extra_list[i].title()))) {
 			_extra_list.del(i);
 			updateExtraList();
 			_widget_control->highlightButtonSave(true);

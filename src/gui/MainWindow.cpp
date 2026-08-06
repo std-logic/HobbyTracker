@@ -59,33 +59,20 @@ void MainWindow::initStatusBar()
 void MainWindow::initCentralWidget()
 {
 	auto central_widget = new QTabWidget(this);
+	auto addTab = [this, central_widget](Base::WidgetMain* page, const QString& label) {
+		central_widget->addTab(page, label);
+		connect(page, &Base::WidgetMain::showMessage, this, &MainWindow::showMessage);
+	};
 
-	central_widget->addTab(_music = new Music::WidgetMain, Music::WidgetMain::getName());
-	connect(_music, &Music::WidgetMain::showMessage, this, &MainWindow::showMessage);
-
-	central_widget->addTab(_player = new Player::WidgetMain, Player::WidgetMain::getName());
-	connect(_player, &Player::WidgetMain::showMessage, this, &MainWindow::showMessage);
-
-	central_widget->addTab(_concerts = new Concerts::WidgetMain, Concerts::WidgetMain::getName());
-	connect(_concerts, &Concerts::WidgetMain::showMessage, this, &MainWindow::showMessage);
-
-	central_widget->addTab(_movies = new Movies::WidgetMain, Movies::WidgetMain::getName());
-	connect(_movies, &Movies::WidgetMain::showMessage, this, &MainWindow::showMessage);
-
-	central_widget->addTab(_books = new Books::WidgetMain, Books::WidgetMain::getName());
-	connect(_books, &Books::WidgetMain::showMessage, this, &MainWindow::showMessage);
-
-	central_widget->addTab(_games = new Games::WidgetMain, Games::WidgetMain::getName());
-	connect(_games, &Games::WidgetMain::showMessage, this, &MainWindow::showMessage);
-
-	central_widget->addTab(_bike = new Bike::WidgetMain, Bike::WidgetMain::getName());
-	connect(_bike, &Bike::WidgetMain::showMessage, this, &MainWindow::showMessage);
-
-	central_widget->addTab(_trekking = new Trekking::WidgetMain, Trekking::WidgetMain::getName());
-	connect(_trekking, &Trekking::WidgetMain::showMessage, this, &MainWindow::showMessage);
-
-	central_widget->addTab(_flights = new Flights::WidgetMain, Flights::WidgetMain::getName());
-	connect(_flights, &Flights::WidgetMain::showMessage, this, &MainWindow::showMessage);
+	addTab(_music = new Music::WidgetMain, Music::WidgetMain::getName());
+	addTab(_player = new Player::WidgetMain, Player::WidgetMain::getName());
+	addTab(_concerts = new Concerts::WidgetMain, Concerts::WidgetMain::getName());
+	addTab(_movies = new Movies::WidgetMain, Movies::WidgetMain::getName());
+	addTab(_books = new Books::WidgetMain, Books::WidgetMain::getName());
+	addTab(_games = new Games::WidgetMain, Games::WidgetMain::getName());
+	addTab(_bike = new Bike::WidgetMain, Bike::WidgetMain::getName());
+	addTab(_trekking = new Trekking::WidgetMain, Trekking::WidgetMain::getName());
+	addTab(_flights = new Flights::WidgetMain, Flights::WidgetMain::getName());
 
 	setCentralWidget(central_widget);
 }

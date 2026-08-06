@@ -25,11 +25,8 @@ void Player::WidgetMain::start()
 void Player::WidgetMain::initWidgets()
 {
 	addWidget(_widget_control = new WidgetControl(this), 0, Qt::AlignTop);
-
 	addWidget(_widget_summary = new WidgetSummary(this), 1, Qt::AlignTop);
-
 	addWidget(_widget_data_list = new WidgetDataList(this), 100);
-
 	addWidget(_widget_chart = new WidgetChart(this), 100);
 }
 

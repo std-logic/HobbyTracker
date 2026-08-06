@@ -1,5 +1,7 @@
 #include "BikeWidgetTrip.h"
 
+#include <gui/base/widgets/BaseWidgetDateEdit.h>
+
 #include <QLineEdit>
 #include <QValidator>
 
@@ -28,10 +30,8 @@ void Bike::WidgetTrip::initCommonParams()
 void Bike::WidgetTrip::initWidgets()
 {
 	add(tr("Старт:"), _edit_date_start);
-	_edit_date_start->setPlaceholderText(tr("YYYY.MM.DD"));
 
 	add(tr("Финиш:"), _edit_date_end);
-	_edit_date_end->setPlaceholderText(tr("YYYY.MM.DD"));
 
 	add(tr("Ночёвок:"), _edit_time);
 	_edit_time->setValidator(new QIntValidator(0, 10000, _edit_time));
@@ -65,13 +65,13 @@ void Bike::WidgetTrip::copyDataToGui()
 
 bool Bike::WidgetTrip::copyGuiToData()
 {
-	if (_edit_date_start->text().isEmpty()) {
+	if (!_edit_date_start->isValid()) {
 		emit showMessage(tr("Не введена дата старта!"));
 		return false;
 	}
 	_data.setDateStart(_edit_date_start->text());
 
-	if (_edit_date_end->text().isEmpty()) {
+	if (!_edit_date_end->isValid()) {
 		emit showMessage(tr("Не введена дата финиша!"));
 		return false;
 	}

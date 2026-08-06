@@ -1,6 +1,7 @@
 #include "FlightsWidgetData.h"
 
 #include <gui/base/widgets/BaseComboEdit.h>
+#include <gui/base/widgets/BaseWidgetDateEdit.h>
 
 #include <QLineEdit>
 #include <QGroupBox>
@@ -45,7 +46,6 @@ void Flights::WidgetData::initCommonParams()
 void Flights::WidgetData::initWidgets()
 {
 	add(tr("Дата:"), _edit_date);
-	_edit_date->setPlaceholderText(tr("YYYY.MM.DD"));
 
 	auto layout_head = new QHBoxLayout();
 	layout_head->setContentsMargins(0, 0, 0, 0);
@@ -117,7 +117,7 @@ void Flights::WidgetData::copyDataToGui()
 
 bool Flights::WidgetData::copyGuiToData()
 {
-	if (_edit_date->text().isEmpty()) {
+	if (!_edit_date->isValid()) {
 		emit showMessage(tr("Не введена дата!"));
 		return false;
 	}

@@ -66,7 +66,7 @@ public:
 	inline QStringList countries() const
 	{ return _countries; }
 	inline QString countriesToString(const QString& delimiter = ", ") const
-	{ return Helper::stringListToString(_countries, delimiter); }
+	{ return _countries.join(delimiter); }
 
 	template<typename T>
 	inline void setPlaces(T&& places)
