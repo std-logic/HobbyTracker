@@ -15,6 +15,7 @@ enum class ChartViewModes
 {
 	ByDecades,
 	ByCenturies,
+	ByDiameters,
 };
 
 enum CsvFiles

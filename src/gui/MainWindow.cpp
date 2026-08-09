@@ -68,11 +68,11 @@ void MainWindow::initCentralWidget()
 
 	addTab(_music = new Music::WidgetMain, Music::WidgetMain::getName());
 	addTab(_player = new Player::WidgetMain, Player::WidgetMain::getName());
-	addTab(_concerts = new Concerts::WidgetMain, Concerts::WidgetMain::getName());
 	addTab(_movies = new Movies::WidgetMain, Movies::WidgetMain::getName());
 	addTab(_books = new Books::WidgetMain, Books::WidgetMain::getName());
 	addTab(_games = new Games::WidgetMain, Games::WidgetMain::getName());
 	addTab(_coins = new Coins::WidgetMain, Coins::WidgetMain::getName());
+	addTab(_concerts = new Concerts::WidgetMain, Concerts::WidgetMain::getName());
 	addTab(_bike = new Bike::WidgetMain, Bike::WidgetMain::getName());
 	addTab(_trekking = new Trekking::WidgetMain, Trekking::WidgetMain::getName());
 	addTab(_flights = new Flights::WidgetMain, Flights::WidgetMain::getName());

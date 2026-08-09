@@ -21,6 +21,7 @@ signals:
 private:
 	void showByDecades(const DataList& data_list);
 	void showByCenturies(const DataList& data_list);
+	void showByDiameters(const DataList& data_list);
 };
 
 } // namespace Coins

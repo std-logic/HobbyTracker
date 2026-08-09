@@ -117,3 +117,10 @@ Coins::DataList::NumbersByStrings Coins::DataList::numbersByYears(uint32_t step,
 			[](const Data& data) { return data.year(); },
 			[](uint32_t val, uint32_t step) { return Helper::epochString(val, step); });
 }
+
+Coins::DataList::NumbersByStrings Coins::DataList::numbersByDiameters() const
+{
+	return numbersInRange(1, RangeTypes::Linear, 0, 0,
+			[](const Data& data) { return data.diameterRounded(); },
+			[](uint32_t val, uint32_t /*step*/) { return QString::number(val); });
+}

@@ -13,6 +13,7 @@ void Coins::WidgetChart::update(const DataList& data_list)
 	switch (static_cast<ChartViewModes>(_view_mode)) {
 		case ChartViewModes::ByDecades:		showByDecades(data_list);		break;
 		case ChartViewModes::ByCenturies:	showByCenturies(data_list);		break;
+		case ChartViewModes::ByDiameters:	showByDiameters(data_list);		break;
 		default: return;
 	}
 }
@@ -27,4 +28,10 @@ void Coins::WidgetChart::showByCenturies(const DataList& data_list)
 {
 	chart()->setTitle(tr("Распределение по столетиям"));
 	updateBars(data_list.numbersByYears(100, DataList::RangeTypes::Linear));
+}
+
+void Coins::WidgetChart::showByDiameters(const DataList& data_list)
+{
+	chart()->setTitle(tr("Распределение по диаметрам"));
+	updateBars(data_list.numbersByDiameters());
 }

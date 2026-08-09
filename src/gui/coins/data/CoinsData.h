@@ -78,6 +78,8 @@ public:
 	{ _diameter = std::forward<T>(diameter); }
 	inline QString diameter() const
 	{ return _diameter; }
+	inline uint32_t diameterRounded() const
+	{ return qRound(_diameter.toDouble()); }
 
 	inline void setYear(uint32_t year)
 	{ _year = year;}
