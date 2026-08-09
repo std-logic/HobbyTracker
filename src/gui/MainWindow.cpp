@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "bike/widgets/BikeWidgetMain.h"
 #include "books/widgets/BooksWidgetMain.h"
+#include "coins/widgets/CoinsWidgetMain.h"
 #include "concerts/widgets/ConcertsWidgetMain.h"
 #include "flights/widgets/FlightsWidgetMain.h"
 #include "games/widgets/GamesWidgetMain.h"
@@ -30,6 +31,7 @@ void MainWindow::start()
 
 	_bike->start();
 	_books->start();
+	_coins->start();
 	_concerts->start();
 	_flights->start();
 	_games->start();
@@ -70,6 +72,7 @@ void MainWindow::initCentralWidget()
 	addTab(_movies = new Movies::WidgetMain, Movies::WidgetMain::getName());
 	addTab(_books = new Books::WidgetMain, Books::WidgetMain::getName());
 	addTab(_games = new Games::WidgetMain, Games::WidgetMain::getName());
+	addTab(_coins = new Coins::WidgetMain, Coins::WidgetMain::getName());
 	addTab(_bike = new Bike::WidgetMain, Bike::WidgetMain::getName());
 	addTab(_trekking = new Trekking::WidgetMain, Trekking::WidgetMain::getName());
 	addTab(_flights = new Flights::WidgetMain, Flights::WidgetMain::getName());

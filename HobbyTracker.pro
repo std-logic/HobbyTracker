@@ -76,6 +76,16 @@ SOURCES += \
 	src/gui/books/widgets/BooksWidgetMain.cpp \
 	src/gui/books/widgets/BooksWidgetSettings.cpp \
 	src/gui/books/widgets/BooksWidgetSummary.cpp \
+	src/gui/coins/data/CoinsDataConverter.cpp \
+	src/gui/coins/data/CoinsDataList.cpp \
+	src/gui/coins/data/CoinsSettings.cpp \
+	src/gui/coins/widgets/CoinsWidgetChart.cpp \
+	src/gui/coins/widgets/CoinsWidgetControl.cpp \
+	src/gui/coins/widgets/CoinsWidgetData.cpp \
+	src/gui/coins/widgets/CoinsWidgetDataList.cpp \
+	src/gui/coins/widgets/CoinsWidgetMain.cpp \
+	src/gui/coins/widgets/CoinsWidgetSettings.cpp \
+	src/gui/coins/widgets/CoinsWidgetSummary.cpp \
 	src/gui/concerts/data/ConcertsDataConverter.cpp \
 	src/gui/concerts/data/ConcertsDataList.cpp \
 	src/gui/concerts/data/ConcertsSettings.cpp \
@@ -213,6 +223,18 @@ HEADERS += \
 	src/gui/books/widgets/BooksWidgetMain.h \
 	src/gui/books/widgets/BooksWidgetSettings.h \
 	src/gui/books/widgets/BooksWidgetSummary.h \
+	src/gui/coins/common/CoinsCommon.h \
+	src/gui/coins/data/CoinsData.h \
+	src/gui/coins/data/CoinsDataConverter.h \
+	src/gui/coins/data/CoinsDataList.h \
+	src/gui/coins/data/CoinsSettings.h \
+	src/gui/coins/widgets/CoinsWidgetChart.h \
+	src/gui/coins/widgets/CoinsWidgetControl.h \
+	src/gui/coins/widgets/CoinsWidgetData.h \
+	src/gui/coins/widgets/CoinsWidgetDataList.h \
+	src/gui/coins/widgets/CoinsWidgetMain.h \
+	src/gui/coins/widgets/CoinsWidgetSettings.h \
+	src/gui/coins/widgets/CoinsWidgetSummary.h \
 	src/gui/concerts/common/ConcertsCommon.h \
 	src/gui/concerts/data/ConcertsData.h \
 	src/gui/concerts/data/ConcertsDataConverter.h \

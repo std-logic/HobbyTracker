@@ -147,30 +147,3 @@ Concerts::DataList::ListOfStrings Concerts::DataList::listOfPlaces(
 	}
 	return list;
 }
-
-Concerts::DataList::Synonyms Concerts::DataList::getSynonyms(
-		const QString& group, const Base::ExtraList& extra_list)
-{
-	Synonyms synonyms;
-	for (const auto& extra : extra_list) {
-		if (extra.group() == group) {
-			auto names = extra.title().split(", ", Qt::SkipEmptyParts);
-			for (const auto& name : names) {
-				synonyms[name] = extra.notes();
-			}
-		}
-	}
-	return synonyms;
-}
-
-Concerts::DataList::Favorites Concerts::DataList::getFavorites(
-		const QString& group, const Base::ExtraList& extra_list)
-{
-	Favorites favorites;
-	for (const auto& extra : extra_list) {
-		if (extra.group() == group) {
-			favorites.insert(extra.title());
-		}
-	}
-	return favorites;
-}

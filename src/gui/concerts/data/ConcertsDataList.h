@@ -3,9 +3,6 @@
 #include "ConcertsData.h"
 
 #include <gui/base/data/BaseDataList.h>
-#include <gui/base/data/BaseExtraList.h>
-
-#include <unordered_set>
 
 namespace Concerts
 {
@@ -14,9 +11,6 @@ class DataList : public Base::DataList<Data>
 {
 public:
 	DataList() = default;
-
-	using Synonyms = std::unordered_map<QString, QString>;
-	using Favorites = std::unordered_set<QString>;
 
 	struct Summary
 	{
@@ -50,9 +44,6 @@ public:
 	SublistsByStrings concertsByPlaces(const Synonyms& synonyms) const;
 	ListOfStrings listOfPlaces(const QString& city) const;
 	ListOfStrings listOfPlaces(const QString& city, const Synonyms& synonyms) const;
-
-	static Synonyms getSynonyms(const QString& group, const Base::ExtraList& extra_list);
-	static Favorites getFavorites(const QString& group, const Base::ExtraList& extra_list);
 };
 
 } // namespace Concerts

@@ -74,9 +74,9 @@ void Concerts::WidgetDataList::showByArtists(const DataList& data_list, const Ba
 	initSorting(CLMN_DATE);
 
 	auto favorites = _favorites_state ?
-			DataList::getFavorites(tr("[Избранные группы]"), extra_list) :
+			extra_list.getFavorites(tr("[Избранные группы]")) :
 			DataList::Favorites();
-	auto synonyms = DataList::getSynonyms(tr("[Синонимы для групп]"), extra_list);
+	auto synonyms = extra_list.getSynonyms(tr("[Синонимы для групп]"));
 	auto concerts_by_artists = data_list.concertsByArtists(synonyms);
 
 	for (const auto& [artist, concerts] : concerts_by_artists) {
@@ -193,9 +193,9 @@ void Concerts::WidgetDataList::showByPlaces(const DataList& data_list, const Bas
 	initSorting(CLMN_DATE);
 
 	auto favorites = _favorites_state ?
-			DataList::getFavorites(tr("[Избранные места]"), extra_list) :
+			extra_list.getFavorites(tr("[Избранные места]")) :
 			DataList::Favorites();
-	auto synonyms = DataList::getSynonyms(tr("[Синонимы для мест]"), extra_list);
+	auto synonyms = extra_list.getSynonyms(tr("[Синонимы для мест]"));
 	auto concerts_by_places = data_list.concertsByPlaces(synonyms);
 
 	for (const auto& [place, concerts] : concerts_by_places) {
@@ -222,7 +222,7 @@ void Concerts::WidgetDataList::showPlacesTree(const DataList& data_list, const B
 				{WIDTH_DATE_BIG, WIDTH_COUNT, WIDTH_ARTISTS});
 	initSorting(CLMN_DATE);
 
-	auto synonyms = DataList::getSynonyms(tr("[Синонимы для мест]"), extra_list);
+	auto synonyms = extra_list.getSynonyms(tr("[Синонимы для мест]"));
 	auto concerts_by_countries = data_list.concertsByCountries();
 	auto concerts_by_cities = data_list.concertsByCities();
 	auto concerts_by_places = data_list.concertsByPlaces(synonyms);

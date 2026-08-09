@@ -1,0 +1,174 @@
+#include "CoinsWidgetDataList.h"
+#include "../common/CoinsCommon.h"
+#include "../data/CoinsDataList.h"
+
+#include <gui/base/data/BaseExtraList.h>
+#include <gui/base/widgets/BaseWidgetTreeItem.h>
+
+Coins::WidgetDataList::WidgetDataList(QWidget* parent)
+	: Base::WidgetTree{parent}
+{
+}
+
+void Coins::WidgetDataList::update(const DataList& data_list, const Base::ExtraList& extra_list)
+{
+	clear();
+	setRootIsDecorated(static_cast<DataListViewModes>(_view_mode) != DataListViewModes::Simple);
+	switch (static_cast<DataListViewModes>(_view_mode)) {
+		case DataListViewModes::ByCountries:	showByCountries(data_list, extra_list);		break;
+		case DataListViewModes::ByDecades:		showByDecades(data_list);					break;
+		case DataListViewModes::ByCenturies:	showByCenturies(data_list);					break;
+		case DataListViewModes::Simple:			showSimple(data_list);						break;
+		default: return;
+	}
+}
+
+void Coins::WidgetDataList::showByCountries(const DataList& data_list, const Base::ExtraList& extra_list)
+{
+	enum Columns {CLMN_COUNTRY, CLMN_COUNT, CLMN_VALUE, CLMN_TITLE,
+				  CLMN_DIAMETER, CLMN_NUMBER, CLMN_YEAR, CLMN_VERSION, CLMN_STATE};
+	initColumns({tr("Страна / Период / Валюта"), tr("К-во"), tr("Номинал"), tr("Название"),
+				 tr("D, мм"), tr("Номер"), tr("Год"), tr("Разн."), tr("Сост.")},
+				{WIDTH_COUNTRY_BIG, WIDTH_COUNT, WIDTH_VALUE, WIDTH_TITLE,
+				 WIDTH_DIAMETER, WIDTH_NUMBER, WIDTH_YEAR, WIDTH_VERSION, WIDTH_STATE});
+	initSorting(CLMN_COUNTRY);
+
+	auto synonyms = extra_list.getSynonyms(tr("[Синонимы для стран]"));
+	auto coins_by_countries = data_list.coinsByCountries(synonyms);
+	auto coins_by_periods = data_list.coinsByPeriods(synonyms);
+
+	for (const auto& [country, coins_from_country] : coins_by_countries) {
+		auto item_country = new Base::WidgetTreeItem(this, Global::Colors::tree_level_2);
+		item_country->setText(CLMN_COUNTRY, country);
+		item_country->setNumb(CLMN_COUNT, coins_from_country.size());
+		item_country->setText(CLMN_YEAR, Helper::yearString(coins_from_country));
+
+		auto list_of_periods = data_list.listOfPeriods(country, synonyms);
+		for (const auto& period : list_of_periods) {
+			auto coins_from_period = coins_by_periods[country + ", " + period];
+			auto item_period = new Base::WidgetTreeItem(item_country, Global::Colors::tree_level_1);
+			item_period->setText(CLMN_COUNTRY, period);
+			item_period->setNumb(CLMN_COUNT, coins_from_period.size());
+			item_period->setText(CLMN_YEAR, Helper::yearString(coins_from_period));
+
+			for (const auto coin : coins_from_period) {
+				auto item_coin = new Base::WidgetTreeItem(item_period);
+				item_coin->setText(CLMN_COUNTRY, coin->currency());
+				item_coin->setText(CLMN_VALUE, coin->value());
+				item_coin->setText(CLMN_TITLE, coin->title());
+				item_coin->setText(CLMN_DIAMETER, coin->diameter());
+				item_coin->setText(CLMN_NUMBER, coin->number());
+				item_coin->setText(CLMN_YEAR, coin->yearString());
+				item_coin->setText(CLMN_VERSION, coin->version());
+				item_coin->setText(CLMN_STATE, coin->state());
+				item_coin->setToolTipEverywhere(coin->summaryString());
+				item_coin->setId(coin->id());
+			}
+		}
+	}
+}
+
+void Coins::WidgetDataList::showByDecades(const DataList& data_list)
+{
+	enum Columns {CLMN_COUNTRY, CLMN_COUNT, CLMN_PERIOD, CLMN_CURRENCY,
+				  CLMN_VALUE, CLMN_TITLE, CLMN_DIAMETER, CLMN_NUMBER,
+				  CLMN_YEAR, CLMN_VERSION, CLMN_STATE};
+	initColumns({tr("Десятилетие / Страна"), tr("К-во"), tr("Период"), tr("Валюта"),
+				 tr("Номинал"), tr("Название"), tr("D, мм"), tr("Номер"),
+				 tr("Год"), tr("Разн."), tr("Сост.")},
+				{WIDTH_COUNTRY_SMALL, WIDTH_COUNT, WIDTH_PERIOD, WIDTH_CURRENCY,
+				 WIDTH_VALUE, WIDTH_TITLE, WIDTH_DIAMETER, WIDTH_NUMBER,
+				 WIDTH_YEAR, WIDTH_VERSION, WIDTH_STATE});
+	initSorting(CLMN_COUNTRY);
+
+	auto coins_by_decades = data_list.coinsByYears(10);
+
+	for (const auto& [decade, coins] : coins_by_decades) {
+		auto item_decade = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
+		item_decade->setText(CLMN_COUNTRY, decade);
+		item_decade->setNumb(CLMN_COUNT, coins.size());
+		item_decade->setText(CLMN_YEAR, Helper::yearString(coins));
+
+		for (const auto coin : coins) {
+			auto item_coin = new Base::WidgetTreeItem(item_decade);
+			item_coin->setText(CLMN_COUNTRY, coin->country());
+			item_coin->setText(CLMN_PERIOD, coin->period());
+			item_coin->setText(CLMN_CURRENCY, coin->currency());
+			item_coin->setText(CLMN_VALUE, coin->value());
+			item_coin->setText(CLMN_TITLE, coin->title());
+			item_coin->setText(CLMN_DIAMETER, coin->diameter());
+			item_coin->setText(CLMN_NUMBER, coin->number());
+			item_coin->setText(CLMN_YEAR, coin->yearString());
+			item_coin->setText(CLMN_VERSION, coin->version());
+			item_coin->setText(CLMN_STATE, coin->state());
+			item_coin->setToolTipEverywhere(coin->summaryString());
+			item_coin->setId(coin->id());
+		}
+	}
+}
+
+void Coins::WidgetDataList::showByCenturies(const DataList& data_list)
+{
+	enum Columns {CLMN_COUNTRY, CLMN_COUNT, CLMN_PERIOD, CLMN_CURRENCY,
+				  CLMN_VALUE, CLMN_TITLE, CLMN_DIAMETER, CLMN_NUMBER,
+				  CLMN_YEAR, CLMN_VERSION, CLMN_STATE};
+	initColumns({tr("Столетие / Страна"), tr("К-во"), tr("Период"), tr("Валюта"),
+				 tr("Номинал"), tr("Название"), tr("D, мм"), tr("Номер"),
+				 tr("Год"), tr("Разн."), tr("Сост.")},
+				{WIDTH_COUNTRY_SMALL, WIDTH_COUNT, WIDTH_PERIOD, WIDTH_CURRENCY,
+				 WIDTH_VALUE, WIDTH_TITLE, WIDTH_DIAMETER, WIDTH_NUMBER,
+				 WIDTH_YEAR, WIDTH_VERSION, WIDTH_STATE});
+	initSorting(CLMN_COUNTRY);
+
+	auto coins_by_centuries = data_list.coinsByYears(100);
+
+	for (const auto& [century, coins] : coins_by_centuries) {
+		auto item_century = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
+		item_century->setNumb(CLMN_COUNTRY, century);
+		item_century->setNumb(CLMN_COUNT, coins.size());
+		item_century->setText(CLMN_YEAR, Helper::yearString(coins));
+
+		for (const auto coin : coins) {
+			auto item_coin = new Base::WidgetTreeItem(item_century);
+			item_coin->setText(CLMN_COUNTRY, coin->country());
+			item_coin->setText(CLMN_PERIOD, coin->period());
+			item_coin->setText(CLMN_CURRENCY, coin->currency());
+			item_coin->setText(CLMN_VALUE, coin->value());
+			item_coin->setText(CLMN_TITLE, coin->title());
+			item_coin->setText(CLMN_DIAMETER, coin->diameter());
+			item_coin->setText(CLMN_NUMBER, coin->number());
+			item_coin->setText(CLMN_YEAR, coin->yearString());
+			item_coin->setText(CLMN_VERSION, coin->version());
+			item_coin->setText(CLMN_STATE, coin->state());
+			item_coin->setToolTipEverywhere(coin->summaryString());
+			item_coin->setId(coin->id());
+		}
+	}
+}
+
+void Coins::WidgetDataList::showSimple(const DataList& data_list)
+{
+	enum Columns {CLMN_COUNTRY, CLMN_PERIOD, CLMN_CURRENCY, CLMN_VALUE, CLMN_TITLE,
+				  CLMN_DIAMETER, CLMN_NUMBER, CLMN_YEAR, CLMN_VERSION, CLMN_STATE};
+	initColumns({tr("Страна"), tr("Период"), tr("Валюта"), tr("Номинал"), tr("Название"),
+				 tr("D, мм"), tr("Номер"), tr("Год"), tr("Разн."), tr("Сост.")},
+				{WIDTH_COUNTRY_SMALL, WIDTH_PERIOD, WIDTH_CURRENCY, WIDTH_VALUE, WIDTH_TITLE,
+				 WIDTH_DIAMETER, WIDTH_NUMBER, WIDTH_YEAR, WIDTH_VERSION, WIDTH_STATE});
+	initSorting(CLMN_COUNTRY);
+
+	for (const auto& coin : data_list) {
+		auto item_coin = new Base::WidgetTreeItem(this);
+		item_coin->setText(CLMN_COUNTRY, coin.country());
+		item_coin->setText(CLMN_PERIOD, coin.period());
+		item_coin->setText(CLMN_CURRENCY, coin.currency());
+		item_coin->setText(CLMN_VALUE, coin.value());
+		item_coin->setText(CLMN_TITLE, coin.title());
+		item_coin->setText(CLMN_DIAMETER, coin.diameter());
+		item_coin->setText(CLMN_NUMBER, coin.number());
+		item_coin->setText(CLMN_YEAR, coin.yearString());
+		item_coin->setText(CLMN_VERSION, coin.version());
+		item_coin->setText(CLMN_STATE, coin.state());
+		item_coin->setToolTipEverywhere(coin.summaryString());
+		item_coin->setId(coin.id());
+	}
+}

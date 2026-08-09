@@ -13,6 +13,9 @@ public:
 
 	SublistsByStrings extraByGroups() const;
 	ListOfStrings listOfGroups() const;
+
+	Synonyms getSynonyms(const QString& group) const;
+	Favorites getFavorites(const QString& group) const;
 };
 
 } // namespace Base

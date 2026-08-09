@@ -25,7 +25,7 @@ void Csv::Storage::createFile(size_t index, const Settings& csv_settings)
 	auto header = csv_settings.header(index);
 	if (!header.isEmpty()) {
 		for (int column = 0; column < header.size(); ++column) {
-			stream << header[column];
+			stream << QChar('\"') << header[column] << QChar('\"');
 			if (column != (header.size() - 1)) {
 				stream << csv_settings.delimiter();
 			}
@@ -56,8 +56,14 @@ Csv::Data Csv::Storage::readFile(size_t index, const Settings& csv_settings)
 	}
 
 	QString buff;
+	QString delimiter_with_quotes = QString("\"") + csv_settings.delimiter() + QString("\"");
 	while (stream.readLineInto(&buff)) {
-		csv_data.push_back(buff.remove(QChar('\"')).split(csv_settings.delimiter()));
+		if (buff.startsWith(QChar('\"'))) {
+			csv_data.push_back(buff.split(delimiter_with_quotes));
+			csv_data.back().replaceInStrings("\"", "");
+		} else {
+			csv_data.push_back(buff.remove(QChar('\"')).split(csv_settings.delimiter()));
+		}
 	}
 
 	file.close();
@@ -82,7 +88,7 @@ bool Csv::Storage::writeFile(size_t index, const Settings& csv_settings, const D
 	auto header = csv_settings.header(index);
 	if (!header.isEmpty()) {
 		for (int column = 0; column < header.size(); ++column) {
-			stream << header[column];
+			stream << QChar('\"') << header[column] << QChar('\"');
 			if (column != (header.size() - 1)) {
 				stream << csv_settings.delimiter();
 			}
@@ -92,7 +98,7 @@ bool Csv::Storage::writeFile(size_t index, const Settings& csv_settings, const D
 
 	for (const auto& line : csv_data) {
 		for (int column = 0; column < line.size(); ++column) {
-			stream << line[column];
+			stream << QChar('\"') << line[column] << QChar('\"');
 			if (column != (line.size() - 1)) {
 				stream << csv_settings.delimiter();
 			}

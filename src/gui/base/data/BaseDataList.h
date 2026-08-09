@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <unordered_map>
+#include <unordered_set>
 #include <map>
 #include <set>
 
@@ -30,6 +31,8 @@ public:
 	using DataMethodReturningStringList = QStringList (T::*)() const;
 	using DataMethodReturningInteger = uint32_t (T::*)() const;
 	using DataMethodReturningBool = bool (T::*)() const;
+	using Synonyms = std::unordered_map<QString, QString>;
+	using Favorites = std::unordered_set<QString>;
 
 	ListContainer::iterator begin() noexcept
 	{ return _data_list.begin(); }
