@@ -96,69 +96,78 @@ QBarCategoryAxis* Base::WidgetChart::getAxisX()
 	return bar_axis_x_1;
 }
 
-void Base::WidgetChart::updateBars(const std::map<QString, uint32_t>& values)
+void Base::WidgetChart::updateBars(const std::map<QString, int>& values)
 {
 	auto bar_axis_x = getAxisX();
 	auto bar_set = getBarSet();
-	uint32_t max_y = std::numeric_limits<uint32_t>::min();
+	int min_y = std::numeric_limits<int>::max();
+	int max_y = std::numeric_limits<int>::min();
 	for (const auto& [val_x, val_y] : values) {
 		bar_axis_x->append(val_x);
 		bar_set->append(val_y);
+		if (min_y > val_y) { min_y = val_y; }
 		if (max_y < val_y) { max_y = val_y; }
 	}
-	updateAxisYRange(max_y);
+	updateAxisYRange(min_y, max_y);
 }
 
-void Base::WidgetChart::updateBars(const std::map<uint32_t, uint32_t>& values)
+void Base::WidgetChart::updateBars(const std::map<uint32_t, int>& values)
 {
 	auto bar_axis_x = getAxisX();
 	auto bar_set = getBarSet();
-	uint32_t max_y = std::numeric_limits<uint32_t>::min();
+	int min_y = std::numeric_limits<int>::max();
+	int max_y = std::numeric_limits<int>::min();
 	for (const auto& [val_x, val_y] : values) {
 		bar_axis_x->append(QString::number(val_x));
 		bar_set->append(val_y);
+		if (min_y > val_y) { min_y = val_y; }
 		if (max_y < val_y) { max_y = val_y; }
 	}
-	updateAxisYRange(max_y);
+	updateAxisYRange(min_y, max_y);
 }
 
-void Base::WidgetChart::updateBars(const std::map<uint32_t, std::pair<QString, uint32_t>>& values)
+void Base::WidgetChart::updateBars(const std::map<uint32_t, std::pair<QString, int>>& values)
 {
 	auto bar_axis_x = getAxisX();
 	auto bar_set = getBarSet();
-	uint32_t max_y = std::numeric_limits<uint32_t>::min();
+	int min_y = std::numeric_limits<int>::max();
+	int max_y = std::numeric_limits<int>::min();
 	for (const auto& [_, val_xy] : values) {
 		bar_axis_x->append(val_xy.first);
 		bar_set->append(val_xy.second);
+		if (min_y > val_xy.second) { min_y = val_xy.second; }
 		if (max_y < val_xy.second) { max_y = val_xy.second; }
 	}
-	updateAxisYRange(max_y);
+	updateAxisYRange(min_y, max_y);
 }
 
-void Base::WidgetChart::updateAxisYRange(uint32_t max_y)
+void Base::WidgetChart::updateAxisYRange(int min_y, int max_y)
 {
-	auto step_y = calcStepY(max_y);
-	uint32_t add = ((static_cast<double>(max_y % step_y) / step_y) > 0.55) ? 1 : 0;
+	min_y = std::min(0, min_y);
+	int step_y = calcStepY(max_y - min_y);
+	int add = ((static_cast<double>(max_y % step_y) / step_y) > 0.55) ? 1 : 0;
+	int range_start = (min_y < 0) ? ((min_y / step_y) - 1) * step_y : 0;
+	int range_end = ((max_y / step_y) + 1 + add) * step_y;
 
 	auto bar_axis_y = getAxisY();
-	bar_axis_y->setRange(0, ((max_y / step_y) + 1 + add) * step_y);
-	bar_axis_y->setTickCount((max_y / step_y) + 2 + add);
+	bar_axis_y->setRange(range_start, range_end);
+	bar_axis_y->setTickCount(((range_end - range_start) / step_y) + 1);
 }
 
-uint32_t Base::WidgetChart::calcStepY(uint32_t max_y)
+int Base::WidgetChart::calcStepY(int range)
 {
-	return	(max_y > 60000)	? 20000 :	// 4+ steps
-			(max_y > 30000)	? 10000 :	// 4-7 steps
-			(max_y > 12000)	? 5000 :	// 3-7 steps
-			(max_y > 6000)	? 2000 :	// 4-7 steps
-			(max_y > 3000)	? 1000 :	// 4-7 steps
-			(max_y > 1200)	? 500 :		// 3-7 steps
-			(max_y > 600)	? 200 :		// 4-7 steps
-			(max_y > 300)	? 100 :		// 4-7 steps
-			(max_y > 120)	? 50 :		// 3-7 steps
-			(max_y > 60)	? 20 :		// 4-7 steps
-			(max_y > 30)	? 10 :		// 4-7 steps
-			(max_y > 12)	? 5 :		// 3-7 steps
-			(max_y > 5)		? 2 :		// 3-7 steps
+	return	(range > 60000)	? 20000 :	// 4+ steps
+			(range > 30000)	? 10000 :	// 4-7 steps
+			(range > 12000)	? 5000 :	// 3-7 steps
+			(range > 6000)	? 2000 :	// 4-7 steps
+			(range > 3000)	? 1000 :	// 4-7 steps
+			(range > 1200)	? 500 :		// 3-7 steps
+			(range > 600)	? 200 :		// 4-7 steps
+			(range > 300)	? 100 :		// 4-7 steps
+			(range > 120)	? 50 :		// 3-7 steps
+			(range > 60)	? 20 :		// 4-7 steps
+			(range > 30)	? 10 :		// 4-7 steps
+			(range > 12)	? 5 :		// 3-7 steps
+			(range > 5)		? 2 :		// 3-7 steps
 							  1;		// 1-6 steps
 }

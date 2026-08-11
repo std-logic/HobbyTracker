@@ -128,7 +128,7 @@ Movies::DataList::NumbersByStrings Movies::DataList::numbersByYears(uint32_t ste
 {
 	return numbersInRange(step, range_type, required_min, required_max,
 			[](const Data& data) { return data.yearStart(); },
-			[](const Data&)->uint32_t { return 1; },
+			[](const Data&)->int { return 1; },
 			[](uint32_t val, uint32_t step) { return Helper::epochString(val, step); },
 			[favorites_only](const Data& data)->bool { return !favorites_only || data.isFavorite(); }
 	);

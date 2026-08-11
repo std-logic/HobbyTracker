@@ -38,7 +38,7 @@ Flights::DataList::NumbersByStrings Flights::DataList::numbersByYears(uint32_t s
 {
 	return numbersInRange(step, range_type, required_min, required_max,
 			[](const Data& data) { return data.year(); },
-			[](const Data& data) { return data.flightsNum(); },
+			[](const Data& data)->int { return data.flightsNum(); },
 			[](uint32_t val, uint32_t step) { return Helper::epochString(val, step); });
 }
 

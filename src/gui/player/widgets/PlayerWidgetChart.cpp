@@ -35,7 +35,7 @@ void Player::WidgetChart::showByPlayCounts(const Library& library)
 {
 	chart()->setTitle(tr("Распределение по прослушиваниям"));
 	const uint32_t step = 10;
-	std::map<uint32_t, std::pair<QString, uint32_t>> list;
+	std::map<uint32_t, std::pair<QString, int>> list;
 	uint32_t min_x = std::numeric_limits<uint32_t>::max(), max_x = std::numeric_limits<uint32_t>::min();
 	for (const auto& [artist_title, artist] : library) {
 		for (const auto& [album_title, album] : artist) {
@@ -56,7 +56,7 @@ void Player::WidgetChart::showByDecades(const Library& library)
 {
 	chart()->setTitle(tr("Распределение по десятилетиям"));
 	const uint32_t step = 10;
-	std::map<uint32_t, std::pair<QString, uint32_t>> list;
+	std::map<uint32_t, std::pair<QString, int>> list;
 	uint32_t min_x = Global::undefined_value, max_x = Global::undefined_value;
 	for (const auto& [artist_title, artist] : library) {
 		for (const auto& [album_title, album] : artist) {
@@ -79,7 +79,7 @@ void Player::WidgetChart::showByDecades(const Library& library)
 void Player::WidgetChart::showHistoryPlayCounts(const std::vector<Library>& libraries)
 {
 	chart()->setTitle(tr("Прирост прослушиваний"));
-	std::map<QString, uint32_t> list;
+	std::map<QString, int> list;
 	for (size_t i = 1; i < libraries.size(); ++i) {
 		list[libraries[i].titleOnlyDate()] = libraries[i].playCount();
 	}
@@ -89,10 +89,11 @@ void Player::WidgetChart::showHistoryPlayCounts(const std::vector<Library>& libr
 void Player::WidgetChart::showHistoryArtists(const std::vector<Library>& libraries)
 {
 	chart()->setTitle(tr("Прирост групп"));
-	std::map<QString, uint32_t> list;
+	std::map<QString, int> list;
 	for (size_t i = 1; i < libraries.size(); ++i) {
 		list[libraries[i].titleOnlyDate()] =
-				libraries[i].artistsCount() - libraries[i-1].artistsCount();
+				static_cast<int>(libraries[i].artistsCount()) -
+				static_cast<int>(libraries[i-1].artistsCount());
 	}
 	updateBars(list);
 }
@@ -100,10 +101,11 @@ void Player::WidgetChart::showHistoryArtists(const std::vector<Library>& librari
 void Player::WidgetChart::showHistoryAlbums(const std::vector<Library>& libraries)
 {
 	chart()->setTitle(tr("Прирост альбомов"));
-	std::map<QString, uint32_t> list;
+	std::map<QString, int> list;
 	for (size_t i = 1; i < libraries.size(); ++i) {
 		list[libraries[i].titleOnlyDate()] =
-				libraries[i].albumsCount() - libraries[i-1].albumsCount();
+				static_cast<int>(libraries[i].albumsCount()) -
+				static_cast<int>(libraries[i-1].albumsCount());
 	}
 	updateBars(list);
 }
@@ -111,10 +113,11 @@ void Player::WidgetChart::showHistoryAlbums(const std::vector<Library>& librarie
 void Player::WidgetChart::showHistoryTracks(const std::vector<Library>& libraries)
 {
 	chart()->setTitle(tr("Прирост треков"));
-	std::map<QString, uint32_t> list;
+	std::map<QString, int> list;
 	for (size_t i = 1; i < libraries.size(); ++i) {
 		list[libraries[i].titleOnlyDate()] =
-				libraries[i].tracksCount() - libraries[i-1].tracksCount();
+				static_cast<int>(libraries[i].tracksCount()) -
+				static_cast<int>(libraries[i-1].tracksCount());
 	}
 	updateBars(list);
 }

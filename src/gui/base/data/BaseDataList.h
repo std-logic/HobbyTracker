@@ -24,8 +24,8 @@ public:
 	using SubListContainer = std::vector<const T*>;
 	using SublistsByStrings = std::unordered_map<QString, SubListContainer>;
 	using SublistsByIntegers = std::unordered_map<uint32_t, SubListContainer>;
-	using NumbersByStrings = std::map<QString, uint32_t>;
-	using NumbersByIntegers = std::map<uint32_t, uint32_t>;
+	using NumbersByStrings = std::map<QString, int>;
+	using NumbersByIntegers = std::map<uint32_t, int>;
 	using ListOfStrings = std::set<QString>;
 	using DataMethodReturningString = QString (T::*)() const;
 	using DataMethodReturningStringList = QStringList (T::*)() const;
@@ -331,7 +331,7 @@ public:
 	{
 		return numbersInRange(step, range_type, required_min, required_max,
 				funcIn,
-				[](const T&)->uint32_t { return 1; },
+				[](const T&)->int { return 1; },
 				funcOut,
 				[](const T&)->bool { return true; }
 		);
