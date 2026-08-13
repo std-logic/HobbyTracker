@@ -35,7 +35,7 @@ private:
 
 private slots:
 	void save() override;
-	void authorTrChanged(int index);
+	void authorTrChanged(const QString& author_tr);
 
 private:
 	Base::ComboEdit* _combo_author_tr = nullptr;

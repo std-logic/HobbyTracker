@@ -15,7 +15,7 @@ Books::WidgetData::WidgetData(size_t index, const DataList& data_list, QWidget* 
 	copyDataToGui();
 
 	// strictly after initialization finished, because we need only real changes
-	connect(_combo_author_tr, &Base::ComboEdit::currentIndexChanged,
+	connect(_combo_author_tr, &Base::ComboEdit::currentTextChanged,
 			this, &WidgetData::authorTrChanged);
 }
 
@@ -116,10 +116,11 @@ void Books::WidgetData::save()
 	}
 }
 
-void Books::WidgetData::authorTrChanged(int index)
+void Books::WidgetData::authorTrChanged(const QString& author_tr)
 {
-	if (index >= 0) {
-		auto author_orig = _data_list.findAuthorOrigByTr(_combo_author_tr->itemText(index));
-		_combo_author_orig->lineEdit()->setText(author_orig);
+	if (!author_tr.isEmpty() && (_combo_author_tr->findText(author_tr) >= 0)) {
+		_combo_author_orig->lineEdit()->setText(_data_list.findAuthorOrigByTr(author_tr));
+	} else {
+		_combo_author_orig->lineEdit()->clear();
 	}
 }
