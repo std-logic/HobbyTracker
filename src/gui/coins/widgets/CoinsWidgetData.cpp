@@ -156,7 +156,7 @@ void Coins::WidgetData::save()
 void Coins::WidgetData::countryChanged(const QString& country)
 {
 	if (!country.isEmpty() && (_combo_country->findText(country) >= 0)) {
-		_combo_period->addList(_data_list.listOfPeriods(country));
+		_combo_period->addList(_data_list.listOfPeriods(country), true);
 	} else {
 		_combo_period->clear();
 	}
@@ -165,10 +165,10 @@ void Coins::WidgetData::countryChanged(const QString& country)
 void Coins::WidgetData::periodChanged(const QString& period)
 {
 	if (!period.isEmpty() && (_combo_period->findText(period) >= 0)) {
+		_combo_currency->addList(_data_list.listOfCurrencies(_combo_country->currentText(), period), true);
 		_combo_value->addList(_data_list.listOfValues(_combo_country->currentText(), period));
-		_combo_currency->addList(_data_list.listOfCurrencies(_combo_country->currentText(), period));
 	} else {
-		_combo_value->clear();
 		_combo_currency->clear();
+		_combo_value->clear();
 	}
 }

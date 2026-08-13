@@ -40,8 +40,8 @@ private slots:
 private:
 	Base::ComboEdit* _combo_country = nullptr;
 	Base::ComboEdit* _combo_period = nullptr;
-	Base::ComboEdit* _combo_value = nullptr;
 	Base::ComboEdit* _combo_currency = nullptr;
+	Base::ComboEdit* _combo_value = nullptr;
 	QLineEdit* _edit_title = nullptr;
 	QLineEdit* _edit_diameter = nullptr;
 	QLineEdit* _edit_number = nullptr;
