@@ -16,6 +16,7 @@ public:
 	{
 		int artists_num = 0;
 		int actives_num = 0;
+		int visited_num = 0;
 		int genres_num = 0;
 		int countries_num = 0;
 		uint32_t min_year = Global::undefined_value;
@@ -36,6 +37,8 @@ public:
 
 	SublistsByIntegers artistsByStates() const;
 	NumbersByIntegers numbersByStates() const;
+
+	SublistsByIntegers artistsByLive() const;
 };
 
 } // namespace Music

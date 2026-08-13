@@ -38,6 +38,9 @@ void Music::WidgetData::initWidgets()
 	add(tr("Год основания:"), _edit_year);
 	_edit_year->setValidator(new QIntValidator(1, 2100, _edit_year));
 
+	add(tr("Концерт:"), _check_live);
+	_check_live->setText(tr("Посещён"));
+
 	add(tr("Статус:"), _check_state);
 	_check_state->setText(tr("Активна"));
 }
@@ -51,6 +54,8 @@ void Music::WidgetData::copyDataToGui()
 	_combo_country->setTextAndList(_data.country(), _data_list.listOfCountries());
 
 	_edit_year->setText(_data.yearString());
+
+	_check_live->setChecked(_data.isVisited());
 
 	_check_state->setChecked(_data.isActive());
 }
@@ -80,6 +85,8 @@ bool Music::WidgetData::copyGuiToData()
 		return false;
 	}
 	_data.setYear(_edit_year->text().toUInt());
+
+	_data.setLive(_check_live->isChecked() ? Live::Visited : Live::Unvisited);
 
 	_data.setState(_check_state->isChecked() ? States::Active : States::Inactive);
 

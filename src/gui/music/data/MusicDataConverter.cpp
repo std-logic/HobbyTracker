@@ -12,6 +12,7 @@ QStringList Music::DataConverter::getDefaultCsvHeader()
 	header[CLMN_COUNTRY]		= tr("Страна основания");
 	header[CLMN_YEAR]			= tr("Год основания");
 	header[CLMN_STATE]			= tr("Статус");
+	header[CLMN_LIVE]			= tr("Концерт");
 
 	return header;
 }
@@ -42,6 +43,10 @@ Music::DataList Music::DataConverter::conv(const Csv::Data& csv_data)
 			auto state = line[CLMN_STATE].toUInt(&conv_ok);
 			if (conv_ok) { data.setState(static_cast<States>(state)); }
 		}
+		if (CLMN_LIVE < line_size) {
+			auto live = line[CLMN_LIVE].toUInt(&conv_ok);
+			if (conv_ok) { data.setLive(static_cast<Live>(live)); }
+		}
 
 		data_list.add(data);
 	}
@@ -61,6 +66,7 @@ Csv::Data Music::DataConverter::conv(const DataList& data_list)
 		line[CLMN_COUNTRY]		= data.country();
 		line[CLMN_YEAR]			= QString::number(data.year());
 		line[CLMN_STATE]		= QString::number(data.state());
+		line[CLMN_LIVE]			= QString::number(data.live());
 
 		csv_data.push_back(line);
 	}

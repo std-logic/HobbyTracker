@@ -32,6 +32,7 @@ private:
 		CLMN_COUNTRY,
 		CLMN_YEAR,
 		CLMN_STATE,
+		CLMN_LIVE,
 		NUM_OF_COLUMNS
 	};
 };

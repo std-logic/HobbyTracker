@@ -41,6 +41,7 @@ private:
 	Base::ComboEdit* _combo_genre = nullptr;
 	Base::ComboEdit* _combo_country = nullptr;
 	QLineEdit* _edit_year = nullptr;
+	QCheckBox* _check_live = nullptr;
 	QCheckBox* _check_state = nullptr;
 
 	DataList _data_list;

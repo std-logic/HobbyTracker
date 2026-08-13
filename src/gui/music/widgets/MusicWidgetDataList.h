@@ -23,6 +23,7 @@ private:
 	void showByGenres(const DataList& data_list);
 	void showByCountries(const DataList& data_list);
 	void showByDecades(const DataList& data_list);
+	void showByLive(const DataList& data_list);
 	void showByStates(const DataList& data_list);
 
 private:
@@ -31,6 +32,7 @@ private:
 	static const int WIDTH_GENRE = 200;
 	static const int WIDTH_COUNTRY = 200;
 	static const int WIDTH_YEAR = 130;
+	static const int WIDTH_LIVE = 80;
 	static const int WIDTH_STATE = 70;
 };
 

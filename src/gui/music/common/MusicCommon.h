@@ -5,8 +5,14 @@ namespace Music
 
 enum class States
 {
-	Active,
 	Inactive,
+	Active,
+};
+
+enum class Live
+{
+	Unvisited,
+	Visited,
 };
 
 enum class DataListViewModes
@@ -15,6 +21,7 @@ enum class DataListViewModes
 	ByGenres,
 	ByCountries,
 	ByDecades,
+	ByLive,
 	ByStates,
 };
 

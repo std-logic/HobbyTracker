@@ -55,11 +55,26 @@ public:
 	inline QString stateString() const
 	{ return stateString(_state); }
 	static inline QString stateString(States state)
-	{ return (state == States::Active) ? QStringLiteral("+") : QStringLiteral("-"); }
+	{ return (state == States::Active) ? QStringLiteral("+") : QStringLiteral("−"); }
 	inline QColor stateColor() const
 	{ return stateColor(_state); }
 	static inline QColor stateColor(States state)
 	{ return (state == States::Active) ? QColor(180, 245, 190) : QColor(245, 190, 190); }
+
+	inline void setLive(Live live)
+	{ _live = live; }
+	inline uint32_t live() const
+	{ return static_cast<uint32_t>(_live); }
+	inline bool isVisited() const
+	{ return (_live == Live::Visited); }
+	inline QString liveString() const
+	{ return liveString(_live); }
+	static inline QString liveString(Live live)
+	{ return (live == Live::Visited) ? QStringLiteral("+") : QStringLiteral("−"); }
+	inline QColor liveColor() const
+	{ return liveColor(_live); }
+	static inline QColor liveColor(Live live)
+	{ return (live == Live::Visited) ? QColor(180, 245, 190) : QColor(245, 190, 190); }
 
 	inline bool operator==(const Data& other) const noexcept
 	{
@@ -67,7 +82,8 @@ public:
 				(_genre == other.genre()) &&
 				(_country == other.country()) &&
 				(_year == other.year()) &&
-				(static_cast<uint32_t>(_state) == other.state());
+				(static_cast<uint32_t>(_state) == other.state()) &&
+				(static_cast<uint32_t>(_live) == other.live());
 	}
 
 private:
@@ -76,6 +92,7 @@ private:
 	QString _country;
 	uint32_t _year = Global::undefined_value;
 	States _state = States::Active;
+	Live _live = Live::Unvisited;
 };
 
 } // namespace Music

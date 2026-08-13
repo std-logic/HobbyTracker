@@ -11,6 +11,7 @@ Music::DataList::Summary Music::DataList::summary() const
 		list_of_countries.insert(data.country());
 		Helper::checkMinMax(data.year(), &sum.min_year, &sum.max_year);
 		if (data.isActive()) { ++sum.actives_num; }
+		if (data.isVisited()) { ++sum.visited_num; }
 	}
 	sum.artists_num = _data_list.size();
 	sum.genres_num = list_of_genres.size();
@@ -59,4 +60,9 @@ Music::DataList::SublistsByIntegers Music::DataList::artistsByStates() const
 Music::DataList::NumbersByIntegers Music::DataList::numbersByStates() const
 {
 	return numbersByIntegers(&Data::state);
+}
+
+Music::DataList::SublistsByIntegers Music::DataList::artistsByLive() const
+{
+	return sublistsByIntegers(&Data::live);
 }

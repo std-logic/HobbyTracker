@@ -28,6 +28,7 @@ void Music::WidgetControl::initWidgets()
 				{tr("По жанрам"), static_cast<int>(DataListViewModes::ByGenres)},
 				{tr("По странам"), static_cast<int>(DataListViewModes::ByCountries)},
 				{tr("По десятилетиям"), static_cast<int>(DataListViewModes::ByDecades)},
+				{tr("По концертам"), static_cast<int>(DataListViewModes::ByLive)},
 				{tr("По статусам"), static_cast<int>(DataListViewModes::ByStates)},
 		});
 

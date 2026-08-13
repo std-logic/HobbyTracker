@@ -24,6 +24,7 @@ private:
 private:
 	QLabel* _label_artists_num = nullptr;
 	QLabel* _label_actives_num = nullptr;
+	QLabel* _label_visited_num = nullptr;
 	QLabel* _label_genres_num = nullptr;
 	QLabel* _label_countries_num = nullptr;
 	QLabel* _label_years = nullptr;
