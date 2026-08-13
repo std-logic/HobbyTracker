@@ -158,7 +158,7 @@ void Flights::WidgetData::save()
 void Flights::WidgetData::countryChanged(size_t point, const QString& country)
 {
 	if (!country.isEmpty() && (_widgets_point[point].combo_country->findText(country) >= 0)) {
-		_widgets_point[point].combo_city->addList(_data_list.listOfCities(country));
+		_widgets_point[point].combo_city->addList(_data_list.listOfCities(country), true);
 	} else {
 		_widgets_point[point].combo_city->clear();
 	}
@@ -167,7 +167,7 @@ void Flights::WidgetData::countryChanged(size_t point, const QString& country)
 void Flights::WidgetData::cityChanged(size_t point, const QString& city)
 {
 	if (!city.isEmpty() && (_widgets_point[point].combo_city->findText(city) >= 0)) {
-		_widgets_point[point].combo_airport->addList(_data_list.listOfAirports(city));
+		_widgets_point[point].combo_airport->addList(_data_list.listOfAirports(city), true);
 	} else {
 		_widgets_point[point].combo_airport->clear();
 	}
@@ -176,6 +176,7 @@ void Flights::WidgetData::cityChanged(size_t point, const QString& city)
 void Flights::WidgetData::airportChanged(size_t point, const QString& airport)
 {
 	if (point > 0) {
+		bool dist_found = false;
 		QString prev_airport = _widgets_point[point-1].combo_airport->currentText();
 		if (!prev_airport.isEmpty()) {
 			QString dist_list_key = prev_airport + airport;
@@ -183,11 +184,17 @@ void Flights::WidgetData::airportChanged(size_t point, const QString& airport)
 				uint32_t dist = _dist_list[dist_list_key];
 				if (dist > 0) {
 					_widgets_point[point].edit_dist->setText(QString::number(dist));
+					dist_found = true;
 				}
 			}
 		}
+		if (!dist_found) {
+			_widgets_point[point].edit_dist->setText(QStringLiteral("0"));
+		}
 	}
+
 	if (point < (max_points_num - 1)) {
+		bool dist_found = false;
 		QString next_airport = _widgets_point[point+1].combo_airport->currentText();
 		if (!next_airport.isEmpty()) {
 			QString dist_list_key = airport + next_airport;
@@ -195,8 +202,12 @@ void Flights::WidgetData::airportChanged(size_t point, const QString& airport)
 				uint32_t dist = _dist_list[dist_list_key];
 				if (dist > 0) {
 					_widgets_point[point+1].edit_dist->setText(QString::number(dist));
+					dist_found = true;
 				}
 			}
+		}
+		if (!dist_found) {
+			_widgets_point[point+1].edit_dist->setText(QStringLiteral("0"));
 		}
 	}
 }

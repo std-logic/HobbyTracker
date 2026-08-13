@@ -9,7 +9,7 @@ Base::ComboEdit::ComboEdit(QWidget* parent)
 	setInsertPolicy(QComboBox::NoInsert);
 }
 
-void Base::ComboEdit::addList(const std::set<QString>& list_of_strings)
+void Base::ComboEdit::addList(const std::set<QString>& list_of_strings, bool choose_if_single)
 {
 	clear();
 	for (const auto& str : list_of_strings) {
@@ -17,6 +17,7 @@ void Base::ComboEdit::addList(const std::set<QString>& list_of_strings)
 			addItem(str);
 		}
 	}
+	if ((count() == 1) && choose_if_single) { return; }
 	setCurrentIndex(-1);
 }
 
