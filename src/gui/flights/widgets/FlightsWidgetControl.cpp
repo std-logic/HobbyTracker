@@ -45,6 +45,14 @@ void Flights::WidgetControl::initWidgets()
 	{
 		addSpacing();
 		addButtonShow(_button_chart, tr("Статистика"), &WidgetControl::showChart);
+		addComboBox(_combo_chart_view_mode, &WidgetControl::setChartViewMode, {
+				{tr("По полётам"), static_cast<int>(ChartViewModes::ByFlights)},
+				{tr("По километрам"), static_cast<int>(ChartViewModes::ByDist)},
+		});
+
+		_button_chart->addSlaveWidgets({
+			_combo_chart_view_mode,
+		});
 	}
 
 	addButtonSettings();

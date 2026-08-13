@@ -43,12 +43,14 @@ public:
 	SublistsByStrings flightsByRoutes() const;
 
 	static uint32_t flightsNumInSublist(const SubListContainer& sublist);
+	static uint32_t distInSublist(const SubListContainer& sublist);
 	static uint32_t countryNumInSublist(const QString& country, const SubListContainer& sublist);
 	static uint32_t cityNumInSublist(const QString& city, const SubListContainer& sublist);
 	static uint32_t airportNumInSublist(const QString& airport, const SubListContainer& sublist);
 
 	using DistList = std::unordered_map<QString, uint32_t>;
 	DistList distList() const;
+	NumbersByIntegers distByYears() const;
 };
 
 } // namespace Flights

@@ -31,6 +31,7 @@ signals:
 	void setDataListViewMode(int view_mode);
 
 	void showChart(bool on);
+	void setChartViewMode(int view_mode);
 
 private:
 	void initWidgets();
@@ -43,6 +44,7 @@ private:
 	Base::ComboBox* _combo_data_list_view_mode = nullptr;
 
 	Base::ButtonShow* _button_chart = nullptr;
+	Base::ComboBox* _combo_chart_view_mode = nullptr;
 };
 
 } // namespace Flights

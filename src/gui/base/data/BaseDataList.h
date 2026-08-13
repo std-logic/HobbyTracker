@@ -248,7 +248,7 @@ public:
 	{
 		NumbersByIntegers list;
 		for (const auto& data : _data_list) {
-			list[(data.*method_key)()] = (data.*method_val)();
+			list[(data.*method_key)()] += (data.*method_val)();
 		}
 		return list;
 	}
@@ -261,7 +261,7 @@ public:
 		NumbersByIntegers list;
 		for (const auto& data : _data_list) {
 			if (condition_on && !(data.*condition)()) { continue; }
-			list[(data.*method_key)()] = (data.*method_val)();
+			list[(data.*method_key)()] += (data.*method_val)();
 		}
 		return list;
 	}

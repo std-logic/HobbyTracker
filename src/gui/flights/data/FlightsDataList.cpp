@@ -114,6 +114,15 @@ uint32_t Flights::DataList::flightsNumInSublist(const SubListContainer& sublist)
 	return flights_num;
 }
 
+uint32_t Flights::DataList::distInSublist(const SubListContainer& sublist)
+{
+	uint32_t dist = 0;
+	for (auto data : sublist) {
+		dist += data->distTotal();
+	}
+	return dist;
+}
+
 uint32_t Flights::DataList::countryNumInSublist(const QString& country, const SubListContainer& sublist)
 {
 	uint32_t country_num = 0;
@@ -167,4 +176,9 @@ Flights::DataList::DistList Flights::DataList::distList() const
 		}
 	}
 	return dist_list;
+}
+
+Flights::DataList::NumbersByIntegers Flights::DataList::distByYears() const
+{
+	return numbersByIntegers(&Data::year, &Data::distTotal);
 }

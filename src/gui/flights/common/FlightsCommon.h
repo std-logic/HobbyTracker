@@ -18,6 +18,12 @@ enum class DataListViewModes
 	Simple,
 };
 
+enum class ChartViewModes
+{
+	ByFlights,
+	ByDist,
+};
+
 enum CsvFiles
 {
 	CsvFileData,

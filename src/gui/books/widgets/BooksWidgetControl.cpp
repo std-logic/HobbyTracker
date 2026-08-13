@@ -62,7 +62,7 @@ void Books::WidgetControl::initWidgets()
 		addComboBox(_combo_chart_view_mode, &WidgetControl::setChartViewMode, {
 				{tr("По десятилетиям"), static_cast<int>(ChartViewModes::ByDecades)},
 				{tr("По столетиям"), static_cast<int>(ChartViewModes::ByCenturies)},
-				{tr("По оценкам"), static_cast<int>(ChartViewModes::ByRatings)}
+				{tr("По оценкам"), static_cast<int>(ChartViewModes::ByRatings)},
 		});
 
 		_button_chart->addSlaveWidgets({

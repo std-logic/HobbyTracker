@@ -19,7 +19,8 @@ public:
 signals:
 
 private:
-	void showByYears(const DataList& data_list);
+	void showByFlights(const DataList& data_list);
+	void showByDist(const DataList& data_list);
 };
 
 } // namespace Flights

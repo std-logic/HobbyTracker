@@ -38,6 +38,7 @@ void Flights::WidgetDataList::showByYears(const DataList& data_list)
 		auto item_year = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_year->setText(CLMN_DATE, year);
 		item_year->setNumb(CLMN_COUNT, DataList::flightsNumInSublist(flights));
+		item_year->setNumb(CLMN_DIST, DataList::distInSublist(flights));
 
 		for (const auto flight : flights) {
 			auto item_flight = new Base::WidgetTreeItem(item_year);
