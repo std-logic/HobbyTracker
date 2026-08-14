@@ -12,6 +12,7 @@ namespace Music
 
 class Data : public Base::Data
 {
+	Q_DECLARE_TR_FUNCTIONS(Data)
 public:
 	Data() = default;
 
@@ -56,6 +57,10 @@ public:
 	{ return stateString(_state); }
 	static inline QString stateString(States state)
 	{ return (state == States::Active) ? QStringLiteral("+") : QStringLiteral("−"); }
+	inline QString stateStringYesNo() const
+	{ return stateStringYesNo(_state); }
+	static inline QString stateStringYesNo(States state)
+	{ return (state == States::Active) ? tr("Да") : tr("Нет"); }
 	inline QColor stateColor() const
 	{ return stateColor(_state); }
 	static inline QColor stateColor(States state)
@@ -71,10 +76,26 @@ public:
 	{ return liveString(_live); }
 	static inline QString liveString(Live live)
 	{ return (live == Live::Visited) ? QStringLiteral("+") : QStringLiteral("−"); }
+	inline QString liveStringYesNo() const
+	{ return liveStringYesNo(_live); }
+	static inline QString liveStringYesNo(Live live)
+	{ return (live == Live::Visited) ? tr("Да") : tr("Нет"); }
 	inline QColor liveColor() const
 	{ return liveColor(_live); }
 	static inline QColor liveColor(Live live)
 	{ return (live == Live::Visited) ? QColor(180, 245, 190) : QColor(245, 190, 190); }
+
+	QString summaryString() const
+	{
+		QString text;
+		text += _title;
+		text += tr("\n\nЖанр: %1").arg(_genre);
+		text += tr("\nСтрана основания: %1").arg(_country);
+		text += tr("\nГод основания: %1").arg(yearString());
+		text += tr("\nБыл на концерте: %1").arg(liveStringYesNo());
+		text += tr("\nАктивна: %1").arg(stateStringYesNo());
+		return text;
+	}
 
 	inline bool operator==(const Data& other) const noexcept
 	{
@@ -91,7 +112,7 @@ private:
 	QString _genre;
 	QString _country;
 	uint32_t _year = Global::undefined_value;
-	States _state = States::Active;
+	States _state = States::Inactive;
 	Live _live = Live::Unvisited;
 };
 

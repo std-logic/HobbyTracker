@@ -28,7 +28,7 @@ void Music::WidgetDataList::showSimple(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_GENRE, CLMN_COUNTRY, CLMN_YEAR, CLMN_LIVE, CLMN_STATE};
 	initColumns({tr("Название"), tr("Жанр"), tr("Страна основания"),
-				 tr("Год основания"), tr("Концерт"), tr("Статус")},
+				 tr("Год основания"), tr("Концерт"), tr("Активна")},
 				{WIDTH_TITLE, WIDTH_GENRE, WIDTH_COUNTRY, WIDTH_YEAR, WIDTH_LIVE, WIDTH_STATE});
 	initSorting(CLMN_TITLE);
 
@@ -42,6 +42,7 @@ void Music::WidgetDataList::showSimple(const DataList& data_list)
 		item_artist->setBackground(CLMN_LIVE, artist.liveColor());
 		item_artist->setText(CLMN_STATE, artist.stateString());
 		item_artist->setBackground(CLMN_STATE, artist.stateColor());
+		item_artist->setToolTipEverywhere(artist.summaryString());
 		item_artist->setId(artist.id());
 	}
 }
@@ -50,7 +51,7 @@ void Music::WidgetDataList::showByGenres(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_COUNTRY, CLMN_YEAR, CLMN_LIVE, CLMN_STATE};
 	initColumns({tr("Жанр / Название"), tr("К-во"), tr("Страна основания"),
-				 tr("Год основания"), tr("Концерт"), tr("Статус")},
+				 tr("Год основания"), tr("Концерт"), tr("Активна")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_COUNTRY, WIDTH_YEAR, WIDTH_LIVE, WIDTH_STATE});
 	initSorting(CLMN_TITLE);
 
@@ -71,6 +72,7 @@ void Music::WidgetDataList::showByGenres(const DataList& data_list)
 			item_artist->setBackground(CLMN_LIVE, artist->liveColor());
 			item_artist->setText(CLMN_STATE, artist->stateString());
 			item_artist->setBackground(CLMN_STATE, artist->stateColor());
+			item_artist->setToolTipEverywhere(artist->summaryString());
 			item_artist->setId(artist->id());
 		}
 	}
@@ -80,7 +82,7 @@ void Music::WidgetDataList::showByCountries(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR, CLMN_LIVE, CLMN_STATE};
 	initColumns({tr("Страна основания / Название"), tr("К-во"), tr("Жанр"),
-				 tr("Год основания"), tr("Концерт"), tr("Статус")},
+				 tr("Год основания"), tr("Концерт"), tr("Активна")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR, WIDTH_LIVE, WIDTH_STATE});
 	initSorting(CLMN_TITLE);
 
@@ -101,6 +103,7 @@ void Music::WidgetDataList::showByCountries(const DataList& data_list)
 			item_artist->setBackground(CLMN_LIVE, artist->liveColor());
 			item_artist->setText(CLMN_STATE, artist->stateString());
 			item_artist->setBackground(CLMN_STATE, artist->stateColor());
+			item_artist->setToolTipEverywhere(artist->summaryString());
 			item_artist->setId(artist->id());
 		}
 	}
@@ -110,7 +113,7 @@ void Music::WidgetDataList::showByDecades(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_COUNTRY, CLMN_YEAR, CLMN_LIVE, CLMN_STATE};
 	initColumns({tr("Десятилетие основания / Название"), tr("К-во"), tr("Жанр"),
-				 tr("Страна основания"), tr("Год основания"), tr("Концерт"), tr("Статус")},
+				 tr("Страна основания"), tr("Год основания"), tr("Концерт"), tr("Активна")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_COUNTRY, WIDTH_YEAR, WIDTH_LIVE, WIDTH_STATE});
 	initSorting(CLMN_TITLE);
 
@@ -132,6 +135,7 @@ void Music::WidgetDataList::showByDecades(const DataList& data_list)
 			item_artist->setBackground(CLMN_LIVE, artist->liveColor());
 			item_artist->setText(CLMN_STATE, artist->stateString());
 			item_artist->setBackground(CLMN_STATE, artist->stateColor());
+			item_artist->setToolTipEverywhere(artist->summaryString());
 			item_artist->setId(artist->id());
 		}
 	}
@@ -141,7 +145,7 @@ void Music::WidgetDataList::showByLive(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_COUNTRY, CLMN_YEAR, CLMN_STATE};
 	initColumns({tr("Концерт / Название"), tr("К-во"), tr("Жанр"),
-				 tr("Страна основания"), tr("Год основания"), tr("Статус")},
+				 tr("Страна основания"), tr("Год основания"), tr("Активна")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_COUNTRY, WIDTH_YEAR, WIDTH_STATE});
 	initSorting(CLMN_TITLE);
 
@@ -161,6 +165,7 @@ void Music::WidgetDataList::showByLive(const DataList& data_list)
 			item_artist->setText(CLMN_YEAR, artist->yearString());
 			item_artist->setText(CLMN_STATE, artist->stateString());
 			item_artist->setBackground(CLMN_STATE, artist->stateColor());
+			item_artist->setToolTipEverywhere(artist->summaryString());
 			item_artist->setId(artist->id());
 		}
 	}
@@ -169,7 +174,7 @@ void Music::WidgetDataList::showByLive(const DataList& data_list)
 void Music::WidgetDataList::showByStates(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_COUNTRY, CLMN_YEAR, CLMN_LIVE};
-	initColumns({tr("Статус / Название"), tr("К-во"), tr("Жанр"),
+	initColumns({tr("Активна / Название"), tr("К-во"), tr("Жанр"),
 				 tr("Страна основания"), tr("Год основания"), tr("Концерт")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_COUNTRY, WIDTH_YEAR, WIDTH_LIVE});
 	initSorting(CLMN_TITLE);
@@ -190,6 +195,7 @@ void Music::WidgetDataList::showByStates(const DataList& data_list)
 			item_artist->setText(CLMN_YEAR, artist->yearString());
 			item_artist->setText(CLMN_LIVE, artist->liveString());
 			item_artist->setBackground(CLMN_LIVE, artist->liveColor());
+			item_artist->setToolTipEverywhere(artist->summaryString());
 			item_artist->setId(artist->id());
 		}
 	}

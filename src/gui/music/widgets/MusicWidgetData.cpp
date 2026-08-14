@@ -38,11 +38,9 @@ void Music::WidgetData::initWidgets()
 	add(tr("Год основания:"), _edit_year);
 	_edit_year->setValidator(new QIntValidator(1, 2100, _edit_year));
 
-	add(tr("Концерт:"), _check_live);
-	_check_live->setText(tr("Посещён"));
+	add(tr("Был на концерте:"), _check_live);
 
-	add(tr("Статус:"), _check_state);
-	_check_state->setText(tr("Активна"));
+	add(tr("Активна:"), _check_state);
 }
 
 void Music::WidgetData::copyDataToGui()
