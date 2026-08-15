@@ -4,6 +4,8 @@
 
 #include <gui/base/widgets/BaseWidgetTreeItem.h>
 
+#include <QDate>
+
 Flights::WidgetDataList::WidgetDataList(QWidget* parent)
 	: Base::WidgetTree{parent}
 {
@@ -30,15 +32,17 @@ void Flights::WidgetDataList::showByYears(const DataList& data_list)
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_DIST, CLMN_POINTS};
 	initColumns({tr("Год / Дата"), tr("К-во"), tr("Километров"), tr("Маршрут")},
 				{WIDTH_DATE, WIDTH_COUNT, WIDTH_DIST, WIDTH_POINTS});
-	initSorting(CLMN_DATE);
+	initSorting(CLMN_DATE, Qt::DescendingOrder);
 
 	auto flights_by_years = data_list.flightsByYears();
+	auto curr_year = QString::number(QDate::currentDate().year());
 
 	for (const auto& [year, flights] : flights_by_years) {
 		auto item_year = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_year->setText(CLMN_DATE, year);
 		item_year->setNumb(CLMN_COUNT, DataList::flightsNumInSublist(flights));
 		item_year->setNumb(CLMN_DIST, DataList::distInSublist(flights));
+		if (year == curr_year) { item_year->setExpanded(true); }
 
 		for (const auto flight : flights) {
 			auto item_flight = new Base::WidgetTreeItem(item_year);
@@ -193,7 +197,7 @@ void Flights::WidgetDataList::showSimple(const DataList& data_list)
 	enum Columns {CLMN_DATE, CLMN_DIST, CLMN_POINTS};
 	initColumns({tr("Дата"), tr("Километров"), tr("Маршрут")},
 				{WIDTH_DATE, WIDTH_DIST, WIDTH_POINTS});
-	initSorting(CLMN_DATE);
+	initSorting(CLMN_DATE, Qt::DescendingOrder);
 
 	for (const auto& flight : data_list) {
 		auto item_flight = new Base::WidgetTreeItem(this);

@@ -20,7 +20,7 @@ void Bike::WidgetDataList::showSimple(const DataList& data_list)
 	enum Columns {CLMN_YEAR, CLMN_TIME, CLMN_DIST};
 	initColumns({tr("Год"), tr("Часов"), tr("Километров")},
 				{WIDTH_YEAR, WIDTH_TIME, WIDTH_DIST});
-	initSorting(CLMN_YEAR);
+	initSorting(CLMN_YEAR, Qt::DescendingOrder);
 
 	for (const auto& data : data_list) {
 		auto item_data = new Base::WidgetTreeItem(this);

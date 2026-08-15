@@ -29,7 +29,7 @@ void Trekking::WidgetDataList::showSimple(const DataList& data_list)
 				 tr("Тип"), tr("Страны"), tr("Место")},
 				{WIDTH_DATE, WIDTH_TIME, WIDTH_DIST, WIDTH_PEAK,
 				 WIDTH_KIND, WIDTH_COUNTRIES, WIDTH_PLACES});
-	initSorting(CLMN_DATE);
+	initSorting(CLMN_DATE, Qt::DescendingOrder);
 
 	for (const auto& track : data_list) {
 		auto item_track = new Base::WidgetTreeItem(this);

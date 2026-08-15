@@ -5,6 +5,8 @@
 #include <gui/base/data/BaseExtraList.h>
 #include <gui/base/widgets/BaseWidgetTreeItem.h>
 
+#include <QDate>
+
 Concerts::WidgetDataList::WidgetDataList(QWidget* parent)
 	: Base::WidgetTree{parent}
 {
@@ -44,14 +46,16 @@ void Concerts::WidgetDataList::showByYears(const DataList& data_list)
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE};
 	initColumns({tr("Год / Дата"), tr("К-во"), tr("Группы"), tr("Страна"), tr("Город"), tr("Место")},
 				{WIDTH_DATE_SMALL, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_COUNTRY, WIDTH_CITY, WIDTH_PLACE});
-	initSorting(CLMN_DATE);
+	initSorting(CLMN_DATE, Qt::DescendingOrder);
 
 	auto concerts_by_years = data_list.concertsByYears();
+	auto curr_year = QString::number(QDate::currentDate().year());
 
 	for (const auto& [year, concerts] : concerts_by_years) {
 		auto item_year = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_year->setText(CLMN_DATE, year);
 		item_year->setNumb(CLMN_COUNT, concerts.size());
+		if (year == curr_year) { item_year->setExpanded(true); }
 
 		for (const auto concert : concerts) {
 			auto item_concert = new Base::WidgetTreeItem(item_year);
@@ -263,7 +267,7 @@ void Concerts::WidgetDataList::showSimple(const DataList& data_list)
 	enum Columns {CLMN_DATE, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE};
 	initColumns({tr("Дата"), tr("Группы"), tr("Страна"), tr("Город"), tr("Место")},
 				{WIDTH_DATE_SMALL, WIDTH_ARTISTS, WIDTH_COUNTRY, WIDTH_CITY, WIDTH_PLACE});
-	initSorting(CLMN_DATE);
+	initSorting(CLMN_DATE, Qt::DescendingOrder);
 
 	for (const auto& concert : data_list) {
 		auto item_concert = new Base::WidgetTreeItem(this);
