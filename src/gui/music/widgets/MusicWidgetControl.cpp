@@ -59,6 +59,15 @@ void Music::WidgetControl::initWidgets()
 	{
 		addSpacing();
 		addButtonShow(_button_chart, tr("Статистика"), &WidgetControl::showChart);
+		addComboBox(_combo_chart_view_mode, &WidgetControl::setChartViewMode, {
+				{tr("По жанрам"), static_cast<int>(ChartViewModes::ByGenres)},
+				{tr("По странам"), static_cast<int>(ChartViewModes::ByCountries)},
+				{tr("По десятилетиям"), static_cast<int>(ChartViewModes::ByDecades)},
+		});
+
+		_button_chart->addSlaveWidgets({
+			_combo_chart_view_mode,
+		});
 	}
 
 	addButtonSettings();

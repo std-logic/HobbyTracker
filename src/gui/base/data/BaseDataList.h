@@ -25,6 +25,7 @@ public:
 	using SublistsByStrings = std::unordered_map<QString, SubListContainer>;
 	using SublistsByIntegers = std::unordered_map<uint32_t, SubListContainer>;
 	using NumbersByStrings = std::map<QString, int>;
+	using NumbersByStringsVec = std::vector<std::pair<QString, int>>;
 	using NumbersByIntegers = std::map<uint32_t, int>;
 	using ListOfStrings = std::set<QString>;
 	using DataMethodReturningString = QString (T::*)() const;
@@ -80,7 +81,7 @@ public:
 		return -1;
 	}
 
-	// Return items, grouped by string values from method (typical for using in WidgetTree)
+	// Return items, grouped by string values from method
 	SublistsByStrings sublistsByStrings(DataMethodReturningString method) const
 	{
 		SublistsByStrings list;
@@ -90,7 +91,7 @@ public:
 		return list;
 	}
 
-	// Return items, grouped by string values from method with condition (typical for using in WidgetTree)
+	// Return items, grouped by string values from method with condition
 	SublistsByStrings sublistsByStrings(DataMethodReturningString method,
 			DataMethodReturningBool condition, bool condition_on) const
 	{
@@ -102,7 +103,7 @@ public:
 		return list;
 	}
 
-	// Return items, grouped by string values from method (typical for using in WidgetTree)
+	// Return items, grouped by string values from method
 	SublistsByStrings sublistsByStrings(DataMethodReturningStringList method) const
 	{
 		SublistsByStrings list;
@@ -115,7 +116,7 @@ public:
 		return list;
 	}
 
-	// Return items, grouped by string values from method with condition (typical for using in WidgetTree)
+	// Return items, grouped by string values from method with condition
 	SublistsByStrings sublistsByStrings(DataMethodReturningStringList method,
 			DataMethodReturningBool condition, bool condition_on) const
 	{
@@ -153,7 +154,7 @@ public:
 		return list;
 	}
 
-	// Return items, grouped by integer values from method (typical for using in WidgetTree)
+	// Return items, grouped by integer values from method
 	SublistsByIntegers sublistsByIntegers(DataMethodReturningInteger method) const
 	{
 		SublistsByIntegers list;
@@ -163,7 +164,7 @@ public:
 		return list;
 	}
 
-	// Return items, grouped by integer values from method with condition (typical for using in WidgetTree)
+	// Return items, grouped by integer values from method with condition
 	SublistsByIntegers sublistsByIntegers(DataMethodReturningInteger method,
 			DataMethodReturningBool condition, bool condition_on) const
 	{
@@ -175,7 +176,7 @@ public:
 		return list;
 	}
 
-	// Return list of string values from method (typical for using in ComboEdit)
+	// Return list of string values from method
 	ListOfStrings listOfStrings(DataMethodReturningString method) const
 	{
 		ListOfStrings list;
@@ -185,7 +186,7 @@ public:
 		return list;
 	}
 
-	// Return list of string values from method (typical for using in ComboEdit)
+	// Return list of string values from method
 	ListOfStrings listOfStrings(DataMethodReturningStringList method) const
 	{
 		ListOfStrings list;
@@ -198,7 +199,7 @@ public:
 		return list;
 	}
 
-	// Return numbers of items with the same string values of method (typical for using in WidgetChart)
+	// Return numbers of items with the same string values of method
 	NumbersByStrings numbersByStrings(DataMethodReturningString method) const
 	{
 		NumbersByStrings list;
@@ -208,7 +209,7 @@ public:
 		return list;
 	}
 
-	// Return numbers of items with the same string values of method with condition (typical for using in WidgetChart)
+	// Return numbers of items with the same string values of method with condition
 	NumbersByStrings numbersByStrings(DataMethodReturningString method,
 			DataMethodReturningBool condition, bool condition_on) const
 	{
@@ -220,7 +221,36 @@ public:
 		return list;
 	}
 
-	// Return numbers of items with the same integer values of method (typical for using in WidgetChart)
+	// Return numbers of items with the same string values of method
+	NumbersByStringsVec numbersByStringsVec(DataMethodReturningString method, size_t max_num) const
+	{
+		NumbersByStrings list = numbersByStrings(method);
+		NumbersByStringsVec vec(list.begin(), list.end());
+		max_num = std::min(max_num, vec.size());
+		std::partial_sort(vec.begin(), vec.begin() + max_num, vec.end(),
+				[](const auto& a, const auto& b)
+				{ return (a.second == b.second) ? (a.first < b.first) : (a.second > b.second); }
+		);
+		vec.resize(max_num);
+		return vec;
+	}
+
+	// Return numbers of items with the same string values of method with condition
+	NumbersByStringsVec numbersByStringsVec(DataMethodReturningString method, size_t max_num,
+			DataMethodReturningBool condition, bool condition_on) const
+	{
+		NumbersByStrings list = numbersByStrings(method, condition, condition_on);
+		NumbersByStringsVec vec(list.begin(), list.end());
+		max_num = std::min(max_num, vec.size());
+		std::partial_sort(vec.begin(), vec.begin() + max_num, vec.end(),
+				[](const auto& a, const auto& b)
+				{ return (a.second == b.second) ? (a.first < b.first) : (a.second > b.second); }
+		);
+		vec.resize(max_num);
+		return vec;
+	}
+
+	// Return numbers of items with the same integer values of method
 	NumbersByIntegers numbersByIntegers(DataMethodReturningInteger method) const
 	{
 		NumbersByIntegers list;
@@ -230,7 +260,7 @@ public:
 		return list;
 	}
 
-	// Return numbers of items with the same integer values of method with condition (typical for using in WidgetChart)
+	// Return numbers of items with the same integer values of method with condition
 	NumbersByIntegers numbersByIntegers(DataMethodReturningInteger method,
 			DataMethodReturningBool condition, bool condition_on) const
 	{
@@ -242,7 +272,7 @@ public:
 		return list;
 	}
 
-	// Return map of <method_key, method_val> integer values (typical for using in WidgetChart)
+	// Return map of <method_key, method_val> integer values
 	NumbersByIntegers numbersByIntegers(DataMethodReturningInteger method_key,
 			DataMethodReturningInteger method_val) const
 	{
@@ -253,7 +283,7 @@ public:
 		return list;
 	}
 
-	// Return map of <method_key, method_val> integer values with condition (typical for using in WidgetChart)
+	// Return map of <method_key, method_val> integer values with condition
 	NumbersByIntegers numbersByIntegers(DataMethodReturningInteger method_key,
 			DataMethodReturningInteger method_val,
 			DataMethodReturningBool condition, bool condition_on) const

@@ -1,4 +1,5 @@
 #include "MusicWidgetChart.h"
+#include "../common/MusicCommon.h"
 #include "../data/MusicDataList.h"
 
 Music::WidgetChart::WidgetChart(QWidget* parent)
@@ -9,7 +10,24 @@ Music::WidgetChart::WidgetChart(QWidget* parent)
 void Music::WidgetChart::update(const DataList& data_list)
 {
 	clearChart();
-	showByDecades(data_list);
+	switch (static_cast<ChartViewModes>(_view_mode)) {
+		case ChartViewModes::ByGenres:		showByGenres(data_list);		break;
+		case ChartViewModes::ByCountries:	showByCountries(data_list);		break;
+		case ChartViewModes::ByDecades:		showByDecades(data_list);		break;
+		default: return;
+	}
+}
+
+void Music::WidgetChart::showByGenres(const DataList& data_list)
+{
+	chart()->setTitle(tr("Распределение по жанрам"));
+	updateBars(data_list.numbersByGenres(10));
+}
+
+void Music::WidgetChart::showByCountries(const DataList& data_list)
+{
+	chart()->setTitle(tr("Распределение по странам"));
+	updateBars(data_list.numbersByCountries(10));
 }
 
 void Music::WidgetChart::showByDecades(const DataList& data_list)

@@ -25,9 +25,11 @@ public:
 	Summary summary() const;
 
 	SublistsByStrings artistsByGenres() const;
+	NumbersByStringsVec numbersByGenres(size_t max_num) const;
 	ListOfStrings listOfGenres() const;
 
 	SublistsByStrings artistsByCountries() const;
+	NumbersByStringsVec numbersByCountries(size_t max_num) const;
 	ListOfStrings listOfCountries() const;
 
 	SublistsByStrings artistsByYears(uint32_t step = 1) const;

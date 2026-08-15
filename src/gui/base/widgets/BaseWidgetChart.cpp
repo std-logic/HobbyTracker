@@ -141,6 +141,21 @@ void Base::WidgetChart::updateBars(const std::map<uint32_t, std::pair<QString, i
 	updateAxisYRange(min_y, max_y);
 }
 
+void Base::WidgetChart::updateBars(const std::vector<std::pair<QString, int>>& values)
+{
+	auto bar_axis_x = getAxisX();
+	auto bar_set = getBarSet();
+	int min_y = std::numeric_limits<int>::max();
+	int max_y = std::numeric_limits<int>::min();
+	for (const auto& [val_x, val_y] : values) {
+		bar_axis_x->append(val_x);
+		bar_set->append(val_y);
+		if (min_y > val_y) { min_y = val_y; }
+		if (max_y < val_y) { max_y = val_y; }
+	}
+	updateAxisYRange(min_y, max_y);
+}
+
 void Base::WidgetChart::updateAxisYRange(int min_y, int max_y)
 {
 	min_y = std::min(0, min_y);

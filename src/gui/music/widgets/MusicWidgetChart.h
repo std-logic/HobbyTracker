@@ -19,6 +19,8 @@ public:
 signals:
 
 private:
+	void showByGenres(const DataList& data_list);
+	void showByCountries(const DataList& data_list);
 	void showByDecades(const DataList& data_list);
 };
 

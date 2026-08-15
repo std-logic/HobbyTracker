@@ -25,6 +25,13 @@ enum class DataListViewModes
 	ByStates,
 };
 
+enum class ChartViewModes
+{
+	ByGenres,
+	ByCountries,
+	ByDecades,
+};
+
 enum CsvFiles
 {
 	CsvFileData,

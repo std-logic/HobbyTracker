@@ -31,6 +31,7 @@ protected:
 	void updateBars(const std::map<QString, int>& values);
 	void updateBars(const std::map<uint32_t, int>& values);
 	void updateBars(const std::map<uint32_t, std::pair<QString, int>>& values);
+	void updateBars(const std::vector<std::pair<QString, int>>& values);
 	void updateAxisYRange(int min_y, int max_y);
 
 private:

@@ -24,6 +24,11 @@ Music::DataList::SublistsByStrings Music::DataList::artistsByGenres() const
 	return sublistsByStrings(&Data::genre);
 }
 
+Music::DataList::NumbersByStringsVec Music::DataList::numbersByGenres(size_t max_num) const
+{
+	return numbersByStringsVec(&Data::genre, max_num);
+}
+
 Music::DataList::ListOfStrings Music::DataList::listOfGenres() const
 {
 	return listOfStrings(&Data::genre);
@@ -32,6 +37,11 @@ Music::DataList::ListOfStrings Music::DataList::listOfGenres() const
 Music::DataList::SublistsByStrings Music::DataList::artistsByCountries() const
 {
 	return sublistsByStrings(&Data::country);
+}
+
+Music::DataList::NumbersByStringsVec Music::DataList::numbersByCountries(size_t max_num) const
+{
+	return numbersByStringsVec(&Data::country, max_num);
 }
 
 Music::DataList::ListOfStrings Music::DataList::listOfCountries() const
