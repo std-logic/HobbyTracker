@@ -127,6 +127,14 @@ public:
 		}
 		return list_of_countries;
 	}
+	QStringList countriesRawList() const
+	{
+		QStringList list_of_countries;
+		for (const auto& point : _points) {
+			list_of_countries.append(point.country);
+		}
+		return list_of_countries;
+	}
 
 	inline QString city(size_t index) const
 	{ return _points[index].city; }
@@ -141,6 +149,14 @@ public:
 		}
 		return list_of_cities;
 	}
+	QStringList citiesRawList() const
+	{
+		QStringList list_of_cities;
+		for (const auto& point : _points) {
+			list_of_cities.append(point.city);
+		}
+		return list_of_cities;
+	}
 
 	inline QString airport(size_t index) const
 	{ return _points[index].airport; }
@@ -152,6 +168,14 @@ public:
 			if (!list_of_airports.contains(airport_str)) {
 				list_of_airports.append(airport_str);
 			}
+		}
+		return list_of_airports;
+	}
+	QStringList airportsRawList() const
+	{
+		QStringList list_of_airports;
+		for (const auto& point : _points) {
+			list_of_airports.append(point.airport);
 		}
 		return list_of_airports;
 	}

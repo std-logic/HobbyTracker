@@ -32,12 +32,15 @@ public:
 			uint32_t required_min = 0, uint32_t required_max = 0) const;
 
 	SublistsByStrings flightsByCountries() const;
+	NumbersByStringsVec numbersByCountries(size_t max_num) const;
 	ListOfStrings listOfCountries() const;
 
 	SublistsByStrings flightsByCities() const;
+	NumbersByStringsVec numbersByCities(size_t max_num) const;
 	ListOfStrings listOfCities(const QString& country) const;
 
 	SublistsByStrings flightsByAirports() const;
+	NumbersByStringsVec numbersByAirports(size_t max_num) const;
 	ListOfStrings listOfAirports(const QString& city) const;
 
 	SublistsByStrings flightsByRoutes() const;

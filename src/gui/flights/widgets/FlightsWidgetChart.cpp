@@ -13,6 +13,9 @@ void Flights::WidgetChart::update(const DataList& data_list)
 	switch (static_cast<ChartViewModes>(_view_mode)) {
 		case ChartViewModes::ByFlights:		showByFlights(data_list);		break;
 		case ChartViewModes::ByDist:		showByDist(data_list);			break;
+		case ChartViewModes::ByCountries:	showByCountries(data_list);		break;
+		case ChartViewModes::ByCities:		showByCities(data_list);		break;
+		case ChartViewModes::ByAirports:	showByAirports(data_list);		break;
 		default: return;
 	}
 }
@@ -27,4 +30,22 @@ void Flights::WidgetChart::showByDist(const DataList& data_list)
 {
 	chart()->setTitle(tr("Распределение километров по годам"));
 	updateBars(data_list.distByYears());
+}
+
+void Flights::WidgetChart::showByCountries(const DataList& data_list)
+{
+	chart()->setTitle(tr("Распределение по странам"));
+	updateBars(data_list.numbersByCountries(10));
+}
+
+void Flights::WidgetChart::showByCities(const DataList& data_list)
+{
+	chart()->setTitle(tr("Распределение по городам"));
+	updateBars(data_list.numbersByCities(10));
+}
+
+void Flights::WidgetChart::showByAirports(const DataList& data_list)
+{
+	chart()->setTitle(tr("Распределение по аэропортам"));
+	updateBars(data_list.numbersByAirports(10));
 }

@@ -22,6 +22,9 @@ enum class ChartViewModes
 {
 	ByFlights,
 	ByDist,
+	ByCountries,
+	ByCities,
+	ByAirports,
 };
 
 enum CsvFiles

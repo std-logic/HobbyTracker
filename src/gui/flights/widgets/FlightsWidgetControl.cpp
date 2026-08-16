@@ -48,6 +48,9 @@ void Flights::WidgetControl::initWidgets()
 		addComboBox(_combo_chart_view_mode, &WidgetControl::setChartViewMode, {
 				{tr("По полётам"), static_cast<int>(ChartViewModes::ByFlights)},
 				{tr("По километрам"), static_cast<int>(ChartViewModes::ByDist)},
+				{tr("По странам"), static_cast<int>(ChartViewModes::ByCountries)},
+				{tr("По городам"), static_cast<int>(ChartViewModes::ByCities)},
+				{tr("По аэропортам"), static_cast<int>(ChartViewModes::ByAirports)},
 		});
 
 		_button_chart->addSlaveWidgets({

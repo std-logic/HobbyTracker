@@ -21,6 +21,9 @@ signals:
 private:
 	void showByFlights(const DataList& data_list);
 	void showByDist(const DataList& data_list);
+	void showByCountries(const DataList& data_list);
+	void showByCities(const DataList& data_list);
+	void showByAirports(const DataList& data_list);
 };
 
 } // namespace Flights

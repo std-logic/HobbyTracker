@@ -47,6 +47,11 @@ Flights::DataList::SublistsByStrings Flights::DataList::flightsByCountries() con
 	return sublistsByStrings(&Data::countries);
 }
 
+Flights::DataList::NumbersByStringsVec Flights::DataList::numbersByCountries(size_t max_num) const
+{
+	return sortedVec(numbersByStrings(&Data::countriesRawList), max_num);
+}
+
 Flights::DataList::ListOfStrings Flights::DataList::listOfCountries() const
 {
 	return listOfStrings(&Data::countries);
@@ -55,6 +60,11 @@ Flights::DataList::ListOfStrings Flights::DataList::listOfCountries() const
 Flights::DataList::SublistsByStrings Flights::DataList::flightsByCities() const
 {
 	return sublistsByStrings(&Data::cities);
+}
+
+Flights::DataList::NumbersByStringsVec Flights::DataList::numbersByCities(size_t max_num) const
+{
+	return sortedVec(numbersByStrings(&Data::citiesRawList), max_num);
 }
 
 Flights::DataList::ListOfStrings Flights::DataList::listOfCities(const QString& country) const
@@ -73,6 +83,11 @@ Flights::DataList::ListOfStrings Flights::DataList::listOfCities(const QString& 
 Flights::DataList::SublistsByStrings Flights::DataList::flightsByAirports() const
 {
 	return sublistsByStrings(&Data::airports);
+}
+
+Flights::DataList::NumbersByStringsVec Flights::DataList::numbersByAirports(size_t max_num) const
+{
+	return sortedVec(numbersByStrings(&Data::airportsRawList), max_num);
 }
 
 Flights::DataList::ListOfStrings Flights::DataList::listOfAirports(const QString& city) const
