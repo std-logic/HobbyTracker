@@ -19,6 +19,8 @@ public:
 signals:
 
 private:
+	void showByAuthors(const DataList& data_list);
+	void showByGenres(const DataList& data_list);
 	void showByDecades(const DataList& data_list);
 	void showByCenturies(const DataList& data_list);
 	void showByRatings(const DataList& data_list);

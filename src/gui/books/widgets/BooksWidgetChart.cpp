@@ -11,11 +11,25 @@ void Books::WidgetChart::update(const DataList& data_list)
 {
 	clearChart();
 	switch (static_cast<ChartViewModes>(_view_mode)) {
+		case ChartViewModes::ByAuthors:		showByAuthors(data_list);		break;
+		case ChartViewModes::ByGenres:		showByGenres(data_list);		break;
 		case ChartViewModes::ByDecades:		showByDecades(data_list);		break;
 		case ChartViewModes::ByCenturies:	showByCenturies(data_list);		break;
 		case ChartViewModes::ByRatings:		showByRatings(data_list);		break;
 		default: return;
 	}
+}
+
+void Books::WidgetChart::showByAuthors(const DataList& data_list)
+{
+	chart()->setTitle(tr("Распределение по авторам"));
+	updateBars(data_list.numbersByAuthors(10));
+}
+
+void Books::WidgetChart::showByGenres(const DataList& data_list)
+{
+	chart()->setTitle(tr("Распределение по жанрам"));
+	updateBars(data_list.numbersByGenres(10));
 }
 
 void Books::WidgetChart::showByDecades(const DataList& data_list)

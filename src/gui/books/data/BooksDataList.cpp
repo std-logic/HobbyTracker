@@ -24,6 +24,11 @@ Books::DataList::SublistsByStrings Books::DataList::booksByAuthors() const
 	return sublistsByStrings(&Data::author);
 }
 
+Books::DataList::NumbersByStringsVec Books::DataList::numbersByAuthors(size_t max_num) const
+{
+	return sortedVec(numbersByStrings(&Data::authorTr), max_num);
+}
+
 Books::DataList::ListOfStrings Books::DataList::listOfAuthorsTr() const
 {
 	return listOfStrings(&Data::authorTr);
@@ -47,6 +52,11 @@ QString Books::DataList::findAuthorOrigByTr(const QString& author_tr) const
 Books::DataList::SublistsByStrings Books::DataList::booksByGenres() const
 {
 	return sublistsByStrings(&Data::genre);
+}
+
+Books::DataList::NumbersByStringsVec Books::DataList::numbersByGenres(size_t max_num) const
+{
+	return sortedVec(numbersByStrings(&Data::genre), max_num);
 }
 
 Books::DataList::ListOfStrings Books::DataList::listOfGenres() const

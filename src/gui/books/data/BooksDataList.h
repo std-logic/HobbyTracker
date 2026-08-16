@@ -24,11 +24,13 @@ public:
 	Summary summary() const;
 
 	SublistsByStrings booksByAuthors() const;
+	NumbersByStringsVec numbersByAuthors(size_t max_num) const;
 	ListOfStrings listOfAuthorsTr() const;
 	ListOfStrings listOfAuthorsOrig() const;
 	QString findAuthorOrigByTr(const QString& author_tr) const;
 
 	SublistsByStrings booksByGenres() const;
+	NumbersByStringsVec numbersByGenres(size_t max_num) const;
 	ListOfStrings listOfGenres() const;
 
 	SublistsByStrings booksByYears(uint32_t step = 1) const;

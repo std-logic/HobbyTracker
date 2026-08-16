@@ -60,6 +60,8 @@ void Books::WidgetControl::initWidgets()
 		addSpacing();
 		addButtonShow(_button_chart, tr("Статистика"), &WidgetControl::showChart);
 		addComboBox(_combo_chart_view_mode, &WidgetControl::setChartViewMode, {
+				{tr("По авторам"), static_cast<int>(ChartViewModes::ByAuthors)},
+				{tr("По жанрам"), static_cast<int>(ChartViewModes::ByGenres)},
 				{tr("По десятилетиям"), static_cast<int>(ChartViewModes::ByDecades)},
 				{tr("По столетиям"), static_cast<int>(ChartViewModes::ByCenturies)},
 				{tr("По оценкам"), static_cast<int>(ChartViewModes::ByRatings)},
