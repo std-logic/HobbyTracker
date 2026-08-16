@@ -16,6 +16,9 @@ enum class DataListViewModes
 
 enum class ChartViewModes
 {
+	BySeries,
+	ByDevelopers,
+	ByGenres,
 	ByYears,
 	ByDecades,
 	ByRatings,

@@ -11,11 +11,32 @@ void Games::WidgetChart::update(const DataList& data_list)
 {
 	clearChart();
 	switch (static_cast<ChartViewModes>(_view_mode)) {
+		case ChartViewModes::BySeries:		showBySeries(data_list);		break;
+		case ChartViewModes::ByDevelopers:	showByDevelopers(data_list);	break;
+		case ChartViewModes::ByGenres:		showByGenres(data_list);		break;
 		case ChartViewModes::ByYears:		showByYears(data_list);			break;
 		case ChartViewModes::ByDecades:		showByDecades(data_list);		break;
 		case ChartViewModes::ByRatings:		showByRatings(data_list);		break;
 		default: return;
 	}
+}
+
+void Games::WidgetChart::showBySeries(const DataList& data_list)
+{
+	chart()->setTitle(tr("Распределение по сериям"));
+	updateBars(data_list.numbersBySeries(10));
+}
+
+void Games::WidgetChart::showByDevelopers(const DataList& data_list)
+{
+	chart()->setTitle(tr("Распределение по разработчикам"));
+	updateBars(data_list.numbersByDevelopers(10));
+}
+
+void Games::WidgetChart::showByGenres(const DataList& data_list)
+{
+	chart()->setTitle(tr("Распределение по жанрам"));
+	updateBars(data_list.numbersByGenres(10));
 }
 
 void Games::WidgetChart::showByYears(const DataList& data_list)

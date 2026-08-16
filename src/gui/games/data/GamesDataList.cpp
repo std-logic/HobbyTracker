@@ -26,6 +26,11 @@ Games::DataList::SublistsByStrings Games::DataList::gamesBySeries() const
 	return sublistsByStrings(&Data::series);
 }
 
+Games::DataList::NumbersByStringsVec Games::DataList::numbersBySeries(size_t max_num) const
+{
+	return sortedVec(numbersByStrings(&Data::series), max_num);
+}
+
 Games::DataList::ListOfStrings Games::DataList::listOfSeries() const
 {
 	return listOfStrings(&Data::series);
@@ -36,6 +41,11 @@ Games::DataList::SublistsByStrings Games::DataList::gamesByDevelopers() const
 	return sublistsByStrings(&Data::developer);
 }
 
+Games::DataList::NumbersByStringsVec Games::DataList::numbersByDevelopers(size_t max_num) const
+{
+	return sortedVec(numbersByStrings(&Data::developer), max_num);
+}
+
 Games::DataList::ListOfStrings Games::DataList::listOfDevelopers() const
 {
 	return listOfStrings(&Data::developer);
@@ -44,6 +54,11 @@ Games::DataList::ListOfStrings Games::DataList::listOfDevelopers() const
 Games::DataList::SublistsByStrings Games::DataList::gamesByGenres() const
 {
 	return sublistsByStrings(&Data::genre);
+}
+
+Games::DataList::NumbersByStringsVec Games::DataList::numbersByGenres(size_t max_num) const
+{
+	return sortedVec(numbersByStrings(&Data::genre), max_num);
 }
 
 Games::DataList::ListOfStrings Games::DataList::listOfGenres() const

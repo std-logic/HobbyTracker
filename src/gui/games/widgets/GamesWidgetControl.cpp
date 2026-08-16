@@ -61,9 +61,12 @@ void Games::WidgetControl::initWidgets()
 		addSpacing();
 		addButtonShow(_button_chart, tr("Статистика"), &WidgetControl::showChart);
 		addComboBox(_combo_chart_view_mode, &WidgetControl::setChartViewMode, {
+				{tr("По сериям"), static_cast<int>(ChartViewModes::BySeries)},
+				{tr("По разработчикам"), static_cast<int>(ChartViewModes::ByDevelopers)},
+				{tr("По жанрам"), static_cast<int>(ChartViewModes::ByGenres)},
 				{tr("По годам"), static_cast<int>(ChartViewModes::ByYears)},
 				{tr("По десятилетиям"), static_cast<int>(ChartViewModes::ByDecades)},
-				{tr("По оценкам"), static_cast<int>(ChartViewModes::ByRatings)}
+				{tr("По оценкам"), static_cast<int>(ChartViewModes::ByRatings)},
 		});
 
 		_button_chart->addSlaveWidgets({

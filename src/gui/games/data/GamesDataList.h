@@ -25,12 +25,15 @@ public:
 	Summary summary() const;
 
 	SublistsByStrings gamesBySeries() const;
+	NumbersByStringsVec numbersBySeries(size_t max_num) const;
 	ListOfStrings listOfSeries() const;
 
 	SublistsByStrings gamesByDevelopers() const;
+	NumbersByStringsVec numbersByDevelopers(size_t max_num) const;
 	ListOfStrings listOfDevelopers() const;
 
 	SublistsByStrings gamesByGenres() const;
+	NumbersByStringsVec numbersByGenres(size_t max_num) const;
 	ListOfStrings listOfGenres() const;
 
 	SublistsByStrings gamesByYears(uint32_t step = 1) const;
