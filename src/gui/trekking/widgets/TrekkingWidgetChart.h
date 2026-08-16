@@ -20,6 +20,7 @@ signals:
 
 private:
 	void showByYears(const DataList& data_list);
+	void showByCountries(const DataList& data_list);
 };
 
 } // namespace Trekking

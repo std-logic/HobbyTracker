@@ -41,6 +41,14 @@ void Trekking::WidgetControl::initWidgets()
 	{
 		addSpacing();
 		addButtonShow(_button_chart, tr("Статистика"), &WidgetControl::showChart);
+		addComboBox(_combo_chart_view_mode, &WidgetControl::setChartViewMode, {
+				{tr("По годам"), static_cast<int>(ChartViewModes::ByYears)},
+				{tr("По странам"), static_cast<int>(ChartViewModes::ByCountries)},
+		});
+
+		_button_chart->addSlaveWidgets({
+			_combo_chart_view_mode,
+		});
 	}
 
 	addButtonSettings();

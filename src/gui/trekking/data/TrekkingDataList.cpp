@@ -32,6 +32,11 @@ Trekking::DataList::SublistsByStrings Trekking::DataList::tracksByCountries() co
 	return sublistsByStrings(&Data::countries);
 }
 
+Trekking::DataList::NumbersByStringsVec Trekking::DataList::numbersByCountries(size_t max_num) const
+{
+	return sortedVec(numbersByStrings(&Data::countries), max_num);
+}
+
 Trekking::DataList::SublistsByStrings Trekking::DataList::tracksByKinds() const
 {
 	return sublistsByStrings(&Data::kind);

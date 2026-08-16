@@ -47,6 +47,8 @@ void Trekking::WidgetMain::initConnections()
 
 	connect(_widget_control, &WidgetControl::showChart,
 			_widget_chart, &WidgetChart::setVisible);
+	connect(_widget_control, &WidgetControl::setChartViewMode,
+			_widget_chart, &WidgetChart::setViewMode);
 
 	connect(_widget_control, &WidgetControl::saveCsvData,
 			this, &WidgetMain::saveCsvData);

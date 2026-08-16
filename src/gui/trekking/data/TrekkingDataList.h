@@ -29,6 +29,7 @@ public:
 			uint32_t required_min = 0, uint32_t required_max = 0) const;
 
 	SublistsByStrings tracksByCountries() const;
+	NumbersByStringsVec numbersByCountries(size_t max_num) const;
 
 	SublistsByStrings tracksByKinds() const;
 	ListOfStrings listOfKinds() const;
