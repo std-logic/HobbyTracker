@@ -33,18 +33,23 @@ public:
 	ListOfStrings listOfKinds() const;
 
 	SublistsByStrings moviesByGenres(bool favorites_only = false) const;
+	NumbersByStringsVec numbersByGenres(size_t max_num, bool favorites_only = false) const;
 	ListOfStrings listOfGenres() const;
 
 	SublistsByStrings moviesByCountries(bool favorites_only = false) const;
+	NumbersByStringsVec numbersByCountries(size_t max_num, bool favorites_only = false) const;
 	ListOfStrings listOfCountries() const;
 
 	SublistsByStrings moviesByDirectors(bool favorites_only = false) const;
+	NumbersByStringsVec numbersByDirectors(size_t max_num, bool favorites_only = false) const;
 	ListOfStrings listOfDirectors() const;
 
 	SublistsByStrings moviesByWriters(bool favorites_only = false) const;
+	NumbersByStringsVec numbersByWriters(size_t max_num, bool favorites_only = false) const;
 	ListOfStrings listOfWriters() const;
 
 	SublistsByStrings moviesByActors(bool favorites_only = false) const;
+	NumbersByStringsVec numbersByActors(size_t max_num, bool favorites_only = false) const;
 	ListOfStrings listOfActors() const;
 
 	SublistsByStrings moviesByYears(uint32_t step = 1, bool favorites_only = false) const;

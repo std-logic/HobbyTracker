@@ -222,24 +222,36 @@ public:
 	}
 
 	// Return numbers of items with the same string values of method
-	NumbersByStringsVec numbersByStringsVec(DataMethodReturningString method, size_t max_num) const
+	NumbersByStrings numbersByStrings(DataMethodReturningStringList method) const
 	{
-		NumbersByStrings list = numbersByStrings(method);
-		NumbersByStringsVec vec(list.begin(), list.end());
-		max_num = std::min(max_num, vec.size());
-		std::partial_sort(vec.begin(), vec.begin() + max_num, vec.end(),
-				[](const auto& a, const auto& b)
-				{ return (a.second == b.second) ? (a.first < b.first) : (a.second > b.second); }
-		);
-		vec.resize(max_num);
-		return vec;
+		NumbersByStrings list;
+		for (const auto& data : _data_list) {
+			auto str_list = (data.*method)();
+			for (const auto& str : str_list) {
+				++list[str];
+			}
+		}
+		return list;
 	}
 
 	// Return numbers of items with the same string values of method with condition
-	NumbersByStringsVec numbersByStringsVec(DataMethodReturningString method, size_t max_num,
+	NumbersByStrings numbersByStrings(DataMethodReturningStringList method,
 			DataMethodReturningBool condition, bool condition_on) const
 	{
-		NumbersByStrings list = numbersByStrings(method, condition, condition_on);
+		NumbersByStrings list;
+		for (const auto& data : _data_list) {
+			if (condition_on && !(data.*condition)()) { continue; }
+			auto str_list = (data.*method)();
+			for (const auto& str : str_list) {
+				++list[str];
+			}
+		}
+		return list;
+	}
+
+	// Convert map NumbersByStrings to sorted vector of pairs string-number with maximum size max_num
+	static NumbersByStringsVec sortedVec(const NumbersByStrings& list, size_t max_num)
+	{
 		NumbersByStringsVec vec(list.begin(), list.end());
 		max_num = std::min(max_num, vec.size());
 		std::partial_sort(vec.begin(), vec.begin() + max_num, vec.end(),

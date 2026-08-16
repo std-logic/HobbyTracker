@@ -72,6 +72,12 @@ Movies::DataList::SublistsByStrings Movies::DataList::moviesByGenres(bool favori
 	return sublistsByStrings(&Data::genres, &Data::isFavorite, favorites_only);
 }
 
+Movies::DataList::NumbersByStringsVec Movies::DataList::numbersByGenres(
+		size_t max_num, bool favorites_only) const
+{
+	return sortedVec(numbersByStrings(&Data::genres, &Data::isFavorite, favorites_only), max_num);
+}
+
 Movies::DataList::ListOfStrings Movies::DataList::listOfGenres() const
 {
 	return listOfStrings(&Data::genres);
@@ -80,6 +86,12 @@ Movies::DataList::ListOfStrings Movies::DataList::listOfGenres() const
 Movies::DataList::SublistsByStrings Movies::DataList::moviesByCountries(bool favorites_only) const
 {
 	return sublistsByStrings(&Data::countries, &Data::isFavorite, favorites_only);
+}
+
+Movies::DataList::NumbersByStringsVec Movies::DataList::numbersByCountries(
+		size_t max_num, bool favorites_only) const
+{
+	return sortedVec(numbersByStrings(&Data::countries, &Data::isFavorite, favorites_only), max_num);
 }
 
 Movies::DataList::ListOfStrings Movies::DataList::listOfCountries() const
@@ -92,6 +104,12 @@ Movies::DataList::SublistsByStrings Movies::DataList::moviesByDirectors(bool fav
 	return sublistsByStrings(&Data::directors, &Data::isFavorite, favorites_only);
 }
 
+Movies::DataList::NumbersByStringsVec Movies::DataList::numbersByDirectors(
+		size_t max_num, bool favorites_only) const
+{
+	return sortedVec(numbersByStrings(&Data::directors, &Data::isFavorite, favorites_only), max_num);
+}
+
 Movies::DataList::ListOfStrings Movies::DataList::listOfDirectors() const
 {
 	return listOfStrings(&Data::directors);
@@ -102,6 +120,12 @@ Movies::DataList::SublistsByStrings Movies::DataList::moviesByWriters(bool favor
 	return sublistsByStrings(&Data::writers, &Data::isFavorite, favorites_only);
 }
 
+Movies::DataList::NumbersByStringsVec Movies::DataList::numbersByWriters(
+		size_t max_num, bool favorites_only) const
+{
+	return sortedVec(numbersByStrings(&Data::writers, &Data::isFavorite, favorites_only), max_num);
+}
+
 Movies::DataList::ListOfStrings Movies::DataList::listOfWriters() const
 {
 	return listOfStrings(&Data::writers);
@@ -110,6 +134,12 @@ Movies::DataList::ListOfStrings Movies::DataList::listOfWriters() const
 Movies::DataList::SublistsByStrings Movies::DataList::moviesByActors(bool favorites_only) const
 {
 	return sublistsByStrings(&Data::actors, &Data::isFavorite, favorites_only);
+}
+
+Movies::DataList::NumbersByStringsVec Movies::DataList::numbersByActors(
+		size_t max_num, bool favorites_only) const
+{
+	return sortedVec(numbersByStrings(&Data::actors, &Data::isFavorite, favorites_only), max_num);
 }
 
 Movies::DataList::ListOfStrings Movies::DataList::listOfActors() const

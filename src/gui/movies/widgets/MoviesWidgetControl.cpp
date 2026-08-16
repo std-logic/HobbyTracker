@@ -67,8 +67,13 @@ void Movies::WidgetControl::initWidgets()
 		addButtonShow(_button_chart, tr("Статистика"), &WidgetControl::showChart);
 		addComboBox(_combo_chart_view_mode, &WidgetControl::setChartViewMode, {
 				{tr("По годам просмотра"), static_cast<int>(ChartViewModes::ByViewDates)},
+				{tr("По жанрам"), static_cast<int>(ChartViewModes::ByGenres)},
+				{tr("По странам"), static_cast<int>(ChartViewModes::ByCountries)},
 				{tr("По годам"), static_cast<int>(ChartViewModes::ByYears)},
 				{tr("По десятилетиям"), static_cast<int>(ChartViewModes::ByDecades)},
+				{tr("По режиссёрам"), static_cast<int>(ChartViewModes::ByDirectors)},
+				{tr("По сценаристам"), static_cast<int>(ChartViewModes::ByWriters)},
+				{tr("По актёрам"), static_cast<int>(ChartViewModes::ByActors)},
 				{tr("По оценкам"), static_cast<int>(ChartViewModes::ByRatings)},
 		});
 

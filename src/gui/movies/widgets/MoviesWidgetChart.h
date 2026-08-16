@@ -23,8 +23,13 @@ signals:
 
 private:
 	void showByViewDates(const DataList& data_list);
+	void showByGenres(const DataList& data_list);
+	void showByCountries(const DataList& data_list);
 	void showByYears(const DataList& data_list);
 	void showByDecades(const DataList& data_list);
+	void showByDirectors(const DataList& data_list);
+	void showByWriters(const DataList& data_list);
+	void showByActors(const DataList& data_list);
 	void showByRatings(const DataList& data_list);
 
 private:
