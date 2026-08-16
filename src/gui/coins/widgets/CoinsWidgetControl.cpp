@@ -58,6 +58,7 @@ void Coins::WidgetControl::initWidgets()
 		addSpacing();
 		addButtonShow(_button_chart, tr("Статистика"), &WidgetControl::showChart);
 		addComboBox(_combo_chart_view_mode, &WidgetControl::setChartViewMode, {
+				{tr("По странам"), static_cast<int>(ChartViewModes::ByCountries)},
 				{tr("По десятилетиям"), static_cast<int>(ChartViewModes::ByDecades)},
 				{tr("По столетиям"), static_cast<int>(ChartViewModes::ByCenturies)},
 				{tr("По диаметрам"), static_cast<int>(ChartViewModes::ByDiameters)},

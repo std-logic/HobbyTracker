@@ -91,6 +91,19 @@ public:
 		return list;
 	}
 
+	// Return items, grouped by string values from method with synonyms
+	SublistsByStrings sublistsByStrings(DataMethodReturningString method,
+			const Synonyms& synonyms) const
+	{
+		SublistsByStrings list;
+		for (const auto& data : _data_list) {
+			auto str = (data.*method)();
+			auto key = synonyms.contains(str) ? synonyms.at(str) : str;
+			list[key].push_back(&data);
+		}
+		return list;
+	}
+
 	// Return items, grouped by string values from method with condition
 	SublistsByStrings sublistsByStrings(DataMethodReturningString method,
 			DataMethodReturningBool condition, bool condition_on) const
@@ -209,6 +222,19 @@ public:
 		return list;
 	}
 
+	// Return numbers of items with the same string values of method with synonyms
+	NumbersByStrings numbersByStrings(DataMethodReturningString method,
+			const Synonyms& synonyms) const
+	{
+		NumbersByStrings list;
+		for (const auto& data : _data_list) {
+			auto str = (data.*method)();
+			auto key = synonyms.contains(str) ? synonyms.at(str) : str;
+			++list[key];
+		}
+		return list;
+	}
+
 	// Return numbers of items with the same string values of method with condition
 	NumbersByStrings numbersByStrings(DataMethodReturningString method,
 			DataMethodReturningBool condition, bool condition_on) const
@@ -249,7 +275,7 @@ public:
 		return list;
 	}
 
-	// Convert map NumbersByStrings to sorted vector of pairs string-number with maximum size max_num
+	// Convert map NumbersByStrings to sorted vector of pairs string-number with no more than max_num items
 	static NumbersByStringsVec sortedVec(const NumbersByStrings& list, size_t max_num)
 	{
 		NumbersByStringsVec vec(list.begin(), list.end());

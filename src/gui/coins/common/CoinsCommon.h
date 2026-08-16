@@ -13,6 +13,7 @@ enum class DataListViewModes
 
 enum class ChartViewModes
 {
+	ByCountries,
 	ByDecades,
 	ByCenturies,
 	ByDiameters,

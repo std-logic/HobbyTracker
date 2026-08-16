@@ -24,6 +24,7 @@ public:
 	Summary summary() const;
 
 	SublistsByStrings coinsByCountries(const Synonyms& synonyms) const;
+	NumbersByStringsVec numbersByCountries(size_t max_num, const Synonyms& synonyms) const;
 	ListOfStrings listOfCountries() const;
 
 	SublistsByStrings coinsByPeriods(const Synonyms& synonyms) const;

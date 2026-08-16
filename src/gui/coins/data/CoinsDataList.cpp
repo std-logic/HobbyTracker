@@ -20,13 +20,13 @@ Coins::DataList::Summary Coins::DataList::summary() const
 Coins::DataList::SublistsByStrings Coins::DataList::coinsByCountries(
 		const Synonyms& synonyms) const
 {
-	SublistsByStrings list;
-	for (const auto& data : _data_list) {
-		auto country = data.country();
-		auto key = synonyms.contains(country) ? synonyms.at(country) : country;
-		list[key].push_back(&data);
-	}
-	return list;
+	return sublistsByStrings(&Data::country, synonyms);
+}
+
+Coins::DataList::NumbersByStringsVec Coins::DataList::numbersByCountries(size_t max_num,
+		const Synonyms& synonyms) const
+{
+	return sortedVec(numbersByStrings(&Data::country, synonyms), max_num);
 }
 
 Coins::DataList::ListOfStrings Coins::DataList::listOfCountries() const

@@ -246,6 +246,7 @@ void Coins::WidgetMain::updateDependentOnExtra()
 {
 	updateDataList();
 	updateExtraList();
+	updateChart();
 }
 
 void Coins::WidgetMain::updateSummary()
@@ -265,5 +266,5 @@ void Coins::WidgetMain::updateExtraList()
 
 void Coins::WidgetMain::updateChart()
 {
-	_widget_chart->update(_data_list);
+	_widget_chart->update(_data_list, _extra_list);
 }
