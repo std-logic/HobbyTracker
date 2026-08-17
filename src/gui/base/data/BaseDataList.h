@@ -260,6 +260,21 @@ public:
 		return list;
 	}
 
+	// Return numbers of items with the same string values of method with synonyms
+	NumbersByStrings numbersByStrings(DataMethodReturningStringList method,
+			const Synonyms& synonyms) const
+	{
+		NumbersByStrings list;
+		for (const auto& data : _data_list) {
+			auto str_list = (data.*method)();
+			for (const auto& str : str_list) {
+				auto key = synonyms.contains(str) ? synonyms.at(str) : str;
+				++list[key];
+			}
+		}
+		return list;
+	}
+
 	// Return numbers of items with the same string values of method with condition
 	NumbersByStrings numbersByStrings(DataMethodReturningStringList method,
 			DataMethodReturningBool condition, bool condition_on) const

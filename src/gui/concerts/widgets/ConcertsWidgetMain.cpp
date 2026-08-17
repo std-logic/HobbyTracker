@@ -269,6 +269,7 @@ void Concerts::WidgetMain::updateDependentOnExtra()
 {
 	updateDataList();
 	updateExtraList();
+	updateChart();
 }
 
 void Concerts::WidgetMain::updateSummary()
@@ -288,5 +289,5 @@ void Concerts::WidgetMain::updateExtraList()
 
 void Concerts::WidgetMain::updateChart()
 {
-	_widget_chart->update(_data_list);
+	_widget_chart->update(_data_list, _extra_list);
 }

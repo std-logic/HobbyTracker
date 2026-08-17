@@ -56,6 +56,12 @@ Concerts::DataList::SublistsByStrings Concerts::DataList::concertsByArtists(cons
 	return list;
 }
 
+Concerts::DataList::NumbersByStringsVec Concerts::DataList::numbersByArtists(
+		size_t max_num, const Synonyms& synonyms) const
+{
+	return sortedVec(numbersByStrings(&Data::artists, synonyms), max_num);
+}
+
 Concerts::DataList::ListOfStrings Concerts::DataList::listOfArtists() const
 {
 	return listOfStrings(&Data::artists);
@@ -85,6 +91,12 @@ Concerts::DataList::SublistsByStrings Concerts::DataList::concertsByCountries() 
 	return sublistsByStrings(&Data::country);
 }
 
+Concerts::DataList::NumbersByStringsVec Concerts::DataList::numbersByCountries(
+		size_t max_num) const
+{
+	return sortedVec(numbersByStrings(&Data::country), max_num);
+}
+
 Concerts::DataList::ListOfStrings Concerts::DataList::listOfCountries() const
 {
 	return listOfStrings(&Data::country);
@@ -93,6 +105,12 @@ Concerts::DataList::ListOfStrings Concerts::DataList::listOfCountries() const
 Concerts::DataList::SublistsByStrings Concerts::DataList::concertsByCities() const
 {
 	return sublistsByStrings(&Data::countryCity);
+}
+
+Concerts::DataList::NumbersByStringsVec Concerts::DataList::numbersByCities(
+		size_t max_num) const
+{
+	return sortedVec(numbersByStrings(&Data::city), max_num);
 }
 
 Concerts::DataList::ListOfStrings Concerts::DataList::listOfCities(
@@ -119,6 +137,12 @@ Concerts::DataList::SublistsByStrings Concerts::DataList::concertsByPlaces(
 		list[key].push_back(&data);
 	}
 	return list;
+}
+
+Concerts::DataList::NumbersByStringsVec Concerts::DataList::numbersByPlaces(
+		size_t max_num, const Synonyms& synonyms) const
+{
+	return sortedVec(numbersByStrings(&Data::place, synonyms), max_num);
 }
 
 Concerts::DataList::ListOfStrings Concerts::DataList::listOfPlaces(

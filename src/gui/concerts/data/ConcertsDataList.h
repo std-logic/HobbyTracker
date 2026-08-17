@@ -30,18 +30,22 @@ public:
 			uint32_t required_min = 0, uint32_t required_max = 0) const;
 
 	SublistsByStrings concertsByArtists(const Synonyms& synonyms) const;
+	NumbersByStringsVec numbersByArtists(size_t max_num, const Synonyms& synonyms) const;
 	ListOfStrings listOfArtists() const;
 
 	SublistsByStrings concertsByTags(const QString& title, const QStringList& tags) const;
 	ListOfStrings listOfDescriptions() const;
 
 	SublistsByStrings concertsByCountries() const;
+	NumbersByStringsVec numbersByCountries(size_t max_num) const;
 	ListOfStrings listOfCountries() const;
 
 	SublistsByStrings concertsByCities() const;
+	NumbersByStringsVec numbersByCities(size_t max_num) const;
 	ListOfStrings listOfCities(const QString& country) const;
 
 	SublistsByStrings concertsByPlaces(const Synonyms& synonyms) const;
+	NumbersByStringsVec numbersByPlaces(size_t max_num, const Synonyms& synonyms) const;
 	ListOfStrings listOfPlaces(const QString& city) const;
 	ListOfStrings listOfPlaces(const QString& city, const Synonyms& synonyms) const;
 };

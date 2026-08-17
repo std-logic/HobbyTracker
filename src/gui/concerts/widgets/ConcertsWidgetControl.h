@@ -58,6 +58,7 @@ private:
 	Base::ButtonExpand* _button_expand_extra_list = nullptr;
 
 	Base::ButtonShow* _button_chart = nullptr;
+	Base::ComboBox* _combo_chart_view_mode = nullptr;
 };
 
 } // namespace Concerts

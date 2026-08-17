@@ -15,6 +15,15 @@ enum class DataListViewModes
 	Simple,
 };
 
+enum class ChartViewModes
+{
+	ByYears,
+	ByArtists,
+	ByCountries,
+	ByCities,
+	ByPlaces,
+};
+
 enum CsvFiles
 {
 	CsvFileData,

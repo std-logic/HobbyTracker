@@ -65,6 +65,17 @@ void Concerts::WidgetControl::initWidgets()
 	{
 		addSpacing();
 		addButtonShow(_button_chart, tr("Статистика"), &WidgetControl::showChart);
+		addComboBox(_combo_chart_view_mode, &WidgetControl::setChartViewMode, {
+				{tr("По годам"), static_cast<int>(ChartViewModes::ByYears)},
+				{tr("По группам"), static_cast<int>(ChartViewModes::ByArtists)},
+				{tr("По странам"), static_cast<int>(ChartViewModes::ByCountries)},
+				{tr("По городам"), static_cast<int>(ChartViewModes::ByCities)},
+				{tr("По местам"), static_cast<int>(ChartViewModes::ByPlaces)},
+		});
+
+		_button_chart->addSlaveWidgets({
+			_combo_chart_view_mode,
+		});
 	}
 
 	addButtonSettings();
