@@ -13,6 +13,7 @@ void Player::WidgetChart::update(const Library& library)
 	if (library.empty()) { return; }
 	switch (static_cast<ChartViewModes>(_view_mode)) {
 		case ChartViewModes::ByPlayCounts:	showByPlayCounts(library);	break;
+		case ChartViewModes::ByArtists:		showByArtists(library);		break;
 		case ChartViewModes::ByDecades:		showByDecades(library);		break;
 		default: return;
 	}
@@ -49,6 +50,22 @@ void Player::WidgetChart::showByPlayCounts(const Library& library)
 	for (uint32_t val_x = min_x; val_x <= max_x; val_x += step) {
 		list[val_x].first = QStringLiteral("%1-%2").arg(val_x).arg(val_x + step - 1);
 	}
+	updateBars(list);
+}
+
+void Player::WidgetChart::showByArtists(const Library& library)
+{
+	chart()->setTitle(tr("Распределение по группам"));
+	std::vector<std::pair<QString, int>> list;
+	for (const auto& [artist_title, artist] : library) {
+		list.emplace_back(std::pair<QString, int>(artist_title, artist.tracksCount()));
+	}
+	size_t max_num = std::min(size_t(10), list.size());
+	std::partial_sort(list.begin(), list.begin() + max_num, list.end(),
+			[](const auto& a, const auto& b)
+			{ return (a.second == b.second) ? (a.first < b.first) : (a.second > b.second); }
+	);
+	list.resize(max_num);
 	updateBars(list);
 }
 

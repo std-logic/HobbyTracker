@@ -88,6 +88,7 @@ void Player::WidgetControl::initWidgets()
 		addButtonShow(_button_chart, tr("Статистика"), &WidgetControl::showChart);
 		addComboBox(_combo_chart_view_mode_library, &WidgetControl::setChartViewMode, {
 				{tr("По прослушиваниям"), static_cast<int>(ChartViewModes::ByPlayCounts)},
+				{tr("По группам"), static_cast<int>(ChartViewModes::ByArtists)},
 				{tr("По десятилетиям"), static_cast<int>(ChartViewModes::ByDecades)},
 		});
 		addComboBox(_combo_chart_view_mode_libraries, &WidgetControl::setChartViewMode, {

@@ -27,6 +27,7 @@ enum class DataListViewModes
 enum class ChartViewModes
 {
 	ByPlayCounts,
+	ByArtists,
 	ByDecades,
 	HistoryPlayCounts,
 	HistoryArtists,
