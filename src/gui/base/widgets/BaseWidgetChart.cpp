@@ -1,4 +1,5 @@
 #include "BaseWidgetChart.h"
+#include "BaseToolTip.h"
 
 #include <common/Global.h>
 
@@ -33,6 +34,7 @@ Base::WidgetChart::WidgetChart(QWidget* parent)
 	auto label_font = bar_set->labelFont();
 	label_font.setPointSize(Global::Sizes::font_small);
 	bar_set->setLabelFont(label_font);
+	connect(bar_set, &QBarSet::hovered, this, &WidgetChart::barSetHovered);
 
 	auto bar_series = new QBarSeries();
 	bar_series->setLabelsVisible(true);
@@ -48,6 +50,8 @@ Base::WidgetChart::WidgetChart(QWidget* parent)
 	bar_axis_y->setLabelFormat("%d");
 	bar_chart->addAxis(bar_axis_y, Qt::AlignLeft);
 	bar_series->attachAxis(bar_axis_y);
+
+	_tooltip = new ToolTip(this);
 
 	hide();
 }
@@ -96,64 +100,80 @@ QBarCategoryAxis* Base::WidgetChart::getAxisX()
 	return bar_axis_x_1;
 }
 
+void Base::WidgetChart::setToolTipInsteadOfLabels(bool on)
+{
+	_tooltip_on = on;
+	getAxisX()->setLabelsVisible(!on);
+}
+
 void Base::WidgetChart::updateBars(const std::map<QString, int>& values)
 {
-	auto bar_axis_x = getAxisX();
-	auto bar_set = getBarSet();
+	QStringList array_x;
+	QList<qreal> array_y;
 	int min_y = std::numeric_limits<int>::max();
 	int max_y = std::numeric_limits<int>::min();
 	for (const auto& [val_x, val_y] : values) {
-		bar_axis_x->append(val_x);
-		bar_set->append(val_y);
+		array_x << val_x;
+		array_y << val_y;
 		if (min_y > val_y) { min_y = val_y; }
 		if (max_y < val_y) { max_y = val_y; }
 	}
+	updateBars(array_x, array_y);
 	updateAxisYRange(min_y, max_y);
 }
 
 void Base::WidgetChart::updateBars(const std::map<uint32_t, int>& values)
 {
-	auto bar_axis_x = getAxisX();
-	auto bar_set = getBarSet();
+	QStringList array_x;
+	QList<qreal> array_y;
 	int min_y = std::numeric_limits<int>::max();
 	int max_y = std::numeric_limits<int>::min();
 	for (const auto& [val_x, val_y] : values) {
-		bar_axis_x->append(QString::number(val_x));
-		bar_set->append(val_y);
+		array_x << QString::number(val_x);
+		array_y << val_y;
 		if (min_y > val_y) { min_y = val_y; }
 		if (max_y < val_y) { max_y = val_y; }
 	}
+	updateBars(array_x, array_y);
 	updateAxisYRange(min_y, max_y);
 }
 
 void Base::WidgetChart::updateBars(const std::map<uint32_t, std::pair<QString, int>>& values)
 {
-	auto bar_axis_x = getAxisX();
-	auto bar_set = getBarSet();
+	QStringList array_x;
+	QList<qreal> array_y;
 	int min_y = std::numeric_limits<int>::max();
 	int max_y = std::numeric_limits<int>::min();
 	for (const auto& [_, val_xy] : values) {
-		bar_axis_x->append(val_xy.first);
-		bar_set->append(val_xy.second);
+		array_x << val_xy.first;
+		array_y << val_xy.second;
 		if (min_y > val_xy.second) { min_y = val_xy.second; }
 		if (max_y < val_xy.second) { max_y = val_xy.second; }
 	}
+	updateBars(array_x, array_y);
 	updateAxisYRange(min_y, max_y);
 }
 
 void Base::WidgetChart::updateBars(const std::vector<std::pair<QString, int>>& values)
 {
-	auto bar_axis_x = getAxisX();
-	auto bar_set = getBarSet();
+	QStringList array_x;
+	QList<qreal> array_y;
 	int min_y = std::numeric_limits<int>::max();
 	int max_y = std::numeric_limits<int>::min();
 	for (const auto& [val_x, val_y] : values) {
-		bar_axis_x->append(val_x);
-		bar_set->append(val_y);
+		array_x << val_x;
+		array_y << val_y;
 		if (min_y > val_y) { min_y = val_y; }
 		if (max_y < val_y) { max_y = val_y; }
 	}
+	updateBars(array_x, array_y);
 	updateAxisYRange(min_y, max_y);
+}
+
+void Base::WidgetChart::updateBars(const QStringList& array_x, const QList<qreal>& array_y)
+{
+	getAxisX()->append(array_x);
+	getBarSet()->append(array_y);
 }
 
 void Base::WidgetChart::updateAxisYRange(int min_y, int max_y)
@@ -185,4 +205,16 @@ int Base::WidgetChart::calcStepY(int range)
 			(range > 12)	? 5 :		// 3-7 steps
 			(range > 5)		? 2 :		// 3-7 steps
 							  1;		// 1-6 steps
+}
+
+void Base::WidgetChart::barSetHovered(bool status, int index)
+{
+	if (!_tooltip_on) { return; }
+	if (status) {
+		_tooltip->showText(QStringLiteral("%1: %2")
+						   .arg(getAxisX()->at(index))
+						   .arg(static_cast<int>(getBarSet()->at(index))));
+	} else {
+		_tooltip->hide();
+	}
 }
