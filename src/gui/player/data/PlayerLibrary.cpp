@@ -107,6 +107,25 @@ Player::Library::FormatsData Player::Library::formats() const
 	return formats;
 }
 
+Player::Library::YearsData Player::Library::years() const
+{
+	YearsData years;
+	for (const auto& [artist_title, artist] : _artists) {
+		for (const auto& [album_title, album] : artist) {
+			for (const auto& track : album) {
+				auto& item_year = years[Helper::epochString(track.year(), 1)];
+				if (item_year.isTitleEmpty()) { item_year.setTitle(_title); }
+				auto& item_artist = item_year[track.artist()];
+				if (item_artist.isTitleEmpty()) { item_artist.setTitle(track.artist()); }
+				auto& item_album = item_artist[track.album()];
+				if (item_album.isTitleEmpty()) { item_album.setTitle(track.album()); }
+				item_album.addTrack(track);
+			}
+		}
+	}
+	return years;
+}
+
 Player::Library::Summary Player::Library::summary() const
 {
 	Summary sum;

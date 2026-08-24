@@ -11,9 +11,11 @@ void Player::WidgetChart::update(const Library& library)
 {
 	clearChart();
 	if (library.empty()) { return; }
+	setToolTipInsteadOfLabels(static_cast<ChartViewModes>(_view_mode) == ChartViewModes::ByYears);
 	switch (static_cast<ChartViewModes>(_view_mode)) {
 		case ChartViewModes::ByPlayCounts:	showByPlayCounts(library);	break;
 		case ChartViewModes::ByArtists:		showByArtists(library);		break;
+		case ChartViewModes::ByYears:		showByYears(library);		break;
 		case ChartViewModes::ByDecades:		showByDecades(library);		break;
 		default: return;
 	}
@@ -23,6 +25,7 @@ void Player::WidgetChart::update(const std::vector<Library>& libraries)
 {
 	clearChart();
 	if (libraries.empty()) { return; }
+	setToolTipInsteadOfLabels(false);
 	switch (static_cast<ChartViewModes>(_view_mode)) {
 		case ChartViewModes::HistoryPlayCounts:	showHistoryPlayCounts(libraries);	break;
 		case ChartViewModes::HistoryArtists:	showHistoryArtists(libraries);		break;
@@ -66,6 +69,29 @@ void Player::WidgetChart::showByArtists(const Library& library)
 			{ return (a.second == b.second) ? (a.first < b.first) : (a.second > b.second); }
 	);
 	list.resize(max_num);
+	updateBars(list);
+}
+
+void Player::WidgetChart::showByYears(const Library& library)
+{
+	chart()->setTitle(tr("Распределение по годам"));
+	std::map<uint32_t, std::pair<QString, int>> list;
+	uint32_t min_x = Global::undefined_value, max_x = Global::undefined_value;
+	for (const auto& [artist_title, artist] : library) {
+		for (const auto& [album_title, album] : artist) {
+			for (const auto& track : album) {
+				auto val_x = track.year();
+				Helper::checkMinMax(val_x, &min_x, &max_x);
+				++list[val_x].second;
+			}
+		}
+	}
+	if (list.contains(Global::undefined_value)) {
+		list[Global::undefined_value].first = Helper::epochString(Global::undefined_value, 1);
+	}
+	for (uint32_t val_x = min_x; val_x <= max_x; ++val_x) {
+		list[val_x].first = Helper::epochString(val_x, 1);
+	}
 	updateBars(list);
 }
 

@@ -123,6 +123,9 @@ public:
 	using FormatsData = std::map<QString, Library>;
 	FormatsData formats() const;
 
+	using YearsData = std::map<QString, Library>;
+	YearsData years() const;
+
 	struct Summary
 	{
 		QString title;

@@ -21,6 +21,7 @@ void Player::WidgetDataList::update(const Library& library)
 		case DataListViewModes::ByBestTracks:	showByBestTracks(library);		break;
 		case DataListViewModes::ByGenres:		showByGenres(library);			break;
 		case DataListViewModes::ByFormats:		showByFormats(library);			break;
+		case DataListViewModes::ByYears:		showByYears(library);			break;
 		case DataListViewModes::Summary:		showSummary(library);			break;
 		default: return;
 	}
@@ -252,6 +253,45 @@ void Player::WidgetDataList::showByFormats(const Library& library)
 					auto item_track = new Base::WidgetTreeItem(item_album);
 					item_track->setText(CLMN_TITLE, track.titleWithTrackNumber());
 					item_track->setText(CLMN_YEAR, track.yearString());
+					item_track->setNumb(CLMN_PLAY_COUNT, track.playCount());
+					item_track->setToolTipEverywhere(track.summaryString());
+				}
+			}
+		}
+	}
+}
+
+void Player::WidgetDataList::showByYears(const Library& library)
+{
+	enum Columns {CLMN_TITLE, CLMN_ARTISTS, CLMN_ALBUMS, CLMN_TRACKS, CLMN_PLAY_COUNT};
+	initColumns({tr("Год / Альбом / Трек"), tr("Групп"), tr("Альбомов"),
+				 tr("Треков"), tr("Прослушиваний")},
+				{WIDTH_TITLE, WIDTH_ARTISTS, WIDTH_ALBUMS, WIDTH_TRACKS, WIDTH_PLAY_COUNT});
+	initSorting(CLMN_TITLE);
+
+	auto years = library.years();
+
+	for (const auto& [year_title, year_library] : years) {
+		auto item_year = new Base::WidgetTreeItem(this, Global::Colors::tree_level_2);
+		item_year->setText(CLMN_TITLE, year_title);
+		item_year->setNumb(CLMN_ARTISTS, year_library.artistsCount());
+		item_year->setNumb(CLMN_ALBUMS, year_library.albumsCount());
+		item_year->setNumb(CLMN_TRACKS, year_library.tracksCount());
+		item_year->setNumb(CLMN_PLAY_COUNT, year_library.playCount());
+		item_year->setToolTipEverywhere(year_library.summaryString());
+
+		for (const auto& [artist_title, artist] : year_library) {
+			for (const auto& [album_title, album] : artist) {
+				auto item_album = new Base::WidgetTreeItem(item_year, Global::Colors::tree_level_1);
+				item_album->setText(CLMN_TITLE, QStringLiteral("[%1] %2")
+						.arg(artist_title, album_title));
+				item_album->setNumb(CLMN_TRACKS, album.tracksCount());
+				item_album->setNumb(CLMN_PLAY_COUNT, album.playCount());
+				item_album->setToolTipEverywhere(album.summaryString());
+
+				for (const auto& track : album) {
+					auto item_track = new Base::WidgetTreeItem(item_album);
+					item_track->setText(CLMN_TITLE, track.titleWithTrackNumber());
 					item_track->setNumb(CLMN_PLAY_COUNT, track.playCount());
 					item_track->setToolTipEverywhere(track.summaryString());
 				}

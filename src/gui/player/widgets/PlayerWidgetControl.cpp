@@ -66,6 +66,7 @@ void Player::WidgetControl::initWidgets()
 				{tr("По лучшим трекам"), static_cast<int>(DataListViewModes::ByBestTracks)},
 				{tr("По жанрам"), static_cast<int>(DataListViewModes::ByGenres)},
 				{tr("По форматам"), static_cast<int>(DataListViewModes::ByFormats)},
+				{tr("По годам"), static_cast<int>(DataListViewModes::ByYears)},
 				{tr("Сводка"), static_cast<int>(DataListViewModes::Summary)},
 		});
 		addComboBox(_combo_data_list_view_mode_libraries, &WidgetControl::setDataListViewMode, {
@@ -89,6 +90,7 @@ void Player::WidgetControl::initWidgets()
 		addComboBox(_combo_chart_view_mode_library, &WidgetControl::setChartViewMode, {
 				{tr("По прослушиваниям"), static_cast<int>(ChartViewModes::ByPlayCounts)},
 				{tr("По группам"), static_cast<int>(ChartViewModes::ByArtists)},
+				{tr("По годам"), static_cast<int>(ChartViewModes::ByYears)},
 				{tr("По десятилетиям"), static_cast<int>(ChartViewModes::ByDecades)},
 		});
 		addComboBox(_combo_chart_view_mode_libraries, &WidgetControl::setChartViewMode, {

@@ -26,6 +26,7 @@ private:
 	void showByBestTracks(const Library& library);
 	void showByGenres(const Library& library);
 	void showByFormats(const Library& library);
+	void showByYears(const Library& library);
 	void showSummary(const Library& library);
 
 	void showHistoryArtists(const std::vector<Library>& libraries);

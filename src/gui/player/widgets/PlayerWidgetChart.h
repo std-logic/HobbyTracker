@@ -22,7 +22,9 @@ signals:
 private:
 	void showByPlayCounts(const Library& library);
 	void showByArtists(const Library& library);
+	void showByYears(const Library& library);
 	void showByDecades(const Library& library);
+
 	void showHistoryPlayCounts(const std::vector<Library>& libraries);
 	void showHistoryArtists(const std::vector<Library>& libraries);
 	void showHistoryAlbums(const std::vector<Library>& libraries);
