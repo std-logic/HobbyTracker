@@ -40,6 +40,9 @@ public:
 	NumbersByStringsVec numbersByCountries(size_t max_num, bool favorites_only = false) const;
 	ListOfStrings listOfCountries() const;
 
+	Sublists2ByStrings moviesByRegions(bool favorites_only = false) const;
+	NumbersByStringsVec numbersByRegions(size_t max_num, bool favorites_only = false) const;
+
 	SublistsByStrings moviesByDirectors(bool favorites_only = false) const;
 	NumbersByStringsVec numbersByDirectors(size_t max_num, bool favorites_only = false) const;
 	ListOfStrings listOfDirectors() const;

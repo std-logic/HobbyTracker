@@ -26,6 +26,7 @@ private:
 	void showByKinds(const DataList& data_list);
 	void showByGenres(const DataList& data_list);
 	void showByCountries(const DataList& data_list);
+	void showByRegions(const DataList& data_list);
 	void showByYears(const DataList& data_list);
 	void showByDecades(const DataList& data_list);
 	void showByDirectors(const DataList& data_list);

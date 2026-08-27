@@ -9,6 +9,7 @@ enum class DataListViewModes
 	ByKinds,
 	ByGenres,
 	ByCountries,
+	ByRegions,
 	ByYears,
 	ByDecades,
 	ByDirectors,

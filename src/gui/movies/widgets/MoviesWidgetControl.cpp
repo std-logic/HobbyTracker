@@ -30,6 +30,7 @@ void Movies::WidgetControl::initWidgets()
 				{tr("По типам"), static_cast<int>(DataListViewModes::ByKinds)},
 				{tr("По жанрам"), static_cast<int>(DataListViewModes::ByGenres)},
 				{tr("По странам"), static_cast<int>(DataListViewModes::ByCountries)},
+				{tr("По регионам"), static_cast<int>(DataListViewModes::ByRegions)},
 				{tr("По годам"), static_cast<int>(DataListViewModes::ByYears)},
 				{tr("По десятилетиям"), static_cast<int>(DataListViewModes::ByDecades)},
 				{tr("По режиссёрам"), static_cast<int>(DataListViewModes::ByDirectors)},

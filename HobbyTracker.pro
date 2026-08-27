@@ -26,6 +26,7 @@ INCLUDEPATH += \
 SOURCES += \
 	src/main.cpp \
 	src/HobbyTracker.cpp \
+	src/common/Regions.cpp \
 	src/gui/MainWindow.cpp \
 	src/gui/base/data/BaseExtraConverter.cpp \
 	src/gui/base/data/BaseExtraList.cpp \
@@ -166,6 +167,7 @@ HEADERS += \
 	src/HobbyTracker.h \
 	src/common/Global.h \
 	src/common/Helper.h \
+	src/common/Regions.h \
 	src/gui/MainWindow.h \
 	src/gui/base/data/BaseData.h \
 	src/gui/base/data/BaseDataList.h \
@@ -328,3 +330,6 @@ HEADERS += \
 	src/storage/csv/CsvData.h \
 	src/storage/csv/CsvSettings.h \
 	src/storage/csv/CsvStorage.h
+
+RESOURCES += \
+	res/HobbyTracker.qrc

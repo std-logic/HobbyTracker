@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/data">
+        <file>regions.csv</file>
+    </qresource>
+</RCC>

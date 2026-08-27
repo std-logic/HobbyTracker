@@ -18,6 +18,7 @@ void Movies::WidgetDataList::update(const DataList& data_list)
 		case DataListViewModes::ByKinds:		showByKinds(data_list);			break;
 		case DataListViewModes::ByGenres:		showByGenres(data_list);		break;
 		case DataListViewModes::ByCountries:	showByCountries(data_list);		break;
+		case DataListViewModes::ByRegions:		showByRegions(data_list);		break;
 		case DataListViewModes::ByYears:		showByYears(data_list);			break;
 		case DataListViewModes::ByDecades:		showByDecades(data_list);		break;
 		case DataListViewModes::ByDirectors:	showByDirectors(data_list);		break;
@@ -164,6 +165,49 @@ void Movies::WidgetDataList::showByCountries(const DataList& data_list)
 			item_movie->setToolTipEverywhere(movie->summaryString());
 			item_movie->setId(movie->id());
 		}
+	}
+}
+
+void Movies::WidgetDataList::showByRegions(const DataList& data_list)
+{
+	enum Columns {CLMN_VIEW_DATE, CLMN_COUNT, CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES,
+				  CLMN_DIRECTORS, CLMN_ACTORS, CLMN_YEAR, CLMN_RATING};
+	initColumns({tr("Регион / Страна / Дата"), tr("К-во"), tr("Название"), tr("Жанр"), tr("Страна"),
+				 tr("Режиссёр"), tr("Актёры"), tr("Год"), tr("Оценка")},
+				{WIDTH_VIEW_DATE_BIG, WIDTH_COUNT, WIDTH_TITLE, WIDTH_GENRES, WIDTH_COUNTRIES,
+				 WIDTH_DIRECTORS, WIDTH_ACTORS, WIDTH_YEAR, WIDTH_RATING});
+	initSorting(CLMN_COUNT, Qt::DescendingOrder, true);
+
+	auto movies_by_regions = data_list.moviesByRegions(_favorites_only);
+
+	for (const auto& [region, movies_by_countries] : movies_by_regions) {
+		auto item_region = new Base::WidgetTreeItem(this, Global::Colors::tree_level_2);
+		item_region->setText(CLMN_VIEW_DATE, region);
+		uint32_t movies_num_in_region = 0;
+
+		for (const auto& [country, movies] : movies_by_countries) {
+			auto item_country = new Base::WidgetTreeItem(item_region, Global::Colors::tree_level_1);
+			item_country->setText(CLMN_VIEW_DATE, country);
+			item_country->setNumb(CLMN_COUNT, movies.size());
+			item_country->setText(CLMN_YEAR, Helper::yearString(movies));
+			movies_num_in_region += movies.size();
+
+			for (const auto movie : movies) {
+				auto item_movie = new Base::WidgetTreeItem(item_country);
+				item_movie->setText(CLMN_VIEW_DATE, movie->viewDateWithoutSeconds());
+				item_movie->setText(CLMN_TITLE, movie->title());
+				item_movie->setText(CLMN_GENRES, movie->genresToString());
+				item_movie->setText(CLMN_COUNTRIES, movie->countriesToString());
+				item_movie->setText(CLMN_DIRECTORS, movie->directorsToString());
+				item_movie->setText(CLMN_ACTORS, movie->actorsToString());
+				item_movie->setText(CLMN_YEAR, movie->yearString());
+				item_movie->setRating(CLMN_RATING, movie->rating());
+				item_movie->setToolTipEverywhere(movie->summaryString());
+				item_movie->setId(movie->id());
+			}
+		}
+
+		item_region->setNumb(CLMN_COUNT, movies_num_in_region);
 	}
 }
 

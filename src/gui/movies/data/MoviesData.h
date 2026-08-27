@@ -2,6 +2,7 @@
 
 #include <common/Global.h>
 #include <common/Helper.h>
+#include <common/Regions.h>
 
 #include <gui/base/data/BaseData.h>
 
@@ -18,7 +19,7 @@ public:
 	{ *this = Data(); }
 
 	inline QString id() const override
-	{ return _title_tr + QString::number(_year_start); }
+	{ return _title_tr + QString::number(_year_start) + _kind; }
 
 	template<typename T>
 	inline void setViewDate(T&& view_date)
@@ -70,6 +71,9 @@ public:
 	{ return _countries; }
 	inline QString countriesToString(const QString& delimiter = ", ") const
 	{ return _countries.join(delimiter); }
+
+	inline QStringList regions() const
+	{ return Regions::get(_countries); }
 
 	template<typename T>
 	inline void setDirectors(T&& directors)

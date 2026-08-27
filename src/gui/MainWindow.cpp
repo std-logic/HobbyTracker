@@ -11,6 +11,7 @@
 #include "trekking/widgets/TrekkingWidgetMain.h"
 
 #include <common/Global.h>
+#include <common/Regions.h>
 
 #include <QStatusBar>
 #include <QTabWidget>
@@ -28,6 +29,8 @@ void MainWindow::start()
 {
 	showDefaultTitle();
 	showLoadingStart();
+
+	Regions::init();
 
 	_bike->start();
 	_books->start();
