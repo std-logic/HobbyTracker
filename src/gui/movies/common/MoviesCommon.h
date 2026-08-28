@@ -23,6 +23,7 @@ enum class ChartViewModes
 	ByViewDates,
 	ByGenres,
 	ByCountries,
+	ByRegions,
 	ByYears,
 	ByDecades,
 	ByDirectors,

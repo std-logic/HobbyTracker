@@ -70,6 +70,7 @@ void Movies::WidgetControl::initWidgets()
 				{tr("По годам просмотра"), static_cast<int>(ChartViewModes::ByViewDates)},
 				{tr("По жанрам"), static_cast<int>(ChartViewModes::ByGenres)},
 				{tr("По странам"), static_cast<int>(ChartViewModes::ByCountries)},
+				{tr("По регионам"), static_cast<int>(ChartViewModes::ByRegions)},
 				{tr("По годам"), static_cast<int>(ChartViewModes::ByYears)},
 				{tr("По десятилетиям"), static_cast<int>(ChartViewModes::ByDecades)},
 				{tr("По режиссёрам"), static_cast<int>(ChartViewModes::ByDirectors)},

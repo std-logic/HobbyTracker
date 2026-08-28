@@ -17,6 +17,7 @@ void Movies::WidgetChart::update(const DataList& data_list, const Base::ExtraLis
 		case ChartViewModes::ByViewDates:	showByViewDates(data_list);					break;
 		case ChartViewModes::ByGenres:		showByGenres(data_list);					break;
 		case ChartViewModes::ByCountries:	showByCountries(data_list, extra_list);		break;
+		case ChartViewModes::ByRegions:		showByRegions(data_list, extra_list);		break;
 		case ChartViewModes::ByYears:		showByYears(data_list);						break;
 		case ChartViewModes::ByDecades:		showByDecades(data_list);					break;
 		case ChartViewModes::ByDirectors:	showByDirectors(data_list);					break;
@@ -53,6 +54,13 @@ void Movies::WidgetChart::showByCountries(const DataList& data_list, const Base:
 	chart()->setTitle(tr("Распределение по странам"));
 	auto synonyms = extra_list.getSynonyms(tr("[Синонимы для стран]"));
 	updateBars(data_list.numbersByCountries(10, synonyms, _favorites_only));
+}
+
+void Movies::WidgetChart::showByRegions(const DataList& data_list, const Base::ExtraList& extra_list)
+{
+	chart()->setTitle(tr("Распределение по регионам"));
+	auto synonyms = extra_list.getSynonyms(tr("[Синонимы для стран]"));
+	updateBars(data_list.numbersByRegions(10, synonyms, _favorites_only));
 }
 
 void Movies::WidgetChart::showByYears(const DataList& data_list)

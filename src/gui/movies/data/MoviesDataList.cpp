@@ -1,5 +1,7 @@
 #include "MoviesDataList.h"
 
+#include <common/Regions.h>
+
 #include <unordered_set>
 #include <unordered_map>
 
@@ -108,10 +110,10 @@ Movies::DataList::Sublists2ByStrings Movies::DataList::moviesByRegions(
 		if (favorites_only && !data.isFavorite()) { continue; }
 		auto countries = data.countries();
 		for (const auto& country : countries) {
-			auto synonym_of_country = synonyms.contains(country) ? synonyms.at(country) : country;
-			auto regions = Regions::get(synonym_of_country);
+			auto synonym_for_country = synonyms.contains(country) ? synonyms.at(country) : country;
+			auto regions = Regions::get(synonym_for_country);
 			for (const auto& region : regions) {
-				list[region][synonym_of_country].push_back(&data);
+				list[region][synonym_for_country].push_back(&data);
 			}
 		}
 	}
@@ -121,7 +123,23 @@ Movies::DataList::Sublists2ByStrings Movies::DataList::moviesByRegions(
 Movies::DataList::NumbersByStringsVec Movies::DataList::numbersByRegions(
 		size_t max_num, const Synonyms& synonyms, bool favorites_only) const
 {
-	return sortedVec(numbersByStrings(&Data::regions, synonyms, &Data::isFavorite, favorites_only), max_num);
+	NumbersByStrings list;
+	for (const auto& data : _data_list) {
+		if (favorites_only && !data.isFavorite()) { continue; }
+		auto countries = data.countries();
+		std::set<QString> unique_regions;
+		for (const auto& country : countries) {
+			auto synonym_for_country = synonyms.contains(country) ? synonyms.at(country) : country;
+			auto regions = Regions::get(synonym_for_country);
+			for (const auto& region : regions) {
+				if (!unique_regions.contains(region)) {
+					unique_regions.insert(region);
+					++list[region];
+				}
+			}
+		}
+	}
+	return sortedVec(list, max_num);
 }
 
 Movies::DataList::SublistsByStrings Movies::DataList::moviesByDirectors(bool favorites_only) const

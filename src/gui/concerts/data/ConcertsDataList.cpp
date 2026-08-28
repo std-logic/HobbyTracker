@@ -64,10 +64,10 @@ Concerts::DataList::NumbersByStringsVec Concerts::DataList::numbersByArtists(
 		auto artists = data.artists();
 		std::set<QString> unique_artists; // protection against multiple identical names in one concert
 		for (const auto& artist : artists) {
-			auto key = synonyms.contains(artist) ? synonyms.at(artist) : artist;
-			if (!unique_artists.contains(key)) {
-				unique_artists.insert(key);
-				++list[key];
+			auto synonym_for_artist = synonyms.contains(artist) ? synonyms.at(artist) : artist;
+			if (!unique_artists.contains(synonym_for_artist)) {
+				unique_artists.insert(synonym_for_artist);
+				++list[synonym_for_artist];
 			}
 		}
 	}
@@ -143,10 +143,10 @@ Concerts::DataList::SublistsByStrings Concerts::DataList::concertsByPlaces(
 	SublistsByStrings list;
 	for (const auto& data : _data_list) {
 		auto place = data.place();
-		auto key = synonyms.contains(place) ?
+		auto synonym_for_place = synonyms.contains(place) ?
 				data.countryCityPlace(synonyms.at(place)) :
 				data.countryCityPlace();
-		list[key].push_back(&data);
+		list[synonym_for_place].push_back(&data);
 	}
 	return list;
 }
