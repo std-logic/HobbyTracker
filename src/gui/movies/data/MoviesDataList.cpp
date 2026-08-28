@@ -109,10 +109,12 @@ Movies::DataList::Sublists2ByStrings Movies::DataList::moviesByRegions(
 	for (const auto& data : _data_list) {
 		if (favorites_only && !data.isFavorite()) { continue; }
 		auto countries = data.countries();
+		std::set<QString> unique_countries;
 		for (const auto& country : countries) {
 			auto synonym_for_country = synonyms.contains(country) ? synonyms.at(country) : country;
-			auto regions = Regions::get(synonym_for_country);
-			for (const auto& region : regions) {
+			if (!unique_countries.contains(synonym_for_country)) {
+				unique_countries.insert(synonym_for_country);
+				auto region = Regions::get(synonym_for_country);
 				list[region][synonym_for_country].push_back(&data);
 			}
 		}
@@ -130,12 +132,10 @@ Movies::DataList::NumbersByStringsVec Movies::DataList::numbersByRegions(
 		std::set<QString> unique_regions;
 		for (const auto& country : countries) {
 			auto synonym_for_country = synonyms.contains(country) ? synonyms.at(country) : country;
-			auto regions = Regions::get(synonym_for_country);
-			for (const auto& region : regions) {
-				if (!unique_regions.contains(region)) {
-					unique_regions.insert(region);
-					++list[region];
-				}
+			auto region = Regions::get(synonym_for_country);
+			if (!unique_regions.contains(region)) {
+				unique_regions.insert(region);
+				++list[region];
 			}
 		}
 	}

@@ -11,11 +11,11 @@ public:
 
 	static void init();
 
-	static QStringList get(const QString& country);
+	static QString get(const QString& country);
 	static QStringList get(const QStringList& countries);
 
 private:
-	inline static std::unordered_map<QString, QStringList> _country_to_region;
+	inline static std::unordered_map<QString, QString> _country_to_region;
 
 	enum Columns
 	{

@@ -13,29 +13,26 @@ void Regions::init()
 	for (const auto& line : csv_data) {
 		int line_size = line.size();
 		if (CLMN_REGIONS < line_size) {
-			_country_to_region[line[CLMN_COUNTRY]] =
-					line[CLMN_REGIONS].split(QStringLiteral(", "), Qt::SkipEmptyParts);
+			_country_to_region[line[CLMN_COUNTRY]] = line[CLMN_REGIONS];
 		}
 	}
 }
 
-QStringList Regions::get(const QString& country)
+QString Regions::get(const QString& country)
 {
 	return	_country_to_region.contains(country) ?
 			_country_to_region[country] :
-			QStringList(QStringLiteral("Неизвестный"));
+			QStringLiteral("Неизвестный");
 }
 
 QStringList Regions::get(const QStringList& countries)
 {
-	QStringList out;
+	QStringList regions;
 	for (const auto& country : countries) {
-		auto regs = get(country);
-		for (const auto& reg : regs) {
-			if (!out.contains(reg)) {
-				out.append(reg);
-			}
+		auto region = get(country);
+		if (!regions.contains(region)) {
+			regions.append(region);
 		}
 	}
-	return out;
+	return regions;
 }
