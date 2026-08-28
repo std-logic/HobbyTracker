@@ -117,6 +117,21 @@ public:
 		return list;
 	}
 
+	// Return items, grouped by string values from method with synonyms and condition
+	SublistsByStrings sublistsByStrings(DataMethodReturningString method,
+			const Synonyms& synonyms,
+			DataMethodReturningBool condition, bool condition_on) const
+	{
+		SublistsByStrings list;
+		for (const auto& data : _data_list) {
+			if (condition_on && !(data.*condition)()) { continue; }
+			auto str = (data.*method)();
+			auto key = synonyms.contains(str) ? synonyms.at(str) : str;
+			list[key].push_back(&data);
+		}
+		return list;
+	}
+
 	// Return items, grouped by string values from method
 	SublistsByStrings sublistsByStrings(DataMethodReturningStringList method) const
 	{
@@ -125,6 +140,21 @@ public:
 			auto str_list = (data.*method)();
 			for (const auto& str : str_list) {
 				list[str].push_back(&data);
+			}
+		}
+		return list;
+	}
+
+	// Return items, grouped by string values from method with synonyms
+	SublistsByStrings sublistsByStrings(DataMethodReturningStringList method,
+			const Synonyms& synonyms) const
+	{
+		SublistsByStrings list;
+		for (const auto& data : _data_list) {
+			auto str_list = (data.*method)();
+			for (const auto& str : str_list) {
+				auto key = synonyms.contains(str) ? synonyms.at(str) : str;
+				list[key].push_back(&data);
 			}
 		}
 		return list;
@@ -145,9 +175,26 @@ public:
 		return list;
 	}
 
+	// Return items, grouped by string values from method with synonyms and condition
+	SublistsByStrings sublistsByStrings(DataMethodReturningStringList method,
+			const Synonyms& synonyms,
+			DataMethodReturningBool condition, bool condition_on) const
+	{
+		SublistsByStrings list;
+		for (const auto& data : _data_list) {
+			if (condition_on && !(data.*condition)()) { continue; }
+			auto str_list = (data.*method)();
+			for (const auto& str : str_list) {
+				auto key = synonyms.contains(str) ? synonyms.at(str) : str;
+				list[key].push_back(&data);
+			}
+		}
+		return list;
+	}
+
 	// Return items, grouped by epoch strings (years, decades, centuries) from method
 	SublistsByStrings sublistsByEpochStrings(DataMethodReturningInteger method,
-											 uint32_t step) const
+			uint32_t step) const
 	{
 		SublistsByStrings list;
 		for (const auto& data : _data_list) {
@@ -157,7 +204,8 @@ public:
 	}
 
 	// Return items, grouped by epoch strings (years, decades, centuries) from method with condition
-	SublistsByStrings sublistsByEpochStrings(DataMethodReturningInteger method, uint32_t step,
+	SublistsByStrings sublistsByEpochStrings(DataMethodReturningInteger method,
+			uint32_t step,
 			DataMethodReturningBool condition, bool condition_on) const
 	{
 		SublistsByStrings list;
@@ -248,6 +296,21 @@ public:
 		return list;
 	}
 
+	// Return numbers of items with the same string values of method with synonyms and condition
+	NumbersByStrings numbersByStrings(DataMethodReturningString method,
+			const Synonyms& synonyms,
+			DataMethodReturningBool condition, bool condition_on) const
+	{
+		NumbersByStrings list;
+		for (const auto& data : _data_list) {
+			if (condition_on && !(data.*condition)()) { continue; }
+			auto str = (data.*method)();
+			auto key = synonyms.contains(str) ? synonyms.at(str) : str;
+			++list[key];
+		}
+		return list;
+	}
+
 	// Return numbers of items with the same string values of method
 	NumbersByStrings numbersByStrings(DataMethodReturningStringList method) const
 	{
@@ -286,6 +349,23 @@ public:
 			auto str_list = (data.*method)();
 			for (const auto& str : str_list) {
 				++list[str];
+			}
+		}
+		return list;
+	}
+
+	// Return numbers of items with the same string values of method with synonyms and condition
+	NumbersByStrings numbersByStrings(DataMethodReturningStringList method,
+			const Synonyms& synonyms,
+			DataMethodReturningBool condition, bool condition_on) const
+	{
+		NumbersByStrings list;
+		for (const auto& data : _data_list) {
+			if (condition_on && !(data.*condition)()) { continue; }
+			auto str_list = (data.*method)();
+			for (const auto& str : str_list) {
+				auto key = synonyms.contains(str) ? synonyms.at(str) : str;
+				++list[key];
 			}
 		}
 		return list;

@@ -2,6 +2,11 @@
 
 #include <gui/base/widgets/BaseWidgetTree.h>
 
+namespace Base
+{
+class ExtraList;
+}
+
 namespace Movies
 {
 
@@ -14,7 +19,7 @@ public:
 	explicit WidgetDataList(QWidget* parent = nullptr);
 	~WidgetDataList() = default;
 
-	void update(const DataList& data_list);
+	void update(const DataList& data_list, const Base::ExtraList& extra_list);
 
 public slots:
 	void setFavoritesOnly(Qt::CheckState state);
@@ -25,8 +30,8 @@ private:
 	void showSimple(const DataList& data_list);
 	void showByKinds(const DataList& data_list);
 	void showByGenres(const DataList& data_list);
-	void showByCountries(const DataList& data_list);
-	void showByRegions(const DataList& data_list);
+	void showByCountries(const DataList& data_list, const Base::ExtraList& extra_list);
+	void showByRegions(const DataList& data_list, const Base::ExtraList& extra_list);
 	void showByYears(const DataList& data_list);
 	void showByDecades(const DataList& data_list);
 	void showByDirectors(const DataList& data_list);

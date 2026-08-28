@@ -2,25 +2,27 @@
 #include "../common/MoviesCommon.h"
 #include "../data/MoviesDataList.h"
 
+#include <gui/base/data/BaseExtraList.h>
+
 Movies::WidgetChart::WidgetChart(QWidget* parent)
 	: Base::WidgetChart{parent}
 {
 }
 
-void Movies::WidgetChart::update(const DataList& data_list)
+void Movies::WidgetChart::update(const DataList& data_list, const Base::ExtraList& extra_list)
 {
 	clearChart();
 	setToolTipInsteadOfLabels(static_cast<ChartViewModes>(_view_mode) == ChartViewModes::ByYears);
 	switch (static_cast<ChartViewModes>(_view_mode)) {
-		case ChartViewModes::ByViewDates:	showByViewDates(data_list);		break;
-		case ChartViewModes::ByGenres:		showByGenres(data_list);		break;
-		case ChartViewModes::ByCountries:	showByCountries(data_list);		break;
-		case ChartViewModes::ByYears:		showByYears(data_list);			break;
-		case ChartViewModes::ByDecades:		showByDecades(data_list);		break;
-		case ChartViewModes::ByDirectors:	showByDirectors(data_list);		break;
-		case ChartViewModes::ByWriters:		showByWriters(data_list);		break;
-		case ChartViewModes::ByActors:		showByActors(data_list);		break;
-		case ChartViewModes::ByRatings:		showByRatings(data_list);		break;
+		case ChartViewModes::ByViewDates:	showByViewDates(data_list);					break;
+		case ChartViewModes::ByGenres:		showByGenres(data_list);					break;
+		case ChartViewModes::ByCountries:	showByCountries(data_list, extra_list);		break;
+		case ChartViewModes::ByYears:		showByYears(data_list);						break;
+		case ChartViewModes::ByDecades:		showByDecades(data_list);					break;
+		case ChartViewModes::ByDirectors:	showByDirectors(data_list);					break;
+		case ChartViewModes::ByWriters:		showByWriters(data_list);					break;
+		case ChartViewModes::ByActors:		showByActors(data_list);					break;
+		case ChartViewModes::ByRatings:		showByRatings(data_list);					break;
 		default: return;
 	}
 }
@@ -46,10 +48,11 @@ void Movies::WidgetChart::showByGenres(const DataList& data_list)
 	updateBars(data_list.numbersByGenres(10, _favorites_only));
 }
 
-void Movies::WidgetChart::showByCountries(const DataList& data_list)
+void Movies::WidgetChart::showByCountries(const DataList& data_list, const Base::ExtraList& extra_list)
 {
 	chart()->setTitle(tr("Распределение по странам"));
-	updateBars(data_list.numbersByCountries(10, _favorites_only));
+	auto synonyms = extra_list.getSynonyms(tr("[Синонимы для стран]"));
+	updateBars(data_list.numbersByCountries(10, synonyms, _favorites_only));
 }
 
 void Movies::WidgetChart::showByYears(const DataList& data_list)

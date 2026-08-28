@@ -2,6 +2,11 @@
 
 #include <gui/base/widgets/BaseWidgetChart.h>
 
+namespace Base
+{
+class ExtraList;
+}
+
 namespace Movies
 {
 
@@ -14,7 +19,7 @@ public:
 	explicit WidgetChart(QWidget* parent = nullptr);
 	~WidgetChart() = default;
 
-	void update(const DataList& data_list);
+	void update(const DataList& data_list, const Base::ExtraList& extra_list);
 
 public slots:
 	void setFavoritesOnly(Qt::CheckState state);
@@ -24,7 +29,7 @@ signals:
 private:
 	void showByViewDates(const DataList& data_list);
 	void showByGenres(const DataList& data_list);
-	void showByCountries(const DataList& data_list);
+	void showByCountries(const DataList& data_list, const Base::ExtraList& extra_list);
 	void showByYears(const DataList& data_list);
 	void showByDecades(const DataList& data_list);
 	void showByDirectors(const DataList& data_list);

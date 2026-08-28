@@ -216,6 +216,11 @@ void Movies::WidgetMain::showExtra(size_t index)
 {
 	if (!_widget_extra) {
 		_widget_extra = new Base::WidgetExtra(index, _extra_list, this);
+		_widget_extra->addSpecialGroup(
+				tr("[Синонимы для стран]"),
+				tr("Перечисление через запятую стран,\nкоторые должны объединяться в одну"),
+				tr("Общее название для вышеуказанных стран")
+		);
 		connect(_widget_extra, &Base::WidgetExtra::showMessage,
 				this, &WidgetMain::showMessage);
 		connect(_widget_extra, &Base::WidgetExtra::saveExtra,
@@ -227,7 +232,7 @@ void Movies::WidgetMain::showExtra(size_t index)
 void Movies::WidgetMain::saveExtra(size_t index, const Base::Extra& extra)
 {
 	if (_extra_list.set(index, extra)) {
-		updateExtraList();
+		updateDependentOnExtra();
 		_widget_control->highlightButtonSave(true);
 	}
 }
@@ -237,7 +242,7 @@ void Movies::WidgetMain::deleteExtra(const QString& id)
 	if (auto i = _extra_list.findIndexById(id); i >= 0) {
 		if (askDel(tr("Удалить запись \"%1\"?").arg(_extra_list[i].title()))) {
 			_extra_list.del(i);
-			updateExtraList();
+			updateDependentOnExtra();
 			_widget_control->highlightButtonSave(true);
 		}
 	}
@@ -258,6 +263,13 @@ void Movies::WidgetMain::updateDependentOnData()
 	updateChart();
 }
 
+void Movies::WidgetMain::updateDependentOnExtra()
+{
+	updateDataList();
+	updateExtraList();
+	updateChart();
+}
+
 void Movies::WidgetMain::updateSummary()
 {
 	_widget_summary->update(_data_list);
@@ -265,7 +277,7 @@ void Movies::WidgetMain::updateSummary()
 
 void Movies::WidgetMain::updateDataList()
 {
-	_widget_data_list->update(_data_list);
+	_widget_data_list->update(_data_list, _extra_list);
 }
 
 void Movies::WidgetMain::updateExtraList()
@@ -275,5 +287,5 @@ void Movies::WidgetMain::updateExtraList()
 
 void Movies::WidgetMain::updateChart()
 {
-	_widget_chart->update(_data_list);
+	_widget_chart->update(_data_list, _extra_list);
 }

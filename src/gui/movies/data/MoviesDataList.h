@@ -36,12 +36,16 @@ public:
 	NumbersByStringsVec numbersByGenres(size_t max_num, bool favorites_only = false) const;
 	ListOfStrings listOfGenres() const;
 
-	SublistsByStrings moviesByCountries(bool favorites_only = false) const;
-	NumbersByStringsVec numbersByCountries(size_t max_num, bool favorites_only = false) const;
+	SublistsByStrings moviesByCountries(
+			const Synonyms& synonyms, bool favorites_only = false) const;
+	NumbersByStringsVec numbersByCountries(size_t max_num,
+			const Synonyms& synonyms, bool favorites_only = false) const;
 	ListOfStrings listOfCountries() const;
 
-	Sublists2ByStrings moviesByRegions(bool favorites_only = false) const;
-	NumbersByStringsVec numbersByRegions(size_t max_num, bool favorites_only = false) const;
+	Sublists2ByStrings moviesByRegions(
+			const Synonyms& synonyms, bool favorites_only = false) const;
+	NumbersByStringsVec numbersByRegions(size_t max_num,
+			const Synonyms& synonyms, bool favorites_only = false) const;
 
 	SublistsByStrings moviesByDirectors(bool favorites_only = false) const;
 	NumbersByStringsVec numbersByDirectors(size_t max_num, bool favorites_only = false) const;

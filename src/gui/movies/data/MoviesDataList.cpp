@@ -83,15 +83,16 @@ Movies::DataList::ListOfStrings Movies::DataList::listOfGenres() const
 	return listOfStrings(&Data::genres);
 }
 
-Movies::DataList::SublistsByStrings Movies::DataList::moviesByCountries(bool favorites_only) const
+Movies::DataList::SublistsByStrings Movies::DataList::moviesByCountries(
+		const Synonyms& synonyms, bool favorites_only) const
 {
-	return sublistsByStrings(&Data::countries, &Data::isFavorite, favorites_only);
+	return sublistsByStrings(&Data::countries, synonyms, &Data::isFavorite, favorites_only);
 }
 
 Movies::DataList::NumbersByStringsVec Movies::DataList::numbersByCountries(
-		size_t max_num, bool favorites_only) const
+		size_t max_num, const Synonyms& synonyms, bool favorites_only) const
 {
-	return sortedVec(numbersByStrings(&Data::countries, &Data::isFavorite, favorites_only), max_num);
+	return sortedVec(numbersByStrings(&Data::countries, synonyms, &Data::isFavorite, favorites_only), max_num);
 }
 
 Movies::DataList::ListOfStrings Movies::DataList::listOfCountries() const
@@ -99,16 +100,18 @@ Movies::DataList::ListOfStrings Movies::DataList::listOfCountries() const
 	return listOfStrings(&Data::countries);
 }
 
-Movies::DataList::Sublists2ByStrings Movies::DataList::moviesByRegions(bool favorites_only) const
+Movies::DataList::Sublists2ByStrings Movies::DataList::moviesByRegions(
+		const Synonyms& synonyms, bool favorites_only) const
 {
 	Sublists2ByStrings list;
 	for (const auto& data : _data_list) {
 		if (favorites_only && !data.isFavorite()) { continue; }
 		auto countries = data.countries();
 		for (const auto& country : countries) {
-			auto regions = Regions::get(country);
+			auto synonym_of_country = synonyms.contains(country) ? synonyms.at(country) : country;
+			auto regions = Regions::get(synonym_of_country);
 			for (const auto& region : regions) {
-				list[region][country].push_back(&data);
+				list[region][synonym_of_country].push_back(&data);
 			}
 		}
 	}
@@ -116,9 +119,9 @@ Movies::DataList::Sublists2ByStrings Movies::DataList::moviesByRegions(bool favo
 }
 
 Movies::DataList::NumbersByStringsVec Movies::DataList::numbersByRegions(
-		size_t max_num, bool favorites_only) const
+		size_t max_num, const Synonyms& synonyms, bool favorites_only) const
 {
-	return sortedVec(numbersByStrings(&Data::regions, &Data::isFavorite, favorites_only), max_num);
+	return sortedVec(numbersByStrings(&Data::regions, synonyms, &Data::isFavorite, favorites_only), max_num);
 }
 
 Movies::DataList::SublistsByStrings Movies::DataList::moviesByDirectors(bool favorites_only) const

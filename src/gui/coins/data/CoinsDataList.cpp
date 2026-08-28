@@ -23,8 +23,8 @@ Coins::DataList::SublistsByStrings Coins::DataList::coinsByCountries(
 	return sublistsByStrings(&Data::country, synonyms);
 }
 
-Coins::DataList::NumbersByStringsVec Coins::DataList::numbersByCountries(size_t max_num,
-		const Synonyms& synonyms) const
+Coins::DataList::NumbersByStringsVec Coins::DataList::numbersByCountries(
+		size_t max_num, const Synonyms& synonyms) const
 {
 	return sortedVec(numbersByStrings(&Data::country, synonyms), max_num);
 }

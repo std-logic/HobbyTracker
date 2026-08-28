@@ -2,6 +2,7 @@
 #include "../common/MoviesCommon.h"
 #include "../data/MoviesDataList.h"
 
+#include <gui/base/data/BaseExtraList.h>
 #include <gui/base/widgets/BaseWidgetTreeItem.h>
 
 Movies::WidgetDataList::WidgetDataList(QWidget* parent)
@@ -9,22 +10,22 @@ Movies::WidgetDataList::WidgetDataList(QWidget* parent)
 {
 }
 
-void Movies::WidgetDataList::update(const DataList& data_list)
+void Movies::WidgetDataList::update(const DataList& data_list, const Base::ExtraList& extra_list)
 {
 	clear();
 	setRootIsDecorated(static_cast<DataListViewModes>(_view_mode) != DataListViewModes::Simple);
 	switch (static_cast<DataListViewModes>(_view_mode)) {
-		case DataListViewModes::Simple:			showSimple(data_list);			break;
-		case DataListViewModes::ByKinds:		showByKinds(data_list);			break;
-		case DataListViewModes::ByGenres:		showByGenres(data_list);		break;
-		case DataListViewModes::ByCountries:	showByCountries(data_list);		break;
-		case DataListViewModes::ByRegions:		showByRegions(data_list);		break;
-		case DataListViewModes::ByYears:		showByYears(data_list);			break;
-		case DataListViewModes::ByDecades:		showByDecades(data_list);		break;
-		case DataListViewModes::ByDirectors:	showByDirectors(data_list);		break;
-		case DataListViewModes::ByWriters:		showByWriters(data_list);		break;
-		case DataListViewModes::ByActors:		showByActors(data_list);		break;
-		case DataListViewModes::ByRatings:		showByRatings(data_list);		break;
+		case DataListViewModes::Simple:			showSimple(data_list);						break;
+		case DataListViewModes::ByKinds:		showByKinds(data_list);						break;
+		case DataListViewModes::ByGenres:		showByGenres(data_list);					break;
+		case DataListViewModes::ByCountries:	showByCountries(data_list, extra_list);		break;
+		case DataListViewModes::ByRegions:		showByRegions(data_list, extra_list);		break;
+		case DataListViewModes::ByYears:		showByYears(data_list);						break;
+		case DataListViewModes::ByDecades:		showByDecades(data_list);					break;
+		case DataListViewModes::ByDirectors:	showByDirectors(data_list);					break;
+		case DataListViewModes::ByWriters:		showByWriters(data_list);					break;
+		case DataListViewModes::ByActors:		showByActors(data_list);					break;
+		case DataListViewModes::ByRatings:		showByRatings(data_list);					break;
 		default: return;
 	}
 }
@@ -134,7 +135,7 @@ void Movies::WidgetDataList::showByGenres(const DataList& data_list)
 	}
 }
 
-void Movies::WidgetDataList::showByCountries(const DataList& data_list)
+void Movies::WidgetDataList::showByCountries(const DataList& data_list, const Base::ExtraList& extra_list)
 {
 	enum Columns {CLMN_VIEW_DATE, CLMN_COUNT, CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES,
 				  CLMN_DIRECTORS, CLMN_ACTORS, CLMN_YEAR, CLMN_RATING};
@@ -144,7 +145,8 @@ void Movies::WidgetDataList::showByCountries(const DataList& data_list)
 				 WIDTH_DIRECTORS, WIDTH_ACTORS, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_COUNT, Qt::DescendingOrder, true);
 
-	auto movies_by_countries = data_list.moviesByCountries(_favorites_only);
+	auto synonyms = extra_list.getSynonyms(tr("[Синонимы для стран]"));
+	auto movies_by_countries = data_list.moviesByCountries(synonyms, _favorites_only);
 
 	for (const auto& [country, movies] : movies_by_countries) {
 		auto item_country = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
@@ -168,7 +170,7 @@ void Movies::WidgetDataList::showByCountries(const DataList& data_list)
 	}
 }
 
-void Movies::WidgetDataList::showByRegions(const DataList& data_list)
+void Movies::WidgetDataList::showByRegions(const DataList& data_list, const Base::ExtraList& extra_list)
 {
 	enum Columns {CLMN_VIEW_DATE, CLMN_COUNT, CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES,
 				  CLMN_DIRECTORS, CLMN_ACTORS, CLMN_YEAR, CLMN_RATING};
@@ -178,7 +180,8 @@ void Movies::WidgetDataList::showByRegions(const DataList& data_list)
 				 WIDTH_DIRECTORS, WIDTH_ACTORS, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_COUNT, Qt::DescendingOrder, true);
 
-	auto movies_by_regions = data_list.moviesByRegions(_favorites_only);
+	auto synonyms = extra_list.getSynonyms(tr("[Синонимы для стран]"));
+	auto movies_by_regions = data_list.moviesByRegions(synonyms, _favorites_only);
 
 	for (const auto& [region, movies_by_countries] : movies_by_regions) {
 		auto item_region = new Base::WidgetTreeItem(this, Global::Colors::tree_level_2);
