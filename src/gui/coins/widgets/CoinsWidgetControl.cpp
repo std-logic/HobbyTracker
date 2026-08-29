@@ -25,6 +25,7 @@ void Coins::WidgetControl::initWidgets()
 		addButtonExpand(_button_expand_data_list, &WidgetControl::expandDataList);
 		addComboBox(_combo_data_list_view_mode, &WidgetControl::setDataListViewMode, {
 				{tr("По странам"), static_cast<int>(DataListViewModes::ByCountries)},
+				{tr("По регионам"), static_cast<int>(DataListViewModes::ByRegions)},
 				{tr("По десятилетиям"), static_cast<int>(DataListViewModes::ByDecades)},
 				{tr("По столетиям"), static_cast<int>(DataListViewModes::ByCenturies)},
 				{tr("Простой список"), static_cast<int>(DataListViewModes::Simple)},
@@ -59,6 +60,7 @@ void Coins::WidgetControl::initWidgets()
 		addButtonShow(_button_chart, tr("Статистика"), &WidgetControl::showChart);
 		addComboBox(_combo_chart_view_mode, &WidgetControl::setChartViewMode, {
 				{tr("По странам"), static_cast<int>(ChartViewModes::ByCountries)},
+				{tr("По регионам"), static_cast<int>(ChartViewModes::ByRegions)},
 				{tr("По десятилетиям"), static_cast<int>(ChartViewModes::ByDecades)},
 				{tr("По столетиям"), static_cast<int>(ChartViewModes::ByCenturies)},
 				{tr("По диаметрам"), static_cast<int>(ChartViewModes::ByDiameters)},

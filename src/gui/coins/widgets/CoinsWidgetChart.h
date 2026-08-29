@@ -25,6 +25,7 @@ signals:
 
 private:
 	void showByCountries(const DataList& data_list, const Base::ExtraList& extra_list);
+	void showByRegions(const DataList& data_list, const Base::ExtraList& extra_list);
 	void showByDecades(const DataList& data_list);
 	void showByCenturies(const DataList& data_list);
 	void showByDiameters(const DataList& data_list);

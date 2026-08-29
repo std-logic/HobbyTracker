@@ -1,5 +1,7 @@
 #include "CoinsDataList.h"
 
+#include <common/Regions.h>
+
 #include <unordered_set>
 
 Coins::DataList::Summary Coins::DataList::summary() const
@@ -74,6 +76,32 @@ Coins::DataList::ListOfStrings Coins::DataList::listOfPeriods(
 		}
 	}
 	return list;
+}
+
+Coins::DataList::Sublists3ByStrings Coins::DataList::coinsByRegions(
+		const Synonyms& synonyms) const
+{
+	Sublists3ByStrings list;
+	for (const auto& data : _data_list) {
+		auto country = data.country();
+		auto synonym_for_country = synonyms.contains(country) ? synonyms.at(country) : country;
+		auto region = Regions::get(synonym_for_country);
+		list[region][synonym_for_country][data.period()].push_back(&data);
+	}
+	return list;
+}
+
+Coins::DataList::NumbersByStringsVec Coins::DataList::numbersByRegions(
+		size_t max_num, const Synonyms& synonyms) const
+{
+	NumbersByStrings list;
+	for (const auto& data : _data_list) {
+		auto country = data.country();
+		auto synonym_for_country = synonyms.contains(country) ? synonyms.at(country) : country;
+		auto region = Regions::get(synonym_for_country);
+		++list[region];
+	}
+	return sortedVec(list, max_num);
 }
 
 Coins::DataList::ListOfStrings Coins::DataList::listOfValues(

@@ -67,14 +67,14 @@ void Flights::WidgetDataList::showByRegions(const DataList& data_list)
 	for (const auto& [region, flights_by_countries] : flights_by_regions) {
 		auto item_region = new Base::WidgetTreeItem(this, Global::Colors::tree_level_2);
 		item_region->setText(CLMN_DATE, region);
-		uint32_t flights_in_region_num = 0;
+		uint32_t region_flights_num = 0;
 
 		for (const auto& [country, flights] : flights_by_countries) {
 			auto item_country = new Base::WidgetTreeItem(item_region, Global::Colors::tree_level_1);
 			item_country->setText(CLMN_DATE, country);
-			uint32_t flights_in_country_num = DataList::countryNumInSublist(country, flights);
-			flights_in_region_num += flights_in_country_num;
-			item_country->setNumb(CLMN_COUNT, flights_in_country_num);
+			uint32_t country_flights_num = DataList::countryNumInSublist(country, flights);
+			region_flights_num += country_flights_num;
+			item_country->setNumb(CLMN_COUNT, country_flights_num);
 
 			for (const auto flight : flights) {
 				auto item_flight = new Base::WidgetTreeItem(item_country);
@@ -85,7 +85,7 @@ void Flights::WidgetDataList::showByRegions(const DataList& data_list)
 			}
 		}
 
-		item_region->setNumb(CLMN_COUNT, flights_in_region_num);
+		item_region->setNumb(CLMN_COUNT, region_flights_num);
 	}
 }
 

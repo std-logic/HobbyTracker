@@ -31,6 +31,9 @@ public:
 	ListOfStrings listOfPeriods(const QString& country) const;
 	ListOfStrings listOfPeriods(const QString& country, const Synonyms& synonyms) const;
 
+	Sublists3ByStrings coinsByRegions(const Synonyms& synonyms) const;
+	NumbersByStringsVec numbersByRegions(size_t max_num, const Synonyms& synonyms) const;
+
 	ListOfStrings listOfValues(const QString& country, const QString& period) const;
 
 	ListOfStrings listOfCurrencies(const QString& country, const QString& period) const;

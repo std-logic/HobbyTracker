@@ -6,6 +6,7 @@ namespace Coins
 enum class DataListViewModes
 {
 	ByCountries,
+	ByRegions,
 	ByDecades,
 	ByCenturies,
 	Simple,
@@ -14,6 +15,7 @@ enum class DataListViewModes
 enum class ChartViewModes
 {
 	ByCountries,
+	ByRegions,
 	ByDecades,
 	ByCenturies,
 	ByDiameters,

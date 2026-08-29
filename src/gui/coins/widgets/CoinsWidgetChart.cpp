@@ -14,6 +14,7 @@ void Coins::WidgetChart::update(const DataList& data_list, const Base::ExtraList
 	clearChart();
 	switch (static_cast<ChartViewModes>(_view_mode)) {
 		case ChartViewModes::ByCountries:	showByCountries(data_list, extra_list);		break;
+		case ChartViewModes::ByRegions:		showByRegions(data_list, extra_list);		break;
 		case ChartViewModes::ByDecades:		showByDecades(data_list);					break;
 		case ChartViewModes::ByCenturies:	showByCenturies(data_list);					break;
 		case ChartViewModes::ByDiameters:	showByDiameters(data_list);					break;
@@ -26,6 +27,13 @@ void Coins::WidgetChart::showByCountries(const DataList& data_list, const Base::
 	chart()->setTitle(tr("Распределение по странам"));
 	auto synonyms = extra_list.getSynonyms(tr("[Синонимы для стран]"));
 	updateBars(data_list.numbersByCountries(10, synonyms));
+}
+
+void Coins::WidgetChart::showByRegions(const DataList& data_list, const Base::ExtraList& extra_list)
+{
+	chart()->setTitle(tr("Распределение по регионам"));
+	auto synonyms = extra_list.getSynonyms(tr("[Синонимы для стран]"));
+	updateBars(data_list.numbersByRegions(10, synonyms));
 }
 
 void Coins::WidgetChart::showByDecades(const DataList& data_list)

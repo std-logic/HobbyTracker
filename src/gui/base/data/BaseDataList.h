@@ -24,6 +24,7 @@ public:
 	using SubListContainer = std::vector<const T*>;
 	using SublistsByStrings = std::unordered_map<QString, SubListContainer>;
 	using Sublists2ByStrings = std::unordered_map<QString, SublistsByStrings>;
+	using Sublists3ByStrings = std::unordered_map<QString, Sublists2ByStrings>;
 	using SublistsByIntegers = std::unordered_map<uint32_t, SubListContainer>;
 	using NumbersByStrings = std::map<QString, int>;
 	using NumbersByStringsVec = std::vector<std::pair<QString, int>>;
