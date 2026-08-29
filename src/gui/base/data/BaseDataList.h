@@ -100,8 +100,8 @@ public:
 		SublistsByStrings list;
 		for (const auto& data : _data_list) {
 			auto str = (data.*method)();
-			auto key = synonyms.contains(str) ? synonyms.at(str) : str;
-			list[key].push_back(&data);
+			auto synonym_for_str = synonyms.contains(str) ? synonyms.at(str) : str;
+			list[synonym_for_str].push_back(&data);
 		}
 		return list;
 	}
@@ -127,8 +127,8 @@ public:
 		for (const auto& data : _data_list) {
 			if (condition_on && !(data.*condition)()) { continue; }
 			auto str = (data.*method)();
-			auto key = synonyms.contains(str) ? synonyms.at(str) : str;
-			list[key].push_back(&data);
+			auto synonym_for_str = synonyms.contains(str) ? synonyms.at(str) : str;
+			list[synonym_for_str].push_back(&data);
 		}
 		return list;
 	}
@@ -153,12 +153,12 @@ public:
 		SublistsByStrings list;
 		for (const auto& data : _data_list) {
 			auto str_list = (data.*method)();
-			std::set<QString> unique_keys;
+			std::set<QString> unique_strs;
 			for (const auto& str : str_list) {
-				auto key = synonyms.contains(str) ? synonyms.at(str) : str;
-				if (!unique_keys.contains(key)) {
-					unique_keys.insert(key);
-					list[key].push_back(&data);
+				auto synonym_for_str = synonyms.contains(str) ? synonyms.at(str) : str;
+				if (!unique_strs.contains(synonym_for_str)) {
+					unique_strs.insert(synonym_for_str);
+					list[synonym_for_str].push_back(&data);
 				}
 			}
 		}
@@ -189,12 +189,12 @@ public:
 		for (const auto& data : _data_list) {
 			if (condition_on && !(data.*condition)()) { continue; }
 			auto str_list = (data.*method)();
-			std::set<QString> unique_keys;
+			std::set<QString> unique_strs;
 			for (const auto& str : str_list) {
-				auto key = synonyms.contains(str) ? synonyms.at(str) : str;
-				if (!unique_keys.contains(key)) {
-					unique_keys.insert(key);
-					list[key].push_back(&data);
+				auto synonym_for_str = synonyms.contains(str) ? synonyms.at(str) : str;
+				if (!unique_strs.contains(synonym_for_str)) {
+					unique_strs.insert(synonym_for_str);
+					list[synonym_for_str].push_back(&data);
 				}
 			}
 		}
@@ -287,8 +287,8 @@ public:
 		NumbersByStrings list;
 		for (const auto& data : _data_list) {
 			auto str = (data.*method)();
-			auto key = synonyms.contains(str) ? synonyms.at(str) : str;
-			++list[key];
+			auto synonym_for_str = synonyms.contains(str) ? synonyms.at(str) : str;
+			++list[synonym_for_str];
 		}
 		return list;
 	}
@@ -314,8 +314,8 @@ public:
 		for (const auto& data : _data_list) {
 			if (condition_on && !(data.*condition)()) { continue; }
 			auto str = (data.*method)();
-			auto key = synonyms.contains(str) ? synonyms.at(str) : str;
-			++list[key];
+			auto synonym_for_str = synonyms.contains(str) ? synonyms.at(str) : str;
+			++list[synonym_for_str];
 		}
 		return list;
 	}
@@ -340,12 +340,12 @@ public:
 		NumbersByStrings list;
 		for (const auto& data : _data_list) {
 			auto str_list = (data.*method)();
-			std::set<QString> unique_keys;
+			std::set<QString> unique_strs;
 			for (const auto& str : str_list) {
-				auto key = synonyms.contains(str) ? synonyms.at(str) : str;
-				if (!unique_keys.contains(key)) {
-					unique_keys.insert(key);
-					++list[key];
+				auto synonym_for_str = synonyms.contains(str) ? synonyms.at(str) : str;
+				if (!unique_strs.contains(synonym_for_str)) {
+					unique_strs.insert(synonym_for_str);
+					++list[synonym_for_str];
 				}
 			}
 		}
@@ -376,12 +376,12 @@ public:
 		for (const auto& data : _data_list) {
 			if (condition_on && !(data.*condition)()) { continue; }
 			auto str_list = (data.*method)();
-			std::set<QString> unique_keys;
+			std::set<QString> unique_strs;
 			for (const auto& str : str_list) {
-				auto key = synonyms.contains(str) ? synonyms.at(str) : str;
-				if (!unique_keys.contains(key)) {
-					unique_keys.insert(key);
-					++list[key];
+				auto synonym_for_str = synonyms.contains(str) ? synonyms.at(str) : str;
+				if (!unique_strs.contains(synonym_for_str)) {
+					unique_strs.insert(synonym_for_str);
+					++list[synonym_for_str];
 				}
 			}
 		}

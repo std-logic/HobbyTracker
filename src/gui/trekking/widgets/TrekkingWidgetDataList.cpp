@@ -61,6 +61,7 @@ void Trekking::WidgetDataList::showByCountries(const DataList& data_list)
 		auto item_country = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_country->setText(CLMN_DATE, country);
 		item_country->setNumb(CLMN_COUNT, tracks.size());
+		uint32_t country_time = 0, country_dist = 0, country_peak = Global::undefined_value;
 
 		for (const auto track : tracks) {
 			auto item_track = new Base::WidgetTreeItem(item_country);
@@ -72,7 +73,14 @@ void Trekking::WidgetDataList::showByCountries(const DataList& data_list)
 			item_track->setText(CLMN_COUNTRIES, track->countriesToString(QStringLiteral(" • ")));
 			item_track->setText(CLMN_PLACES, track->places());
 			item_track->setId(track->id());
+			country_time += track->time();
+			country_dist += track->dist();
+			Helper::checkMax(track->peak(), &country_peak);
 		}
+
+		item_country->setNumb(CLMN_TIME, country_time);
+		item_country->setNumb(CLMN_DIST, country_dist);
+		item_country->setNumb(CLMN_PEAK, country_peak);
 	}
 }
 
@@ -92,11 +100,13 @@ void Trekking::WidgetDataList::showByRegions(const DataList& data_list)
 		auto item_region = new Base::WidgetTreeItem(this, Global::Colors::tree_level_2);
 		item_region->setText(CLMN_DATE, region);
 		std::unordered_set<QString> ids;
+		uint32_t region_time = 0, region_dist = 0, region_peak = Global::undefined_value;
 
 		for (const auto& [country, tracks] : tracks_by_countries) {
 			auto item_country = new Base::WidgetTreeItem(item_region, Global::Colors::tree_level_1);
 			item_country->setText(CLMN_DATE, country);
 			item_country->setNumb(CLMN_COUNT, tracks.size());
+			uint32_t country_time = 0, country_dist = 0, country_peak = Global::undefined_value;
 
 			for (const auto track : tracks) {
 				auto item_track = new Base::WidgetTreeItem(item_country);
@@ -108,11 +118,26 @@ void Trekking::WidgetDataList::showByRegions(const DataList& data_list)
 				item_track->setText(CLMN_COUNTRIES, track->countriesToString(QStringLiteral(" • ")));
 				item_track->setText(CLMN_PLACES, track->places());
 				item_track->setId(track->id());
+				if (!ids.contains(track->id())) {
+					region_time += track->time();
+					region_dist += track->dist();
+					Helper::checkMax(track->peak(), &region_peak);
+				}
 				ids.insert(track->id());
+				country_time += track->time();
+				country_dist += track->dist();
+				Helper::checkMax(track->peak(), &country_peak);
 			}
+
+			item_country->setNumb(CLMN_TIME, country_time);
+			item_country->setNumb(CLMN_DIST, country_dist);
+			item_country->setNumb(CLMN_PEAK, country_peak);
 		}
 
 		item_region->setNumb(CLMN_COUNT, ids.size());
+		item_region->setNumb(CLMN_TIME, region_time);
+		item_region->setNumb(CLMN_DIST, region_dist);
+		item_region->setNumb(CLMN_PEAK, region_peak);
 	}
 }
 
@@ -132,6 +157,7 @@ void Trekking::WidgetDataList::showByKinds(const DataList& data_list)
 		auto item_kind = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
 		item_kind->setText(CLMN_DATE, kind);
 		item_kind->setNumb(CLMN_COUNT, tracks.size());
+		uint32_t kind_time = 0, kind_dist = 0, kind_peak = Global::undefined_value;
 
 		for (const auto track : tracks) {
 			auto item_track = new Base::WidgetTreeItem(item_kind);
@@ -142,6 +168,13 @@ void Trekking::WidgetDataList::showByKinds(const DataList& data_list)
 			item_track->setText(CLMN_COUNTRIES, track->countriesToString(QStringLiteral(" • ")));
 			item_track->setText(CLMN_PLACES, track->places());
 			item_track->setId(track->id());
+			kind_time += track->time();
+			kind_dist += track->dist();
+			Helper::checkMax(track->peak(), &kind_peak);
 		}
+
+		item_kind->setNumb(CLMN_TIME, kind_time);
+		item_kind->setNumb(CLMN_DIST, kind_dist);
+		item_kind->setNumb(CLMN_PEAK, kind_peak);
 	}
 }

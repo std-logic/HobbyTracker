@@ -187,6 +187,8 @@ void Movies::WidgetDataList::showByRegions(const DataList& data_list, const Base
 		auto item_region = new Base::WidgetTreeItem(this, Global::Colors::tree_level_2);
 		item_region->setText(CLMN_VIEW_DATE, region);
 		std::unordered_set<QString> ids;
+		uint32_t region_min_year = Global::undefined_value;
+		uint32_t region_max_year = Global::undefined_value;
 
 		for (const auto& [country, movies] : movies_by_countries) {
 			auto item_country = new Base::WidgetTreeItem(item_region, Global::Colors::tree_level_1);
@@ -207,10 +209,12 @@ void Movies::WidgetDataList::showByRegions(const DataList& data_list, const Base
 				item_movie->setToolTipEverywhere(movie->summaryString());
 				item_movie->setId(movie->id());
 				ids.insert(movie->id());
+				Helper::checkMinMax(movie->year(), &region_min_year, &region_max_year);
 			}
 		}
 
 		item_region->setNumb(CLMN_COUNT, ids.size());
+		item_region->setText(CLMN_YEAR, Helper::yearString(region_min_year, region_max_year));
 	}
 }
 
