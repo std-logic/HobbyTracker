@@ -1,5 +1,7 @@
 #include "FlightsDataList.h"
 
+#include <common/Regions.h>
+
 #include <unordered_set>
 
 Flights::DataList::Summary Flights::DataList::summary() const
@@ -40,6 +42,32 @@ Flights::DataList::NumbersByStrings Flights::DataList::numbersByYears(uint32_t s
 			[](const Data& data) { return data.year(); },
 			[](const Data& data)->int { return data.flightsNum(); },
 			[](uint32_t val, uint32_t step) { return Helper::epochString(val, step); });
+}
+
+Flights::DataList::Sublists2ByStrings Flights::DataList::flightsByRegions() const
+{
+	Sublists2ByStrings list;
+	for (const auto& data : _data_list) {
+		auto countries = data.countries();
+		for (const auto& country : countries) {
+			auto region = Regions::get(country);
+			list[region][country].push_back(&data);
+		}
+	}
+	return list;
+}
+
+Flights::DataList::NumbersByStringsVec Flights::DataList::numbersByRegions(size_t max_num) const
+{
+	NumbersByStrings list;
+	for (const auto& data : _data_list) {
+		auto countries = data.countriesRawList();
+		for (const auto& country : countries) {
+			auto region = Regions::get(country);
+			++list[region];
+		}
+	}
+	return sortedVec(list, max_num);
 }
 
 Flights::DataList::SublistsByStrings Flights::DataList::flightsByCountries() const

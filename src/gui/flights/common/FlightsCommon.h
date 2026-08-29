@@ -10,6 +10,7 @@ constexpr size_t max_points_num = 5;
 enum class DataListViewModes
 {
 	ByYears,
+	ByRegions,
 	ByCountries,
 	ByCities,
 	ByAirports,
@@ -22,6 +23,7 @@ enum class ChartViewModes
 {
 	ByFlights,
 	ByDist,
+	ByRegions,
 	ByCountries,
 	ByCities,
 	ByAirports,

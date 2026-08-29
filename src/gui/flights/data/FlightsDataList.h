@@ -31,6 +31,9 @@ public:
 			RangeTypes range_type = RangeTypes::Discrete,
 			uint32_t required_min = 0, uint32_t required_max = 0) const;
 
+	Sublists2ByStrings flightsByRegions() const;
+	NumbersByStringsVec numbersByRegions(size_t max_num) const;
+
 	SublistsByStrings flightsByCountries() const;
 	NumbersByStringsVec numbersByCountries(size_t max_num) const;
 	ListOfStrings listOfCountries() const;

@@ -25,6 +25,7 @@ void Flights::WidgetControl::initWidgets()
 		addButtonExpand(_button_expand_data_list, &WidgetControl::expandDataList);
 		addComboBox(_combo_data_list_view_mode, &WidgetControl::setDataListViewMode, {
 				{tr("По годам"), static_cast<int>(DataListViewModes::ByYears)},
+				{tr("По регионам"), static_cast<int>(DataListViewModes::ByRegions)},
 				{tr("По странам"), static_cast<int>(DataListViewModes::ByCountries)},
 				{tr("По городам"), static_cast<int>(DataListViewModes::ByCities)},
 				{tr("По аэропортам"), static_cast<int>(DataListViewModes::ByAirports)},
@@ -48,6 +49,7 @@ void Flights::WidgetControl::initWidgets()
 		addComboBox(_combo_chart_view_mode, &WidgetControl::setChartViewMode, {
 				{tr("По полётам"), static_cast<int>(ChartViewModes::ByFlights)},
 				{tr("По километрам"), static_cast<int>(ChartViewModes::ByDist)},
+				{tr("По регионам"), static_cast<int>(ChartViewModes::ByRegions)},
 				{tr("По странам"), static_cast<int>(ChartViewModes::ByCountries)},
 				{tr("По городам"), static_cast<int>(ChartViewModes::ByCities)},
 				{tr("По аэропортам"), static_cast<int>(ChartViewModes::ByAirports)},
