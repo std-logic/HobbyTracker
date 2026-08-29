@@ -36,23 +36,22 @@ void Coins::WidgetDataList::showByCountries(const DataList& data_list, const Bas
 
 	auto synonyms = extra_list.getSynonyms(tr("[Синонимы для стран]"));
 	auto coins_by_countries = data_list.coinsByCountries(synonyms);
-	auto coins_by_periods = data_list.coinsByPeriods(synonyms);
 
-	for (const auto& [country, coins_from_country] : coins_by_countries) {
+	for (const auto& [country, coins_by_periods] : coins_by_countries) {
 		auto item_country = new Base::WidgetTreeItem(this, Global::Colors::tree_level_2);
 		item_country->setText(CLMN_COUNTRY, country);
-		item_country->setNumb(CLMN_COUNT, coins_from_country.size());
-		item_country->setText(CLMN_YEAR, Helper::yearString(coins_from_country));
+		uint32_t country_coins_num = 0;
+		uint32_t country_min_year = Global::undefined_value;
+		uint32_t country_max_year = Global::undefined_value;
 
-		auto list_of_periods = data_list.listOfPeriods(country, synonyms);
-		for (const auto& period : list_of_periods) {
-			auto coins_from_period = coins_by_periods[country + ", " + period];
+		for (const auto& [period, coins] : coins_by_periods) {
 			auto item_period = new Base::WidgetTreeItem(item_country, Global::Colors::tree_level_1);
 			item_period->setText(CLMN_COUNTRY, period);
-			item_period->setNumb(CLMN_COUNT, coins_from_period.size());
-			item_period->setText(CLMN_YEAR, Helper::yearString(coins_from_period));
+			item_period->setNumb(CLMN_COUNT, coins.size());
+			item_period->setText(CLMN_YEAR, Helper::yearString(coins));
+			country_coins_num += coins.size();
 
-			for (const auto coin : coins_from_period) {
+			for (const auto coin : coins) {
 				auto item_coin = new Base::WidgetTreeItem(item_period);
 				item_coin->setText(CLMN_COUNTRY, coin->currency());
 				item_coin->setText(CLMN_VALUE, coin->value());
@@ -64,8 +63,12 @@ void Coins::WidgetDataList::showByCountries(const DataList& data_list, const Bas
 				item_coin->setText(CLMN_STATE, coin->state());
 				item_coin->setToolTipEverywhere(coin->summaryString());
 				item_coin->setId(coin->id());
+				Helper::checkMinMax(coin->year(), &country_min_year, &country_max_year);
 			}
 		}
+
+		item_country->setNumb(CLMN_COUNT, country_coins_num);
+		item_country->setText(CLMN_YEAR, Helper::yearString(country_min_year, country_max_year));
 	}
 }
 

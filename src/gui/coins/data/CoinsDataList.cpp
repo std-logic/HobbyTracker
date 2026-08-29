@@ -19,10 +19,16 @@ Coins::DataList::Summary Coins::DataList::summary() const
 	return sum;
 }
 
-Coins::DataList::SublistsByStrings Coins::DataList::coinsByCountries(
+Coins::DataList::Sublists2ByStrings Coins::DataList::coinsByCountries(
 		const Synonyms& synonyms) const
 {
-	return sublistsByStrings(&Data::country, synonyms);
+	Sublists2ByStrings list;
+	for (const auto& data : _data_list) {
+		auto country = data.country();
+		auto synonym_for_country = synonyms.contains(country) ? synonyms.at(country) : country;
+		list[synonym_for_country][data.period()].push_back(&data);
+	}
+	return list;
 }
 
 Coins::DataList::NumbersByStringsVec Coins::DataList::numbersByCountries(
@@ -36,42 +42,12 @@ Coins::DataList::ListOfStrings Coins::DataList::listOfCountries() const
 	return listOfStrings(&Data::country);
 }
 
-Coins::DataList::SublistsByStrings Coins::DataList::coinsByPeriods(
-		const Synonyms& synonyms) const
-{
-	SublistsByStrings list;
-	for (const auto& data : _data_list) {
-		auto country = data.country();
-		auto key = synonyms.contains(country) ?
-				data.countryPeriod(synonyms.at(country)) :
-				data.countryPeriod();
-		list[key].push_back(&data);
-	}
-	return list;
-}
-
 Coins::DataList::ListOfStrings Coins::DataList::listOfPeriods(
 		const QString& country) const
 {
 	ListOfStrings list;
 	for (const auto& data : _data_list) {
 		if (data.country() == country) {
-			list.insert(data.period());
-		}
-	}
-	return list;
-}
-
-Coins::DataList::ListOfStrings Coins::DataList::listOfPeriods(
-		const QString& country, const Synonyms& synonyms) const
-{
-	ListOfStrings list;
-	for (const auto& data : _data_list) {
-		if (synonyms.contains(data.country())) {
-			if (synonyms.at(data.country()) == country) {
-				list.insert(data.period());
-			}
-		} else if (data.country() == country) {
 			list.insert(data.period());
 		}
 	}

@@ -23,13 +23,11 @@ public:
 	};
 	Summary summary() const;
 
-	SublistsByStrings coinsByCountries(const Synonyms& synonyms) const;
+	Sublists2ByStrings coinsByCountries(const Synonyms& synonyms) const;
 	NumbersByStringsVec numbersByCountries(size_t max_num, const Synonyms& synonyms) const;
 	ListOfStrings listOfCountries() const;
 
-	SublistsByStrings coinsByPeriods(const Synonyms& synonyms) const;
 	ListOfStrings listOfPeriods(const QString& country) const;
-	ListOfStrings listOfPeriods(const QString& country, const Synonyms& synonyms) const;
 
 	Sublists3ByStrings coinsByRegions(const Synonyms& synonyms) const;
 	NumbersByStringsVec numbersByRegions(size_t max_num, const Synonyms& synonyms) const;
