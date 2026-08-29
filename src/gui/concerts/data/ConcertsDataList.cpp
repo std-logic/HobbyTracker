@@ -37,41 +37,13 @@ Concerts::DataList::NumbersByStrings Concerts::DataList::numbersByYears(uint32_t
 
 Concerts::DataList::SublistsByStrings Concerts::DataList::concertsByArtists(const Synonyms& synonyms) const
 {
-	SublistsByStrings list;
-	for (const auto& data : _data_list) {
-		auto artists = data.artists();
-		for (const auto& artist : artists) {
-			if (synonyms.contains(artist)) {
-				auto& sublist = list[synonyms.at(artist)];
-				if (!sublist.empty() && (sublist.back()->id() == data.id())) {
-					continue; // protection against multiple identical names in one concert
-				} else {
-					sublist.push_back(&data);
-				}
-			} else {
-				list[artist].push_back(&data);
-			}
-		}
-	}
-	return list;
+	return sublistsByStrings(&Data::artists, synonyms);
 }
 
 Concerts::DataList::NumbersByStringsVec Concerts::DataList::numbersByArtists(
 		size_t max_num, const Synonyms& synonyms) const
 {
-	NumbersByStrings list;
-	for (const auto& data : _data_list) {
-		auto artists = data.artists();
-		std::set<QString> unique_artists; // protection against multiple identical names in one concert
-		for (const auto& artist : artists) {
-			auto synonym_for_artist = synonyms.contains(artist) ? synonyms.at(artist) : artist;
-			if (!unique_artists.contains(synonym_for_artist)) {
-				unique_artists.insert(synonym_for_artist);
-				++list[synonym_for_artist];
-			}
-		}
-	}
-	return sortedVec(list, max_num);
+	return sortedVec(numbersByStrings(&Data::artists, synonyms), max_num);
 }
 
 Concerts::DataList::ListOfStrings Concerts::DataList::listOfArtists() const
