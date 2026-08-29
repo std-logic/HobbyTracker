@@ -16,6 +16,7 @@ void Trekking::WidgetDataList::update(const DataList& data_list)
 	switch (static_cast<DataListViewModes>(_view_mode)) {
 		case DataListViewModes::Simple:			showSimple(data_list);			break;
 		case DataListViewModes::ByCountries:	showByCountries(data_list);		break;
+		case DataListViewModes::ByRegions:		showByRegions(data_list);		break;
 		case DataListViewModes::ByKinds:		showByKinds(data_list);			break;
 		default: return;
 	}
@@ -72,6 +73,46 @@ void Trekking::WidgetDataList::showByCountries(const DataList& data_list)
 			item_track->setText(CLMN_PLACES, track->places());
 			item_track->setId(track->id());
 		}
+	}
+}
+
+void Trekking::WidgetDataList::showByRegions(const DataList& data_list)
+{
+	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_TIME, CLMN_DIST,
+				  CLMN_PEAK, CLMN_KIND, CLMN_COUNTRIES, CLMN_PLACES};
+	initColumns({tr("Регион / Страна / Даты"), tr("К-во"), tr("Ночёвок"), tr("Километров"),
+				 tr("Высшая точка"), tr("Тип"), tr("Страны"), tr("Место")},
+				{WIDTH_DATE, WIDTH_COUNT, WIDTH_TIME, WIDTH_DIST,
+				 WIDTH_PEAK, WIDTH_KIND, WIDTH_COUNTRIES, WIDTH_PLACES});
+	initSorting(CLMN_DATE);
+
+	auto tracks_by_regions = data_list.tracksByRegions();
+
+	for (const auto& [region, tracks_by_countries] : tracks_by_regions) {
+		auto item_region = new Base::WidgetTreeItem(this, Global::Colors::tree_level_2);
+		item_region->setText(CLMN_DATE, region);
+		std::unordered_set<QString> ids;
+
+		for (const auto& [country, tracks] : tracks_by_countries) {
+			auto item_country = new Base::WidgetTreeItem(item_region, Global::Colors::tree_level_1);
+			item_country->setText(CLMN_DATE, country);
+			item_country->setNumb(CLMN_COUNT, tracks.size());
+
+			for (const auto track : tracks) {
+				auto item_track = new Base::WidgetTreeItem(item_country);
+				item_track->setText(CLMN_DATE, track->dates());
+				item_track->setNumb(CLMN_TIME, track->time());
+				item_track->setNumb(CLMN_DIST, track->dist());
+				item_track->setNumb(CLMN_PEAK, track->peak());
+				item_track->setText(CLMN_KIND, track->kind());
+				item_track->setText(CLMN_COUNTRIES, track->countriesToString(QStringLiteral(" • ")));
+				item_track->setText(CLMN_PLACES, track->places());
+				item_track->setId(track->id());
+				ids.insert(track->id());
+			}
+		}
+
+		item_region->setNumb(CLMN_COUNT, ids.size());
 	}
 }
 

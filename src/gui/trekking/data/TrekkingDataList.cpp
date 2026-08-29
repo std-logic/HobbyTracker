@@ -1,5 +1,7 @@
 #include "TrekkingDataList.h"
 
+#include <common/Regions.h>
+
 #include <unordered_set>
 
 Trekking::DataList::Summary Trekking::DataList::summary() const
@@ -35,6 +37,36 @@ Trekking::DataList::SublistsByStrings Trekking::DataList::tracksByCountries() co
 Trekking::DataList::NumbersByStringsVec Trekking::DataList::numbersByCountries(size_t max_num) const
 {
 	return sortedVec(numbersByStrings(&Data::countries), max_num);
+}
+
+Trekking::DataList::Sublists2ByStrings Trekking::DataList::tracksByRegions() const
+{
+	Sublists2ByStrings list;
+	for (const auto& data : _data_list) {
+		auto countries = data.countries();
+		for (const auto& country : countries) {
+			auto region = Regions::get(country);
+			list[region][country].push_back(&data);
+		}
+	}
+	return list;
+}
+
+Trekking::DataList::NumbersByStringsVec Trekking::DataList::numbersByRegions(size_t max_num) const
+{
+	NumbersByStrings list;
+	for (const auto& data : _data_list) {
+		auto countries = data.countries();
+		std::set<QString> unique_regions;
+		for (const auto& country : countries) {
+			auto region = Regions::get(country);
+			if (!unique_regions.contains(region)) {
+				unique_regions.insert(region);
+				++list[region];
+			}
+		}
+	}
+	return sortedVec(list, max_num);
 }
 
 Trekking::DataList::SublistsByStrings Trekking::DataList::tracksByKinds() const

@@ -7,6 +7,7 @@ enum class DataListViewModes
 {
 	Simple,
 	ByCountries,
+	ByRegions,
 	ByKinds,
 };
 
@@ -14,6 +15,7 @@ enum class ChartViewModes
 {
 	ByYears,
 	ByCountries,
+	ByRegions,
 };
 
 enum CsvFiles

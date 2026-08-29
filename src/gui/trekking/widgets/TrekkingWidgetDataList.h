@@ -21,10 +21,11 @@ signals:
 private:
 	void showSimple(const DataList& data_list);
 	void showByCountries(const DataList& data_list);
+	void showByRegions(const DataList& data_list);
 	void showByKinds(const DataList& data_list);
 
 private:
-	static const int WIDTH_DATE = 180;
+	static const int WIDTH_DATE = 200;
 	static const int WIDTH_COUNT = 50;
 	static const int WIDTH_TIME = 100;
 	static const int WIDTH_DIST = 100;

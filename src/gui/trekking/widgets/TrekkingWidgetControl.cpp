@@ -26,6 +26,7 @@ void Trekking::WidgetControl::initWidgets()
 		addComboBox(_combo_data_list_view_mode, &WidgetControl::setDataListViewMode, {
 				{tr("Простой список"), static_cast<int>(DataListViewModes::Simple)},
 				{tr("По странам"), static_cast<int>(DataListViewModes::ByCountries)},
+				{tr("По регионам"), static_cast<int>(DataListViewModes::ByRegions)},
 				{tr("По типам"), static_cast<int>(DataListViewModes::ByKinds)},
 		});
 
@@ -44,6 +45,7 @@ void Trekking::WidgetControl::initWidgets()
 		addComboBox(_combo_chart_view_mode, &WidgetControl::setChartViewMode, {
 				{tr("По годам"), static_cast<int>(ChartViewModes::ByYears)},
 				{tr("По странам"), static_cast<int>(ChartViewModes::ByCountries)},
+				{tr("По регионам"), static_cast<int>(ChartViewModes::ByRegions)},
 		});
 
 		_button_chart->addSlaveWidgets({

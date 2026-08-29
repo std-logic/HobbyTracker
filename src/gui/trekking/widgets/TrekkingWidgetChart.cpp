@@ -13,6 +13,7 @@ void Trekking::WidgetChart::update(const DataList& data_list)
 	switch (static_cast<ChartViewModes>(_view_mode)) {
 		case ChartViewModes::ByYears:		showByYears(data_list);			break;
 		case ChartViewModes::ByCountries:	showByCountries(data_list);		break;
+		case ChartViewModes::ByRegions:		showByRegions(data_list);		break;
 		default: return;
 	}
 }
@@ -27,4 +28,10 @@ void Trekking::WidgetChart::showByCountries(const DataList& data_list)
 {
 	chart()->setTitle(tr("Распределение по странам"));
 	updateBars(data_list.numbersByCountries(10));
+}
+
+void Trekking::WidgetChart::showByRegions(const DataList& data_list)
+{
+	chart()->setTitle(tr("Распределение по регионам"));
+	updateBars(data_list.numbersByRegions(10));
 }
