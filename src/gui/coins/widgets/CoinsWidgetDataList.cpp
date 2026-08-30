@@ -5,6 +5,8 @@
 #include <gui/base/data/BaseExtraList.h>
 #include <gui/base/widgets/BaseWidgetTreeItem.h>
 
+#include <common/Regions.h>
+
 Coins::WidgetDataList::WidgetDataList(QWidget* parent)
 	: Base::WidgetTree{parent}
 {
@@ -91,6 +93,7 @@ void Coins::WidgetDataList::showByRegions(const DataList& data_list, const Base:
 		uint32_t region_coins_num = 0;
 		uint32_t region_min_year = Global::undefined_value;
 		uint32_t region_max_year = Global::undefined_value;
+		std::set<QString> present_countries;
 
 		for (const auto& [country, coins_by_periods] : coins_by_countries) {
 			auto item_country = new Base::WidgetTreeItem(item_region, Global::Colors::tree_level_2);
@@ -98,6 +101,7 @@ void Coins::WidgetDataList::showByRegions(const DataList& data_list, const Base:
 			uint32_t country_coins_num = 0;
 			uint32_t country_min_year = Global::undefined_value;
 			uint32_t country_max_year = Global::undefined_value;
+			present_countries.insert(country);
 
 			for (const auto& [period, coins] : coins_by_periods) {
 				auto item_period = new Base::WidgetTreeItem(item_country, Global::Colors::tree_level_1);
@@ -131,6 +135,7 @@ void Coins::WidgetDataList::showByRegions(const DataList& data_list, const Base:
 
 		item_region->setNumb(CLMN_COUNT, region_coins_num);
 		item_region->setText(CLMN_YEAR, Helper::yearString(region_min_year, region_max_year));
+		item_region->setToolTipEverywhere(Regions::progress(region, present_countries));
 	}
 }
 

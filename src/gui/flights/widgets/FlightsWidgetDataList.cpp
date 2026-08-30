@@ -4,6 +4,8 @@
 
 #include <gui/base/widgets/BaseWidgetTreeItem.h>
 
+#include <common/Regions.h>
+
 #include <QDate>
 
 Flights::WidgetDataList::WidgetDataList(QWidget* parent)
@@ -68,6 +70,7 @@ void Flights::WidgetDataList::showByRegions(const DataList& data_list)
 		auto item_region = new Base::WidgetTreeItem(this, Global::Colors::tree_level_2);
 		item_region->setText(CLMN_DATE, region);
 		uint32_t region_flights_num = 0;
+		std::set<QString> present_countries;
 
 		for (const auto& [country, flights] : flights_by_countries) {
 			auto item_country = new Base::WidgetTreeItem(item_region, Global::Colors::tree_level_1);
@@ -75,6 +78,7 @@ void Flights::WidgetDataList::showByRegions(const DataList& data_list)
 			uint32_t country_flights_num = DataList::countryNumInSublist(country, flights);
 			region_flights_num += country_flights_num;
 			item_country->setNumb(CLMN_COUNT, country_flights_num);
+			present_countries.insert(country);
 
 			for (const auto flight : flights) {
 				auto item_flight = new Base::WidgetTreeItem(item_country);
@@ -86,6 +90,7 @@ void Flights::WidgetDataList::showByRegions(const DataList& data_list)
 		}
 
 		item_region->setNumb(CLMN_COUNT, region_flights_num);
+		item_region->setToolTipEverywhere(Regions::progress(region, present_countries));
 	}
 }
 

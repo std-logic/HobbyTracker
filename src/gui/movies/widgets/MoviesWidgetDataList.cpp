@@ -5,6 +5,8 @@
 #include <gui/base/data/BaseExtraList.h>
 #include <gui/base/widgets/BaseWidgetTreeItem.h>
 
+#include <common/Regions.h>
+
 Movies::WidgetDataList::WidgetDataList(QWidget* parent)
 	: Base::WidgetTree{parent}
 {
@@ -186,6 +188,7 @@ void Movies::WidgetDataList::showByRegions(const DataList& data_list, const Base
 	for (const auto& [region, movies_by_countries] : movies_by_regions) {
 		auto item_region = new Base::WidgetTreeItem(this, Global::Colors::tree_level_2);
 		item_region->setText(CLMN_VIEW_DATE, region);
+		std::set<QString> present_countries;
 		std::unordered_set<QString> ids;
 		uint32_t region_min_year = Global::undefined_value;
 		uint32_t region_max_year = Global::undefined_value;
@@ -195,6 +198,7 @@ void Movies::WidgetDataList::showByRegions(const DataList& data_list, const Base
 			item_country->setText(CLMN_VIEW_DATE, country);
 			item_country->setNumb(CLMN_COUNT, movies.size());
 			item_country->setText(CLMN_YEAR, Helper::yearString(movies));
+			present_countries.insert(country);
 
 			for (const auto movie : movies) {
 				auto item_movie = new Base::WidgetTreeItem(item_country);
@@ -215,6 +219,7 @@ void Movies::WidgetDataList::showByRegions(const DataList& data_list, const Base
 
 		item_region->setNumb(CLMN_COUNT, ids.size());
 		item_region->setText(CLMN_YEAR, Helper::yearString(region_min_year, region_max_year));
+		item_region->setToolTipEverywhere(Regions::progress(region, present_countries));
 	}
 }
 
