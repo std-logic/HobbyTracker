@@ -1,7 +1,10 @@
 #include "CoinsWidgetSummary.h"
 #include "../data/CoinsDataList.h"
 
+#include <gui/base/data/BaseExtraList.h>
+
 #include <common/Helper.h>
+#include <common/Regions.h>
 
 #include <QLabel>
 
@@ -11,17 +14,19 @@ Coins::WidgetSummary::WidgetSummary(QWidget* parent)
 	initWidgets();
 }
 
-void Coins::WidgetSummary::update(const DataList& data_list)
+void Coins::WidgetSummary::update(const DataList& data_list, const Base::ExtraList& extra_list)
 {
 	if (data_list.empty()) {
 		clear();
 		return;
 	}
 
-	auto summary = data_list.summary();
+	auto synonyms = extra_list.getSynonyms(tr("[Синонимы для стран]"));
+	auto summary = data_list.summary(synonyms);
 
 	_label_coins_num->setText(QString::number(summary.coins_num));
 	_label_countries_num->setText(QString::number(summary.countries_num));
+	_label_countries_num->setToolTip(Regions::progress(summary.list_of_countries));
 	_label_diameters->setText(QStringLiteral("%1-%2")
 			.arg(summary.min_diameter*0.1, 0, 'f', 1)
 			.arg(summary.max_diameter*0.1, 0, 'f', 1));
@@ -32,6 +37,7 @@ void Coins::WidgetSummary::initWidgets()
 {
 	addWidget(tr("Монет:"), _label_coins_num);
 	addWidget(tr("Стран:"), _label_countries_num);
+	_label_countries_num->setToolTipDuration(1000000);
 	addWidget(tr("Диаметры:"), _label_diameters);
 	addWidget(tr("Годы:"), _label_years, 0);
 

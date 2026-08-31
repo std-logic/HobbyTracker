@@ -23,8 +23,9 @@ public:
 		uint32_t min_year = Global::undefined_value;
 		uint32_t max_year = Global::undefined_value;
 		double rating = 0.;
+		std::unordered_set<QString> list_of_countries;
 	};
-	Summary summary(bool favorites_only = false) const;
+	Summary summary(const Synonyms& synonyms, bool favorites_only = false) const;
 
 	void setFavorites(const DataList& favorites_list);
 	DataList getFavorites() const;

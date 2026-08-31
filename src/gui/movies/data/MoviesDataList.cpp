@@ -2,13 +2,12 @@
 
 #include <common/Regions.h>
 
-#include <unordered_set>
 #include <unordered_map>
 
-Movies::DataList::Summary Movies::DataList::summary(bool favorites_only) const
+Movies::DataList::Summary Movies::DataList::summary(
+		const Synonyms& synonyms, bool favorites_only) const
 {
 	Summary sum;
-	std::unordered_set<QString> list_of_countries;
 	for (const auto& data : _data_list) {
 		if (favorites_only && !data.isFavorite()) { continue; }
 		++sum.viewed_num;
@@ -17,11 +16,14 @@ Movies::DataList::Summary Movies::DataList::summary(bool favorites_only) const
 		if (data.kind() == QStringLiteral("Мультфильм")) { ++sum.animation_num; }
 		if (data.kind() == QStringLiteral("Мультсериал")) { ++sum.animation_series_num; }
 		auto countries = data.countries();
-		for (const auto& country : countries) { list_of_countries.insert(country); }
+		for (const auto& country : countries) {
+			auto synonym_for_country = synonyms.contains(country) ? synonyms.at(country) : country;
+			sum.list_of_countries.insert(synonym_for_country);
+		}
 		Helper::checkMinMax(data.yearStart(), &sum.min_year, &sum.max_year);
 		sum.rating += data.rating();
 	}
-	sum.countries_num = list_of_countries.size();
+	sum.countries_num = sum.list_of_countries.size();
 	if (sum.viewed_num) { sum.rating /= sum.viewed_num; }
 	return sum;
 }

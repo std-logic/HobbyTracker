@@ -265,6 +265,7 @@ void Movies::WidgetMain::updateDependentOnData()
 
 void Movies::WidgetMain::updateDependentOnExtra()
 {
+	updateSummary();
 	updateDataList();
 	updateExtraList();
 	updateChart();
@@ -272,7 +273,7 @@ void Movies::WidgetMain::updateDependentOnExtra()
 
 void Movies::WidgetMain::updateSummary()
 {
-	_widget_summary->update(_data_list);
+	_widget_summary->update(_data_list, _extra_list);
 }
 
 void Movies::WidgetMain::updateDataList()

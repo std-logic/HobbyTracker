@@ -21,6 +21,7 @@ void Base::WidgetSummary::clear()
 {
 	for (auto label : _labels) {
 		label->setText(QStringLiteral("-"));
+		label->setToolTip(QStringLiteral(""));
 	}
 }
 

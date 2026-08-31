@@ -93,7 +93,7 @@ void Coins::WidgetDataList::showByRegions(const DataList& data_list, const Base:
 		uint32_t region_coins_num = 0;
 		uint32_t region_min_year = Global::undefined_value;
 		uint32_t region_max_year = Global::undefined_value;
-		std::set<QString> present_countries;
+		std::unordered_set<QString> present_countries;
 
 		for (const auto& [country, coins_by_periods] : coins_by_countries) {
 			auto item_country = new Base::WidgetTreeItem(item_region, Global::Colors::tree_level_2);

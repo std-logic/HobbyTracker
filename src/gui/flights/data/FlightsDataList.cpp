@@ -7,13 +7,13 @@
 Flights::DataList::Summary Flights::DataList::summary() const
 {
 	Summary sum;
-	std::unordered_set<QString> list_of_countries, list_of_cities, list_of_airports;
+	std::unordered_set<QString> list_of_cities, list_of_airports;
 	for (const auto& data : _data_list) {
 		Helper::checkMinMax(data.year(), &sum.min_year, &sum.max_year);
 		sum.flights_num += data.flightsNum();
 		sum.dist += data.distTotal();
 		for (size_t i = 0; i < data.pointsNum(); ++i) {
-			list_of_countries.insert(data.country(i));
+			sum.list_of_countries.insert(data.country(i));
 			list_of_cities.insert(data.city(i));
 			list_of_airports.insert(data.airport(i));
 			if (i > 0) {
@@ -24,7 +24,7 @@ Flights::DataList::Summary Flights::DataList::summary() const
 		}
 	}
 	sum.international_num = sum.flights_num - sum.local_num;
-	sum.countries_num = list_of_countries.size();
+	sum.countries_num = sum.list_of_countries.size();
 	sum.cities_num = list_of_cities.size();
 	sum.airports_num = list_of_airports.size();
 	return sum;

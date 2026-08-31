@@ -4,6 +4,8 @@
 #include <QCoreApplication>
 
 #include <unordered_map>
+#include <unordered_set>
+#include <map>
 #include <set>
 
 class Regions
@@ -25,13 +27,16 @@ public:
 	static QStringList get(const QStringList& countries);
 
 	static QStringList missingCountries(const QString& region,
-			const std::set<QString>& present_countries);
+			const std::unordered_set<QString>& present_countries);
+
 	static QString progress(const QString& region,
-			const std::set<QString>& present_countries);
+			const std::unordered_set<QString>& present_countries);
+	static QString progress(const std::unordered_set<QString>& present_countries);
 
 private:
 	inline static std::unordered_map<QString, CountryData> _country_data;
-	inline static std::unordered_map<QString, std::set<QString>> _region_countries;
+	inline static std::map<QString, std::set<QString>> _region_countries;
+	inline static int _countries_total_num = 0;
 
 	enum Columns
 	{
@@ -42,4 +47,3 @@ private:
 		NUM_OF_COLUMNS
 	};
 };
-

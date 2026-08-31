@@ -188,7 +188,7 @@ void Movies::WidgetDataList::showByRegions(const DataList& data_list, const Base
 	for (const auto& [region, movies_by_countries] : movies_by_regions) {
 		auto item_region = new Base::WidgetTreeItem(this, Global::Colors::tree_level_2);
 		item_region->setText(CLMN_VIEW_DATE, region);
-		std::set<QString> present_countries;
+		std::unordered_set<QString> present_countries;
 		std::unordered_set<QString> ids;
 		uint32_t region_min_year = Global::undefined_value;
 		uint32_t region_max_year = Global::undefined_value;

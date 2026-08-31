@@ -2,22 +2,19 @@
 
 #include <common/Regions.h>
 
-#include <unordered_set>
-
 Trekking::DataList::Summary Trekking::DataList::summary() const
 {
 	Summary sum;
-	std::unordered_set<QString> list_of_countries;
 	for (const auto& data : _data_list) {
 		Helper::checkMinMax(data.year(), &sum.min_year, &sum.max_year);
 		sum.total_dist += data.dist();
 		sum.total_time += data.time();
 		sum.highest_peak = std::max(sum.highest_peak, data.peak());
 		auto countries = data.countries();
-		for (const auto& country : countries) { list_of_countries.insert(country); }
+		for (const auto& country : countries) { sum.list_of_countries.insert(country); }
 	}
 	sum.tracks_num = _data_list.size();
-	sum.countries_num = list_of_countries.size();
+	sum.countries_num = sum.list_of_countries.size();
 	return sum;
 }
 

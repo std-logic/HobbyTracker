@@ -23,6 +23,7 @@ public:
 		uint32_t cities_num = 0;
 		uint32_t airports_num = 0;
 		uint32_t dist = 0;
+		std::unordered_set<QString> list_of_countries;
 	};
 	Summary summary() const;
 

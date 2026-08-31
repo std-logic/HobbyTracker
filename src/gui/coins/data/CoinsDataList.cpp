@@ -2,19 +2,18 @@
 
 #include <common/Regions.h>
 
-#include <unordered_set>
-
-Coins::DataList::Summary Coins::DataList::summary() const
+Coins::DataList::Summary Coins::DataList::summary(const Synonyms& synonyms) const
 {
 	Summary sum;
-	std::unordered_set<QString> list_of_countries;
 	for (const auto& data : _data_list) {
-		list_of_countries.insert(data.country());
+		auto country = data.country();
+		auto synonym_for_country = synonyms.contains(country) ? synonyms.at(country) : country;
+		sum.list_of_countries.insert(synonym_for_country);
 		Helper::checkMinMax(data.year(), &sum.min_year, &sum.max_year);
 		Helper::checkMinMax(qRound(data.diameter().toDouble()*10),
 							&sum.min_diameter, &sum.max_diameter);
 	}
-	sum.countries_num = list_of_countries.size();
+	sum.countries_num = sum.list_of_countries.size();
 	sum.coins_num = _data_list.size();
 	return sum;
 }

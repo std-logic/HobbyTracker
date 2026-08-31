@@ -4,6 +4,11 @@
 
 class QLabel;
 
+namespace Base
+{
+class ExtraList;
+}
+
 namespace Movies
 {
 
@@ -16,7 +21,7 @@ public:
 	explicit WidgetSummary(QWidget* parent = nullptr);
 	~WidgetSummary() = default;
 
-	void update(const DataList& data_list);
+	void update(const DataList& data_list, const Base::ExtraList& extra_list);
 
 public slots:
 	void setFavoritesOnly(Qt::CheckState state);

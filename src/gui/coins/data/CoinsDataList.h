@@ -20,8 +20,9 @@ public:
 		uint32_t max_year = Global::undefined_value;
 		uint32_t min_diameter = Global::undefined_value; // step 0.1 mm
 		uint32_t max_diameter = Global::undefined_value; // step 0.1 mm
+		std::unordered_set<QString> list_of_countries;
 	};
-	Summary summary() const;
+	Summary summary(const Synonyms& synonyms) const;
 
 	Sublists2ByStrings coinsByCountries(const Synonyms& synonyms) const;
 	NumbersByStringsVec numbersByCountries(size_t max_num, const Synonyms& synonyms) const;

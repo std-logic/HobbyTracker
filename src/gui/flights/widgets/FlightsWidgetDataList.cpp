@@ -70,7 +70,7 @@ void Flights::WidgetDataList::showByRegions(const DataList& data_list)
 		auto item_region = new Base::WidgetTreeItem(this, Global::Colors::tree_level_2);
 		item_region->setText(CLMN_DATE, region);
 		uint32_t region_flights_num = 0;
-		std::set<QString> present_countries;
+		std::unordered_set<QString> present_countries;
 
 		for (const auto& [country, flights] : flights_by_countries) {
 			auto item_country = new Base::WidgetTreeItem(item_region, Global::Colors::tree_level_1);
