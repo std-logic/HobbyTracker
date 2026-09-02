@@ -50,7 +50,7 @@ Flights::DataList::Sublists2ByStrings Flights::DataList::flightsByRegions() cons
 	for (const auto& data : _data_list) {
 		auto countries = data.countries();
 		for (const auto& country : countries) {
-			auto region = Regions::get(country);
+			auto region = Regions::region(country);
 			list[region][country].push_back(&data);
 		}
 	}
@@ -63,7 +63,7 @@ Flights::DataList::NumbersByStringsVec Flights::DataList::numbersByRegions(size_
 	for (const auto& data : _data_list) {
 		auto countries = data.countriesRawList();
 		for (const auto& country : countries) {
-			auto region = Regions::get(country);
+			auto region = Regions::region(country);
 			++list[region];
 		}
 	}

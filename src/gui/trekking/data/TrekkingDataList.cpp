@@ -42,7 +42,7 @@ Trekking::DataList::Sublists2ByStrings Trekking::DataList::tracksByRegions() con
 	for (const auto& data : _data_list) {
 		auto countries = data.countries();
 		for (const auto& country : countries) {
-			auto region = Regions::get(country);
+			auto region = Regions::region(country);
 			list[region][country].push_back(&data);
 		}
 	}
@@ -56,7 +56,7 @@ Trekking::DataList::NumbersByStringsVec Trekking::DataList::numbersByRegions(siz
 		auto countries = data.countries();
 		std::set<QString> unique_regions;
 		for (const auto& country : countries) {
-			auto region = Regions::get(country);
+			auto region = Regions::region(country);
 			if (!unique_regions.contains(region)) {
 				unique_regions.insert(region);
 				++list[region];

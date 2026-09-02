@@ -2,6 +2,7 @@
 #include "../data/ConcertsDataList.h"
 
 #include <common/Helper.h>
+#include <common/Regions.h>
 
 #include <QLabel>
 
@@ -22,6 +23,7 @@ void Concerts::WidgetSummary::update(const DataList& data_list)
 
 	_label_years->setText(Helper::yearString(summary.min_year, summary.max_year));
 	_label_countries_num->setText(QString::number(summary.countries_num));
+	_label_countries_num->setToolTip(Regions::progress(summary.list_of_countries));
 	_label_cities_num->setText(QString::number(summary.cities_num));
 	_label_places_num->setText(QString::number(summary.places_num));
 	_label_artists_num->setText(QString::number(summary.artists_num));
@@ -32,6 +34,7 @@ void Concerts::WidgetSummary::initWidgets()
 {
 	addWidget(tr("Годы:"), _label_years);
 	addWidget(tr("Стран:"), _label_countries_num);
+	_label_countries_num->setToolTipDuration(1000000);
 	addWidget(tr("Городов:"), _label_cities_num);
 	addWidget(tr("Мест:"), _label_places_num);
 	addWidget(tr("Групп:"), _label_artists_num);

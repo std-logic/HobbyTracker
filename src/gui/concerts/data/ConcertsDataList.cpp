@@ -5,18 +5,18 @@
 Concerts::DataList::Summary Concerts::DataList::summary() const
 {
 	Summary sum;
-	std::unordered_set<QString> list_of_artists, list_of_countries, list_of_cities, list_of_places;
+	std::unordered_set<QString> list_of_artists, list_of_cities, list_of_places;
 	for (const auto& data : _data_list) {
 		auto artists = data.artists();
 		for (const auto& artist : artists) { list_of_artists.insert(artist); }
-		list_of_countries.insert(data.country());
+		sum.list_of_countries.insert(data.country());
 		list_of_cities.insert(data.city());
 		list_of_places.insert(data.cityPlace());
 		Helper::checkMinMax(data.year(), &sum.min_year, &sum.max_year);
 	}
 	sum.concerts_num = _data_list.size();
 	sum.artists_num = list_of_artists.size();
-	sum.countries_num = list_of_countries.size();
+	sum.countries_num = sum.list_of_countries.size();
 	sum.cities_num = list_of_cities.size();
 	sum.places_num = list_of_places.size();
 	return sum;

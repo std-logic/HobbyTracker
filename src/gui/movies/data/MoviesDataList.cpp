@@ -116,7 +116,7 @@ Movies::DataList::Sublists2ByStrings Movies::DataList::moviesByRegions(
 			auto synonym_for_country = synonyms.contains(country) ? synonyms.at(country) : country;
 			if (!unique_countries.contains(synonym_for_country)) {
 				unique_countries.insert(synonym_for_country);
-				auto region = Regions::get(synonym_for_country);
+				auto region = Regions::region(synonym_for_country);
 				list[region][synonym_for_country].push_back(&data);
 			}
 		}
@@ -134,7 +134,7 @@ Movies::DataList::NumbersByStringsVec Movies::DataList::numbersByRegions(
 		std::set<QString> unique_regions;
 		for (const auto& country : countries) {
 			auto synonym_for_country = synonyms.contains(country) ? synonyms.at(country) : country;
-			auto region = Regions::get(synonym_for_country);
+			auto region = Regions::region(synonym_for_country);
 			if (!unique_regions.contains(region)) {
 				unique_regions.insert(region);
 				++list[region];

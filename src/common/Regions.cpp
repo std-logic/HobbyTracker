@@ -25,6 +25,9 @@ void Regions::init()
 			if (CLMN_UNION < line_size) {
 				data.is_union = (line[CLMN_UNION] == "+");
 			}
+			if (CLMN_COMMENT < line_size) {
+				data.comment = line[CLMN_COMMENT];
+			}
 
 			_country_data[country] = data;
 			if (!data.region.isEmpty() && !data.is_former && !data.is_union) {
@@ -35,23 +38,44 @@ void Regions::init()
 	}
 }
 
-QString Regions::get(const QString& country)
+QString Regions::region(const QString& country)
 {
 	return	_country_data.contains(country) ?
 			_country_data[country].region :
 			QStringLiteral("Неизвестный");
 }
 
-QStringList Regions::get(const QStringList& countries)
+QStringList Regions::region(const QStringList& countries)
 {
 	QStringList regions;
 	for (const auto& country : countries) {
-		auto region = get(country);
-		if (!regions.contains(region)) {
-			regions.append(region);
+		auto reg = region(country);
+		if (!regions.contains(reg)) {
+			regions.append(reg);
 		}
 	}
 	return regions;
+}
+
+QString Regions::comment(const QString& country)
+{
+	return	_country_data.contains(country) ?
+			_country_data[country].comment :
+			QStringLiteral("");
+}
+
+bool Regions::isFormer(const QString& country)
+{
+	return	_country_data.contains(country) ?
+			_country_data[country].is_former :
+			false;
+}
+
+bool Regions::isUnion(const QString& country)
+{
+	return	_country_data.contains(country) ?
+			_country_data[country].is_union :
+			false;
 }
 
 QStringList Regions::missingCountries(const QString& region,
@@ -92,7 +116,7 @@ QString Regions::progress(const QString& region,
 	}
 
 	if (union_num > 0) {
-		out += tr("\n\nСоюзов стран:\n%1").arg(union_num);
+		out += tr("\n\nОбъединений стран:\n%1").arg(union_num);
 	}
 
 	auto missing_countries = missingCountries(region, present_countries);
@@ -147,7 +171,7 @@ QString Regions::progress(const std::unordered_set<QString>& present_countries)
 	}
 
 	if (union_num > 0) {
-		out += tr("\n\nСоюзов стран:\n%1").arg(union_num);
+		out += tr("\n\nОбъединений стран:\n%1").arg(union_num);
 	}
 
 	return out;

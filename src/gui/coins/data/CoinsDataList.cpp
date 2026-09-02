@@ -60,7 +60,7 @@ Coins::DataList::Sublists3ByStrings Coins::DataList::coinsByRegions(
 	for (const auto& data : _data_list) {
 		auto country = data.country();
 		auto synonym_for_country = synonyms.contains(country) ? synonyms.at(country) : country;
-		auto region = Regions::get(synonym_for_country);
+		auto region = Regions::region(synonym_for_country);
 		list[region][synonym_for_country][data.period()].push_back(&data);
 	}
 	return list;
@@ -73,7 +73,7 @@ Coins::DataList::NumbersByStringsVec Coins::DataList::numbersByRegions(
 	for (const auto& data : _data_list) {
 		auto country = data.country();
 		auto synonym_for_country = synonyms.contains(country) ? synonyms.at(country) : country;
-		auto region = Regions::get(synonym_for_country);
+		auto region = Regions::region(synonym_for_country);
 		++list[region];
 	}
 	return sortedVec(list, max_num);

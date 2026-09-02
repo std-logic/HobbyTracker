@@ -17,14 +17,20 @@ public:
 	struct CountryData
 	{
 		QString region;
+		QString comment;
 		bool is_former = false;
 		bool is_union = false;
 	};
 
 	static void init();
 
-	static QString get(const QString& country);
-	static QStringList get(const QStringList& countries);
+	static QString region(const QString& country);
+	static QStringList region(const QStringList& countries);
+
+	static QString comment(const QString& country);
+
+	static bool isFormer(const QString& country);
+	static bool isUnion(const QString& country);
 
 	static QStringList missingCountries(const QString& region,
 			const std::unordered_set<QString>& present_countries);
@@ -44,6 +50,7 @@ private:
 		CLMN_REGIONS,
 		CLMN_FORMER,
 		CLMN_UNION,
+		CLMN_COMMENT,
 		NUM_OF_COLUMNS
 	};
 };
