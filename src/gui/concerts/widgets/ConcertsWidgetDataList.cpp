@@ -149,7 +149,7 @@ void Concerts::WidgetDataList::showByCountries(const DataList& data_list)
 
 	for (const auto& [country, concerts] : concerts_by_countries) {
 		auto item_country = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
-		item_country->setText(CLMN_DATE, country);
+		item_country->setCountry(CLMN_DATE, country);
 		item_country->setNumb(CLMN_COUNT, concerts.size());
 
 		for (const auto concert : concerts) {
@@ -233,7 +233,7 @@ void Concerts::WidgetDataList::showPlacesTree(const DataList& data_list, const B
 
 	for (const auto& [country, concerts_in_country] : concerts_by_countries) {
 		auto item_country = new Base::WidgetTreeItem(this, Global::Colors::tree_level_3);
-		item_country->setText(CLMN_DATE, country);
+		item_country->setCountry(CLMN_DATE, country);
 		item_country->setNumb(CLMN_COUNT, concerts_in_country.size());
 
 		auto list_of_cities = data_list.listOfCities(country);

@@ -74,13 +74,7 @@ void Flights::WidgetDataList::showByRegions(const DataList& data_list)
 
 		for (const auto& [country, flights] : flights_by_countries) {
 			auto item_country = new Base::WidgetTreeItem(item_region, Global::Colors::tree_level_1);
-			auto country_comment = Regions::comment(country);
-			if (country_comment.isEmpty()) {
-				item_country->setText(CLMN_DATE, country);
-			} else {
-				item_country->setText(CLMN_DATE, country + "*");
-				item_country->setToolTipEverywhere(country_comment.replace(": ", ":\n"));
-			}
+			item_country->setCountry(CLMN_DATE, country);
 			uint32_t country_flights_num = DataList::countryNumInSublist(country, flights);
 			region_flights_num += country_flights_num;
 			item_country->setNumb(CLMN_COUNT, country_flights_num);
@@ -111,13 +105,7 @@ void Flights::WidgetDataList::showByCountries(const DataList& data_list)
 
 	for (const auto& [country, flights] : flights_by_countries) {
 		auto item_country = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
-		auto country_comment = Regions::comment(country);
-		if (country_comment.isEmpty()) {
-			item_country->setText(CLMN_DATE, country);
-		} else {
-			item_country->setText(CLMN_DATE, country + "*");
-			item_country->setToolTipEverywhere(country_comment.replace(": ", ":\n"));
-		}
+		item_country->setCountry(CLMN_DATE, country);
 		item_country->setNumb(CLMN_COUNT, DataList::countryNumInSublist(country, flights));
 
 		for (const auto flight : flights) {
@@ -215,13 +203,7 @@ void Flights::WidgetDataList::showAirportsTree(const DataList& data_list)
 
 	for (const auto& [country, flights_in_country] : flights_by_countries) {
 		auto item_country = new Base::WidgetTreeItem(this, Global::Colors::tree_level_3);
-		auto country_comment = Regions::comment(country);
-		if (country_comment.isEmpty()) {
-			item_country->setText(CLMN_DATE, country);
-		} else {
-			item_country->setText(CLMN_DATE, country + "*");
-			item_country->setToolTipEverywhere(country_comment.replace(": ", ":\n"));
-		}
+		item_country->setCountry(CLMN_DATE, country);
 		item_country->setNumb(CLMN_COUNT, DataList::countryNumInSublist(country, flights_in_country));
 
 		auto list_of_cities = data_list.listOfCities(country);

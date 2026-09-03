@@ -41,13 +41,7 @@ void Coins::WidgetDataList::showByCountries(const DataList& data_list, const Bas
 
 	for (const auto& [country, coins_by_periods] : coins_by_countries) {
 		auto item_country = new Base::WidgetTreeItem(this, Global::Colors::tree_level_2);
-		auto country_comment = Regions::comment(country);
-		if (country_comment.isEmpty()) {
-			item_country->setText(CLMN_COUNTRY, country);
-		} else {
-			item_country->setText(CLMN_COUNTRY, country + "*");
-			item_country->setToolTipEverywhere(country_comment.replace(": ", ":\n"));
-		}
+		item_country->setCountry(CLMN_COUNTRY, country);
 		uint32_t country_coins_num = 0;
 		uint32_t country_min_year = Global::undefined_value;
 		uint32_t country_max_year = Global::undefined_value;
@@ -103,13 +97,7 @@ void Coins::WidgetDataList::showByRegions(const DataList& data_list, const Base:
 
 		for (const auto& [country, coins_by_periods] : coins_by_countries) {
 			auto item_country = new Base::WidgetTreeItem(item_region, Global::Colors::tree_level_2);
-			auto country_comment = Regions::comment(country);
-			if (country_comment.isEmpty()) {
-				item_country->setText(CLMN_COUNTRY, country);
-			} else {
-				item_country->setText(CLMN_COUNTRY, country + "*");
-				item_country->setToolTipEverywhere(country_comment.replace(": ", ":\n"));
-			}
+			item_country->setCountry(CLMN_COUNTRY, country);
 			uint32_t country_coins_num = 0;
 			uint32_t country_min_year = Global::undefined_value;
 			uint32_t country_max_year = Global::undefined_value;

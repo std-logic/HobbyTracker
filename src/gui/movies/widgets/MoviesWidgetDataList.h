@@ -42,7 +42,8 @@ private:
 private:
 	static const int WIDTH_VIEW_DATE_SMALL = 130;
 	static const int WIDTH_VIEW_DATE_MEDIUM = 180;
-	static const int WIDTH_VIEW_DATE_BIG = 210;
+	static const int WIDTH_VIEW_DATE_COUNTRIES = 215;
+	static const int WIDTH_VIEW_DATE_BIG = 240;
 	static const int WIDTH_TITLE = 0; // stretched
 	static const int WIDTH_COUNT = 50;
 	static const int WIDTH_GENRES = 140;

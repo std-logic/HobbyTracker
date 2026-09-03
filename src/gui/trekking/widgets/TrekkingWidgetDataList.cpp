@@ -4,8 +4,6 @@
 
 #include <gui/base/widgets/BaseWidgetTreeItem.h>
 
-#include <common/Regions.h>
-
 Trekking::WidgetDataList::WidgetDataList(QWidget* parent)
 	: Base::WidgetTree{parent}
 {
@@ -61,13 +59,7 @@ void Trekking::WidgetDataList::showByCountries(const DataList& data_list)
 
 	for (const auto& [country, tracks] : tracks_by_countries) {
 		auto item_country = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
-		auto country_comment = Regions::comment(country);
-		if (country_comment.isEmpty()) {
-			item_country->setText(CLMN_DATE, country);
-		} else {
-			item_country->setText(CLMN_DATE, country + "*");
-			item_country->setToolTipEverywhere(country_comment.replace(": ", ":\n"));
-		}
+		item_country->setCountry(CLMN_DATE, country);
 		item_country->setNumb(CLMN_COUNT, tracks.size());
 		uint32_t country_time = 0, country_dist = 0, country_peak = Global::undefined_value;
 
@@ -112,13 +104,7 @@ void Trekking::WidgetDataList::showByRegions(const DataList& data_list)
 
 		for (const auto& [country, tracks] : tracks_by_countries) {
 			auto item_country = new Base::WidgetTreeItem(item_region, Global::Colors::tree_level_1);
-			auto country_comment = Regions::comment(country);
-			if (country_comment.isEmpty()) {
-				item_country->setText(CLMN_DATE, country);
-			} else {
-				item_country->setText(CLMN_DATE, country + "*");
-				item_country->setToolTipEverywhere(country_comment.replace(": ", ":\n"));
-			}
+			item_country->setCountry(CLMN_DATE, country);
 			item_country->setNumb(CLMN_COUNT, tracks.size());
 			uint32_t country_time = 0, country_dist = 0, country_peak = Global::undefined_value;
 

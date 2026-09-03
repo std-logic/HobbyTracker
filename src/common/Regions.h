@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QIcon>
 #include <QStringList>
 #include <QCoreApplication>
 
@@ -16,13 +17,19 @@ public:
 
 	struct CountryData
 	{
+		QString code;
 		QString region;
 		QString comment;
+		QIcon icon;
 		bool is_former = false;
 		bool is_union = false;
 	};
 
 	static void init();
+
+	static CountryData data(const QString& country);
+
+	static QIcon icon(const QString& country);
 
 	static QString region(const QString& country);
 	static QStringList region(const QStringList& countries);
@@ -47,6 +54,7 @@ private:
 	enum Columns
 	{
 		CLMN_COUNTRY,
+		CLMN_CODE,
 		CLMN_REGIONS,
 		CLMN_FORMER,
 		CLMN_UNION,

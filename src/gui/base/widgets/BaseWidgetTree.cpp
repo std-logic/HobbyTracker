@@ -18,6 +18,8 @@ Base::WidgetTree::WidgetTree(QWidget* parent)
 	default_font.setPointSize(Global::Sizes::font_big);
 	setFont(default_font);
 
+	setIconSize(QSize(24, 16));
+
 	// keep current sorting column between view modes
 	setSortingEnabled(true);
 	connect(header(), &QHeaderView::sortIndicatorChanged,

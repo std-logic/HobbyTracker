@@ -2,6 +2,7 @@
 
 #include <common/Global.h>
 #include <common/Helper.h>
+#include <common/Regions.h>
 
 #include <QTreeWidget>
 
@@ -43,6 +44,20 @@ void Base::WidgetTreeItem::setRating(int column, const QVariant& value)
 	setNumb(column, value);
 	auto rating = value.toUInt();
 	setBackground(column, Helper::ratingColor(rating));
+}
+
+void Base::WidgetTreeItem::setCountry(int column, const QString& country)
+{
+	auto data = Regions::data(country);
+	if (data.comment.isEmpty()) {
+		setText(column, country);
+	} else {
+		setText(column, country + "*");
+		setToolTipEverywhere(data.comment.replace(": ", ":\n"));
+	}
+	if (!data.icon.isNull()) {
+		setIcon(column, data.icon);
+	}
 }
 
 void Base::WidgetTreeItem::setBold(int column, bool enable)

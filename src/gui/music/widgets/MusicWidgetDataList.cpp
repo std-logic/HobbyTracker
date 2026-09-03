@@ -90,7 +90,7 @@ void Music::WidgetDataList::showByCountries(const DataList& data_list)
 
 	for (const auto& [country, artists] : artists_by_countries) {
 		auto item_country = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
-		item_country->setText(CLMN_TITLE, country);
+		item_country->setCountry(CLMN_TITLE, country);
 		item_country->setNumb(CLMN_COUNT, artists.size());
 		item_country->setText(CLMN_YEAR, Helper::yearString(artists));
 

@@ -24,6 +24,8 @@ public:
 
 	void setRating(int column, const QVariant& value);
 
+	void setCountry(int column, const QString& country);
+
 	void setBold(int column, bool enable);
 	void setBoldEverywhere(bool enable);
 	void setBackgroundEverywhere(const QBrush& brush);

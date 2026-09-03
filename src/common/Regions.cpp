@@ -7,7 +7,7 @@
 void Regions::init()
 {
 	Csv::Settings csv_settings;
-	csv_settings.setFileName(0, ":/data/regions.csv");
+	csv_settings.setFileName(0, ":/regions/regions/regions.csv");
 	auto csv_data = Storage::readCsv(0, csv_settings);
 
 	for (const auto& line : csv_data) {
@@ -16,6 +16,12 @@ void Regions::init()
 			QString country = line[CLMN_COUNTRY];
 			CountryData data;
 
+			if (CLMN_CODE < line_size) {
+				data.code = line[CLMN_CODE];
+				if (!data.code.isEmpty()) {
+					data.icon = QIcon(":/flags/flags/" + data.code + ".svg");
+				}
+			}
 			if (CLMN_REGIONS < line_size) {
 				data.region = line[CLMN_REGIONS];
 			}
@@ -36,6 +42,20 @@ void Regions::init()
 			}
 		}
 	}
+}
+
+Regions::CountryData Regions::data(const QString& country)
+{
+	return	_country_data.contains(country) ?
+			_country_data[country] :
+			CountryData();
+}
+
+QIcon Regions::icon(const QString& country)
+{
+	return	_country_data.contains(country) ?
+			_country_data[country].icon :
+			QIcon();
 }
 
 QString Regions::region(const QString& country)

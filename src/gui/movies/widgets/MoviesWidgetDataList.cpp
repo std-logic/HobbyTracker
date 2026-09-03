@@ -143,7 +143,7 @@ void Movies::WidgetDataList::showByCountries(const DataList& data_list, const Ba
 				  CLMN_DIRECTORS, CLMN_ACTORS, CLMN_YEAR, CLMN_RATING};
 	initColumns({tr("Страна / Дата"), tr("К-во"), tr("Название"), tr("Жанр"), tr("Страна"),
 				 tr("Режиссёр"), tr("Актёры"), tr("Год"), tr("Оценка")},
-				{WIDTH_VIEW_DATE_MEDIUM, WIDTH_COUNT, WIDTH_TITLE, WIDTH_GENRES, WIDTH_COUNTRIES,
+				{WIDTH_VIEW_DATE_COUNTRIES, WIDTH_COUNT, WIDTH_TITLE, WIDTH_GENRES, WIDTH_COUNTRIES,
 				 WIDTH_DIRECTORS, WIDTH_ACTORS, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_COUNT, Qt::DescendingOrder, true);
 
@@ -152,13 +152,7 @@ void Movies::WidgetDataList::showByCountries(const DataList& data_list, const Ba
 
 	for (const auto& [country, movies] : movies_by_countries) {
 		auto item_country = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
-		auto country_comment = Regions::comment(country);
-		if (country_comment.isEmpty()) {
-			item_country->setText(CLMN_VIEW_DATE, country);
-		} else {
-			item_country->setText(CLMN_VIEW_DATE, country + "*");
-			item_country->setToolTipEverywhere(country_comment.replace(": ", ":\n"));
-		}
+		item_country->setCountry(CLMN_VIEW_DATE, country);
 		item_country->setNumb(CLMN_COUNT, movies.size());
 		item_country->setText(CLMN_YEAR, Helper::yearString(movies));
 
@@ -201,13 +195,7 @@ void Movies::WidgetDataList::showByRegions(const DataList& data_list, const Base
 
 		for (const auto& [country, movies] : movies_by_countries) {
 			auto item_country = new Base::WidgetTreeItem(item_region, Global::Colors::tree_level_1);
-			auto country_comment = Regions::comment(country);
-			if (country_comment.isEmpty()) {
-				item_country->setText(CLMN_VIEW_DATE, country);
-			} else {
-				item_country->setText(CLMN_VIEW_DATE, country + "*");
-				item_country->setToolTipEverywhere(country_comment.replace(": ", ":\n"));
-			}
+			item_country->setCountry(CLMN_VIEW_DATE, country);
 			item_country->setNumb(CLMN_COUNT, movies.size());
 			item_country->setText(CLMN_YEAR, Helper::yearString(movies));
 			present_countries.insert(country);
