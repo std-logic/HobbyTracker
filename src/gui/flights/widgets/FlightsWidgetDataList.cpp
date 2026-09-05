@@ -90,7 +90,7 @@ void Flights::WidgetDataList::showByRegions(const DataList& data_list)
 		}
 
 		item_region->setNumb(CLMN_COUNT, region_flights_num);
-		item_region->setToolTipEverywhere(Regions::progress(region, present_countries));
+		item_region->setCustomToolTip(Regions::progress(region, present_countries));
 	}
 }
 

@@ -62,7 +62,7 @@ void Movies::WidgetDataList::showSimple(const DataList& data_list)
 		item_movie->setText(CLMN_ACTORS, movie.actorsToString());
 		item_movie->setText(CLMN_YEAR, movie.yearString());
 		item_movie->setRating(CLMN_RATING, movie.rating());
-		item_movie->setToolTipEverywhere(movie.summaryString());
+		item_movie->setCustomToolTip(movie.summaryString());
 		item_movie->setId(movie.id());
 	}
 }
@@ -95,7 +95,7 @@ void Movies::WidgetDataList::showByKinds(const DataList& data_list)
 			item_movie->setText(CLMN_ACTORS, movie->actorsToString());
 			item_movie->setText(CLMN_YEAR, movie->yearString());
 			item_movie->setRating(CLMN_RATING, movie->rating());
-			item_movie->setToolTipEverywhere(movie->summaryString());
+			item_movie->setCustomToolTip(movie->summaryString());
 			item_movie->setId(movie->id());
 		}
 	}
@@ -131,7 +131,7 @@ void Movies::WidgetDataList::showByGenres(const DataList& data_list)
 			item_movie->setText(CLMN_ACTORS, movie->actorsToString());
 			item_movie->setText(CLMN_YEAR, movie->yearString());
 			item_movie->setRating(CLMN_RATING, movie->rating());
-			item_movie->setToolTipEverywhere(movie->summaryString());
+			item_movie->setCustomToolTip(movie->summaryString());
 			item_movie->setId(movie->id());
 		}
 	}
@@ -166,7 +166,7 @@ void Movies::WidgetDataList::showByCountries(const DataList& data_list, const Ba
 			item_movie->setText(CLMN_ACTORS, movie->actorsToString());
 			item_movie->setText(CLMN_YEAR, movie->yearString());
 			item_movie->setRating(CLMN_RATING, movie->rating());
-			item_movie->setToolTipEverywhere(movie->summaryString());
+			item_movie->setCustomToolTip(movie->summaryString());
 			item_movie->setId(movie->id());
 		}
 	}
@@ -210,7 +210,7 @@ void Movies::WidgetDataList::showByRegions(const DataList& data_list, const Base
 				item_movie->setText(CLMN_ACTORS, movie->actorsToString());
 				item_movie->setText(CLMN_YEAR, movie->yearString());
 				item_movie->setRating(CLMN_RATING, movie->rating());
-				item_movie->setToolTipEverywhere(movie->summaryString());
+				item_movie->setCustomToolTip(movie->summaryString());
 				item_movie->setId(movie->id());
 				ids.insert(movie->id());
 				Helper::checkMinMax(movie->year(), &region_min_year, &region_max_year);
@@ -219,7 +219,7 @@ void Movies::WidgetDataList::showByRegions(const DataList& data_list, const Base
 
 		item_region->setNumb(CLMN_COUNT, ids.size());
 		item_region->setText(CLMN_YEAR, Helper::yearString(region_min_year, region_max_year));
-		item_region->setToolTipEverywhere(Regions::progress(region, present_countries));
+		item_region->setCustomToolTip(Regions::progress(region, present_countries));
 	}
 }
 
@@ -251,7 +251,7 @@ void Movies::WidgetDataList::showByYears(const DataList& data_list)
 			item_movie->setText(CLMN_ACTORS, movie->actorsToString());
 			item_movie->setText(CLMN_YEAR, movie->yearString());
 			item_movie->setRating(CLMN_RATING, movie->rating());
-			item_movie->setToolTipEverywhere(movie->summaryString());
+			item_movie->setCustomToolTip(movie->summaryString());
 			item_movie->setId(movie->id());
 		}
 	}
@@ -285,7 +285,7 @@ void Movies::WidgetDataList::showByDecades(const DataList& data_list)
 			item_movie->setText(CLMN_ACTORS, movie->actorsToString());
 			item_movie->setText(CLMN_YEAR, movie->yearString());
 			item_movie->setRating(CLMN_RATING, movie->rating());
-			item_movie->setToolTipEverywhere(movie->summaryString());
+			item_movie->setCustomToolTip(movie->summaryString());
 			item_movie->setId(movie->id());
 		}
 	}
@@ -320,7 +320,7 @@ void Movies::WidgetDataList::showByDirectors(const DataList& data_list)
 			item_movie->setText(CLMN_ACTORS, movie->actorsToString());
 			item_movie->setText(CLMN_YEAR, movie->yearString());
 			item_movie->setRating(CLMN_RATING, movie->rating());
-			item_movie->setToolTipEverywhere(movie->summaryString());
+			item_movie->setCustomToolTip(movie->summaryString());
 			item_movie->setId(movie->id());
 		}
 	}
@@ -355,7 +355,7 @@ void Movies::WidgetDataList::showByWriters(const DataList& data_list)
 			item_movie->setText(CLMN_ACTORS, movie->actorsToString());
 			item_movie->setText(CLMN_YEAR, movie->yearString());
 			item_movie->setRating(CLMN_RATING, movie->rating());
-			item_movie->setToolTipEverywhere(movie->summaryString());
+			item_movie->setCustomToolTip(movie->summaryString());
 			item_movie->setId(movie->id());
 		}
 	}
@@ -390,7 +390,7 @@ void Movies::WidgetDataList::showByActors(const DataList& data_list)
 			item_movie->setText(CLMN_ACTORS, movie->actorsToString());
 			item_movie->setText(CLMN_YEAR, movie->yearString());
 			item_movie->setRating(CLMN_RATING, movie->rating());
-			item_movie->setToolTipEverywhere(movie->summaryString());
+			item_movie->setCustomToolTip(movie->summaryString());
 			item_movie->setId(movie->id());
 		}
 	}
@@ -423,7 +423,7 @@ void Movies::WidgetDataList::showByRatings(const DataList& data_list)
 			item_movie->setText(CLMN_DIRECTORS, movie->directorsToString());
 			item_movie->setText(CLMN_ACTORS, movie->actorsToString());
 			item_movie->setText(CLMN_YEAR, movie->yearString());
-			item_movie->setToolTipEverywhere(movie->summaryString());
+			item_movie->setCustomToolTip(movie->summaryString());
 			item_movie->setId(movie->id());
 		}
 	}

@@ -1,4 +1,5 @@
 #include "Regions.h"
+#include "Helper.h"
 
 #include <storage/Storage.h>
 #include <storage/csv/CsvData.h>
@@ -19,7 +20,8 @@ void Regions::init()
 			if (CLMN_CODE < line_size) {
 				data.code = line[CLMN_CODE];
 				if (!data.code.isEmpty()) {
-					data.icon = QIcon(":/flags/flags/" + data.code + ".svg");
+					data.icon_path = ":/flags/flags/" + data.code + ".svg";
+					data.icon = QIcon(data.icon_path);
 				}
 			}
 			if (CLMN_REGIONS < line_size) {
@@ -126,30 +128,36 @@ QString Regions::progress(const QString& region,
 	int total_region_num = _region_countries[region].size();
 	double total_region_percent = 100. * present_num / total_region_num;
 
-	QString out = tr("Всего стран:\n%1/%2 (%3%)")
+	const int w = 130;
+	QString text;
+	text += Helper::htmlTableStart();
+	text += Helper::htmlTableRow(tr("Всего стран"),
+			tr("%1 / %2 (%3%)")
 			.arg(present_num)
 			.arg(total_region_num)
-			.arg(total_region_percent, 0, 'f', 0);
+			.arg(total_region_percent, 0, 'f', 0), w);
 
 	if (former_num > 0) {
-		out += tr("\n\nИсчезнувших стран:\n%1").arg(former_num);
+		text += Helper::htmlTableRow(tr("Исчезнувших"), QString::number(former_num), w);
 	}
 
 	if (union_num > 0) {
-		out += tr("\n\nОбъединений стран:\n%1").arg(union_num);
+		text += Helper::htmlTableRow(tr("Объединений"), QString::number(union_num), w);
 	}
+
+	text += Helper::htmlTableEnd();
 
 	auto missing_countries = missingCountries(region, present_countries);
 	if (!missing_countries.isEmpty()) {
-		out += tr("\n\nОстались:");
+		text += tr("<br><br>Остались:");
 		int cnt = 0;
 		for (const auto& country : missing_countries) {
-			if (++cnt > 30) { out += "\n..."; break; }
-			out += "\n" + country;
+			if (++cnt > 30) { text += "<br>..."; break; }
+			text += "<br>" + country;
 		}
 	}
 
-	return out;
+	return text;
 }
 
 QString Regions::progress(const std::unordered_set<QString>& present_countries)
@@ -168,31 +176,37 @@ QString Regions::progress(const std::unordered_set<QString>& present_countries)
 	}
 	double total_percent = 100. * present_num / _countries_total_num;
 
-	QString out = tr("Всего стран:\n%1/%2 (%3%)")
+	const int w = 130;
+	QString text;
+	text += Helper::htmlTableStart();
+	text += Helper::htmlTableRow(tr("Всего стран"),
+			tr("%1 / %2 (%3%)")
 			.arg(present_num)
 			.arg(_countries_total_num)
-			.arg(total_percent, 0, 'f', 0);
+			.arg(total_percent, 0, 'f', 0), w);
 
 	for (const auto& [region, countries] : _region_countries) {
 		int present_region_num = present_num_by_regions[region];
 		if (present_region_num > 0) {
 			int total_region_num = countries.size();
 			double region_percent = 100. * present_region_num / total_region_num;
-			out += tr("\n%1:\n%2/%3 (%4%)")
-					.arg(region)
+			text += Helper::htmlTableRow(region,
+					tr("%1 / %2 (%3%)")
 					.arg(present_region_num)
 					.arg(total_region_num)
-					.arg(region_percent, 0, 'f', 0);
+					.arg(region_percent, 0, 'f', 0), w);
 		}
 	}
 
 	if (former_num > 0) {
-		out += tr("\n\nИсчезнувших стран:\n%1").arg(former_num);
+		text += Helper::htmlTableRow(tr("Исчезнувших"), QString::number(former_num), w);
 	}
 
 	if (union_num > 0) {
-		out += tr("\n\nОбъединений стран:\n%1").arg(union_num);
+		text += Helper::htmlTableRow(tr("Объединений"), QString::number(union_num), w);
 	}
 
-	return out;
+	text += Helper::htmlTableEnd();
+
+	return text;
 }

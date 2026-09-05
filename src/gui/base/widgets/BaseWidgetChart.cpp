@@ -215,6 +215,6 @@ void Base::WidgetChart::barSetHovered(bool status, int index)
 						   .arg(getAxisX()->at(index))
 						   .arg(static_cast<int>(getBarSet()->at(index))));
 	} else {
-		_tooltip->hide();
+		_tooltip->hideText();
 	}
 }

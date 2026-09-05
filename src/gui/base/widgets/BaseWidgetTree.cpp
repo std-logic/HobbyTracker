@@ -1,9 +1,12 @@
 #include "BaseWidgetTree.h"
+#include "BaseWidgetTreeItem.h"
+#include "BaseToolTip.h"
 
 #include <common/Global.h>
 
 #include <QHeaderView>
 #include <QShortcut>
+#include <QMouseEvent>
 
 Base::WidgetTree::WidgetTree(QWidget* parent)
 	: QTreeWidget{parent}
@@ -34,6 +37,12 @@ Base::WidgetTree::WidgetTree(QWidget* parent)
 	shortcut->setContext(Qt::WidgetShortcut);
 	connect(shortcut, &QShortcut::activated,
 			this, &WidgetTree::onItemDeletePressed);
+
+	// tracking mouse for custom tooltip processing
+	setMouseTracking(true);
+
+	_tooltip = new ToolTip(this);
+	_tooltip->setShowDelay(300);
 
 	hide();
 }
@@ -80,6 +89,41 @@ void Base::WidgetTree::initSorting(int default_column, Qt::SortOrder default_ord
 		}
 	}
 	sortByColumn(default_column, default_order);
+}
+
+void Base::WidgetTree::mouseMoveEvent(QMouseEvent* event)
+{
+	QTreeWidgetItem* item = itemAt(event->position().toPoint());
+	if (_hovered_item != item) {
+		if (_hovered_item) { hideToolTip(); }
+		_hovered_item = item;
+		if (_hovered_item) { showToolTip(); }
+	}
+
+	QTreeWidget::mouseMoveEvent(event);
+}
+
+void Base::WidgetTree::leaveEvent(QEvent* event)
+{
+	hideToolTip();
+	_hovered_item = nullptr;
+
+	QTreeWidget::leaveEvent(event);
+}
+
+void Base::WidgetTree::showToolTip()
+{
+	auto custom_item = dynamic_cast<WidgetTreeItem*>(_hovered_item);
+	if (custom_item && custom_item->hasCustomToolTip()) {
+		_tooltip->showText(custom_item->customToolTip());
+	} else {
+		_tooltip->hideText();
+	}
+}
+
+void Base::WidgetTree::hideToolTip()
+{
+	_tooltip->hideText();
 }
 
 void Base::WidgetTree::sortingChanged(int index, Qt::SortOrder order)

@@ -91,16 +91,24 @@ public:
 	QString summaryString() const
 	{
 		QString text;
-		text += tr("Страна: ") + _country;
-		text += tr("\nПериод: ") + _period;
-		text += tr("\nВалюта: ") + _currency;
-		text += tr("\nНоминал: ") + _value;
-		if (!_title.isEmpty()) { text += tr("\nНазвание: ") + _title; }
-		text += tr("\nДиаметр: ") + _diameter;
-		text += tr("\nНомер: ") + _number;
-		text += tr("\nГод: ") + yearString();
-		if (!_version.isEmpty()) { text += tr("\nРазновидность: ") + _version; }
-		if (!_state.isEmpty()) { text += tr("\nСостояние: ") + _state; }
+		text += Helper::htmlTableStart();
+		text += Helper::htmlTableRow(tr("Страна"), _country);
+		text += Helper::htmlTableRow(tr("Период"), _period);
+		text += Helper::htmlTableRow(tr("Валюта"), _currency);
+		text += Helper::htmlTableRow(tr("Номинал"), _value);
+		if (!_title.isEmpty()) {
+			text += Helper::htmlTableRow(tr("Название"), _title);
+		}
+		text += Helper::htmlTableRow(tr("Диаметр"), _diameter);
+		text += Helper::htmlTableRow(tr("Номер"), _number);
+		text += Helper::htmlTableRow(tr("Год"), yearString());
+		if (!_version.isEmpty()) {
+			text += Helper::htmlTableRow(tr("Разновидность"), _version);
+		}
+		if (!_state.isEmpty()) {
+			text += Helper::htmlTableRow(tr("Состояние"), _state);
+		}
+		text += Helper::htmlTableEnd();
 		return text;
 	}
 

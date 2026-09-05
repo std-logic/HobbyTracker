@@ -60,10 +60,13 @@ public:
 	{
 		QString text;
 		text += _title;
-		text += tr("\n\nРазработчик: %1").arg(_developer);
-		text += tr("\nЖанр: %1").arg(_genre);
-		text += tr("\nГод: %1").arg(yearString());
-		text += tr("\nОценка: %1").arg(_rating);
+		text += "<br>";
+		text += Helper::htmlTableStart();
+		text += Helper::htmlTableRow(tr("Разработчик"), _developer);
+		text += Helper::htmlTableRow(tr("Жанр"), _genre);
+		text += Helper::htmlTableRow(tr("Год"), yearString());
+		text += Helper::htmlTableRow(tr("Оценка"), QString::number(_rating));
+		text += Helper::htmlTableEnd();
 		return text;
 	}
 

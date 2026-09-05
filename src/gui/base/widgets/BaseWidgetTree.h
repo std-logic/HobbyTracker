@@ -5,6 +5,8 @@
 namespace Base
 {
 
+class ToolTip;
+
 class WidgetTree : public QTreeWidget
 {
 	Q_OBJECT
@@ -25,6 +27,13 @@ protected:
 	void initColumns(const QStringList& labels, const std::vector<int>& widths = {});
 	void initSorting(int default_column = 0, Qt::SortOrder default_order = Qt::AscendingOrder, bool force = false);
 
+	void mouseMoveEvent(QMouseEvent* event) override;
+	void leaveEvent(QEvent* event) override;
+
+private:
+	void showToolTip();
+	void hideToolTip();
+
 private slots:
 	void sortingChanged(int index, Qt::SortOrder order);
 	void onItemDoubleClicked(QTreeWidgetItem* item, int column);
@@ -35,6 +44,9 @@ protected:
 
 	QString _sorting_column;
 	Qt::SortOrder _sorting_order = Qt::AscendingOrder;
+
+	QTreeWidgetItem* _hovered_item = nullptr;
+	Base::ToolTip* _tooltip = nullptr;
 };
 
 } // namespace Base

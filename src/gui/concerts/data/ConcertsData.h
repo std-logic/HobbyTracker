@@ -87,16 +87,18 @@ public:
 	QString summaryString() const
 	{
 		QString text;
-		text += tr("Дата: ") + _date;
+		text += Helper::htmlTableStart();
+		text += Helper::htmlTableRow(tr("Дата"), _date);
 		if (!_artists.isEmpty()) {
-			text += tr("\nГруппы: ") + artistsToString(QStringLiteral(" • "));
+			text += Helper::htmlTableRow(tr("Группы"), artistsToString(QStringLiteral(" • ")));
 		}
 		if (!_description.isEmpty()) {
-			text += tr("\nОписание: ") + Helper::startWithCapital(_description);
+			text += Helper::htmlTableRow(tr("Описание"), Helper::startWithCapital(_description));
 		}
-		text += tr("\nСтрана: ") + _country;
-		text += tr("\nГород: ") + _city;
-		text += tr("\nМесто: ") + Helper::startWithCapital(_place);
+		text += Helper::htmlTableRow(tr("Страна"), _country);
+		text += Helper::htmlTableRow(tr("Город"), _city);
+		text += Helper::htmlTableRow(tr("Место"), Helper::startWithCapital(_place));
+		text += Helper::htmlTableEnd();
 		return text;
 	}
 

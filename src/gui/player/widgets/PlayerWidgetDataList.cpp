@@ -55,7 +55,7 @@ void Player::WidgetDataList::showByArtists(const Library& library)
 		item_artist->setNumb(CLMN_ALBUMS, artist.albumsCount());
 		item_artist->setNumb(CLMN_TRACKS, artist.tracksCount());
 		item_artist->setNumb(CLMN_PLAY_COUNT, artist.playCount());
-		item_artist->setToolTipEverywhere(artist.summaryString());
+		item_artist->setCustomToolTip(artist.summaryString());
 
 		for (const auto& [album_title, album] : artist) {
 			auto item_album = new Base::WidgetTreeItem(item_artist, Global::Colors::tree_level_1);
@@ -63,14 +63,14 @@ void Player::WidgetDataList::showByArtists(const Library& library)
 			item_album->setText(CLMN_YEAR, album.yearString());
 			item_album->setNumb(CLMN_TRACKS, album.tracksCount());
 			item_album->setNumb(CLMN_PLAY_COUNT, album.playCount());
-			item_album->setToolTipEverywhere(album.summaryString());
+			item_album->setCustomToolTip(album.summaryString());
 
 			for (const auto& track : album) {
 				auto item_track = new Base::WidgetTreeItem(item_album);
 				item_track->setText(CLMN_TITLE, track.titleWithTrackNumber());
 				item_track->setText(CLMN_YEAR, track.yearString());
 				item_track->setNumb(CLMN_PLAY_COUNT, track.playCount());
-				item_track->setToolTipEverywhere(track.summaryString());
+				item_track->setCustomToolTip(track.summaryString());
 			}
 		}
 	}
@@ -91,14 +91,14 @@ void Player::WidgetDataList::showByAlbums(const Library& library)
 			item_album->setText(CLMN_YEAR, album.yearString());
 			item_album->setNumb(CLMN_TRACKS, album.tracksCount());
 			item_album->setNumb(CLMN_PLAY_COUNT, album.playCount());
-			item_album->setToolTipEverywhere(album.summaryString());
+			item_album->setCustomToolTip(album.summaryString());
 
 			for (const auto& track : album) {
 				auto item_track = new Base::WidgetTreeItem(item_album);
 				item_track->setText(CLMN_TITLE, track.titleWithTrackNumber());
 				item_track->setText(CLMN_YEAR, track.yearString());
 				item_track->setNumb(CLMN_PLAY_COUNT, track.playCount());
-				item_track->setToolTipEverywhere(track.summaryString());
+				item_track->setCustomToolTip(track.summaryString());
 			}
 		}
 	}
@@ -119,7 +119,7 @@ void Player::WidgetDataList::showByTracks(const Library& library)
 						.arg(artist_title, album_title, track.titleWithTrackNumber()));
 				item_track->setText(CLMN_YEAR, track.yearString());
 				item_track->setNumb(CLMN_PLAY_COUNT, track.playCount());
-				item_track->setToolTipEverywhere(track.summaryString());
+				item_track->setCustomToolTip(track.summaryString());
 			}
 		}
 	}
@@ -138,7 +138,7 @@ void Player::WidgetDataList::showByBestTracks(const Library& library)
 		item_artist->setText(CLMN_YEAR, artist.yearString());
 		item_artist->setNumb(CLMN_TRACKS, artist.tracksCount());
 		item_artist->setNumb(CLMN_PLAY_COUNT, artist.playCount());
-		item_artist->setToolTipEverywhere(artist.summaryString());
+		item_artist->setCustomToolTip(artist.summaryString());
 
 		for (const auto& [album_title, album] : artist) {
 			for (const auto& track : album) {
@@ -151,7 +151,7 @@ void Player::WidgetDataList::showByBestTracks(const Library& library)
 				}
 				item_track->setText(CLMN_YEAR, track.yearString());
 				item_track->setNumb(CLMN_PLAY_COUNT, track.playCount());
-				item_track->setToolTipEverywhere(track.summaryString());
+				item_track->setCustomToolTip(track.summaryString());
 			}
 		}
 	}
@@ -175,7 +175,7 @@ void Player::WidgetDataList::showByGenres(const Library& library)
 		item_genre->setNumb(CLMN_ALBUMS, genre_library.albumsCount());
 		item_genre->setNumb(CLMN_TRACKS, genre_library.tracksCount());
 		item_genre->setNumb(CLMN_PLAY_COUNT, genre_library.playCount());
-		item_genre->setToolTipEverywhere(genre_library.summaryString());
+		item_genre->setCustomToolTip(genre_library.summaryString());
 
 		for (const auto& [artist_title, artist] : genre_library) {
 			bool misc = (artist_title == QStringLiteral("Разное"));
@@ -186,7 +186,7 @@ void Player::WidgetDataList::showByGenres(const Library& library)
 				item_artist->setNumb(CLMN_ALBUMS, artist.albumsCount());
 				item_artist->setNumb(CLMN_TRACKS, artist.tracksCount());
 				item_artist->setNumb(CLMN_PLAY_COUNT, artist.playCount());
-				item_artist->setToolTipEverywhere(artist.summaryString());
+				item_artist->setCustomToolTip(artist.summaryString());
 			}
 
 			for (const auto& [album_title, album] : artist) {
@@ -198,14 +198,14 @@ void Player::WidgetDataList::showByGenres(const Library& library)
 				if (misc) { item_album->setNumb(CLMN_ALBUMS, 1); }
 				item_album->setNumb(CLMN_TRACKS, album.tracksCount());
 				item_album->setNumb(CLMN_PLAY_COUNT, album.playCount());
-				item_album->setToolTipEverywhere(album.summaryString());
+				item_album->setCustomToolTip(album.summaryString());
 
 				for (const auto& track : album) {
 					auto item_track = new Base::WidgetTreeItem(item_album);
 					item_track->setText(CLMN_TITLE, track.titleWithTrackNumber());
 					item_track->setText(CLMN_YEAR, track.yearString());
 					item_track->setNumb(CLMN_PLAY_COUNT, track.playCount());
-					item_track->setToolTipEverywhere(track.summaryString());
+					item_track->setCustomToolTip(track.summaryString());
 				}
 			}
 		}
@@ -230,7 +230,7 @@ void Player::WidgetDataList::showByFormats(const Library& library)
 		item_format->setNumb(CLMN_ALBUMS, format_library.albumsCount());
 		item_format->setNumb(CLMN_TRACKS, format_library.tracksCount());
 		item_format->setNumb(CLMN_PLAY_COUNT, format_library.playCount());
-		item_format->setToolTipEverywhere(format_library.summaryString());
+		item_format->setCustomToolTip(format_library.summaryString());
 
 		for (const auto& [artist_title, artist] : format_library) {
 			auto item_artist = new Base::WidgetTreeItem(item_format, Global::Colors::tree_level_2);
@@ -239,7 +239,7 @@ void Player::WidgetDataList::showByFormats(const Library& library)
 			item_artist->setNumb(CLMN_ALBUMS, artist.albumsCount());
 			item_artist->setNumb(CLMN_TRACKS, artist.tracksCount());
 			item_artist->setNumb(CLMN_PLAY_COUNT, artist.playCount());
-			item_artist->setToolTipEverywhere(artist.summaryString());
+			item_artist->setCustomToolTip(artist.summaryString());
 
 			for (const auto& [album_title, album] : artist) {
 				auto item_album = new Base::WidgetTreeItem(item_artist, Global::Colors::tree_level_1);
@@ -247,14 +247,14 @@ void Player::WidgetDataList::showByFormats(const Library& library)
 				item_album->setText(CLMN_YEAR, album.yearString());
 				item_album->setNumb(CLMN_TRACKS, album.tracksCount());
 				item_album->setNumb(CLMN_PLAY_COUNT, album.playCount());
-				item_album->setToolTipEverywhere(album.summaryString());
+				item_album->setCustomToolTip(album.summaryString());
 
 				for (const auto& track : album) {
 					auto item_track = new Base::WidgetTreeItem(item_album);
 					item_track->setText(CLMN_TITLE, track.titleWithTrackNumber());
 					item_track->setText(CLMN_YEAR, track.yearString());
 					item_track->setNumb(CLMN_PLAY_COUNT, track.playCount());
-					item_track->setToolTipEverywhere(track.summaryString());
+					item_track->setCustomToolTip(track.summaryString());
 				}
 			}
 		}
@@ -278,7 +278,7 @@ void Player::WidgetDataList::showByYears(const Library& library)
 		item_year->setNumb(CLMN_ALBUMS, year_library.albumsCount());
 		item_year->setNumb(CLMN_TRACKS, year_library.tracksCount());
 		item_year->setNumb(CLMN_PLAY_COUNT, year_library.playCount());
-		item_year->setToolTipEverywhere(year_library.summaryString());
+		item_year->setCustomToolTip(year_library.summaryString());
 
 		for (const auto& [artist_title, artist] : year_library) {
 			for (const auto& [album_title, album] : artist) {
@@ -287,13 +287,13 @@ void Player::WidgetDataList::showByYears(const Library& library)
 						.arg(artist_title, album_title));
 				item_album->setNumb(CLMN_TRACKS, album.tracksCount());
 				item_album->setNumb(CLMN_PLAY_COUNT, album.playCount());
-				item_album->setToolTipEverywhere(album.summaryString());
+				item_album->setCustomToolTip(album.summaryString());
 
 				for (const auto& track : album) {
 					auto item_track = new Base::WidgetTreeItem(item_album);
 					item_track->setText(CLMN_TITLE, track.titleWithTrackNumber());
 					item_track->setNumb(CLMN_PLAY_COUNT, track.playCount());
-					item_track->setToolTipEverywhere(track.summaryString());
+					item_track->setCustomToolTip(track.summaryString());
 				}
 			}
 		}
@@ -326,7 +326,7 @@ void Player::WidgetDataList::showSummary(const Library& library)
 				.arg(++place, 2, 10, QChar('0')).arg(artist->title()));
 		item_artist->setText(CLMN_YEAR, artist->yearString());
 		item_artist->setNumb(CLMN_PLAY_COUNT, play_count);
-		item_artist->setToolTipEverywhere(artist->summaryString());
+		item_artist->setCustomToolTip(artist->summaryString());
 	}
 
 	// albums
@@ -340,7 +340,7 @@ void Player::WidgetDataList::showSummary(const Library& library)
 				.arg(++place, 2, 10, QChar('0')).arg(album->artist(), album->title()));
 		item_album->setText(CLMN_YEAR, album->yearString());
 		item_album->setNumb(CLMN_PLAY_COUNT, play_count);
-		item_album->setToolTipEverywhere(album->summaryString());
+		item_album->setCustomToolTip(album->summaryString());
 	}
 
 	// tracks
@@ -359,7 +359,7 @@ void Player::WidgetDataList::showSummary(const Library& library)
 		}
 		item_track->setText(CLMN_YEAR, track->yearString());
 		item_track->setNumb(CLMN_PLAY_COUNT, play_count);
-		item_track->setToolTipEverywhere(track->summaryString());
+		item_track->setCustomToolTip(track->summaryString());
 	}
 
 	expandAll();
@@ -392,7 +392,7 @@ void Player::WidgetDataList::showHistoryArtists(const std::vector<Library>& libr
 					.arg(++place, 2, 10, QChar('0')).arg(artist->title()));
 			item_artist->setText(CLMN_YEAR, artist->yearString());
 			item_artist->setNumb(CLMN_PLAY_COUNT, play_count);
-			item_artist->setToolTipEverywhere(artist->summaryString());
+			item_artist->setCustomToolTip(artist->summaryString());
 		}
 	}
 
@@ -426,7 +426,7 @@ void Player::WidgetDataList::showHistoryAlbums(const std::vector<Library>& libra
 					.arg(++place, 2, 10, QChar('0')).arg(album->artist(), album->title()));
 			item_album->setText(CLMN_YEAR, album->yearString());
 			item_album->setNumb(CLMN_PLAY_COUNT, play_count);
-			item_album->setToolTipEverywhere(album->summaryString());
+			item_album->setCustomToolTip(album->summaryString());
 		}
 	}
 
@@ -465,7 +465,7 @@ void Player::WidgetDataList::showHistoryTracks(const std::vector<Library>& libra
 			}
 			item_track->setText(CLMN_YEAR, track->yearString());
 			item_track->setNumb(CLMN_PLAY_COUNT, play_count);
-			item_track->setToolTipEverywhere(track->summaryString());
+			item_track->setCustomToolTip(track->summaryString());
 		}
 	}
 

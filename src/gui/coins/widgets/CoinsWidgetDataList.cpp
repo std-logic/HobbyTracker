@@ -63,7 +63,7 @@ void Coins::WidgetDataList::showByCountries(const DataList& data_list, const Bas
 				item_coin->setText(CLMN_YEAR, coin->yearString());
 				item_coin->setText(CLMN_VERSION, coin->version());
 				item_coin->setText(CLMN_STATE, coin->state());
-				item_coin->setToolTipEverywhere(coin->summaryString());
+				item_coin->setCustomToolTip(coin->summaryString());
 				item_coin->setId(coin->id());
 				Helper::checkMinMax(coin->year(), &country_min_year, &country_max_year);
 			}
@@ -120,7 +120,7 @@ void Coins::WidgetDataList::showByRegions(const DataList& data_list, const Base:
 					item_coin->setText(CLMN_YEAR, coin->yearString());
 					item_coin->setText(CLMN_VERSION, coin->version());
 					item_coin->setText(CLMN_STATE, coin->state());
-					item_coin->setToolTipEverywhere(coin->summaryString());
+					item_coin->setCustomToolTip(coin->summaryString());
 					item_coin->setId(coin->id());
 					Helper::checkMinMax(coin->year(), &country_min_year, &country_max_year);
 				}
@@ -135,7 +135,7 @@ void Coins::WidgetDataList::showByRegions(const DataList& data_list, const Base:
 
 		item_region->setNumb(CLMN_COUNT, region_coins_num);
 		item_region->setText(CLMN_YEAR, Helper::yearString(region_min_year, region_max_year));
-		item_region->setToolTipEverywhere(Regions::progress(region, present_countries));
+		item_region->setCustomToolTip(Regions::progress(region, present_countries));
 	}
 }
 
@@ -172,7 +172,7 @@ void Coins::WidgetDataList::showByDecades(const DataList& data_list)
 			item_coin->setText(CLMN_YEAR, coin->yearString());
 			item_coin->setText(CLMN_VERSION, coin->version());
 			item_coin->setText(CLMN_STATE, coin->state());
-			item_coin->setToolTipEverywhere(coin->summaryString());
+			item_coin->setCustomToolTip(coin->summaryString());
 			item_coin->setId(coin->id());
 		}
 	}
@@ -211,7 +211,7 @@ void Coins::WidgetDataList::showByCenturies(const DataList& data_list)
 			item_coin->setText(CLMN_YEAR, coin->yearString());
 			item_coin->setText(CLMN_VERSION, coin->version());
 			item_coin->setText(CLMN_STATE, coin->state());
-			item_coin->setToolTipEverywhere(coin->summaryString());
+			item_coin->setCustomToolTip(coin->summaryString());
 			item_coin->setId(coin->id());
 		}
 	}
@@ -239,7 +239,7 @@ void Coins::WidgetDataList::showSimple(const DataList& data_list)
 		item_coin->setText(CLMN_YEAR, coin.yearString());
 		item_coin->setText(CLMN_VERSION, coin.version());
 		item_coin->setText(CLMN_STATE, coin.state());
-		item_coin->setToolTipEverywhere(coin.summaryString());
+		item_coin->setCustomToolTip(coin.summaryString());
 		item_coin->setId(coin.id());
 	}
 }

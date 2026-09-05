@@ -20,6 +20,7 @@ public:
 		QString code;
 		QString region;
 		QString comment;
+		QString icon_path;
 		QIcon icon;
 		bool is_former = false;
 		bool is_union = false;

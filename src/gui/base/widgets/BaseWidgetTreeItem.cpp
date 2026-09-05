@@ -53,7 +53,7 @@ void Base::WidgetTreeItem::setCountry(int column, const QString& country)
 		setText(column, country);
 	} else {
 		setText(column, country + "*");
-		setToolTipEverywhere(data.comment.replace(": ", ":\n"));
+		setCustomToolTip(data.comment.replace(": ", ":<br>"));
 	}
 	if (!data.icon.isNull()) {
 		setIcon(column, data.icon);
@@ -78,12 +78,5 @@ void Base::WidgetTreeItem::setBackgroundEverywhere(const QBrush& brush)
 {
 	for (auto column = 0; column < treeWidget()->columnCount(); ++column) {
 		setBackground(column, brush);
-	}
-}
-
-void Base::WidgetTreeItem::setToolTipEverywhere(const QString& str)
-{
-	for (auto column = 0; column < treeWidget()->columnCount(); ++column) {
-		setToolTip(column, str);
 	}
 }

@@ -87,13 +87,17 @@ public:
 
 	QString summaryString() const
 	{
+		const int w = 120;
 		QString text;
 		text += _title;
-		text += tr("\n\nЖанр: %1").arg(_genre);
-		text += tr("\nСтрана основания: %1").arg(_country);
-		text += tr("\nГод основания: %1").arg(yearString());
-		text += tr("\nБыл на концерте: %1").arg(liveStringYesNo());
-		text += tr("\nАктивна: %1").arg(stateStringYesNo());
+		text += "<br>";
+		text += Helper::htmlTableStart();
+		text += Helper::htmlTableRow(tr("Жанр"), _genre, w);
+		text += Helper::htmlTableRow(tr("Страна основания"), _country, w);
+		text += Helper::htmlTableRow(tr("Год основания"), yearString(), w);
+		text += Helper::htmlTableRow(tr("Был на концерте"), liveStringYesNo(), w);
+		text += Helper::htmlTableRow(tr("Активна"), stateStringYesNo(), w);
+		text += Helper::htmlTableEnd();
 		return text;
 	}
 

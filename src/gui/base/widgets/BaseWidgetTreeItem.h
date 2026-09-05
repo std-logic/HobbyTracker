@@ -29,10 +29,13 @@ public:
 	void setBold(int column, bool enable);
 	void setBoldEverywhere(bool enable);
 	void setBackgroundEverywhere(const QBrush& brush);
-	void setToolTipEverywhere(const QString& str);
 
-signals:
+	void setCustomToolTip(const QString& str) { _custom_tooltip = str; }
+	bool hasCustomToolTip() const { return !_custom_tooltip.isEmpty(); }
+	QString customToolTip() const { return _custom_tooltip; }
 
+private:
+	QString _custom_tooltip;
 };
 
 } // namespace Base

@@ -197,7 +197,7 @@ void Coins::WidgetMain::showExtra(size_t index)
 		_widget_extra = new Base::WidgetExtra(index, _extra_list, this);
 		_widget_extra->addSpecialGroup(
 				tr("[Синонимы для стран]"),
-				tr("Перечисление через запятую стран,\nкоторые должны объединяться в одну"),
+				tr("Перечисление через запятую стран,<br>которые должны объединяться в одну"),
 				tr("Общее название для вышеуказанных стран")
 		);
 		connect(_widget_extra, &Base::WidgetExtra::showMessage,

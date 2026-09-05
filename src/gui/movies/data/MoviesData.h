@@ -141,22 +141,26 @@ public:
 	QString summaryString() const
 	{
 		QString text;
-		text += title();
-		text += tr("\n\nТип: ") + _kind;
-		text += tr("\nЖанр: ") + genresToString();
-		text += tr("\nСтрана: ") + countriesToString();
+		text += Helper::fullTrAndOrigString(_title_tr, _title_orig, true);
+		text += "<br>";
+		text += Helper::htmlTableStart();
+		text += Helper::htmlTableRow(tr("Тип"), _kind);
+		text += Helper::htmlTableRow(tr("Жанр"), genresToString());
+		text += Helper::htmlTableRow(tr("Страна"), countriesToString());
 		if (!_directors.isEmpty()) {
-			text += tr("\nРежиссёр: ") + directorsToString();
+			text += Helper::htmlTableRow(tr("Режиссёр"), directorsToString());
 		}
 		if (!_writers.isEmpty()) {
-			text += tr("\nСценарист: ") + writersToString();
+			text += Helper::htmlTableRow(tr("Сценарист"), writersToString());
 		}
 		if (!_actors.isEmpty()) {
-			text += tr("\nАктёры: ") + Helper::stringListToStringWithBreaks(_actors, ", ", 5);
+			text += Helper::htmlTableRow(tr("Актёры"),
+					Helper::stringListToStringWithBreaks(_actors, ", ", 5));
 		}
-		text += tr("\nДлительность: ") + timeString();
-		text += tr("\nГод: ") + yearString();
-		text += tr("\nОценка: %1").arg(_rating);
+		text += Helper::htmlTableRow(tr("Длительность"), timeString());
+		text += Helper::htmlTableRow(tr("Год"), yearString());
+		text += Helper::htmlTableRow(tr("Оценка"), QString::number(_rating));
+		text += Helper::htmlTableEnd();
 		return text;
 	}
 

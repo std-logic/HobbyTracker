@@ -47,7 +47,7 @@ void Games::WidgetDataList::showBySeries(const DataList& data_list)
 			item_game->setText(CLMN_GENRE, game->genre());
 			item_game->setText(CLMN_YEAR, game->yearString());
 			item_game->setRating(CLMN_RATING, game->rating());
-			item_game->setToolTipEverywhere(game->summaryString());
+			item_game->setCustomToolTip(game->summaryString());
 			item_game->setId(game->id());
 		}
 	}
@@ -74,7 +74,7 @@ void Games::WidgetDataList::showByDevelopers(const DataList& data_list)
 			item_game->setText(CLMN_GENRE, game->genre());
 			item_game->setText(CLMN_YEAR, game->yearString());
 			item_game->setRating(CLMN_RATING, game->rating());
-			item_game->setToolTipEverywhere(game->summaryString());
+			item_game->setCustomToolTip(game->summaryString());
 			item_game->setId(game->id());
 		}
 	}
@@ -101,7 +101,7 @@ void Games::WidgetDataList::showByGenres(const DataList& data_list)
 			item_game->setText(CLMN_DEVELOPER, game->developer());
 			item_game->setText(CLMN_YEAR, game->yearString());
 			item_game->setRating(CLMN_RATING, game->rating());
-			item_game->setToolTipEverywhere(game->summaryString());
+			item_game->setCustomToolTip(game->summaryString());
 			item_game->setId(game->id());
 		}
 	}
@@ -127,7 +127,7 @@ void Games::WidgetDataList::showByYears(const DataList& data_list)
 			item_game->setText(CLMN_DEVELOPER, game->developer());
 			item_game->setText(CLMN_GENRE, game->genre());
 			item_game->setRating(CLMN_RATING, game->rating());
-			item_game->setToolTipEverywhere(game->summaryString());
+			item_game->setCustomToolTip(game->summaryString());
 			item_game->setId(game->id());
 		}
 	}
@@ -155,7 +155,7 @@ void Games::WidgetDataList::showByDecades(const DataList& data_list)
 			item_game->setText(CLMN_GENRE, game->genre());
 			item_game->setText(CLMN_YEAR, game->yearString());
 			item_game->setRating(CLMN_RATING, game->rating());
-			item_game->setToolTipEverywhere(game->summaryString());
+			item_game->setCustomToolTip(game->summaryString());
 			item_game->setId(game->id());
 		}
 	}
@@ -182,7 +182,7 @@ void Games::WidgetDataList::showByRatings(const DataList& data_list)
 			item_game->setText(CLMN_DEVELOPER, game->developer());
 			item_game->setText(CLMN_GENRE, game->genre());
 			item_game->setText(CLMN_YEAR, game->yearString());
-			item_game->setToolTipEverywhere(game->summaryString());
+			item_game->setCustomToolTip(game->summaryString());
 			item_game->setId(game->id());
 		}
 	}
@@ -202,7 +202,7 @@ void Games::WidgetDataList::showSimple(const DataList& data_list)
 		item_game->setText(CLMN_GENRE, game.genre());
 		item_game->setText(CLMN_YEAR, game.yearString());
 		item_game->setRating(CLMN_RATING, game.rating());
-		item_game->setToolTipEverywhere(game.summaryString());
+		item_game->setCustomToolTip(game.summaryString());
 		item_game->setId(game.id());
 	}
 }

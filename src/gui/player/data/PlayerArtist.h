@@ -99,14 +99,16 @@ public:
 	QString summaryString() const
 	{
 		QString text;
-		text += tr("Группа: %1").arg(_title);
-		text += tr("\nГод: %1").arg(yearString());
-		text += tr("\nАльбомов: %1").arg(albumsCount());
-		text += tr("\nТреков: %1").arg(tracksCount());
-		text += tr("\nПрослушиваний: %1").arg(playCount());
-		text += tr("\nЖанр: %1").arg(genre());
-		text += tr("\nДлина: %1").arg(Helper::timeString(time()));
-		text += tr("\nРазмер: %1").arg(Helper::sizeString(size()));
+		text += Helper::htmlTableStart();
+		text += Helper::htmlTableRow(tr("Группа"), _title);
+		text += Helper::htmlTableRow(tr("Год"), yearString());
+		text += Helper::htmlTableRow(tr("Альбомов"), QString::number(albumsCount()));
+		text += Helper::htmlTableRow(tr("Треков"), QString::number(tracksCount()));
+		text += Helper::htmlTableRow(tr("Прослушиваний"), QString::number(playCount()));
+		text += Helper::htmlTableRow(tr("Жанр"), genre());
+		text += Helper::htmlTableRow(tr("Длина"), Helper::timeString(time()));
+		text += Helper::htmlTableRow(tr("Размер"), Helper::sizeString(size()));
+		text += Helper::htmlTableEnd();
 		return text;
 	}
 

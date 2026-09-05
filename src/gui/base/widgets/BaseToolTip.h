@@ -2,6 +2,8 @@
 
 #include <QLabel>
 
+class QTimer;
+
 namespace Base
 {
 
@@ -12,10 +14,22 @@ public:
 	explicit ToolTip(QWidget* parent = nullptr);
 	virtual ~ToolTip() = default;
 
-	void showText(const QString& text);
+	void setShowDelay(int ms) { _show_delay = ms; }
 
-protected:
+	void showText(const QString& text);
+	void hideText();
+
+private slots:
+	void onTimerDelay();
+
+private:
+	void update(const QString& text);
 	void updatePos();
+
+private:
+	QString _text;
+	QTimer* _timer_delay = nullptr;
+	int _show_delay = 0;
 };
 
 } // namespace Base

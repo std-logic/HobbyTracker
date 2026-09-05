@@ -64,7 +64,7 @@ void Concerts::WidgetDataList::showByYears(const DataList& data_list)
 			item_concert->setText(CLMN_COUNTRY, concert->country());
 			item_concert->setText(CLMN_CITY, concert->city());
 			item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert->place()));
-			item_concert->setToolTipEverywhere(concert->summaryString());
+			item_concert->setCustomToolTip(concert->summaryString());
 			item_concert->setId(concert->id());
 		}
 	}
@@ -97,7 +97,7 @@ void Concerts::WidgetDataList::showByArtists(const DataList& data_list, const Ba
 			item_concert->setText(CLMN_COUNTRY, concert->country());
 			item_concert->setText(CLMN_CITY, concert->city());
 			item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert->place()));
-			item_concert->setToolTipEverywhere(concert->summaryString());
+			item_concert->setCustomToolTip(concert->summaryString());
 			item_concert->setId(concert->id());
 		}
 	}
@@ -129,7 +129,7 @@ void Concerts::WidgetDataList::showByTags(const DataList& data_list, const Base:
 						item_concert->setText(CLMN_COUNTRY, concert->country());
 						item_concert->setText(CLMN_CITY, concert->city());
 						item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert->place()));
-						item_concert->setToolTipEverywhere(concert->summaryString());
+						item_concert->setCustomToolTip(concert->summaryString());
 						item_concert->setId(concert->id());
 					}
 				}
@@ -158,7 +158,7 @@ void Concerts::WidgetDataList::showByCountries(const DataList& data_list)
 			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
 			item_concert->setText(CLMN_CITY, concert->city());
 			item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert->place()));
-			item_concert->setToolTipEverywhere(concert->summaryString());
+			item_concert->setCustomToolTip(concert->summaryString());
 			item_concert->setId(concert->id());
 		}
 	}
@@ -183,7 +183,7 @@ void Concerts::WidgetDataList::showByCities(const DataList& data_list)
 			item_concert->setText(CLMN_DATE, concert->date());
 			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
 			item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert->place()));
-			item_concert->setToolTipEverywhere(concert->summaryString());
+			item_concert->setCustomToolTip(concert->summaryString());
 			item_concert->setId(concert->id());
 		}
 	}
@@ -213,7 +213,7 @@ void Concerts::WidgetDataList::showByPlaces(const DataList& data_list, const Bas
 			auto item_concert = new Base::WidgetTreeItem(item_place);
 			item_concert->setText(CLMN_DATE, concert->date());
 			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
-			item_concert->setToolTipEverywhere(concert->summaryString());
+			item_concert->setCustomToolTip(concert->summaryString());
 			item_concert->setId(concert->id());
 		}
 	}
@@ -254,7 +254,7 @@ void Concerts::WidgetDataList::showPlacesTree(const DataList& data_list, const B
 					auto item_concert = new Base::WidgetTreeItem(item_place);
 					item_concert->setText(CLMN_DATE, concert->date());
 					item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
-					item_concert->setToolTipEverywhere(concert->summaryString());
+					item_concert->setCustomToolTip(concert->summaryString());
 					item_concert->setId(concert->id());
 				}
 			}
@@ -276,7 +276,7 @@ void Concerts::WidgetDataList::showSimple(const DataList& data_list)
 		item_concert->setText(CLMN_COUNTRY, concert.country());
 		item_concert->setText(CLMN_CITY, concert.city());
 		item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert.place()));
-		item_concert->setToolTipEverywhere(concert.summaryString());
+		item_concert->setCustomToolTip(concert.summaryString());
 		item_concert->setId(concert.id());
 	}
 }

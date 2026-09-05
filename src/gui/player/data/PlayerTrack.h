@@ -81,7 +81,7 @@ public:
 
 	template<typename T>
 	inline void setComments(T&& comments)
-	{ _comments = std::forward<T>(comments); }
+	{ _comments = std::forward<T>(comments); _comments.replace("\n", "<br>"); }
 	inline QString comments() const
 	{ return _comments; }
 
@@ -120,16 +120,26 @@ public:
 	QString summaryString() const
 	{
 		QString text;
-		text += tr("Трек: ") + _title;
-		if (_year != Global::undefined_value) { text += tr("\nГод: ") + yearString(); }
-		text += tr("\nПрослушиваний: %1").arg(_play_count);
-		text += tr("\nЖанр: ") + _genre;
-		text += tr("\nДлина: ") + Helper::timeString(_time);
-		text += tr("\nРазмер: ") + Helper::sizeString(_size);
-		text += tr("\nБитрейт: %1 кбит/с (%2)").arg(_bitrate).arg(_format);
-		if (!_composer.isEmpty()) { text += tr("\nКомпозитор: ") + _composer; }
-		if (!_publisher.isEmpty()) { text += tr("\nИздатель: ") + _publisher; }
-		if (!_comments.isEmpty()) { text += QStringLiteral("\n\n") + _comments; }
+		text += Helper::htmlTableStart();
+		text += Helper::htmlTableRow(tr("Трек"), _title);
+		if (_year != Global::undefined_value) {
+			text += Helper::htmlTableRow(tr("Год"), yearString());
+		}
+		text += Helper::htmlTableRow(tr("Прослушиваний"), QString::number(_play_count));
+		text += Helper::htmlTableRow(tr("Жанр"), _genre);
+		text += Helper::htmlTableRow(tr("Длина"), Helper::timeString(_time));
+		text += Helper::htmlTableRow(tr("Размер"), Helper::sizeString(_size));
+		text += Helper::htmlTableRow(tr("Битрейт"), tr("%1 кбит/с (%2)").arg(_bitrate).arg(_format));
+		if (!_composer.isEmpty()) {
+			text += Helper::htmlTableRow(tr("Композитор"), _composer);
+		}
+		if (!_publisher.isEmpty()) {
+			text += Helper::htmlTableRow(tr("Издатель"), _publisher);
+		}
+		text += Helper::htmlTableEnd();
+		if (!_comments.isEmpty()) {
+			text += "<br><br>" + _comments;
+		}
 		return text;
 	}
 

@@ -7,6 +7,27 @@
 
 namespace Helper
 {
+	inline QString htmlSecondName(const QString& val)
+	{
+		return QStringLiteral("<span style=\"color:#666666;\">(%1)</span>").arg(val);
+	}
+	inline QString htmlImage(const QString& path, int w)
+	{
+		return QStringLiteral("<img src=\"%1\" width=\"%2\"").arg(path).arg(w);
+	}
+
+	inline QString htmlTableStart() { return QString("<table>"); }
+	inline QString htmlTableEnd() { return QString("</table>"); }
+	inline QString htmlTableRow(const QString& name, const QString& val, int w = 100)
+	{
+		return	QStringLiteral(
+					"<tr>"
+					"<td width=\"%1\"><span style=\"color:#666666;\">%2:</span></td>"
+					"<td>%3</td>"
+					"</tr>"
+				).arg(w).arg(name, val);
+	}
+
 	inline QString stdPath(const QString& file_name)
 	{
 		return QCoreApplication::applicationDirPath() + '/' + file_name;
@@ -17,14 +38,16 @@ namespace Helper
 		return stdPath(Global::settings_file_name);
 	}
 
-	inline QString fullTrAndOrigString(const QString& tr_str, const QString& orig_str)
+	inline QString fullTrAndOrigString(const QString& tr_str, const QString& orig_str, bool colored = false)
 	{
 		if (tr_str.isEmpty()) {
 			return orig_str;
 		} else if (orig_str.isEmpty()) {
 			return tr_str;
 		} else {
-			return QStringLiteral("%1 (%2)").arg(tr_str, orig_str);
+			return	colored ?
+					QStringLiteral("%1 %2").arg(tr_str, htmlSecondName(orig_str)) :
+					QStringLiteral("%1 (%2)").arg(tr_str, orig_str);
 		}
 	}
 
@@ -37,7 +60,7 @@ namespace Helper
 			if (i != (str_list.size() - 1)) {
 				str += delimiter;
 				if ((i+1) % num_in_line == 0) {
-					str += QChar('\n');
+					str += "<br>";
 				}
 			}
 		}

@@ -42,7 +42,7 @@ void Music::WidgetDataList::showSimple(const DataList& data_list)
 		item_artist->setBackground(CLMN_LIVE, artist.liveColor());
 		item_artist->setText(CLMN_STATE, artist.stateString());
 		item_artist->setBackground(CLMN_STATE, artist.stateColor());
-		item_artist->setToolTipEverywhere(artist.summaryString());
+		item_artist->setCustomToolTip(artist.summaryString());
 		item_artist->setId(artist.id());
 	}
 }
@@ -72,7 +72,7 @@ void Music::WidgetDataList::showByGenres(const DataList& data_list)
 			item_artist->setBackground(CLMN_LIVE, artist->liveColor());
 			item_artist->setText(CLMN_STATE, artist->stateString());
 			item_artist->setBackground(CLMN_STATE, artist->stateColor());
-			item_artist->setToolTipEverywhere(artist->summaryString());
+			item_artist->setCustomToolTip(artist->summaryString());
 			item_artist->setId(artist->id());
 		}
 	}
@@ -103,7 +103,7 @@ void Music::WidgetDataList::showByCountries(const DataList& data_list)
 			item_artist->setBackground(CLMN_LIVE, artist->liveColor());
 			item_artist->setText(CLMN_STATE, artist->stateString());
 			item_artist->setBackground(CLMN_STATE, artist->stateColor());
-			item_artist->setToolTipEverywhere(artist->summaryString());
+			item_artist->setCustomToolTip(artist->summaryString());
 			item_artist->setId(artist->id());
 		}
 	}
@@ -135,7 +135,7 @@ void Music::WidgetDataList::showByDecades(const DataList& data_list)
 			item_artist->setBackground(CLMN_LIVE, artist->liveColor());
 			item_artist->setText(CLMN_STATE, artist->stateString());
 			item_artist->setBackground(CLMN_STATE, artist->stateColor());
-			item_artist->setToolTipEverywhere(artist->summaryString());
+			item_artist->setCustomToolTip(artist->summaryString());
 			item_artist->setId(artist->id());
 		}
 	}
@@ -165,7 +165,7 @@ void Music::WidgetDataList::showByLive(const DataList& data_list)
 			item_artist->setText(CLMN_YEAR, artist->yearString());
 			item_artist->setText(CLMN_STATE, artist->stateString());
 			item_artist->setBackground(CLMN_STATE, artist->stateColor());
-			item_artist->setToolTipEverywhere(artist->summaryString());
+			item_artist->setCustomToolTip(artist->summaryString());
 			item_artist->setId(artist->id());
 		}
 	}
@@ -195,7 +195,7 @@ void Music::WidgetDataList::showByStates(const DataList& data_list)
 			item_artist->setText(CLMN_YEAR, artist->yearString());
 			item_artist->setText(CLMN_LIVE, artist->liveString());
 			item_artist->setBackground(CLMN_LIVE, artist->liveColor());
-			item_artist->setToolTipEverywhere(artist->summaryString());
+			item_artist->setCustomToolTip(artist->summaryString());
 			item_artist->setId(artist->id());
 		}
 	}

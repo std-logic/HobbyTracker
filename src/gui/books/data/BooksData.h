@@ -90,11 +90,15 @@ public:
 		QString text;
 		text += autorAndTitleTr();
 		if (!_author_orig.isEmpty() || !_title_orig.isEmpty()) {
-			text += QStringLiteral("\n(%1)").arg(autorAndTitleOrig());
+			text += QStringLiteral("<br>%1")
+					.arg(Helper::htmlSecondName(autorAndTitleOrig()));
 		}
-		text += tr("\n\nЖанр: %1").arg(_genre);
-		text += tr("\nГод: %1").arg(yearString());
-		text += tr("\nОценка: %1").arg(_rating);
+		text += "<br>";
+		text += Helper::htmlTableStart();
+		text += Helper::htmlTableRow(tr("Жанр"), _genre);
+		text += Helper::htmlTableRow(tr("Год"), yearString());
+		text += Helper::htmlTableRow(tr("Оценка"), QString::number(_rating));
+		text += Helper::htmlTableEnd();
 		return text;
 	}
 

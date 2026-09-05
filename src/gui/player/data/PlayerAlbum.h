@@ -98,16 +98,22 @@ public:
 	QString summaryString() const
 	{
 		QString text;
-		text += tr("Альбом: ") + _title;
+		text += Helper::htmlTableStart();
+		text += Helper::htmlTableRow(tr("Альбом"), _title);
 		QString year_str = yearString();
-		if (!year_str.isEmpty()) { text += tr("\nГод: ") + year_str; }
-		text += tr("\nТреков: %1").arg(tracksCount());
-		text += tr("\nПрослушиваний: %1").arg(playCount());
-		text += tr("\nЖанр: ") + genre();
-		text += tr("\nДлина: ") + Helper::timeString(time());
-		text += tr("\nРазмер: ") + Helper::sizeString(size());
+		if (!year_str.isEmpty()) {
+			text += Helper::htmlTableRow(tr("Год"), year_str);
+		}
+		text += Helper::htmlTableRow(tr("Треков"), QString::number(tracksCount()));
+		text += Helper::htmlTableRow(tr("Прослушиваний"), QString::number(playCount()));
+		text += Helper::htmlTableRow(tr("Жанр"), genre());
+		text += Helper::htmlTableRow(tr("Длина"), Helper::timeString(time()));
+		text += Helper::htmlTableRow(tr("Размер"), Helper::sizeString(size()));
 		QString publ_str = publisher();
-		if (!publ_str.isEmpty()) { text += tr("\nИздатель: ") + publ_str; }
+		if (!publ_str.isEmpty()) {
+			text += Helper::htmlTableRow(tr("Издатель"), publ_str);
+		}
+		text += Helper::htmlTableEnd();
 		return text;
 	}
 
