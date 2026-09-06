@@ -10,6 +10,7 @@ namespace Trekking
 
 class Data : public Base::Data
 {
+	Q_DECLARE_TR_FUNCTIONS(Data)
 public:
 	Data() = default;
 
@@ -73,6 +74,23 @@ public:
 	{ _places = std::forward<T>(places); }
 	inline QString places() const
 	{ return _places; }
+
+	QString summaryString() const
+	{
+		QString text;
+		text += Helper::htmlTableStart();
+		text += Helper::htmlTableRow(tr("Старт"), _date_start);
+		text += Helper::htmlTableRow(tr("Финиш"), _date_end);
+		text += Helper::htmlTableRow(tr("Ночёвок"), QString::number(_time));
+		text += Helper::htmlTableRow(tr("Расстояние"), tr("%1 км").arg(_dist));
+		text += Helper::htmlTableRow(tr("Высшая точка"), tr("%1 м").arg(_peak));
+		text += Helper::htmlTableRow(tr("Тип"), _kind);
+		auto countries_head = (_countries.size() > 1) ? tr("Страны") : tr("Страна");
+		text += Helper::htmlTableRow(countries_head, countriesToString());
+		text += Helper::htmlTableRow(tr("Место"), _places);
+		text += Helper::htmlTableEnd();
+		return text;
+	}
 
 	inline bool operator==(const Data& other) const noexcept
 	{

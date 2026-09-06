@@ -90,7 +90,8 @@ public:
 		text += Helper::htmlTableStart();
 		text += Helper::htmlTableRow(tr("Дата"), _date);
 		if (!_artists.isEmpty()) {
-			text += Helper::htmlTableRow(tr("Группы"), artistsToString(QStringLiteral(" • ")));
+			auto artists_head = (_artists.size() > 1) ? tr("Группы") : tr("Группа");
+			text += Helper::htmlTableRow(artists_head, artistsToString(QStringLiteral(" • ")));
 		}
 		if (!_description.isEmpty()) {
 			text += Helper::htmlTableRow(tr("Описание"), Helper::startWithCapital(_description));
