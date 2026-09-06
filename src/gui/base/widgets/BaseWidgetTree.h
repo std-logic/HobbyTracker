@@ -36,7 +36,10 @@ private:
 
 private slots:
 	void sortingChanged(int index, Qt::SortOrder order);
+	void onItemPressed(QTreeWidgetItem* item, int column);
 	void onItemDoubleClicked(QTreeWidgetItem* item, int column);
+	void onItemExpanded(QTreeWidgetItem* item);
+	void onItemCollapsed(QTreeWidgetItem* item);
 	void onItemDeletePressed();
 
 protected:

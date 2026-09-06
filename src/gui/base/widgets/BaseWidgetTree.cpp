@@ -28,9 +28,19 @@ Base::WidgetTree::WidgetTree(QWidget* parent)
 	connect(header(), &QHeaderView::sortIndicatorChanged,
 			this, &WidgetTree::sortingChanged);
 
+	// tracking items pressing
+	connect(this, &WidgetTree::itemPressed,
+			this, &WidgetTree::onItemPressed);
+
 	// tracking items doubleclicking
 	connect(this, &WidgetTree::itemDoubleClicked,
 			this, &WidgetTree::onItemDoubleClicked);
+
+	// tracking items expanding/collapsing
+	connect(this, &WidgetTree::itemExpanded,
+			this, &WidgetTree::onItemExpanded);
+	connect(this, &WidgetTree::itemCollapsed,
+			this, &WidgetTree::onItemCollapsed);
 
 	// tracking items delete pressing
 	auto shortcut = new QShortcut(QKeySequence(Qt::Key_Delete), this);
@@ -133,12 +143,27 @@ void Base::WidgetTree::sortingChanged(int index, Qt::SortOrder order)
 	_sorting_order = order;
 }
 
+void Base::WidgetTree::onItemPressed(QTreeWidgetItem* /*item*/, int /*column*/)
+{
+	hideToolTip();
+}
+
 void Base::WidgetTree::onItemDoubleClicked(QTreeWidgetItem* item, int /*column*/)
 {
 	auto id = item->data(0, Qt::UserRole).toString();
 	if (!id.isEmpty()) {
 		emit editData(id);
 	}
+}
+
+void Base::WidgetTree::onItemExpanded(QTreeWidgetItem* /*item*/)
+{
+	hideToolTip();
+}
+
+void Base::WidgetTree::onItemCollapsed(QTreeWidgetItem* /*item*/)
+{
+	hideToolTip();
 }
 
 void Base::WidgetTree::onItemDeletePressed()
