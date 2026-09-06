@@ -86,7 +86,7 @@ public:
 		text += Helper::htmlTableRow(tr("Высшая точка"), tr("%1 м").arg(_peak));
 		text += Helper::htmlTableRow(tr("Тип"), _kind);
 		auto countries_head = (_countries.size() > 1) ? tr("Страны") : tr("Страна");
-		text += Helper::htmlTableRow(countries_head, countriesToString());
+		text += Helper::htmlTableRow(countries_head, countriesToString(QStringLiteral(" • ")));
 		text += Helper::htmlTableRow(tr("Место"), _places);
 		text += Helper::htmlTableEnd();
 		return text;

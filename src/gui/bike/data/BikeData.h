@@ -10,6 +10,7 @@ namespace Bike
 
 class Data : public Base::Data
 {
+	Q_DECLARE_TR_FUNCTIONS(Data)
 public:
 	Data() = default;
 
@@ -35,6 +36,17 @@ public:
 	{ _dist = dist; }
 	inline uint32_t dist() const
 	{ return _dist; }
+
+	QString summaryString() const
+	{
+		QString text;
+		text += Helper::htmlTableStart();
+		text += Helper::htmlTableRow(tr("Год"), yearString());
+		text += Helper::htmlTableRow(tr("Время"), tr("%1 ч").arg(_time));
+		text += Helper::htmlTableRow(tr("Расстояние"), tr("%1 км").arg(_dist));
+		text += Helper::htmlTableEnd();
+		return text;
+	}
 
 	inline bool operator==(const Data& other) const noexcept
 	{

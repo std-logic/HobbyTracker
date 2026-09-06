@@ -10,6 +10,7 @@ namespace Bike
 
 class Trip : public Base::Data
 {
+	Q_DECLARE_TR_FUNCTIONS(Data)
 public:
 	Trip() = default;
 
@@ -66,6 +67,21 @@ public:
 	{ return _places; }
 	inline QString placesToString(const QString& delimiter = ", ") const
 	{ return _places.join(delimiter); }
+
+	QString summaryString() const
+	{
+		QString text;
+		text += Helper::htmlTableStart();
+		text += Helper::htmlTableRow(tr("Старт"), _date_start);
+		text += Helper::htmlTableRow(tr("Финиш"), _date_end);
+		text += Helper::htmlTableRow(tr("Ночёвок"), QString::number(_time));
+		text += Helper::htmlTableRow(tr("Расстояние"), tr("%1 км").arg(_dist));
+		auto countries_head = (_countries.size() > 1) ? tr("Страны") : tr("Страна");
+		text += Helper::htmlTableRow(countries_head, countriesToString(QStringLiteral(" • ")));
+		text += Helper::htmlTableRow(tr("Места"), placesToString(QStringLiteral(" → ")));
+		text += Helper::htmlTableEnd();
+		return text;
+	}
 
 	inline bool operator==(const Trip& other) const noexcept
 	{
