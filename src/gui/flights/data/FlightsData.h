@@ -12,6 +12,7 @@ namespace Flights
 
 class Data : public Base::Data
 {
+	Q_DECLARE_TR_FUNCTIONS(Data)
 public:
 	struct FlightPoint
 	{
@@ -187,6 +188,23 @@ public:
 		uint32_t dist_total = 0;
 		for (const auto& point : _points) { dist_total += point.dist; }
 		return dist_total;
+	}
+
+	QString summaryString() const
+	{
+		QString text;
+		text += Helper::htmlTableStart();
+		text += Helper::htmlTableRow(tr("Дата"), _date);
+		text += Helper::htmlTableRow(tr("Расстояние"), tr("%1 км").arg(distTotal()));
+		for (size_t i = 0; i < _points.size(); ++i) {
+			text += Helper::htmlTableRow(
+						tr("Точка %1").arg(i+1),
+						tr("%1 км").arg(_points[i].dist),
+						pointToString(i, ", ", false),
+						100, 90);
+		}
+		text += Helper::htmlTableEnd();
+		return text;
 	}
 
 	inline bool operator==(const Data& other) const noexcept

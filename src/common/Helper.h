@@ -27,6 +27,17 @@ namespace Helper
 					"</tr>"
 				).arg(w).arg(name, val);
 	}
+	inline QString htmlTableRow(const QString& name,
+			const QString& val1, const QString& val2, int w1 = 100, int w2 = 100)
+	{
+		return	QStringLiteral(
+					"<tr>"
+					"<td width=\"%1\"><span style=\"color:#666666;\">%2:</span></td>"
+					"<td width=\"%3\">%4</td>"
+					"<td>%5</td>"
+					"</tr>"
+				).arg(w1).arg(name).arg(w2).arg(val1, val2);
+	}
 
 	inline QString stdPath(const QString& file_name)
 	{
