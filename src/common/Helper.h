@@ -7,10 +7,16 @@
 
 namespace Helper
 {
+	inline QString htmlColorGray(const QString& val)
+	{
+		return QStringLiteral("<span style=\"color:#666666;\">%1</span>").arg(val);
+	}
+
 	inline QString htmlSecondName(const QString& val)
 	{
 		return QStringLiteral("<span style=\"color:#666666;\">(%1)</span>").arg(val);
 	}
+
 	inline QString htmlImage(const QString& path, int w)
 	{
 		return QStringLiteral("<img src=\"%1\" width=\"%2\"").arg(path).arg(w);
@@ -171,6 +177,14 @@ namespace Helper
 					.arg(time / (60 * 60000), 2, 10, QChar('0'))
 					.arg((time % (60 * 60000)) / 60000, 2, 10, QChar('0'))
 					.arg((time % 60000) / 1000, 2, 10, QChar('0'));
+	}
+
+	inline QString percentString(int actual_num, int total_num)
+	{
+		return	QStringLiteral("%1 / %2 <span style=\"color:#666666;\">(%3%)</span>")
+					.arg(actual_num)
+					.arg(total_num)
+					.arg(100. * actual_num / total_num, 0, 'f', 0);
 	}
 
 	inline QColor ratingColor(uint32_t rating)

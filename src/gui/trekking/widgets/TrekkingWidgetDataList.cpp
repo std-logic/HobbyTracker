@@ -4,6 +4,8 @@
 
 #include <gui/base/widgets/BaseWidgetTreeItem.h>
 
+#include <common/Regions.h>
+
 Trekking::WidgetDataList::WidgetDataList(QWidget* parent)
 	: Base::WidgetTree{parent}
 {
@@ -101,13 +103,14 @@ void Trekking::WidgetDataList::showByRegions(const DataList& data_list)
 	for (const auto& [region, tracks_by_countries] : tracks_by_regions) {
 		auto item_region = new Base::WidgetTreeItem(this, Global::Colors::tree_level_2);
 		item_region->setText(CLMN_DATE, region);
-		std::unordered_set<QString> ids;
+		std::unordered_set<QString> ids, present_countries;
 		uint32_t region_time = 0, region_dist = 0, region_peak = Global::undefined_value;
 
 		for (const auto& [country, tracks] : tracks_by_countries) {
 			auto item_country = new Base::WidgetTreeItem(item_region, Global::Colors::tree_level_1);
 			item_country->setCountry(CLMN_DATE, country);
 			item_country->setNumb(CLMN_COUNT, tracks.size());
+			present_countries.insert(country);
 			uint32_t country_time = 0, country_dist = 0, country_peak = Global::undefined_value;
 
 			for (const auto track : tracks) {
@@ -141,6 +144,7 @@ void Trekking::WidgetDataList::showByRegions(const DataList& data_list)
 		item_region->setNumb(CLMN_TIME, region_time);
 		item_region->setNumb(CLMN_DIST, region_dist);
 		item_region->setNumb(CLMN_PEAK, region_peak);
+		item_region->setHoveredToolTip(Regions::progress(region, present_countries));
 	}
 }
 

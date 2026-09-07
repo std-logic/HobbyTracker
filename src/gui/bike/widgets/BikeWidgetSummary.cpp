@@ -3,6 +3,7 @@
 #include "../data/BikeTripList.h"
 
 #include <common/Helper.h>
+#include <common/Regions.h>
 
 #include <QLabel>
 
@@ -31,6 +32,7 @@ void Bike::WidgetSummary::update(const DataList& data_list, const TripList& trip
 	_label_trips_total_time->setText(QString::number(trip_summary.total_time));
 	_label_trips_total_dist->setText(QString::number(trip_summary.total_dist));
 	_label_countries_num->setText(QString::number(trip_summary.countries_num));
+	_label_countries_num->setToolTip(Regions::progress(trip_summary.list_of_countries));
 }
 
 void Bike::WidgetSummary::initWidgets()
@@ -42,6 +44,7 @@ void Bike::WidgetSummary::initWidgets()
 	addWidget(tr("Ночёвок:"), _label_trips_total_time);
 	addWidget(tr("Километров:"), _label_trips_total_dist);
 	addWidget(tr("Стран:"), _label_countries_num, 0);
+	_label_countries_num->setToolTipDuration(1000000);
 
 	addStretch();
 }

@@ -18,6 +18,7 @@ public:
 		uint32_t total_dist = 0;
 		uint32_t total_time = 0;
 		uint32_t countries_num = 0;
+		std::unordered_set<QString> list_of_countries;
 	};
 	Summary summary() const;
 

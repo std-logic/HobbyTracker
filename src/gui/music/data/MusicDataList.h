@@ -21,6 +21,7 @@ public:
 		int countries_num = 0;
 		uint32_t min_year = Global::undefined_value;
 		uint32_t max_year = Global::undefined_value;
+		std::unordered_set<QString> list_of_countries;
 	};
 	Summary summary() const;
 

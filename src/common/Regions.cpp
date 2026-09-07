@@ -125,17 +125,12 @@ QString Regions::progress(const QString& region,
 			if (data.is_union) { ++union_num; }
 		}
 	}
-	int total_region_num = _region_countries[region].size();
-	double total_region_percent = 100. * present_num / total_region_num;
 
 	const int w = 130;
 	QString text;
 	text += Helper::htmlTableStart();
-	text += Helper::htmlTableRow(tr("Всего стран"),
-			tr("%1 / %2 (%3%)")
-			.arg(present_num)
-			.arg(total_region_num)
-			.arg(total_region_percent, 0, 'f', 0), w);
+	auto percent_str = Helper::percentString(present_num, _region_countries[region].size());
+	text += Helper::htmlTableRow(tr("Всего стран"), percent_str, w);
 
 	if (former_num > 0) {
 		text += Helper::htmlTableRow(tr("Исчезнувших"), QString::number(former_num), w);
@@ -149,7 +144,8 @@ QString Regions::progress(const QString& region,
 
 	auto missing_countries = missingCountries(region, present_countries);
 	if (!missing_countries.isEmpty()) {
-		text += tr("<br><br>Остались:");
+		text += "<br><br>";
+		text += Helper::htmlColorGray(tr("Остались:"));
 		int cnt = 0;
 		for (const auto& country : missing_countries) {
 			if (++cnt > 30) { text += "<br>..."; break; }
@@ -174,27 +170,19 @@ QString Regions::progress(const std::unordered_set<QString>& present_countries)
 			++present_num_by_regions[data.region];
 		}
 	}
-	double total_percent = 100. * present_num / _countries_total_num;
 
 	const int w = 130;
 	QString text;
 	text += Helper::htmlTableStart();
-	text += Helper::htmlTableRow(tr("Всего стран"),
-			tr("%1 / %2 (%3%)")
-			.arg(present_num)
-			.arg(_countries_total_num)
-			.arg(total_percent, 0, 'f', 0), w);
+	auto percent_str = Helper::percentString(present_num, _countries_total_num);
+	text += Helper::htmlTableRow(tr("Всего стран"), percent_str, w);
 
 	for (const auto& [region, countries] : _region_countries) {
 		int present_region_num = present_num_by_regions[region];
 		if (present_region_num > 0) {
 			int total_region_num = countries.size();
-			double region_percent = 100. * present_region_num / total_region_num;
-			text += Helper::htmlTableRow(region,
-					tr("%1 / %2 (%3%)")
-					.arg(present_region_num)
-					.arg(total_region_num)
-					.arg(region_percent, 0, 'f', 0), w);
+			percent_str = Helper::percentString(present_region_num, total_region_num);
+			text += Helper::htmlTableRow(region, percent_str, w);
 		}
 	}
 
