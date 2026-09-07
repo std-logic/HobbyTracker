@@ -27,7 +27,7 @@ void Bike::WidgetDataList::showSimple(const DataList& data_list)
 		item_data->setNumb(CLMN_YEAR, data.year());
 		item_data->setNumb(CLMN_TIME, data.time());
 		item_data->setNumb(CLMN_DIST, data.dist());
-		item_data->setCustomToolTip(data.summaryString());
+		item_data->setHoveredToolTip(data.summaryString());
 		item_data->setId(data.id());
 	}
 }

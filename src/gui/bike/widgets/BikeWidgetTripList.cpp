@@ -29,7 +29,7 @@ void Bike::WidgetTripList::showSimple(const TripList& trip_list)
 		item_trip->setNumb(CLMN_DIST, trip.dist());
 		item_trip->setText(CLMN_COUNTRIES, trip.countriesToString(QStringLiteral(" • ")));
 		item_trip->setText(CLMN_PLACES, trip.placesToString(QStringLiteral(" → ")));
-		item_trip->setCustomToolTip(trip.summaryString());
+		item_trip->setHoveredToolTip(trip.summaryString());
 		item_trip->setId(trip.id());
 	}
 }

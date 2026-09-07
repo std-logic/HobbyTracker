@@ -41,7 +41,7 @@ void Trekking::WidgetDataList::showSimple(const DataList& data_list)
 		item_track->setText(CLMN_KIND, track.kind());
 		item_track->setText(CLMN_COUNTRIES, track.countriesToString(QStringLiteral(" • ")));
 		item_track->setText(CLMN_PLACES, track.places());
-		item_track->setCustomToolTip(track.summaryString());
+		item_track->setHoveredToolTip(track.summaryString());
 		item_track->setId(track.id());
 	}
 }
@@ -73,7 +73,7 @@ void Trekking::WidgetDataList::showByCountries(const DataList& data_list)
 			item_track->setText(CLMN_KIND, track->kind());
 			item_track->setText(CLMN_COUNTRIES, track->countriesToString(QStringLiteral(" • ")));
 			item_track->setText(CLMN_PLACES, track->places());
-			item_track->setCustomToolTip(track->summaryString());
+			item_track->setHoveredToolTip(track->summaryString());
 			item_track->setId(track->id());
 			country_time += track->time();
 			country_dist += track->dist();
@@ -119,7 +119,7 @@ void Trekking::WidgetDataList::showByRegions(const DataList& data_list)
 				item_track->setText(CLMN_KIND, track->kind());
 				item_track->setText(CLMN_COUNTRIES, track->countriesToString(QStringLiteral(" • ")));
 				item_track->setText(CLMN_PLACES, track->places());
-				item_track->setCustomToolTip(track->summaryString());
+				item_track->setHoveredToolTip(track->summaryString());
 				item_track->setId(track->id());
 				if (!ids.contains(track->id())) {
 					region_time += track->time();
@@ -170,7 +170,7 @@ void Trekking::WidgetDataList::showByKinds(const DataList& data_list)
 			item_track->setNumb(CLMN_PEAK, track->peak());
 			item_track->setText(CLMN_COUNTRIES, track->countriesToString(QStringLiteral(" • ")));
 			item_track->setText(CLMN_PLACES, track->places());
-			item_track->setCustomToolTip(track->summaryString());
+			item_track->setHoveredToolTip(track->summaryString());
 			item_track->setId(track->id());
 			kind_time += track->time();
 			kind_dist += track->dist();

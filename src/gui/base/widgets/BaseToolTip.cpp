@@ -25,9 +25,9 @@ Base::ToolTip::ToolTip(QWidget* parent)
 	connect(_timer_delay, &QTimer::timeout, this, &ToolTip::onTimerDelay);
 }
 
-void Base::ToolTip::showText(const QString& text)
+void Base::ToolTip::showText(const QString& text, bool immediately)
 {
-	if (_show_delay == 0) {
+	if ((_show_delay == 0) || immediately) {
 		update(text);
 	} else {
 		_text = text;

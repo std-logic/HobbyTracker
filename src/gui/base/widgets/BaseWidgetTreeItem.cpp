@@ -53,10 +53,12 @@ void Base::WidgetTreeItem::setCountry(int column, const QString& country)
 		setText(column, country);
 	} else {
 		setText(column, country + "*");
-		setCustomToolTip(data.comment.replace(": ", ":<br>"));
+		setHoveredToolTip(data.comment.replace(": ", ":<br>"));
 	}
 	if (!data.icon.isNull()) {
 		setIcon(column, data.icon);
+		int w = ((data.code == "np") || (data.code == "ch")) ? 400 : 600;
+		setRightClickToolTip(Helper::htmlImage(data.icon_path, w));
 	}
 }
 

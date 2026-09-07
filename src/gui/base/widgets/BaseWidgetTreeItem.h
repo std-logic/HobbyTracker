@@ -30,12 +30,17 @@ public:
 	void setBoldEverywhere(bool enable);
 	void setBackgroundEverywhere(const QBrush& brush);
 
-	void setCustomToolTip(const QString& str) { _custom_tooltip = str; }
-	bool hasCustomToolTip() const { return !_custom_tooltip.isEmpty(); }
-	QString customToolTip() const { return _custom_tooltip; }
+	void setHoveredToolTip(const QString& str) { _hovered_tooltip = str; }
+	bool hasHoveredToolTip() const { return !_hovered_tooltip.isEmpty(); }
+	QString hoveredToolTip() const { return _hovered_tooltip; }
+
+	void setRightClickToolTip(const QString& str) { _rightclick_tooltip = str; }
+	bool hasRightClickToolTip() const { return !_rightclick_tooltip.isEmpty(); }
+	QString rightClickToolTip() const { return _rightclick_tooltip; }
 
 private:
-	QString _custom_tooltip;
+	QString _hovered_tooltip;
+	QString _rightclick_tooltip;
 };
 
 } // namespace Base

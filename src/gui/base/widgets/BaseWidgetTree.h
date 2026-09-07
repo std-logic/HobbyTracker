@@ -27,16 +27,17 @@ protected:
 	void initColumns(const QStringList& labels, const std::vector<int>& widths = {});
 	void initSorting(int default_column = 0, Qt::SortOrder default_order = Qt::AscendingOrder, bool force = false);
 
+	void mousePressEvent(QMouseEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void leaveEvent(QEvent* event) override;
 
 private:
-	void showToolTip();
+	void showHoveredToolTip(QTreeWidgetItem* item);
+	void showRightClickToolTip(QTreeWidgetItem* item);
 	void hideToolTip();
 
 private slots:
 	void sortingChanged(int index, Qt::SortOrder order);
-	void onItemPressed(QTreeWidgetItem* item, int column);
 	void onItemDoubleClicked(QTreeWidgetItem* item, int column);
 	void onItemExpanded(QTreeWidgetItem* item);
 	void onItemCollapsed(QTreeWidgetItem* item);

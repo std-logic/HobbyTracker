@@ -52,7 +52,7 @@ void Flights::WidgetDataList::showByYears(const DataList& data_list)
 			item_flight->setText(CLMN_DATE, flight->date());
 			item_flight->setNumb(CLMN_DIST, flight->distTotal());
 			item_flight->setText(CLMN_POINTS, flight->pointsToString());
-			item_flight->setCustomToolTip(flight->summaryString());
+			item_flight->setHoveredToolTip(flight->summaryString());
 			item_flight->setId(flight->id());
 		}
 	}
@@ -86,13 +86,13 @@ void Flights::WidgetDataList::showByRegions(const DataList& data_list)
 				item_flight->setText(CLMN_DATE, flight->date());
 				item_flight->setNumb(CLMN_DIST, flight->distTotal());
 				item_flight->setText(CLMN_POINTS, flight->pointsToString());
-				item_flight->setCustomToolTip(flight->summaryString());
+				item_flight->setHoveredToolTip(flight->summaryString());
 				item_flight->setId(flight->id());
 			}
 		}
 
 		item_region->setNumb(CLMN_COUNT, region_flights_num);
-		item_region->setCustomToolTip(Regions::progress(region, present_countries));
+		item_region->setHoveredToolTip(Regions::progress(region, present_countries));
 	}
 }
 
@@ -115,7 +115,7 @@ void Flights::WidgetDataList::showByCountries(const DataList& data_list)
 			item_flight->setText(CLMN_DATE, flight->date());
 			item_flight->setNumb(CLMN_DIST, flight->distTotal());
 			item_flight->setText(CLMN_POINTS, flight->pointsToString());
-			item_flight->setCustomToolTip(flight->summaryString());
+			item_flight->setHoveredToolTip(flight->summaryString());
 			item_flight->setId(flight->id());
 		}
 	}
@@ -140,7 +140,7 @@ void Flights::WidgetDataList::showByCities(const DataList& data_list)
 			item_flight->setText(CLMN_DATE, flight->date());
 			item_flight->setNumb(CLMN_DIST, flight->distTotal());
 			item_flight->setText(CLMN_POINTS, flight->pointsToString());
-			item_flight->setCustomToolTip(flight->summaryString());
+			item_flight->setHoveredToolTip(flight->summaryString());
 			item_flight->setId(flight->id());
 		}
 	}
@@ -165,7 +165,7 @@ void Flights::WidgetDataList::showByAirports(const DataList& data_list)
 			item_flight->setText(CLMN_DATE, flight->date());
 			item_flight->setNumb(CLMN_DIST, flight->distTotal());
 			item_flight->setText(CLMN_POINTS, flight->pointsToString());
-			item_flight->setCustomToolTip(flight->summaryString());
+			item_flight->setHoveredToolTip(flight->summaryString());
 			item_flight->setId(flight->id());
 		}
 	}
@@ -190,7 +190,7 @@ void Flights::WidgetDataList::showByRoutes(const DataList& data_list)
 			item_flight->setText(CLMN_DATE, flight->date());
 			item_flight->setNumb(CLMN_DIST, flight->distTotal());
 			item_flight->setText(CLMN_POINTS, flight->pointsToString());
-			item_flight->setCustomToolTip(flight->summaryString());
+			item_flight->setHoveredToolTip(flight->summaryString());
 			item_flight->setId(flight->id());
 		}
 	}
@@ -231,7 +231,7 @@ void Flights::WidgetDataList::showAirportsTree(const DataList& data_list)
 					item_flight->setText(CLMN_DATE, flight->date());
 					item_flight->setNumb(CLMN_DIST, flight->distTotal());
 					item_flight->setText(CLMN_POINTS, flight->pointsToString());
-					item_flight->setCustomToolTip(flight->summaryString());
+					item_flight->setHoveredToolTip(flight->summaryString());
 					item_flight->setId(flight->id());
 				}
 			}
@@ -251,7 +251,7 @@ void Flights::WidgetDataList::showSimple(const DataList& data_list)
 		item_flight->setText(CLMN_DATE, flight.date());
 		item_flight->setNumb(CLMN_DIST, flight.distTotal());
 		item_flight->setText(CLMN_POINTS, flight.pointsToString());
-		item_flight->setCustomToolTip(flight.summaryString());
+		item_flight->setHoveredToolTip(flight.summaryString());
 		item_flight->setId(flight.id());
 	}
 }

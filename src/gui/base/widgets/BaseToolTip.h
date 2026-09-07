@@ -16,7 +16,7 @@ public:
 
 	void setShowDelay(int ms) { _show_delay = ms; }
 
-	void showText(const QString& text);
+	void showText(const QString& text, bool immediately = false);
 	void hideText();
 
 private slots:

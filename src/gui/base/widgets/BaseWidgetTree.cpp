@@ -28,10 +28,6 @@ Base::WidgetTree::WidgetTree(QWidget* parent)
 	connect(header(), &QHeaderView::sortIndicatorChanged,
 			this, &WidgetTree::sortingChanged);
 
-	// tracking items pressing
-	connect(this, &WidgetTree::itemPressed,
-			this, &WidgetTree::onItemPressed);
-
 	// tracking items doubleclicking
 	connect(this, &WidgetTree::itemDoubleClicked,
 			this, &WidgetTree::onItemDoubleClicked);
@@ -48,7 +44,7 @@ Base::WidgetTree::WidgetTree(QWidget* parent)
 	connect(shortcut, &QShortcut::activated,
 			this, &WidgetTree::onItemDeletePressed);
 
-	// tracking mouse for custom tooltip processing
+	// tracking mouse for hovered tooltip processing
 	setMouseTracking(true);
 
 	_tooltip = new ToolTip(this);
@@ -101,13 +97,25 @@ void Base::WidgetTree::initSorting(int default_column, Qt::SortOrder default_ord
 	sortByColumn(default_column, default_order);
 }
 
+void Base::WidgetTree::mousePressEvent(QMouseEvent* event)
+{
+	hideToolTip();
+
+	if (event->button() == Qt::RightButton) {
+		QTreeWidgetItem* item = itemAt(event->position().toPoint());
+		if (item) { showRightClickToolTip(item); }
+	}
+
+	QTreeWidget::mousePressEvent(event);
+}
+
 void Base::WidgetTree::mouseMoveEvent(QMouseEvent* event)
 {
 	QTreeWidgetItem* item = itemAt(event->position().toPoint());
 	if (_hovered_item != item) {
 		if (_hovered_item) { hideToolTip(); }
 		_hovered_item = item;
-		if (_hovered_item) { showToolTip(); }
+		if (_hovered_item) { showHoveredToolTip(_hovered_item); }
 	}
 
 	QTreeWidget::mouseMoveEvent(event);
@@ -121,13 +129,21 @@ void Base::WidgetTree::leaveEvent(QEvent* event)
 	QTreeWidget::leaveEvent(event);
 }
 
-void Base::WidgetTree::showToolTip()
+void Base::WidgetTree::showHoveredToolTip(QTreeWidgetItem* item)
 {
-	auto custom_item = dynamic_cast<WidgetTreeItem*>(_hovered_item);
-	if (custom_item && custom_item->hasCustomToolTip()) {
-		_tooltip->showText(custom_item->customToolTip());
+	auto base_item = dynamic_cast<WidgetTreeItem*>(item);
+	if (base_item && base_item->hasHoveredToolTip()) {
+		_tooltip->showText(base_item->hoveredToolTip());
 	} else {
 		_tooltip->hideText();
+	}
+}
+
+void Base::WidgetTree::showRightClickToolTip(QTreeWidgetItem* item)
+{
+	auto base_item = dynamic_cast<WidgetTreeItem*>(item);
+	if (base_item && base_item->hasRightClickToolTip()) {
+		_tooltip->showText(base_item->rightClickToolTip(), true);
 	}
 }
 
@@ -141,11 +157,6 @@ void Base::WidgetTree::sortingChanged(int index, Qt::SortOrder order)
 	if (index == -1) { return; }
 	_sorting_column = headerItem()->text(index);
 	_sorting_order = order;
-}
-
-void Base::WidgetTree::onItemPressed(QTreeWidgetItem* /*item*/, int /*column*/)
-{
-	hideToolTip();
 }
 
 void Base::WidgetTree::onItemDoubleClicked(QTreeWidgetItem* item, int /*column*/)
