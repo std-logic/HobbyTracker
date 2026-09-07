@@ -143,7 +143,7 @@ void Player::WidgetDataList::showByBestTracks(const Library& library)
 		for (const auto& [album_title, album] : artist) {
 			for (const auto& track : album) {
 				auto item_track = new Base::WidgetTreeItem(item_artist);
-				if (artist_title == QStringLiteral("Разное")) {
+				if (artist_title == artist_title_misc) {
 					item_track->setText(CLMN_TITLE, track.title());
 				} else {
 					item_track->setText(CLMN_TITLE, QStringLiteral("[%1] %2")
@@ -171,14 +171,14 @@ void Player::WidgetDataList::showByGenres(const Library& library)
 		auto item_genre = new Base::WidgetTreeItem(this, Global::Colors::tree_level_3);
 		item_genre->setText(CLMN_TITLE, genre_title);
 		item_genre->setText(CLMN_YEAR, genre_library.yearString());
-		item_genre->setNumb(CLMN_ARTISTS, genre_library.artistsCount());
+		item_genre->setNumb(CLMN_ARTISTS, genre_library.artistsCount(true));
 		item_genre->setNumb(CLMN_ALBUMS, genre_library.albumsCount());
 		item_genre->setNumb(CLMN_TRACKS, genre_library.tracksCount());
 		item_genre->setNumb(CLMN_PLAY_COUNT, genre_library.playCount());
-		item_genre->setCustomToolTip(genre_library.summaryString());
+		item_genre->setCustomToolTip(genre_library.summaryString(true));
 
 		for (const auto& [artist_title, artist] : genre_library) {
-			bool misc = (artist_title == QStringLiteral("Разное"));
+			bool misc = (artist_title == artist_title_misc);
 			auto item_artist = !misc ? new Base::WidgetTreeItem(item_genre, Global::Colors::tree_level_2) : nullptr;
 			if (!misc) {
 				item_artist->setText(CLMN_TITLE, artist_title);
@@ -350,7 +350,7 @@ void Player::WidgetDataList::showSummary(const Library& library)
 
 	for (int place = 0; auto [track, play_count] : top_tracks) {
 		auto item_track = new Base::WidgetTreeItem(item_top_tracks);
-		if (track->artist() == QStringLiteral("Разное")) {
+		if (track->artist() == artist_title_misc) {
 			item_track->setText(CLMN_TITLE, QStringLiteral("%1. [%2] %3")
 					.arg(++place, 2, 10, QChar('0')).arg(track->artist(), track->title()));
 		} else {
@@ -456,7 +456,7 @@ void Player::WidgetDataList::showHistoryTracks(const std::vector<Library>& libra
 
 		for (int place = 0; auto [track, play_count] : top_tracks) {
 			auto item_track = new Base::WidgetTreeItem(item_library);
-			if (track->artist() == QStringLiteral("Разное")) {
+			if (track->artist() == artist_title_misc) {
 				item_track->setText(CLMN_TITLE, QStringLiteral("%1. [%2] %3")
 						.arg(++place, 2, 10, QChar('0')).arg(track->artist(), track->title()));
 			} else {

@@ -126,7 +126,7 @@ Player::Library::YearsData Player::Library::years() const
 	return years;
 }
 
-Player::Library::Summary Player::Library::summary() const
+Player::Library::Summary Player::Library::summary(bool expand_misc) const
 {
 	Summary sum;
 	std::unordered_set<QString> list_of_genres;
@@ -139,7 +139,7 @@ Player::Library::Summary Player::Library::summary() const
 		}
 	}
 	sum.title = titleOnlyDate();
-	sum.artists_num = artistsCount();
+	sum.artists_num = artistsCount(expand_misc);
 	sum.albums_num = albumsCount();
 	sum.tracks_num = tracksCount();
 	sum.play_count = playCount();
@@ -147,13 +147,13 @@ Player::Library::Summary Player::Library::summary() const
 	return sum;
 }
 
-QString Player::Library::summaryString() const
+QString Player::Library::summaryString(bool expand_misc) const
 {
 	QString text;
 	text += Helper::htmlTableStart();
 	text += Helper::htmlTableRow(tr("Файл"), _title);
 	text += Helper::htmlTableRow(tr("Год"), yearString());
-	text += Helper::htmlTableRow(tr("Групп"), QString::number(artistsCount()));
+	text += Helper::htmlTableRow(tr("Групп"), QString::number(artistsCount(expand_misc)));
 	text += Helper::htmlTableRow(tr("Альбомов"), QString::number(albumsCount()));
 	text += Helper::htmlTableRow(tr("Треков"), QString::number(tracksCount()));
 	text += Helper::htmlTableRow(tr("Прослушиваний"), QString::number(playCount()));

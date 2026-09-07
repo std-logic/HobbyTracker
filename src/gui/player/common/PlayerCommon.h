@@ -39,4 +39,6 @@ enum class ChartViewModes
 
 inline const char settings_group_name[] = "player";
 
+inline const char artist_title_misc[] = "Разное";
+
 } // namespace Player

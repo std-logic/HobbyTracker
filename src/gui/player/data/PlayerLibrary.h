@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PlayerArtist.h"
+#include "../common/PlayerCommon.h"
 
 #include <common/Global.h>
 #include <common/Helper.h>
@@ -89,8 +90,19 @@ public:
 		return sum;
 	}
 
-	auto artistsCount() const
-	{ return _artists.size(); }
+	auto artistsCount(bool expand_misc = false) const
+	{
+		size_t sum = _artists.size();
+		if (expand_misc) {
+			for (const auto& [artist_title, artist] : _artists) {
+				if (artist_title == artist_title_misc) {
+					sum += artist.albumsCount() - 1;
+					break;
+				}
+			}
+		}
+		return sum;
+	}
 
 	auto albumsCount() const
 	{
@@ -137,8 +149,8 @@ public:
 		uint32_t min_year = Global::undefined_value;
 		uint32_t max_year = Global::undefined_value;
 	};
-	Summary summary() const;
-	QString summaryString() const;
+	Summary summary(bool expand_misc = false) const;
+	QString summaryString(bool expand_misc = false) const;
 
 private:
 	QString _title;
