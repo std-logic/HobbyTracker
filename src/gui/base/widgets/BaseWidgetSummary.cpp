@@ -31,6 +31,7 @@ void Base::WidgetSummary::addWidget(QLabel*& widget, int spacing)
 	widget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 	widget->setText(QStringLiteral("-"));
 	widget->setStyleSheet(Global::Stylesheets::label_value);
+	widget->setToolTipDuration(1000000);
 	_layout_main->addWidget(widget);
 	_labels.push_back(widget);
 

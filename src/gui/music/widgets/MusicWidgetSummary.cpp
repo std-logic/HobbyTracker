@@ -21,24 +21,23 @@ void Music::WidgetSummary::update(const DataList& data_list)
 
 	auto summary = data_list.summary();
 
-	_label_artists_num->setText(QString::number(summary.artists_num));
-	_label_actives_num->setText(QString::number(summary.actives_num));
-	_label_visited_num->setText(QString::number(summary.visited_num));
-	_label_genres_num->setText(QString::number(summary.genres_num));
+	_label_years->setText(Helper::yearString(summary.min_year, summary.max_year));
 	_label_countries_num->setText(QString::number(summary.countries_num));
 	_label_countries_num->setToolTip(Regions::progress(summary.list_of_countries));
-	_label_years->setText(Helper::yearString(summary.min_year, summary.max_year));
+	_label_genres_num->setText(QString::number(summary.genres_num));
+	_label_visited_num->setText(QString::number(summary.visited_num));
+	_label_actives_num->setText(QString::number(summary.actives_num));
+	_label_artists_num->setText(QString::number(summary.artists_num));
 }
 
 void Music::WidgetSummary::initWidgets()
 {
-	addWidget(tr("Групп:"), _label_artists_num);
-	addWidget(tr("Активно:"), _label_actives_num);
-	addWidget(tr("Был на концерте:"), _label_visited_num);
-	addWidget(tr("Жанров:"), _label_genres_num);
+	addWidget(tr("Годы:"), _label_years);
 	addWidget(tr("Стран:"), _label_countries_num);
-	_label_countries_num->setToolTipDuration(1000000);
-	addWidget(tr("Годы:"), _label_years, 0);
+	addWidget(tr("Жанров:"), _label_genres_num);
+	addWidget(tr("Был на концерте:"), _label_visited_num);
+	addWidget(tr("Активно:"), _label_actives_num);
+	addWidget(tr("Групп:"), _label_artists_num, 0);
 
 	addStretch();
 }

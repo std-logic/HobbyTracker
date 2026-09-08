@@ -34,7 +34,6 @@ void Concerts::WidgetSummary::initWidgets()
 {
 	addWidget(tr("Годы:"), _label_years);
 	addWidget(tr("Стран:"), _label_countries_num);
-	_label_countries_num->setToolTipDuration(1000000);
 	addWidget(tr("Городов:"), _label_cities_num);
 	addWidget(tr("Мест:"), _label_places_num);
 	addWidget(tr("Групп:"), _label_artists_num);

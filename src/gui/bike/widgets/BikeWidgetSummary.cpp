@@ -39,7 +39,6 @@ void Bike::WidgetSummary::initWidgets()
 {
 	addWidget(tr("Годы:"), _label_years);
 	addWidget(tr("Стран:"), _label_countries_num);
-	_label_countries_num->setToolTipDuration(1000000);
 	addWidget(tr("Велопоходов:"), _label_trips_num);
 	addWidget(tr("Ночёвок:"), _label_trips_total_time);
 	addWidget(tr("Километров:"), _label_trips_total_dist);

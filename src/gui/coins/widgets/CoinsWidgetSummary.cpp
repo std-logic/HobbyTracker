@@ -24,22 +24,21 @@ void Coins::WidgetSummary::update(const DataList& data_list, const Base::ExtraLi
 	auto synonyms = extra_list.getSynonyms(tr("[Синонимы для стран]"));
 	auto summary = data_list.summary(synonyms);
 
-	_label_coins_num->setText(QString::number(summary.coins_num));
+	_label_years->setText(Helper::yearString(summary.min_year, summary.max_year));
 	_label_countries_num->setText(QString::number(summary.countries_num));
 	_label_countries_num->setToolTip(Regions::progress(summary.list_of_countries));
 	_label_diameters->setText(QStringLiteral("%1-%2")
 			.arg(summary.min_diameter*0.1, 0, 'f', 1)
 			.arg(summary.max_diameter*0.1, 0, 'f', 1));
-	_label_years->setText(Helper::yearString(summary.min_year, summary.max_year));
+	_label_coins_num->setText(QString::number(summary.coins_num));
 }
 
 void Coins::WidgetSummary::initWidgets()
 {
-	addWidget(tr("Монет:"), _label_coins_num);
+	addWidget(tr("Годы:"), _label_years);
 	addWidget(tr("Стран:"), _label_countries_num);
-	_label_countries_num->setToolTipDuration(1000000);
 	addWidget(tr("Диаметры:"), _label_diameters);
-	addWidget(tr("Годы:"), _label_years, 0);
+	addWidget(tr("Монет:"), _label_coins_num, 0);
 
 	addStretch();
 }

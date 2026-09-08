@@ -22,10 +22,10 @@ private:
 	void initWidgets();
 
 private:
+	QLabel* _label_years = nullptr;
+	QLabel* _label_genres_num = nullptr;
 	QLabel* _label_authors_num = nullptr;
 	QLabel* _label_books_num = nullptr;
-	QLabel* _label_genres_num = nullptr;
-	QLabel* _label_years = nullptr;
 	QLabel* _label_rating = nullptr;
 };
 

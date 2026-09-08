@@ -27,10 +27,10 @@ private:
 	void initWidgets();
 
 private:
-	QLabel* _label_coins_num = nullptr;
+	QLabel* _label_years = nullptr;
 	QLabel* _label_countries_num = nullptr;
 	QLabel* _label_diameters = nullptr;
-	QLabel* _label_years = nullptr;
+	QLabel* _label_coins_num = nullptr;
 };
 
 } // namespace Coins

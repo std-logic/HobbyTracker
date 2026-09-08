@@ -20,20 +20,19 @@ void Books::WidgetSummary::update(const DataList& data_list)
 
 	auto summary = data_list.summary();
 
+	_label_years->setText(Helper::yearString(summary.min_year, summary.max_year));
+	_label_genres_num->setText(QString::number(summary.genres_num));
 	_label_authors_num->setText(QString::number(summary.authors_num));
 	_label_books_num->setText(QString::number(summary.books_num));
-	_label_genres_num->setText(QString::number(summary.genres_num));
-	_label_years->setText(Helper::yearString(summary.min_year, summary.max_year));
 	_label_rating->setText(QString::number(summary.rating, 'f', 1));
 }
 
 void Books::WidgetSummary::initWidgets()
 {
-	addWidget(tr("Авторов:"), _label_authors_num);
-	addWidget(tr("Произведений:"), _label_books_num);
-	addWidget(tr("Жанров:"), _label_genres_num);
 	addWidget(tr("Годы:"), _label_years);
-	addWidget(tr("Оценки:"), _label_rating, 0);
-
+	addWidget(tr("Жанров:"), _label_genres_num);
+	addWidget(tr("Авторов:"), _label_authors_num);
+	addWidget(tr("Произведений:"), _label_books_num, 0);
 	addStretch();
+	addWidget(tr("Оценки:"), _label_rating, 0);
 }

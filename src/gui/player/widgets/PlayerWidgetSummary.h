@@ -25,11 +25,11 @@ private:
 private:
 	QLabel* _label_title = nullptr;
 	QLabel* _label_years = nullptr;
+	QLabel* _label_genres_num = nullptr;
 	QLabel* _label_artists_num = nullptr;
 	QLabel* _label_albums_num = nullptr;
 	QLabel* _label_tracks_num = nullptr;
 	QLabel* _label_play_count = nullptr;
-	QLabel* _label_genres_num = nullptr;
 };
 
 } // namespace Player

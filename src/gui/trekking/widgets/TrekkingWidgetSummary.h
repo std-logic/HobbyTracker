@@ -23,11 +23,11 @@ private:
 
 private:
 	QLabel* _label_years = nullptr;
+	QLabel* _label_countries_num = nullptr;
 	QLabel* _label_tracks_num = nullptr;
 	QLabel* _label_total_time = nullptr;
 	QLabel* _label_total_dist = nullptr;
 	QLabel* _label_highest_peak = nullptr;
-	QLabel* _label_countries_num = nullptr;
 };
 
 } // namespace Trekking

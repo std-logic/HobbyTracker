@@ -24,13 +24,12 @@ private:
 
 private:
 	QLabel* _label_years = nullptr;
-	QLabel* _label_total_time = nullptr;
-	QLabel* _label_total_dist = nullptr;
-
+	QLabel* _label_countries_num = nullptr;
 	QLabel* _label_trips_num = nullptr;
 	QLabel* _label_trips_total_time = nullptr;
 	QLabel* _label_trips_total_dist = nullptr;
-	QLabel* _label_countries_num = nullptr;
+	QLabel* _label_total_time = nullptr;
+	QLabel* _label_total_dist = nullptr;
 };
 
 } // namespace Bike

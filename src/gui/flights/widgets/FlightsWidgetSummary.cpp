@@ -36,7 +36,6 @@ void Flights::WidgetSummary::initWidgets()
 {
 	addWidget(tr("Годы:"), _label_years);
 	addWidget(tr("Стран:"), _label_countries_num);
-	_label_countries_num->setToolTipDuration(1000000);
 	addWidget(tr("Городов:"), _label_cities_num);
 	addWidget(tr("Аэропортов:"), _label_airports_num);
 	addWidget(tr("Полётов:"), _label_flights_num, 0);
