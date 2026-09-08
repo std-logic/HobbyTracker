@@ -21,3 +21,13 @@ Bike::TripList::NumbersByStrings Bike::TripList::numbersByYears(uint32_t step,
 			[](const Trip& trip) { return trip.year(); },
 			[](uint32_t val, uint32_t step) { return Helper::epochString(val, step); });
 }
+
+Bike::TripList::SublistsByStrings Bike::TripList::tripsByCountries() const
+{
+	return sublistsByStrings(&Trip::countries);
+}
+
+Bike::TripList::NumbersByStringsVec Bike::TripList::numbersByCountries(size_t max_num) const
+{
+	return sortedVec(numbersByStrings(&Trip::countries), max_num);
+}

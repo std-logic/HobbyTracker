@@ -38,13 +38,13 @@ void Bike::WidgetSummary::update(const DataList& data_list, const TripList& trip
 void Bike::WidgetSummary::initWidgets()
 {
 	addWidget(tr("Годы:"), _label_years);
-	addWidget(tr("Всего часов:"), _label_total_time);
-	addWidget(tr("Всего километров:"), _label_total_dist);
+	addWidget(tr("Стран:"), _label_countries_num);
+	_label_countries_num->setToolTipDuration(1000000);
 	addWidget(tr("Велопоходов:"), _label_trips_num);
 	addWidget(tr("Ночёвок:"), _label_trips_total_time);
 	addWidget(tr("Километров:"), _label_trips_total_dist);
-	addWidget(tr("Стран:"), _label_countries_num, 0);
-	_label_countries_num->setToolTipDuration(1000000);
+	addWidget(tr("Всего часов:"), _label_total_time);
+	addWidget(tr("Всего километров:"), _label_total_dist, 0);
 
 	addStretch();
 }

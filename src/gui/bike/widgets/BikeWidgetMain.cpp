@@ -33,8 +33,8 @@ void Bike::WidgetMain::initWidgets()
 {
 	addWidget(_widget_control = new WidgetControl(this), 0, Qt::AlignTop);
 	addWidget(_widget_summary = new WidgetSummary(this), 1, Qt::AlignTop);
-	addWidget(_widget_data_list = new WidgetDataList(this), 100);
 	addWidget(_widget_trip_list = new WidgetTripList(this), 100);
+	addWidget(_widget_data_list = new WidgetDataList(this), 100);
 	addWidget(_widget_chart = new WidgetChart(this), 100);
 }
 
@@ -45,6 +45,12 @@ void Bike::WidgetMain::initConnections()
 
 	connect(_widget_control, &WidgetControl::showTripList,
 			_widget_trip_list, &WidgetTripList::setVisible);
+	connect(_widget_control, &WidgetControl::collapseTripList,
+			_widget_trip_list, &WidgetTripList::collapseAll);
+	connect(_widget_control, &WidgetControl::expandTripList,
+			_widget_trip_list, &WidgetTripList::expandAll);
+	connect(_widget_control, &WidgetControl::setTripListViewMode,
+			_widget_trip_list, &WidgetTripList::setViewMode);
 	connect(_widget_control, &WidgetControl::findText,
 			_widget_trip_list, &WidgetTripList::findText);
 

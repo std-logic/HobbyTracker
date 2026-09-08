@@ -20,9 +20,11 @@ signals:
 
 private:
 	void showSimple(const TripList& trip_list);
+	void showByCountries(const TripList& trip_list);
 
 private:
 	static const int WIDTH_DATE = 180;
+	static const int WIDTH_COUNT = 50;
 	static const int WIDTH_TIME = 100;
 	static const int WIDTH_DIST = 100;
 	static const int WIDTH_COUNTRIES = 200;

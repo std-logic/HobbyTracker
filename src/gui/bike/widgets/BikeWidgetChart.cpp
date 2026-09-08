@@ -12,27 +12,34 @@ void Bike::WidgetChart::update(const DataList& data_list, const TripList& trip_l
 {
 	clearChart();
 	switch (static_cast<ChartViewModes>(_view_mode)) {
-		case ChartViewModes::ByDist:		showByDist(data_list);		break;
-		case ChartViewModes::ByTime:		showByTime(data_list);		break;
-		case ChartViewModes::ByTrips:		showByTrips(trip_list);		break;
+		case ChartViewModes::ByTrips:		showByTrips(trip_list);			break;
+		case ChartViewModes::ByCountries:	showByCountries(trip_list);		break;
+		case ChartViewModes::ByDist:		showByDist(data_list);			break;
+		case ChartViewModes::ByTime:		showByTime(data_list);			break;
 		default: return;
 	}
-}
-
-void Bike::WidgetChart::showByDist(const DataList& data_list)
-{
-	chart()->setTitle(tr("Распределение километров по годам"));
-	updateBars(data_list.distByYears());
-}
-
-void Bike::WidgetChart::showByTime(const DataList& data_list)
-{
-	chart()->setTitle(tr("Распределение часов по годам"));
-	updateBars(data_list.timeByYears());
 }
 
 void Bike::WidgetChart::showByTrips(const TripList& trip_list)
 {
 	chart()->setTitle(tr("Распределение велопоходов по годам"));
 	updateBars(trip_list.numbersByYears(1, TripList::RangeTypes::Linear));
+}
+
+void Bike::WidgetChart::showByCountries(const TripList& trip_list)
+{
+	chart()->setTitle(tr("Распределение велопоходов по странам"));
+	updateBars(trip_list.numbersByCountries(10));
+}
+
+void Bike::WidgetChart::showByDist(const DataList& data_list)
+{
+	chart()->setTitle(tr("Распределение километров пробега по годам"));
+	updateBars(data_list.distByYears());
+}
+
+void Bike::WidgetChart::showByTime(const DataList& data_list)
+{
+	chart()->setTitle(tr("Распределение часов пробега по годам"));
+	updateBars(data_list.timeByYears());
 }

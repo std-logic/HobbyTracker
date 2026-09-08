@@ -3,11 +3,18 @@
 namespace Bike
 {
 
+enum class DataListViewModes
+{
+	Simple,
+	ByCountries,
+};
+
 enum class ChartViewModes
 {
+	ByTrips,
+	ByCountries,
 	ByDist,
 	ByTime,
-	ByTrips,
 };
 
 enum CsvFiles

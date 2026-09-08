@@ -5,6 +5,8 @@
 namespace Base
 {
 class ButtonAdd;
+class ButtonCollapse;
+class ButtonExpand;
 class ButtonShow;
 class ComboBox;
 }
@@ -27,6 +29,9 @@ signals:
 
 	void showTripList(bool on);
 	void addTrip();
+	void collapseTripList();
+	void expandTripList();
+	void setTripListViewMode(int view_mode);
 
 	void showChart(bool on);
 	void setChartViewMode(int view_mode);
@@ -35,11 +40,14 @@ private:
 	void initWidgets();
 
 private:
-	Base::ButtonShow* _button_data_list = nullptr;
-	Base::ButtonAdd* _button_add_data = nullptr;
-
 	Base::ButtonShow* _button_trip_list = nullptr;
 	Base::ButtonAdd* _button_add_trip = nullptr;
+	Base::ButtonCollapse* _button_collapse_trip_list = nullptr;
+	Base::ButtonExpand* _button_expand_trip_list = nullptr;
+	Base::ComboBox* _combo_trip_list_view_mode = nullptr;
+
+	Base::ButtonShow* _button_data_list = nullptr;
+	Base::ButtonAdd* _button_add_data = nullptr;
 
 	Base::ButtonShow* _button_chart = nullptr;
 	Base::ComboBox* _combo_chart_view_mode = nullptr;

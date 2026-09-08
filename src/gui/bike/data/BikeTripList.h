@@ -25,6 +25,9 @@ public:
 	NumbersByStrings numbersByYears(uint32_t step = 1,
 			RangeTypes range_type = RangeTypes::Discrete,
 			uint32_t required_min = 0, uint32_t required_max = 0) const;
+
+	SublistsByStrings tripsByCountries() const;
+	NumbersByStringsVec numbersByCountries(size_t max_num) const;
 };
 
 } // namespace Bike

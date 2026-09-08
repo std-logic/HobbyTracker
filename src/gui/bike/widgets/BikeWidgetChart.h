@@ -20,9 +20,10 @@ public:
 signals:
 
 private:
+	void showByTrips(const TripList& trip_list);
+	void showByCountries(const TripList& trip_list);
 	void showByDist(const DataList& data_list);
 	void showByTime(const DataList& data_list);
-	void showByTrips(const TripList& trip_list);
 };
 
 } // namespace Bike
