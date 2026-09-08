@@ -60,5 +60,7 @@ void Flights::WidgetControl::initWidgets()
 		});
 	}
 
+	addStretch();
+	addEditSearch();
 	addButtonSettings();
 }

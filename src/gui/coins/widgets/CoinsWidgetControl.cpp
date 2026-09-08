@@ -71,5 +71,7 @@ void Coins::WidgetControl::initWidgets()
 		});
 	}
 
+	addStretch();
+	addEditSearch();
 	addButtonSettings();
 }

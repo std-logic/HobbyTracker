@@ -51,6 +51,8 @@ void Concerts::WidgetMain::initConnections()
 			_widget_data_list, &WidgetDataList::setViewMode);
 	connect(_widget_control, &WidgetControl::setFavoritesState,
 			_widget_data_list, &WidgetDataList::setFavoritesState);
+	connect(_widget_control, &WidgetControl::findText,
+			_widget_data_list, &WidgetDataList::findText);
 
 	connect(_widget_control, &WidgetControl::showExtraList,
 			_widget_extra_list, &Base::WidgetExtraList::setVisible);

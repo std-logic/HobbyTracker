@@ -74,5 +74,7 @@ void Games::WidgetControl::initWidgets()
 		});
 	}
 
+	addStretch();
+	addEditSearch();
 	addButtonSettings();
 }

@@ -106,6 +106,8 @@ void Player::WidgetControl::initWidgets()
 		});
 	}
 
+	addStretch();
+	addEditSearch();
 	addButtonSettings();
 }
 

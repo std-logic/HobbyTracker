@@ -27,6 +27,7 @@ void Concerts::WidgetDataList::update(const DataList& data_list, const Base::Ext
 		case DataListViewModes::Simple:			showSimple(data_list);					break;
 		default: return;
 	}
+	updateSearch();
 }
 
 void Concerts::WidgetDataList::setFavoritesState(Qt::CheckState state)
@@ -44,6 +45,7 @@ void Concerts::WidgetDataList::setFavoritesState(Qt::CheckState state)
 void Concerts::WidgetDataList::showByYears(const DataList& data_list)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE};
+	setSearchColumns({CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE});
 	initColumns({tr("Год / Дата"), tr("К-во"), tr("Группы"), tr("Страна"), tr("Город"), tr("Место")},
 				{WIDTH_DATE_SMALL, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_COUNTRY, WIDTH_CITY, WIDTH_PLACE});
 	initSorting(CLMN_DATE, Qt::DescendingOrder);
@@ -73,6 +75,7 @@ void Concerts::WidgetDataList::showByYears(const DataList& data_list)
 void Concerts::WidgetDataList::showByArtists(const DataList& data_list, const Base::ExtraList& extra_list)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE};
+	setSearchColumns({CLMN_DATE, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE});
 	initColumns({tr("Группа / Дата"), tr("К-во"), tr("Группы"), tr("Страна"), tr("Город"), tr("Место")},
 				{WIDTH_DATE_MEDIUM, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_COUNTRY, WIDTH_CITY, WIDTH_PLACE});
 	initSorting(CLMN_DATE);
@@ -106,6 +109,7 @@ void Concerts::WidgetDataList::showByArtists(const DataList& data_list, const Ba
 void Concerts::WidgetDataList::showByTags(const DataList& data_list, const Base::ExtraList& extra_list)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE};
+	setSearchColumns({CLMN_DATE, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE});
 	initColumns({tr("Тип / Дата"), tr("К-во"), tr("Группы"), tr("Страна"), tr("Город"), tr("Место")},
 				{WIDTH_DATE_SMALL, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_COUNTRY, WIDTH_CITY, WIDTH_PLACE});
 	initSorting(CLMN_DATE);
@@ -141,6 +145,7 @@ void Concerts::WidgetDataList::showByTags(const DataList& data_list, const Base:
 void Concerts::WidgetDataList::showByCountries(const DataList& data_list)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_CITY, CLMN_PLACE};
+	setSearchColumns({CLMN_DATE, CLMN_ARTISTS, CLMN_CITY, CLMN_PLACE});
 	initColumns({tr("Страна / Дата"), tr("К-во"), tr("Группы"), tr("Город"), tr("Место")},
 				{WIDTH_DATE_SMALL, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_CITY, WIDTH_PLACE});
 	initSorting(CLMN_DATE);
@@ -167,6 +172,7 @@ void Concerts::WidgetDataList::showByCountries(const DataList& data_list)
 void Concerts::WidgetDataList::showByCities(const DataList& data_list)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_PLACE};
+	setSearchColumns({CLMN_DATE, CLMN_ARTISTS, CLMN_PLACE});
 	initColumns({tr("Город / Дата"), tr("К-во"), tr("Группы"), tr("Место")},
 				{WIDTH_DATE_MEDIUM, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_PLACE});
 	initSorting(CLMN_DATE);
@@ -192,6 +198,7 @@ void Concerts::WidgetDataList::showByCities(const DataList& data_list)
 void Concerts::WidgetDataList::showByPlaces(const DataList& data_list, const Base::ExtraList& extra_list)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS};
+	setSearchColumns({CLMN_DATE, CLMN_ARTISTS});
 	initColumns({tr("Место / Дата"), tr("К-во"), tr("Группы")},
 				{WIDTH_DATE_BIG, WIDTH_COUNT, WIDTH_ARTISTS});
 	initSorting(CLMN_DATE);
@@ -222,6 +229,7 @@ void Concerts::WidgetDataList::showByPlaces(const DataList& data_list, const Bas
 void Concerts::WidgetDataList::showPlacesTree(const DataList& data_list, const Base::ExtraList& extra_list)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS};
+	setSearchColumns({CLMN_DATE, CLMN_ARTISTS});
 	initColumns({tr("Страна / Город / Место / Дата"), tr("К-во"), tr("Группы")},
 				{WIDTH_DATE_BIG, WIDTH_COUNT, WIDTH_ARTISTS});
 	initSorting(CLMN_DATE);
@@ -265,6 +273,7 @@ void Concerts::WidgetDataList::showPlacesTree(const DataList& data_list, const B
 void Concerts::WidgetDataList::showSimple(const DataList& data_list)
 {
 	enum Columns {CLMN_DATE, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE};
+	setSearchColumns({CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE});
 	initColumns({tr("Дата"), tr("Группы"), tr("Страна"), tr("Город"), tr("Место")},
 				{WIDTH_DATE_SMALL, WIDTH_ARTISTS, WIDTH_COUNTRY, WIDTH_CITY, WIDTH_PLACE});
 	initSorting(CLMN_DATE, Qt::DescendingOrder);

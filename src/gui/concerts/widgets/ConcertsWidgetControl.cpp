@@ -78,5 +78,7 @@ void Concerts::WidgetControl::initWidgets()
 		});
 	}
 
+	addStretch();
+	addEditSearch();
 	addButtonSettings();
 }

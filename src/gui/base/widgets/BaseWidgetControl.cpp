@@ -1,6 +1,7 @@
 #include "BaseWidgetControl.h"
 #include "BaseButtonSave.h"
 #include "BaseButtonSettings.h"
+#include "BaseEditSearch.h"
 
 #include <common/Global.h>
 
@@ -43,9 +44,14 @@ void Base::WidgetControl::addButtonSave()
 
 void Base::WidgetControl::addButtonSettings()
 {
-	addStretch();
-
 	addWidget(_button_settings = new ButtonSettings(this));
 	connect(_button_settings, &ButtonSettings::clicked,
 			this, &WidgetControl::showSettings);
+}
+
+void Base::WidgetControl::addEditSearch()
+{
+	addWidget(_edit_search = new EditSearch(this));
+	connect(_edit_search, &EditSearch::findText,
+			this, &WidgetControl::findText);
 }

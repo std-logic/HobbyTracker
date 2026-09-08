@@ -87,5 +87,7 @@ void Movies::WidgetControl::initWidgets()
 	addSpacing();
 	addCheckBox(_check_favorites, tr("Только избранные"), &WidgetControl::setFavoritesOnly);
 
+	addStretch();
+	addEditSearch();
 	addButtonSettings();
 }

@@ -45,6 +45,8 @@ void Bike::WidgetMain::initConnections()
 
 	connect(_widget_control, &WidgetControl::showTripList,
 			_widget_trip_list, &WidgetTripList::setVisible);
+	connect(_widget_control, &WidgetControl::findText,
+			_widget_trip_list, &WidgetTripList::findText);
 
 	connect(_widget_control, &WidgetControl::showChart,
 			_widget_chart, &WidgetChart::setVisible);

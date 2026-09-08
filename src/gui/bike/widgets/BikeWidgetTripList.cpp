@@ -13,11 +13,13 @@ void Bike::WidgetTripList::update(const TripList& trip_list)
 {
 	clear();
 	showSimple(trip_list);
+	updateSearch();
 }
 
 void Bike::WidgetTripList::showSimple(const TripList& trip_list)
 {
 	enum Columns {CLMN_DATE, CLMN_TIME, CLMN_DIST, CLMN_COUNTRIES, CLMN_PLACES};
+	setSearchColumns({CLMN_COUNTRIES, CLMN_PLACES});
 	initColumns({tr("Даты"), tr("Ночёвок"), tr("Километров"), tr("Страны"), tr("Места")},
 				{WIDTH_DATE, WIDTH_TIME, WIDTH_DIST, WIDTH_COUNTRIES, WIDTH_PLACES});
 	initSorting(CLMN_DATE, Qt::DescendingOrder);

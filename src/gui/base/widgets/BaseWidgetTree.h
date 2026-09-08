@@ -17,6 +17,7 @@ public:
 public slots:
 	virtual void setViewMode(int view_mode);
 	virtual void clearList();
+	void findText(const QString& search_text);
 
 signals:
 	void needUpdate();
@@ -24,6 +25,8 @@ signals:
 	void deleteData(const QString& id);
 
 protected:
+	void setSearchColumns(const std::vector<int>& columns);
+	void updateSearch();
 	void initColumns(const QStringList& labels, const std::vector<int>& widths = {});
 	void initSorting(int default_column = 0, Qt::SortOrder default_order = Qt::AscendingOrder, bool force = false);
 
@@ -35,6 +38,7 @@ private:
 	void showHoveredToolTip(QTreeWidgetItem* item);
 	void showRightClickToolTip(QTreeWidgetItem* item);
 	void hideToolTip();
+	bool filterItem(QTreeWidgetItem* item, const QString& search_text, bool parent_found = false);
 
 private slots:
 	void sortingChanged(int index, Qt::SortOrder order);
@@ -51,6 +55,9 @@ protected:
 
 	QTreeWidgetItem* _hovered_item = nullptr;
 	Base::ToolTip* _tooltip = nullptr;
+
+	std::vector<int> _search_columns;
+	QString _search_text;
 };
 
 } // namespace Base

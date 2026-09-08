@@ -16,6 +16,7 @@ namespace Base
 
 class ButtonSave;
 class ButtonSettings;
+class EditSearch;
 
 class WidgetControl : public QWidget
 {
@@ -31,6 +32,7 @@ public slots:
 
 signals:
 	void saveCsvData();
+	void findText(const QString& search_text);
 	void showSettings();
 
 protected:
@@ -39,6 +41,7 @@ protected:
 	void addSpacing(int size = 30);
 	void addButtonSave();
 	void addButtonSettings();
+	void addEditSearch();
 
 	template<typename FuncClick>
 	void addButton(QPushButton*& button, const QString& text, FuncClick&& func_click)
@@ -101,6 +104,7 @@ protected:
 private:
 	QHBoxLayout* _layout_main = nullptr;
 	ButtonSave* _button_save = nullptr;
+	EditSearch* _edit_search = nullptr;
 	ButtonSettings* _button_settings = nullptr;
 };
 

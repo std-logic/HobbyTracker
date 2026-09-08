@@ -30,6 +30,7 @@ void Movies::WidgetDataList::update(const DataList& data_list, const Base::Extra
 		case DataListViewModes::ByRatings:		showByRatings(data_list);					break;
 		default: return;
 	}
+	updateSearch();
 }
 
 void Movies::WidgetDataList::setFavoritesOnly(Qt::CheckState state)
@@ -45,6 +46,7 @@ void Movies::WidgetDataList::showSimple(const DataList& data_list)
 {
 	enum Columns {CLMN_VIEW_DATE, CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES,
 				  CLMN_DIRECTORS, CLMN_ACTORS, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES, CLMN_DIRECTORS, CLMN_ACTORS});
 	initColumns({tr("Дата"), tr("Название"), tr("Жанр"), tr("Страна"),
 				 tr("Режиссёр"), tr("Актёры"), tr("Год"), tr("Оценка")},
 				{WIDTH_VIEW_DATE_SMALL, WIDTH_TITLE, WIDTH_GENRES, WIDTH_COUNTRIES,
@@ -71,6 +73,7 @@ void Movies::WidgetDataList::showByKinds(const DataList& data_list)
 {
 	enum Columns {CLMN_VIEW_DATE, CLMN_COUNT, CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES,
 				  CLMN_DIRECTORS, CLMN_ACTORS, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES, CLMN_DIRECTORS, CLMN_ACTORS});
 	initColumns({tr("Тип / Дата"), tr("К-во"), tr("Название"), tr("Жанр"), tr("Страна"),
 				 tr("Режиссёр"), tr("Актёры"), tr("Год"), tr("Оценка")},
 				{WIDTH_VIEW_DATE_MEDIUM, WIDTH_COUNT, WIDTH_TITLE, WIDTH_GENRES, WIDTH_COUNTRIES,
@@ -105,6 +108,7 @@ void Movies::WidgetDataList::showByGenres(const DataList& data_list)
 {
 	enum Columns {CLMN_VIEW_DATE, CLMN_COUNT, CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES,
 				  CLMN_DIRECTORS, CLMN_ACTORS, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES, CLMN_DIRECTORS, CLMN_ACTORS});
 	initColumns({tr("Жанр / Дата"), tr("К-во"), tr("Название"), tr("Жанр"), tr("Страна"),
 				 tr("Режиссёр"), tr("Актёры"), tr("Год"), tr("Оценка")},
 				{WIDTH_VIEW_DATE_MEDIUM, WIDTH_COUNT, WIDTH_TITLE, WIDTH_GENRES, WIDTH_COUNTRIES,
@@ -141,6 +145,7 @@ void Movies::WidgetDataList::showByCountries(const DataList& data_list, const Ba
 {
 	enum Columns {CLMN_VIEW_DATE, CLMN_COUNT, CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES,
 				  CLMN_DIRECTORS, CLMN_ACTORS, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES, CLMN_DIRECTORS, CLMN_ACTORS});
 	initColumns({tr("Страна / Дата"), tr("К-во"), tr("Название"), tr("Жанр"), tr("Страна"),
 				 tr("Режиссёр"), tr("Актёры"), tr("Год"), tr("Оценка")},
 				{WIDTH_VIEW_DATE_COUNTRIES, WIDTH_COUNT, WIDTH_TITLE, WIDTH_GENRES, WIDTH_COUNTRIES,
@@ -176,6 +181,7 @@ void Movies::WidgetDataList::showByRegions(const DataList& data_list, const Base
 {
 	enum Columns {CLMN_VIEW_DATE, CLMN_COUNT, CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES,
 				  CLMN_DIRECTORS, CLMN_ACTORS, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES, CLMN_DIRECTORS, CLMN_ACTORS});
 	initColumns({tr("Регион / Страна / Дата"), tr("К-во"), tr("Название"), tr("Жанр"), tr("Страна"),
 				 tr("Режиссёр"), tr("Актёры"), tr("Год"), tr("Оценка")},
 				{WIDTH_VIEW_DATE_BIG, WIDTH_COUNT, WIDTH_TITLE, WIDTH_GENRES, WIDTH_COUNTRIES,
@@ -227,6 +233,7 @@ void Movies::WidgetDataList::showByYears(const DataList& data_list)
 {
 	enum Columns {CLMN_VIEW_DATE, CLMN_COUNT, CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES,
 				  CLMN_DIRECTORS, CLMN_ACTORS, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES, CLMN_DIRECTORS, CLMN_ACTORS});
 	initColumns({tr("Год / Дата"), tr("К-во"), tr("Название"), tr("Жанр"), tr("Страна"),
 				 tr("Режиссёр"), tr("Актёры"), tr("Год"), tr("Оценка")},
 				{WIDTH_VIEW_DATE_MEDIUM, WIDTH_COUNT, WIDTH_TITLE, WIDTH_GENRES, WIDTH_COUNTRIES,
@@ -261,6 +268,7 @@ void Movies::WidgetDataList::showByDecades(const DataList& data_list)
 {
 	enum Columns {CLMN_VIEW_DATE, CLMN_COUNT, CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES,
 				  CLMN_DIRECTORS, CLMN_ACTORS, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES, CLMN_DIRECTORS, CLMN_ACTORS});
 	initColumns({tr("Десятилетие / Дата"), tr("К-во"), tr("Название"), tr("Жанр"), tr("Страна"),
 				 tr("Режиссёр"), tr("Актёры"), tr("Год"), tr("Оценка")},
 				{WIDTH_VIEW_DATE_MEDIUM, WIDTH_COUNT, WIDTH_TITLE, WIDTH_GENRES, WIDTH_COUNTRIES,
@@ -295,6 +303,7 @@ void Movies::WidgetDataList::showByDirectors(const DataList& data_list)
 {
 	enum Columns {CLMN_VIEW_DATE, CLMN_COUNT, CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES,
 				  CLMN_DIRECTORS, CLMN_ACTORS, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES, CLMN_DIRECTORS, CLMN_ACTORS});
 	initColumns({tr("Режиссёр / Дата"), tr("К-во"), tr("Название"), tr("Жанр"), tr("Страна"),
 				 tr("Режиссёр"), tr("Актёры"), tr("Год"), tr("Оценка")},
 				{WIDTH_VIEW_DATE_BIG, WIDTH_COUNT, WIDTH_TITLE, WIDTH_GENRES, WIDTH_COUNTRIES,
@@ -330,6 +339,7 @@ void Movies::WidgetDataList::showByWriters(const DataList& data_list)
 {
 	enum Columns {CLMN_VIEW_DATE, CLMN_COUNT, CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES,
 				  CLMN_DIRECTORS, CLMN_ACTORS, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES, CLMN_DIRECTORS, CLMN_ACTORS});
 	initColumns({tr("Сценарист / Дата"), tr("К-во"), tr("Название"), tr("Жанр"), tr("Страна"),
 				 tr("Режиссёр"), tr("Актёры"), tr("Год"), tr("Оценка")},
 				{WIDTH_VIEW_DATE_BIG, WIDTH_COUNT, WIDTH_TITLE, WIDTH_GENRES, WIDTH_COUNTRIES,
@@ -365,6 +375,7 @@ void Movies::WidgetDataList::showByActors(const DataList& data_list)
 {
 	enum Columns {CLMN_VIEW_DATE, CLMN_COUNT, CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES,
 				  CLMN_DIRECTORS, CLMN_ACTORS, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES, CLMN_DIRECTORS, CLMN_ACTORS});
 	initColumns({tr("Актёр / Дата"), tr("К-во"), tr("Название"), tr("Жанр"), tr("Страна"),
 				 tr("Режиссёр"), tr("Актёры"), tr("Год"), tr("Оценка")},
 				{WIDTH_VIEW_DATE_BIG, WIDTH_COUNT, WIDTH_TITLE, WIDTH_GENRES, WIDTH_COUNTRIES,
@@ -400,6 +411,7 @@ void Movies::WidgetDataList::showByRatings(const DataList& data_list)
 {
 	enum Columns {CLMN_VIEW_DATE, CLMN_COUNT, CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES,
 				  CLMN_DIRECTORS, CLMN_ACTORS, CLMN_YEAR};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES, CLMN_DIRECTORS, CLMN_ACTORS});
 	initColumns({tr("Оценка / Дата"), tr("К-во"), tr("Название"), tr("Жанр"), tr("Страна"),
 				 tr("Режиссёр"), tr("Актёры"), tr("Год")},
 				{WIDTH_VIEW_DATE_MEDIUM, WIDTH_COUNT, WIDTH_TITLE, WIDTH_GENRES, WIDTH_COUNTRIES,

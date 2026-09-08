@@ -44,6 +44,8 @@ void Trekking::WidgetMain::initConnections()
 			_widget_data_list, &WidgetDataList::expandAll);
 	connect(_widget_control, &WidgetControl::setDataListViewMode,
 			_widget_data_list, &WidgetDataList::setViewMode);
+	connect(_widget_control, &WidgetControl::findText,
+			_widget_data_list, &WidgetDataList::findText);
 
 	connect(_widget_control, &WidgetControl::showChart,
 			_widget_chart, &WidgetChart::setVisible);

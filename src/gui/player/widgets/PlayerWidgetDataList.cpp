@@ -25,6 +25,7 @@ void Player::WidgetDataList::update(const Library& library)
 		case DataListViewModes::Summary:		showSummary(library);			break;
 		default: return;
 	}
+	updateSearch();
 }
 
 void Player::WidgetDataList::update(const std::vector<Library>& libraries)
@@ -38,11 +39,13 @@ void Player::WidgetDataList::update(const std::vector<Library>& libraries)
 		case DataListViewModes::HistoryTracks:	showHistoryTracks(libraries);	break;
 		default: return;
 	}
+	updateSearch();
 }
 
 void Player::WidgetDataList::showByArtists(const Library& library)
 {
 	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_ALBUMS, CLMN_TRACKS, CLMN_PLAY_COUNT};
+	setSearchColumns({CLMN_TITLE});
 	initColumns({tr("Группа / Альбом / Трек"), tr("Год"), tr("Альбомов"),
 				 tr("Треков"), tr("Прослушиваний")},
 				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_ALBUMS, WIDTH_TRACKS, WIDTH_PLAY_COUNT});
@@ -79,6 +82,7 @@ void Player::WidgetDataList::showByArtists(const Library& library)
 void Player::WidgetDataList::showByAlbums(const Library& library)
 {
 	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_TRACKS, CLMN_PLAY_COUNT};
+	setSearchColumns({CLMN_TITLE});
 	initColumns({tr("Альбом / Трек"), tr("Год"), tr("Треков"), tr("Прослушиваний")},
 				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_TRACKS, WIDTH_PLAY_COUNT});
 	initSorting(CLMN_TITLE);
@@ -107,6 +111,7 @@ void Player::WidgetDataList::showByAlbums(const Library& library)
 void Player::WidgetDataList::showByTracks(const Library& library)
 {
 	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_PLAY_COUNT};
+	setSearchColumns({CLMN_TITLE});
 	initColumns({tr("Трек"), tr("Год"), tr("Прослушиваний")},
 				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_PLAY_COUNT});
 	initSorting(CLMN_TITLE);
@@ -128,6 +133,7 @@ void Player::WidgetDataList::showByTracks(const Library& library)
 void Player::WidgetDataList::showByBestTracks(const Library& library)
 {
 	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_TRACKS, CLMN_PLAY_COUNT};
+	setSearchColumns({CLMN_TITLE});
 	initColumns({tr("Группа / Трек"), tr("Год"), tr("Треков"), tr("Прослушиваний")},
 				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_TRACKS, WIDTH_PLAY_COUNT});
 	initSorting(CLMN_TITLE);
@@ -160,6 +166,7 @@ void Player::WidgetDataList::showByBestTracks(const Library& library)
 void Player::WidgetDataList::showByGenres(const Library& library)
 {
 	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_ARTISTS, CLMN_ALBUMS, CLMN_TRACKS, CLMN_PLAY_COUNT};
+	setSearchColumns({CLMN_TITLE});
 	initColumns({tr("Жанр / Группа / Альбом / Трек"), tr("Год"), tr("Групп"),
 				 tr("Альбомов"), tr("Треков"), tr("Прослушиваний")},
 				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_ARTISTS, WIDTH_ALBUMS, WIDTH_TRACKS, WIDTH_PLAY_COUNT});
@@ -215,6 +222,7 @@ void Player::WidgetDataList::showByGenres(const Library& library)
 void Player::WidgetDataList::showByFormats(const Library& library)
 {
 	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_ARTISTS, CLMN_ALBUMS, CLMN_TRACKS, CLMN_PLAY_COUNT};
+	setSearchColumns({CLMN_TITLE});
 	initColumns({tr("Формат / Группа / Альбом / Трек"), tr("Год"), tr("Групп"),
 				 tr("Альбомов"), tr("Треков"), tr("Прослушиваний")},
 				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_ARTISTS, WIDTH_ALBUMS, WIDTH_TRACKS, WIDTH_PLAY_COUNT});
@@ -264,6 +272,7 @@ void Player::WidgetDataList::showByFormats(const Library& library)
 void Player::WidgetDataList::showByYears(const Library& library)
 {
 	enum Columns {CLMN_TITLE, CLMN_ARTISTS, CLMN_ALBUMS, CLMN_TRACKS, CLMN_PLAY_COUNT};
+	setSearchColumns({CLMN_TITLE});
 	initColumns({tr("Год / Альбом / Трек"), tr("Групп"), tr("Альбомов"),
 				 tr("Треков"), tr("Прослушиваний")},
 				{WIDTH_TITLE, WIDTH_ARTISTS, WIDTH_ALBUMS, WIDTH_TRACKS, WIDTH_PLAY_COUNT});
@@ -303,6 +312,7 @@ void Player::WidgetDataList::showByYears(const Library& library)
 void Player::WidgetDataList::showSummary(const Library& library)
 {
 	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_PLAY_COUNT};
+	setSearchColumns({CLMN_TITLE});
 	initColumns({tr("Топ"), tr("Год"), tr("Прослушиваний")},
 				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_PLAY_COUNT});
 	initSorting(-1, Qt::AscendingOrder, true);
@@ -368,6 +378,7 @@ void Player::WidgetDataList::showSummary(const Library& library)
 void Player::WidgetDataList::showHistoryArtists(const std::vector<Library>& libraries)
 {
 	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_PLAY_COUNT};
+	setSearchColumns({CLMN_TITLE});
 	initColumns({tr("Топ"), tr("Год"), tr("Прослушиваний")},
 				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_PLAY_COUNT});
 	initSorting(-1, Qt::AscendingOrder, true);
@@ -402,6 +413,7 @@ void Player::WidgetDataList::showHistoryArtists(const std::vector<Library>& libr
 void Player::WidgetDataList::showHistoryAlbums(const std::vector<Library>& libraries)
 {
 	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_PLAY_COUNT};
+	setSearchColumns({CLMN_TITLE});
 	initColumns({tr("Топ"), tr("Год"), tr("Прослушиваний")},
 				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_PLAY_COUNT});
 	initSorting(-1, Qt::AscendingOrder, true);
@@ -436,6 +448,7 @@ void Player::WidgetDataList::showHistoryAlbums(const std::vector<Library>& libra
 void Player::WidgetDataList::showHistoryTracks(const std::vector<Library>& libraries)
 {
 	enum Columns {CLMN_TITLE, CLMN_YEAR, CLMN_PLAY_COUNT};
+	setSearchColumns({CLMN_TITLE});
 	initColumns({tr("Топ"), tr("Год"), tr("Прослушиваний")},
 				{WIDTH_TITLE, WIDTH_YEAR, WIDTH_PLAY_COUNT});
 	initSorting(-1, Qt::AscendingOrder, true);

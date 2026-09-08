@@ -22,11 +22,13 @@ void Music::WidgetDataList::update(const DataList& data_list)
 		case DataListViewModes::ByStates:		showByStates(data_list);		break;
 		default: return;
 	}
+	updateSearch();
 }
 
 void Music::WidgetDataList::showSimple(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_GENRE, CLMN_COUNTRY, CLMN_YEAR, CLMN_LIVE, CLMN_STATE};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRE, CLMN_COUNTRY});
 	initColumns({tr("Название"), tr("Жанр"), tr("Страна основания"),
 				 tr("Год основания"), tr("Концерт"), tr("Активна")},
 				{WIDTH_TITLE, WIDTH_GENRE, WIDTH_COUNTRY, WIDTH_YEAR, WIDTH_LIVE, WIDTH_STATE});
@@ -50,6 +52,7 @@ void Music::WidgetDataList::showSimple(const DataList& data_list)
 void Music::WidgetDataList::showByGenres(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_COUNTRY, CLMN_YEAR, CLMN_LIVE, CLMN_STATE};
+	setSearchColumns({CLMN_TITLE, CLMN_COUNTRY});
 	initColumns({tr("Жанр / Название"), tr("К-во"), tr("Страна основания"),
 				 tr("Год основания"), tr("Концерт"), tr("Активна")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_COUNTRY, WIDTH_YEAR, WIDTH_LIVE, WIDTH_STATE});
@@ -81,6 +84,7 @@ void Music::WidgetDataList::showByGenres(const DataList& data_list)
 void Music::WidgetDataList::showByCountries(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR, CLMN_LIVE, CLMN_STATE};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRE});
 	initColumns({tr("Страна основания / Название"), tr("К-во"), tr("Жанр"),
 				 tr("Год основания"), tr("Концерт"), tr("Активна")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR, WIDTH_LIVE, WIDTH_STATE});
@@ -112,6 +116,7 @@ void Music::WidgetDataList::showByCountries(const DataList& data_list)
 void Music::WidgetDataList::showByDecades(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_COUNTRY, CLMN_YEAR, CLMN_LIVE, CLMN_STATE};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRE, CLMN_COUNTRY});
 	initColumns({tr("Десятилетие основания / Название"), tr("К-во"), tr("Жанр"),
 				 tr("Страна основания"), tr("Год основания"), tr("Концерт"), tr("Активна")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_COUNTRY, WIDTH_YEAR, WIDTH_LIVE, WIDTH_STATE});
@@ -144,6 +149,7 @@ void Music::WidgetDataList::showByDecades(const DataList& data_list)
 void Music::WidgetDataList::showByLive(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_COUNTRY, CLMN_YEAR, CLMN_STATE};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRE, CLMN_COUNTRY});
 	initColumns({tr("Концерт / Название"), tr("К-во"), tr("Жанр"),
 				 tr("Страна основания"), tr("Год основания"), tr("Активна")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_COUNTRY, WIDTH_YEAR, WIDTH_STATE});
@@ -174,6 +180,7 @@ void Music::WidgetDataList::showByLive(const DataList& data_list)
 void Music::WidgetDataList::showByStates(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_COUNTRY, CLMN_YEAR, CLMN_LIVE};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRE, CLMN_COUNTRY});
 	initColumns({tr("Активна / Название"), tr("К-во"), tr("Жанр"),
 				 tr("Страна основания"), tr("Год основания"), tr("Концерт")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_COUNTRY, WIDTH_YEAR, WIDTH_LIVE});

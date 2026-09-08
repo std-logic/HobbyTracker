@@ -24,12 +24,14 @@ void Coins::WidgetDataList::update(const DataList& data_list, const Base::ExtraL
 		case DataListViewModes::Simple:			showSimple(data_list);						break;
 		default: return;
 	}
+	updateSearch();
 }
 
 void Coins::WidgetDataList::showByCountries(const DataList& data_list, const Base::ExtraList& extra_list)
 {
 	enum Columns {CLMN_COUNTRY, CLMN_COUNT, CLMN_VALUE, CLMN_TITLE,
 				  CLMN_DIAMETER, CLMN_NUMBER, CLMN_YEAR, CLMN_VERSION, CLMN_STATE};
+	setSearchColumns({CLMN_COUNTRY, CLMN_VALUE, CLMN_TITLE, CLMN_NUMBER});
 	initColumns({tr("Страна / Период / Валюта"), tr("К-во"), tr("Номинал"), tr("Название"),
 				 tr("D, мм"), tr("Номер"), tr("Год"), tr("Разн."), tr("Сост.")},
 				{WIDTH_COUNTRY_BIG, WIDTH_COUNT, WIDTH_VALUE, WIDTH_TITLE,
@@ -78,6 +80,7 @@ void Coins::WidgetDataList::showByRegions(const DataList& data_list, const Base:
 {
 	enum Columns {CLMN_COUNTRY, CLMN_COUNT, CLMN_VALUE, CLMN_TITLE,
 				  CLMN_DIAMETER, CLMN_NUMBER, CLMN_YEAR, CLMN_VERSION, CLMN_STATE};
+	setSearchColumns({CLMN_COUNTRY, CLMN_VALUE, CLMN_TITLE, CLMN_NUMBER});
 	initColumns({tr("Регион / Страна / Период / Валюта"), tr("К-во"), tr("Номинал"), tr("Название"),
 				 tr("D, мм"), tr("Номер"), tr("Год"), tr("Разн."), tr("Сост.")},
 				{WIDTH_COUNTRY_BIG, WIDTH_COUNT, WIDTH_VALUE, WIDTH_TITLE,
@@ -144,6 +147,8 @@ void Coins::WidgetDataList::showByDecades(const DataList& data_list)
 	enum Columns {CLMN_COUNTRY, CLMN_COUNT, CLMN_PERIOD, CLMN_CURRENCY,
 				  CLMN_VALUE, CLMN_TITLE, CLMN_DIAMETER, CLMN_NUMBER,
 				  CLMN_YEAR, CLMN_VERSION, CLMN_STATE};
+	setSearchColumns({CLMN_COUNTRY, CLMN_PERIOD, CLMN_CURRENCY,
+					  CLMN_VALUE, CLMN_TITLE, CLMN_NUMBER});
 	initColumns({tr("Десятилетие / Страна"), tr("К-во"), tr("Период"), tr("Валюта"),
 				 tr("Номинал"), tr("Название"), tr("D, мм"), tr("Номер"),
 				 tr("Год"), tr("Разн."), tr("Сост.")},
@@ -183,6 +188,8 @@ void Coins::WidgetDataList::showByCenturies(const DataList& data_list)
 	enum Columns {CLMN_COUNTRY, CLMN_COUNT, CLMN_PERIOD, CLMN_CURRENCY,
 				  CLMN_VALUE, CLMN_TITLE, CLMN_DIAMETER, CLMN_NUMBER,
 				  CLMN_YEAR, CLMN_VERSION, CLMN_STATE};
+	setSearchColumns({CLMN_COUNTRY, CLMN_PERIOD, CLMN_CURRENCY,
+					  CLMN_VALUE, CLMN_TITLE, CLMN_NUMBER});
 	initColumns({tr("Столетие / Страна"), tr("К-во"), tr("Период"), tr("Валюта"),
 				 tr("Номинал"), tr("Название"), tr("D, мм"), tr("Номер"),
 				 tr("Год"), tr("Разн."), tr("Сост.")},
@@ -221,6 +228,8 @@ void Coins::WidgetDataList::showSimple(const DataList& data_list)
 {
 	enum Columns {CLMN_COUNTRY, CLMN_PERIOD, CLMN_CURRENCY, CLMN_VALUE, CLMN_TITLE,
 				  CLMN_DIAMETER, CLMN_NUMBER, CLMN_YEAR, CLMN_VERSION, CLMN_STATE};
+	setSearchColumns({CLMN_COUNTRY, CLMN_PERIOD, CLMN_CURRENCY,
+					  CLMN_VALUE, CLMN_TITLE, CLMN_NUMBER});
 	initColumns({tr("Страна"), tr("Период"), tr("Валюта"), tr("Номинал"), tr("Название"),
 				 tr("D, мм"), tr("Номер"), tr("Год"), tr("Разн."), tr("Сост.")},
 				{WIDTH_COUNTRY_SMALL, WIDTH_PERIOD, WIDTH_CURRENCY, WIDTH_VALUE, WIDTH_TITLE,

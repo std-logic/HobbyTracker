@@ -22,11 +22,13 @@ void Books::WidgetDataList::update(const DataList& data_list)
 		case DataListViewModes::Simple:			showSimple(data_list);			break;
 		default: return;
 	}
+	updateSearch();
 }
 
 void Books::WidgetDataList::showByAuthors(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRE});
 	initColumns({tr("Автор / Название"), tr("К-во"), tr("Жанр"), tr("Год"), tr("Оценка")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
@@ -54,6 +56,7 @@ void Books::WidgetDataList::showByAuthors(const DataList& data_list)
 void Books::WidgetDataList::showByGenres(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE});
 	initColumns({tr("Жанр / Название"), tr("К-во"), tr("Год"), tr("Оценка")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
@@ -80,6 +83,7 @@ void Books::WidgetDataList::showByGenres(const DataList& data_list)
 void Books::WidgetDataList::showByDecades(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRE});
 	initColumns({tr("Десятилетие / Название"), tr("К-во"), tr("Жанр"), tr("Год"), tr("Оценка")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
@@ -107,6 +111,7 @@ void Books::WidgetDataList::showByDecades(const DataList& data_list)
 void Books::WidgetDataList::showByCenturies(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRE});
 	initColumns({tr("Столетие / Название"), tr("К-во"), tr("Жанр"), tr("Год"), tr("Оценка")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
@@ -134,6 +139,7 @@ void Books::WidgetDataList::showByCenturies(const DataList& data_list)
 void Books::WidgetDataList::showByRatings(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRE});
 	initColumns({tr("Оценка / Название"), tr("К-во"), tr("Жанр"), tr("Год")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR});
 	initSorting(CLMN_TITLE);
@@ -160,6 +166,7 @@ void Books::WidgetDataList::showByRatings(const DataList& data_list)
 void Books::WidgetDataList::showSimple(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRE});
 	initColumns({tr("Название"), tr("Жанр"), tr("Год"), tr("Оценка")},
 				{WIDTH_TITLE, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);

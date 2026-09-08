@@ -22,12 +22,14 @@ void Trekking::WidgetDataList::update(const DataList& data_list)
 		case DataListViewModes::ByKinds:		showByKinds(data_list);			break;
 		default: return;
 	}
+	updateSearch();
 }
 
 void Trekking::WidgetDataList::showSimple(const DataList& data_list)
 {
 	enum Columns {CLMN_DATE, CLMN_TIME, CLMN_DIST, CLMN_PEAK,
 				  CLMN_KIND, CLMN_COUNTRIES, CLMN_PLACES};
+	setSearchColumns({CLMN_KIND, CLMN_COUNTRIES, CLMN_PLACES});
 	initColumns({tr("Даты"), tr("Ночёвок"), tr("Километров"), tr("Высшая точка"),
 				 tr("Тип"), tr("Страны"), tr("Место")},
 				{WIDTH_DATE, WIDTH_TIME, WIDTH_DIST, WIDTH_PEAK,
@@ -52,6 +54,7 @@ void Trekking::WidgetDataList::showByCountries(const DataList& data_list)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_TIME, CLMN_DIST,
 				  CLMN_PEAK, CLMN_KIND, CLMN_COUNTRIES, CLMN_PLACES};
+	setSearchColumns({CLMN_KIND, CLMN_COUNTRIES, CLMN_PLACES});
 	initColumns({tr("Страна / Даты"), tr("К-во"), tr("Ночёвок"), tr("Километров"),
 				 tr("Высшая точка"), tr("Тип"), tr("Страны"), tr("Место")},
 				{WIDTH_DATE, WIDTH_COUNT, WIDTH_TIME, WIDTH_DIST,
@@ -92,6 +95,7 @@ void Trekking::WidgetDataList::showByRegions(const DataList& data_list)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_TIME, CLMN_DIST,
 				  CLMN_PEAK, CLMN_KIND, CLMN_COUNTRIES, CLMN_PLACES};
+	setSearchColumns({CLMN_DATE, CLMN_KIND, CLMN_COUNTRIES, CLMN_PLACES});
 	initColumns({tr("Регион / Страна / Даты"), tr("К-во"), tr("Ночёвок"), tr("Километров"),
 				 tr("Высшая точка"), tr("Тип"), tr("Страны"), tr("Место")},
 				{WIDTH_DATE, WIDTH_COUNT, WIDTH_TIME, WIDTH_DIST,
@@ -152,6 +156,7 @@ void Trekking::WidgetDataList::showByKinds(const DataList& data_list)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_TIME, CLMN_DIST,
 				  CLMN_PEAK, CLMN_COUNTRIES, CLMN_PLACES};
+	setSearchColumns({CLMN_DATE, CLMN_COUNTRIES, CLMN_PLACES});
 	initColumns({tr("Тип / Даты"), tr("К-во"), tr("Ночёвок"), tr("Километров"),
 				 tr("Высшая точка"), tr("Страны"), tr("Место")},
 				{WIDTH_DATE, WIDTH_COUNT, WIDTH_TIME, WIDTH_DIST,

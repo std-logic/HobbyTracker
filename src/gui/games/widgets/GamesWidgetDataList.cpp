@@ -23,11 +23,13 @@ void Games::WidgetDataList::update(const DataList& data_list)
 		case DataListViewModes::Simple:			showSimple(data_list);			break;
 		default: return;
 	}
+	updateSearch();
 }
 
 void Games::WidgetDataList::showBySeries(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_DEVELOPER, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_DEVELOPER, CLMN_GENRE});
 	initColumns({tr("Серия / Название"), tr("К-во"), tr("Разработчик"), tr("Жанр"), tr("Год"), tr("Оценка")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_DEVELOPER, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
@@ -56,6 +58,7 @@ void Games::WidgetDataList::showBySeries(const DataList& data_list)
 void Games::WidgetDataList::showByDevelopers(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRE});
 	initColumns({tr("Разработчик / Название"), tr("К-во"), tr("Жанр"), tr("Год"), tr("Оценка")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
@@ -83,6 +86,7 @@ void Games::WidgetDataList::showByDevelopers(const DataList& data_list)
 void Games::WidgetDataList::showByGenres(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_DEVELOPER, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_DEVELOPER});
 	initColumns({tr("Жанр / Название"), tr("К-во"), tr("Разработчик"), tr("Год"), tr("Оценка")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_DEVELOPER, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
@@ -110,6 +114,7 @@ void Games::WidgetDataList::showByGenres(const DataList& data_list)
 void Games::WidgetDataList::showByYears(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_DEVELOPER, CLMN_GENRE, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_DEVELOPER, CLMN_GENRE});
 	initColumns({tr("Год / Название"), tr("К-во"), tr("Разработчик"), tr("Жанр"), tr("Оценка")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_DEVELOPER, WIDTH_GENRE, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
@@ -136,6 +141,7 @@ void Games::WidgetDataList::showByYears(const DataList& data_list)
 void Games::WidgetDataList::showByDecades(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_DEVELOPER, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_DEVELOPER, CLMN_GENRE});
 	initColumns({tr("Десятилетие / Название"), tr("К-во"), tr("Разработчик"), tr("Жанр"), tr("Год"), tr("Оценка")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_DEVELOPER, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);
@@ -164,6 +170,7 @@ void Games::WidgetDataList::showByDecades(const DataList& data_list)
 void Games::WidgetDataList::showByRatings(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_COUNT, CLMN_DEVELOPER, CLMN_GENRE, CLMN_YEAR};
+	setSearchColumns({CLMN_TITLE, CLMN_DEVELOPER, CLMN_GENRE});
 	initColumns({tr("Оценка / Название"), tr("К-во"), tr("Разработчик"), tr("Жанр"), tr("Год")},
 				{WIDTH_TITLE, WIDTH_COUNT, WIDTH_DEVELOPER, WIDTH_GENRE, WIDTH_YEAR});
 	initSorting(CLMN_TITLE);
@@ -191,6 +198,7 @@ void Games::WidgetDataList::showByRatings(const DataList& data_list)
 void Games::WidgetDataList::showSimple(const DataList& data_list)
 {
 	enum Columns {CLMN_TITLE, CLMN_DEVELOPER, CLMN_GENRE, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_DEVELOPER, CLMN_GENRE});
 	initColumns({tr("Название"), tr("Разработчик"), tr("Жанр"), tr("Год"), tr("Оценка")},
 				{WIDTH_TITLE, WIDTH_DEVELOPER, WIDTH_GENRE, WIDTH_YEAR, WIDTH_RATING});
 	initSorting(CLMN_TITLE);

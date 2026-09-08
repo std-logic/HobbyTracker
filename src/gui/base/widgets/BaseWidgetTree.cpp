@@ -66,6 +66,26 @@ void Base::WidgetTree::clearList()
 	clear();
 }
 
+void Base::WidgetTree::findText(const QString& search_text)
+{
+	_search_text = search_text;
+	for (int i = 0; i < topLevelItemCount(); ++i) {
+		filterItem(topLevelItem(i), search_text);
+	}
+}
+
+void Base::WidgetTree::setSearchColumns(const std::vector<int>& columns)
+{
+	_search_columns = columns;
+}
+
+void Base::WidgetTree::updateSearch()
+{
+	if (!_search_text.isEmpty()) {
+		findText(_search_text);
+	}
+}
+
 void Base::WidgetTree::initColumns(const QStringList& labels, const std::vector<int>& widths)
 {
 	setColumnCount(labels.size());
@@ -150,6 +170,32 @@ void Base::WidgetTree::showRightClickToolTip(QTreeWidgetItem* item)
 void Base::WidgetTree::hideToolTip()
 {
 	_tooltip->hideText();
+}
+
+bool Base::WidgetTree::filterItem(QTreeWidgetItem* item,
+		const QString& search_text, bool parent_found)
+{
+	bool self_found = search_text.isEmpty() || parent_found;
+	if (!self_found) {
+		for (auto clmn : _search_columns) {
+			if (item->text(clmn).contains(search_text, Qt::CaseInsensitive)) {
+				self_found = true;
+				break;
+			}
+		}
+	}
+
+	bool child_found = false;
+	for (int i = 0; i < item->childCount(); ++i) {
+		if (filterItem(item->child(i), search_text, self_found)) {
+			child_found = true;
+		}
+	}
+
+	bool visible = self_found || child_found;
+	item->setHidden(!visible);
+
+	return visible;
 }
 
 void Base::WidgetTree::sortingChanged(int index, Qt::SortOrder order)
