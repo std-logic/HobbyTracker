@@ -19,6 +19,13 @@ Music::DataList::Summary Music::DataList::summary() const
 	return sum;
 }
 
+void Music::DataList::sort()
+{
+	std::ranges::sort(_data_list, {}, [](const Data& data) {
+		return data.title().toCaseFolded();
+	});
+}
+
 Music::DataList::SublistsByStrings Music::DataList::artistsByGenres() const
 {
 	return sublistsByStrings(&Data::genre);

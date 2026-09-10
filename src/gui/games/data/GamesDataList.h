@@ -24,6 +24,8 @@ public:
 	};
 	Summary summary() const;
 
+	void sort() override;
+
 	SublistsByStrings gamesBySeries() const;
 	NumbersByStringsVec numbersBySeries(size_t max_num) const;
 	ListOfStrings listOfSeries() const;

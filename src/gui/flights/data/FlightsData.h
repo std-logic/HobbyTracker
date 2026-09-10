@@ -21,13 +21,7 @@ public:
 		QString airport;
 		uint32_t dist = 0;
 
-		inline bool operator==(const FlightPoint& other) const noexcept
-		{
-			return	(country == other.country) &&
-					(city == other.city) &&
-					(airport == other.airport) &&
-					(dist == other.dist);
-		}
+		bool operator==(const FlightPoint& other) const noexcept = default;
 	};
 	using FlightPoints = std::vector<FlightPoint>;
 
@@ -207,11 +201,7 @@ public:
 		return text;
 	}
 
-	inline bool operator==(const Data& other) const noexcept
-	{
-		return	(_date == other.date()) &&
-				(_points == other.points());
-	}
+	bool operator==(const Data& other) const noexcept = default;
 
 private:
 	QString _date; // YYYY.MM.DD

@@ -92,17 +92,7 @@ public:
 		return text;
 	}
 
-	inline bool operator==(const Data& other) const noexcept
-	{
-		return	(_date_start == other.dateStart()) &&
-				(_date_end == other.dateEnd()) &&
-				(_time == other.time()) &&
-				(_dist == other.dist()) &&
-				(_peak == other.peak()) &&
-				(_kind == other.kind()) &&
-				(_countries == other.countries()) &&
-				(_places == other.places());
-	}
+	bool operator==(const Data& other) const noexcept = default;
 
 private:
 	QString _date_start; // YYYY.MM.DD

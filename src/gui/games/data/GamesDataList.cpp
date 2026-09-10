@@ -21,6 +21,13 @@ Games::DataList::Summary Games::DataList::summary() const
 	return sum;
 }
 
+void Games::DataList::sort()
+{
+	std::ranges::stable_sort(_data_list, {}, [](const Data& data) {
+		return std::make_tuple(data.series(), data.year());
+	});
+}
+
 Games::DataList::SublistsByStrings Games::DataList::gamesBySeries() const
 {
 	return sublistsByStrings(&Data::series);

@@ -141,13 +141,16 @@ void Movies::WidgetMain::saveCsvData()
 	auto csv_settings = _settings.csvSettings();
 
 	// we don't write main data file at this moment, because take it from external source
+	// _data_list.sort();
 	// auto csv_data = DataConverter::conv(_data_list);
 	// auto write_data_ok = Storage::writeCsv(CsvFileData, csv_settings, csv_data);
 
 	auto favorites_list = _data_list.getFavorites();
+	std::ranges::sort(favorites_list, {}, &Data::titleTr);
 	auto csv_data = FavoritesConverter::conv(favorites_list);
 	auto write_favorites_ok = Storage::writeCsv(CsvFileFavorites, csv_settings, csv_data);
 
+	_extra_list.sort();
 	csv_data = Base::ExtraConverter::conv(_extra_list);
 	auto write_extra_ok = Storage::writeCsv(CsvFileExtra, csv_settings, csv_data);
 

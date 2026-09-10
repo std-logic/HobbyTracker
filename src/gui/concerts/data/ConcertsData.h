@@ -103,15 +103,7 @@ public:
 		return text;
 	}
 
-	inline bool operator==(const Data& other) const noexcept
-	{
-		return	(_date == other.date()) &&
-				(_artists == other.artists()) &&
-				(_description == other.description()) &&
-				(_country == other.country()) &&
-				(_city == other.city()) &&
-				(_place == other.place());
-	}
+	bool operator==(const Data& other) const noexcept = default;
 
 private:
 	QString _date; // YYYY.MM.DD

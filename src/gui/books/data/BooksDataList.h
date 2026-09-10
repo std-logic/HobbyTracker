@@ -23,6 +23,8 @@ public:
 	};
 	Summary summary() const;
 
+	void sort() override;
+
 	SublistsByStrings booksByAuthors() const;
 	NumbersByStringsVec numbersByAuthors(size_t max_num) const;
 	ListOfStrings listOfAuthorsTr() const;

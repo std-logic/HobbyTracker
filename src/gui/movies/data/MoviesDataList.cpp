@@ -28,6 +28,11 @@ Movies::DataList::Summary Movies::DataList::summary(
 	return sum;
 }
 
+void Movies::DataList::sort()
+{
+	std::ranges::stable_sort(_data_list, std::ranges::greater(), &Data::viewDate);
+}
+
 void Movies::DataList::setFavorites(const DataList& favorites_list)
 {
 	std::unordered_map<QString, const Data*> favorites_map;
@@ -57,7 +62,6 @@ Movies::DataList Movies::DataList::getFavorites() const
 			favorites_list.add(data);
 		}
 	}
-	std::ranges::sort(favorites_list, {}, &Data::titleTr);
 	return favorites_list;
 }
 

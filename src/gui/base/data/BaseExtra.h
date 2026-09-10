@@ -36,12 +36,7 @@ public:
 	inline QString notes() const
 	{ return _notes; }
 
-	inline bool operator==(const Extra& other) const noexcept
-	{
-		return	(_group == other.group()) &&
-				(_title == other.title()) &&
-				(_notes == other.notes());
-	}
+	bool operator==(const Extra& other) const noexcept = default;
 
 private:
 	QString _group;

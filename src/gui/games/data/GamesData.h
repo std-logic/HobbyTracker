@@ -70,15 +70,7 @@ public:
 		return text;
 	}
 
-	inline bool operator==(const Data& other) const noexcept
-	{
-		return	(_series == other.series()) &&
-				(_title == other.title()) &&
-				(_developer == other.developer()) &&
-				(_genre == other.genre()) &&
-				(_year == other.year()) &&
-				(_rating == other.rating());
-	}
+	bool operator==(const Data& other) const noexcept = default;
 
 private:
 	QString _series;

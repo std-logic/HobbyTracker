@@ -14,6 +14,11 @@ Bike::TripList::Summary Bike::TripList::summary() const
 	return sum;
 }
 
+void Bike::TripList::sort()
+{
+	std::ranges::sort(_data_list, {}, &Trip::dateStart);
+}
+
 Bike::TripList::NumbersByStrings Bike::TripList::numbersByYears(uint32_t step,
 		RangeTypes range_type, uint32_t required_min, uint32_t required_max) const
 {

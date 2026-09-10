@@ -21,6 +21,8 @@ public:
 	};
 	Summary summary() const;
 
+	void sort() override;
+
 	NumbersByIntegers distByYears() const;
 	NumbersByIntegers timeByYears() const;
 };

@@ -22,6 +22,8 @@ public:
 	};
 	Summary summary() const;
 
+	void sort() override;
+
 	NumbersByStrings numbersByYears(uint32_t step = 1,
 			RangeTypes range_type = RangeTypes::Discrete,
 			uint32_t required_min = 0, uint32_t required_max = 0) const;

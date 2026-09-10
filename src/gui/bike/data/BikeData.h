@@ -48,12 +48,7 @@ public:
 		return text;
 	}
 
-	inline bool operator==(const Data& other) const noexcept
-	{
-		return	(_year == other.year()) &&
-				(_time == other.time()) &&
-				(_dist == other.dist());
-	}
+	bool operator==(const Data& other) const noexcept = default;
 
 private:
 	uint32_t _year = Global::undefined_value;

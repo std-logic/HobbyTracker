@@ -124,9 +124,11 @@ void Coins::WidgetMain::readCsvData(const Csv::Settings& csv_settings)
 void Coins::WidgetMain::saveCsvData()
 {
 	// we don't write main data file at this moment, because take it from external source
+	// _data_list.sort();
 	// auto csv_data = DataConverter::conv(_data_list);
 	// auto write_data_ok = Storage::writeCsv(CsvFileData, _settings.csvSettings(), csv_data);
 
+	_extra_list.sort();
 	auto csv_data = Base::ExtraConverter::conv(_extra_list);
 	auto write_extra_ok = Storage::writeCsv(CsvFileExtra, _settings.csvSettings(), csv_data);
 

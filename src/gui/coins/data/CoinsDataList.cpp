@@ -18,6 +18,13 @@ Coins::DataList::Summary Coins::DataList::summary(const Synonyms& synonyms) cons
 	return sum;
 }
 
+void Coins::DataList::sort()
+{
+	std::ranges::stable_sort(_data_list, {}, [](const Data& data) {
+		return std::make_tuple(data.country(), data.period(), data.value(), data.number());
+	});
+}
+
 Coins::DataList::Sublists2ByStrings Coins::DataList::coinsByCountries(
 		const Synonyms& synonyms) const
 {

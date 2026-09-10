@@ -25,6 +25,8 @@ public:
 	};
 	Summary summary() const;
 
+	void sort() override;
+
 	SublistsByStrings concertsByYears(uint32_t step = 1) const;
 	NumbersByStrings numbersByYears(uint32_t step = 1,
 			RangeTypes range_type = RangeTypes::Discrete,

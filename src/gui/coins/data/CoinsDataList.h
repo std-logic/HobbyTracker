@@ -24,6 +24,8 @@ public:
 	};
 	Summary summary(const Synonyms& synonyms) const;
 
+	void sort() override;
+
 	Sublists2ByStrings coinsByCountries(const Synonyms& synonyms) const;
 	NumbersByStringsVec numbersByCountries(size_t max_num, const Synonyms& synonyms) const;
 	ListOfStrings listOfCountries() const;

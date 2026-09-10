@@ -11,6 +11,8 @@ class ExtraList : public DataList<Extra>
 public:
 	ExtraList() = default;
 
+	void sort() override;
+
 	SublistsByStrings extraByGroups() const;
 	ListOfStrings listOfGroups() const;
 

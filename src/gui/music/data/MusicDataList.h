@@ -25,6 +25,8 @@ public:
 	};
 	Summary summary() const;
 
+	void sort() override;
+
 	SublistsByStrings artistsByGenres() const;
 	NumbersByStringsVec numbersByGenres(size_t max_num) const;
 	ListOfStrings listOfGenres() const;

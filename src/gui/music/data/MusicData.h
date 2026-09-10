@@ -101,15 +101,7 @@ public:
 		return text;
 	}
 
-	inline bool operator==(const Data& other) const noexcept
-	{
-		return	(_title == other.title()) &&
-				(_genre == other.genre()) &&
-				(_country == other.country()) &&
-				(_year == other.year()) &&
-				(static_cast<uint32_t>(_state) == other.state()) &&
-				(static_cast<uint32_t>(_live) == other.live());
-	}
+	bool operator==(const Data& other) const noexcept = default;
 
 private:
 	QString _title;

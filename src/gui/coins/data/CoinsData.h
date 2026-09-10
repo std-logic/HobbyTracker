@@ -112,19 +112,7 @@ public:
 		return text;
 	}
 
-	inline bool operator==(const Data& other) const noexcept
-	{
-		return	(_country == other.country()) &&
-				(_period == other.period()) &&
-				(_value == other.value()) &&
-				(_version == other.version()) &&
-				(_currency == other.currency()) &&
-				(_title == other.title()) &&
-				(_state == other.state()) &&
-				(_number == other.number()) &&
-				(_diameter == other.diameter()) &&
-				(_year == other.year());
-	}
+	bool operator==(const Data& other) const noexcept = default;
 
 private:
 	QString _country;

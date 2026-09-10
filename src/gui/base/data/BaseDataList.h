@@ -75,6 +75,8 @@ public:
 	inline void del(size_t index)
 	{ _data_list.erase(_data_list.begin() + index); }
 
+	virtual void sort() {};
+
 	int findIndexById(const QString& id)
 	{
 		for (size_t i = 0; i < _data_list.size(); ++i) {

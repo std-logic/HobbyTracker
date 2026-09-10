@@ -11,6 +11,11 @@ Bike::DataList::Summary Bike::DataList::summary() const
 	return sum;
 }
 
+void Bike::DataList::sort()
+{
+	std::ranges::sort(_data_list, {}, &Data::year);
+}
+
 Bike::DataList::NumbersByIntegers Bike::DataList::distByYears() const
 {
 	return numbersByIntegers(&Data::year, &Data::dist);

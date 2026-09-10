@@ -164,23 +164,7 @@ public:
 		return text;
 	}
 
-	inline bool operator==(const Data& other) const noexcept
-	{
-		return	(_view_date == other.viewDate()) &&
-				(_title_tr == other.titleTr()) &&
-				(_title_orig == other.titleOrig()) &&
-				(_kind == other.kind()) &&
-				(_genres == other.genres()) &&
-				(_countries == other.countries()) &&
-				(_directors == other.directors()) &&
-				(_writers == other.writers()) &&
-				(_actors == other.actors()) &&
-				(_time == other.time()) &&
-				(_year_start == other.yearStart()) &&
-				(_year_end == other.yearEnd()) &&
-				(_rating == other.rating()) &&
-				(_favorite == other.isFavorite());
-	}
+	bool operator==(const Data& other) const noexcept = default;
 
 private:
 	QString _view_date; // YYYY.MM.DD HH:MM:SS

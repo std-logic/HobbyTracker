@@ -27,6 +27,8 @@ public:
 	};
 	Summary summary(const Synonyms& synonyms, bool favorites_only = false) const;
 
+	void sort() override;
+
 	void setFavorites(const DataList& favorites_list);
 	DataList getFavorites() const;
 

@@ -118,9 +118,11 @@ void Bike::WidgetMain::readCsvData(const Csv::Settings& csv_settings)
 
 void Bike::WidgetMain::saveCsvData()
 {
+	_data_list.sort();
 	auto csv_data = DataConverter::conv(_data_list);
 	auto write_data_ok = Storage::writeCsv(CsvFileData, _settings.csvSettings(), csv_data);
 
+	_trip_list.sort();
 	csv_data = TripConverter::conv(_trip_list);
 	auto write_trip_ok = Storage::writeCsv(CsvFileTrip, _settings.csvSettings(), csv_data);
 

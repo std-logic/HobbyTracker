@@ -22,6 +22,11 @@ Concerts::DataList::Summary Concerts::DataList::summary() const
 	return sum;
 }
 
+void Concerts::DataList::sort()
+{
+	std::ranges::stable_sort(_data_list, {}, &Data::date);
+}
+
 Concerts::DataList::SublistsByStrings Concerts::DataList::concertsByYears(uint32_t step) const
 {
 	return sublistsByEpochStrings(&Data::year, step);

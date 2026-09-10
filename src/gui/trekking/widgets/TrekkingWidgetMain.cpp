@@ -99,6 +99,7 @@ void Trekking::WidgetMain::readCsvData(const Csv::Settings& csv_settings)
 
 void Trekking::WidgetMain::saveCsvData()
 {
+	_data_list.sort();
 	auto csv_data = DataConverter::conv(_data_list);
 	auto write_data_ok = Storage::writeCsv(CsvFileData, _settings.csvSettings(), csv_data);
 

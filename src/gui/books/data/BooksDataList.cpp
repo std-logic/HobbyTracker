@@ -19,6 +19,13 @@ Books::DataList::Summary Books::DataList::summary() const
 	return sum;
 }
 
+void Books::DataList::sort()
+{
+	std::ranges::stable_sort(_data_list, {}, [](const Data& data) {
+		return std::make_tuple(data.authorTr(), data.year());
+	});
+}
+
 Books::DataList::SublistsByStrings Books::DataList::booksByAuthors() const
 {
 	return sublistsByStrings(&Data::author);

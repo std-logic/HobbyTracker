@@ -30,6 +30,11 @@ Flights::DataList::Summary Flights::DataList::summary() const
 	return sum;
 }
 
+void Flights::DataList::sort()
+{
+	std::ranges::stable_sort(_data_list, {}, &Data::date);
+}
+
 Flights::DataList::SublistsByStrings Flights::DataList::flightsByYears(uint32_t step) const
 {
 	return sublistsByEpochStrings(&Data::year, step);

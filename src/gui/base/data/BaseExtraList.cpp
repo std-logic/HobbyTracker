@@ -1,5 +1,12 @@
 #include "BaseExtraList.h"
 
+void Base::ExtraList::sort()
+{
+	std::ranges::sort(_data_list, {}, [](const Extra& extra) {
+		return std::make_tuple(extra.group(), extra.title());
+	});
+}
+
 Base::ExtraList::SublistsByStrings Base::ExtraList::extraByGroups() const
 {
 	return sublistsByStrings(&Extra::group);
