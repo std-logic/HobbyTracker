@@ -14,7 +14,8 @@ QStringList Trekking::DataConverter::getDefaultCsvHeader()
 	header[CLMN_PEAK]			= tr("Высшая точка");
 	header[CLMN_KIND]			= tr("Тип");
 	header[CLMN_COUNTRIES]		= tr("Страны");
-	header[CLMN_PLACES]			= tr("Место");
+	header[CLMN_PLACES]			= tr("Маршрут");
+	header[CLMN_PHOTO_LINK]		= tr("Фото");
 
 	return header;
 }
@@ -55,6 +56,9 @@ Trekking::DataList Trekking::DataConverter::conv(const Csv::Data& csv_data)
 		if (CLMN_PLACES < line_size) {
 			data.setPlaces(line[CLMN_PLACES]);
 		}
+		if (CLMN_PHOTO_LINK < line_size) {
+			data.setPhotoLink(line[CLMN_PHOTO_LINK]);
+		}
 
 		data_list.add(data);
 	}
@@ -77,6 +81,7 @@ Csv::Data Trekking::DataConverter::conv(const DataList& data_list)
 		line[CLMN_KIND]			= data.kind();
 		line[CLMN_COUNTRIES]	= data.countriesToString();
 		line[CLMN_PLACES]		= data.places();
+		line[CLMN_PHOTO_LINK]	= data.photoLink();
 
 		csv_data.push_back(line);
 	}

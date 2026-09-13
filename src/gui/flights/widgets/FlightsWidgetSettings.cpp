@@ -1,5 +1,7 @@
 #include "FlightsWidgetSettings.h"
 
+#include <gui/base/widgets/BaseWidgetCsvSettings.h>
+
 Flights::WidgetSettings::WidgetSettings(const Settings& settings, QWidget* parent)
 	: Base::WidgetSettings{parent}
 	, _settings{settings}

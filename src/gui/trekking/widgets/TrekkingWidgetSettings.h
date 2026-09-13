@@ -2,8 +2,13 @@
 
 #include "../data/TrekkingSettings.h"
 
-#include <gui/base/widgets/BaseWidgetCsvSettings.h>
 #include <gui/base/widgets/BaseWidgetSettings.h>
+
+namespace Base
+{
+class WidgetCsvSettings;
+class WidgetFileEdit;
+}
 
 namespace Trekking
 {
@@ -22,6 +27,7 @@ signals:
 private:
 	void initWidgets();
 
+	void copySettingsToGui();
 	void copyGuiToSettings();
 
 private slots:
@@ -29,6 +35,7 @@ private slots:
 
 private:
 	Base::WidgetCsvSettings* _widget_csv_settings = nullptr;
+	Base::WidgetFileEdit* _widget_photo_dir = nullptr;
 
 	Settings _settings;
 };

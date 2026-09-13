@@ -12,7 +12,7 @@ QStringList Bike::TripConverter::getDefaultCsvHeader()
 	header[CLMN_TIME]			= tr("Ночёвок");
 	header[CLMN_DIST]			= tr("Километров");
 	header[CLMN_COUNTRIES]		= tr("Страны");
-	header[CLMN_PLACES]			= tr("Места");
+	header[CLMN_PLACES]			= tr("Маршрут");
 	header[CLMN_PHOTO_LINK]		= tr("Фото");
 
 	return header;

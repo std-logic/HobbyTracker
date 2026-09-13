@@ -11,29 +11,30 @@ Trekking::WidgetDataList::WidgetDataList(QWidget* parent)
 {
 }
 
-void Trekking::WidgetDataList::update(const DataList& data_list)
+void Trekking::WidgetDataList::update(const DataList& data_list, const QString& photo_dir)
 {
 	clear();
 	setRootIsDecorated(static_cast<DataListViewModes>(_view_mode) != DataListViewModes::Simple);
 	switch (static_cast<DataListViewModes>(_view_mode)) {
-		case DataListViewModes::Simple:			showSimple(data_list);			break;
-		case DataListViewModes::ByCountries:	showByCountries(data_list);		break;
-		case DataListViewModes::ByRegions:		showByRegions(data_list);		break;
-		case DataListViewModes::ByKinds:		showByKinds(data_list);			break;
+		case DataListViewModes::Simple:			showSimple(data_list, photo_dir);			break;
+		case DataListViewModes::ByCountries:	showByCountries(data_list, photo_dir);		break;
+		case DataListViewModes::ByRegions:		showByRegions(data_list, photo_dir);		break;
+		case DataListViewModes::ByKinds:		showByKinds(data_list, photo_dir);			break;
 		default: return;
 	}
 	updateSearch();
 }
 
-void Trekking::WidgetDataList::showSimple(const DataList& data_list)
+void Trekking::WidgetDataList::showSimple(const DataList& data_list, const QString& photo_dir)
 {
 	enum Columns {CLMN_DATE, CLMN_TIME, CLMN_DIST, CLMN_PEAK,
-				  CLMN_KIND, CLMN_COUNTRIES, CLMN_PLACES};
+				  CLMN_KIND, CLMN_COUNTRIES, CLMN_PLACES, CLMN_PHOTOS};
 	setSearchColumns({CLMN_KIND, CLMN_COUNTRIES, CLMN_PLACES});
 	initColumns({tr("Даты"), tr("Ночёвок"), tr("Километров"), tr("Высшая точка"),
-				 tr("Тип"), tr("Страны"), tr("Место")},
+				 tr("Тип"), tr("Страны"), tr("Маршрут"), ""},
 				{WIDTH_DATE, WIDTH_TIME, WIDTH_DIST, WIDTH_PEAK,
-				 WIDTH_KIND, WIDTH_COUNTRIES, WIDTH_PLACES});
+				 WIDTH_KIND, WIDTH_COUNTRIES, WIDTH_PLACES, WIDTH_PHOTOS});
+	initPhotoColumn(CLMN_PHOTOS);
 	initSorting(CLMN_DATE, Qt::DescendingOrder);
 
 	for (const auto& track : data_list) {
@@ -45,20 +46,22 @@ void Trekking::WidgetDataList::showSimple(const DataList& data_list)
 		item_track->setText(CLMN_KIND, track.kind());
 		item_track->setText(CLMN_COUNTRIES, track.countriesToString(QStringLiteral(" • ")));
 		item_track->setText(CLMN_PLACES, track.places());
+		item_track->setPhotoLink(CLMN_PHOTOS, photo_dir, track.photoLink());
 		item_track->setHoveredToolTip(track.summaryString());
 		item_track->setId(track.id());
 	}
 }
 
-void Trekking::WidgetDataList::showByCountries(const DataList& data_list)
+void Trekking::WidgetDataList::showByCountries(const DataList& data_list, const QString& photo_dir)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_TIME, CLMN_DIST,
-				  CLMN_PEAK, CLMN_KIND, CLMN_COUNTRIES, CLMN_PLACES};
+				  CLMN_PEAK, CLMN_KIND, CLMN_COUNTRIES, CLMN_PLACES, CLMN_PHOTOS};
 	setSearchColumns({CLMN_KIND, CLMN_COUNTRIES, CLMN_PLACES});
 	initColumns({tr("Страна / Даты"), tr("К-во"), tr("Ночёвок"), tr("Километров"),
-				 tr("Высшая точка"), tr("Тип"), tr("Страны"), tr("Место")},
+				 tr("Высшая точка"), tr("Тип"), tr("Страны"), tr("Маршрут"), ""},
 				{WIDTH_DATE, WIDTH_COUNT, WIDTH_TIME, WIDTH_DIST,
-				 WIDTH_PEAK, WIDTH_KIND, WIDTH_COUNTRIES, WIDTH_PLACES});
+				 WIDTH_PEAK, WIDTH_KIND, WIDTH_COUNTRIES, WIDTH_PLACES, WIDTH_PHOTOS});
+	initPhotoColumn(CLMN_PHOTOS);
 	initSorting(CLMN_DATE);
 
 	auto tracks_by_countries = data_list.tracksByCountries();
@@ -78,6 +81,7 @@ void Trekking::WidgetDataList::showByCountries(const DataList& data_list)
 			item_track->setText(CLMN_KIND, track->kind());
 			item_track->setText(CLMN_COUNTRIES, track->countriesToString(QStringLiteral(" • ")));
 			item_track->setText(CLMN_PLACES, track->places());
+			item_track->setPhotoLink(CLMN_PHOTOS, photo_dir, track->photoLink());
 			item_track->setHoveredToolTip(track->summaryString());
 			item_track->setId(track->id());
 			country_time += track->time();
@@ -91,15 +95,16 @@ void Trekking::WidgetDataList::showByCountries(const DataList& data_list)
 	}
 }
 
-void Trekking::WidgetDataList::showByRegions(const DataList& data_list)
+void Trekking::WidgetDataList::showByRegions(const DataList& data_list, const QString& photo_dir)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_TIME, CLMN_DIST,
-				  CLMN_PEAK, CLMN_KIND, CLMN_COUNTRIES, CLMN_PLACES};
+				  CLMN_PEAK, CLMN_KIND, CLMN_COUNTRIES, CLMN_PLACES, CLMN_PHOTOS};
 	setSearchColumns({CLMN_DATE, CLMN_KIND, CLMN_COUNTRIES, CLMN_PLACES});
 	initColumns({tr("Регион / Страна / Даты"), tr("К-во"), tr("Ночёвок"), tr("Километров"),
-				 tr("Высшая точка"), tr("Тип"), tr("Страны"), tr("Место")},
+				 tr("Высшая точка"), tr("Тип"), tr("Страны"), tr("Маршрут"), ""},
 				{WIDTH_DATE, WIDTH_COUNT, WIDTH_TIME, WIDTH_DIST,
-				 WIDTH_PEAK, WIDTH_KIND, WIDTH_COUNTRIES, WIDTH_PLACES});
+				 WIDTH_PEAK, WIDTH_KIND, WIDTH_COUNTRIES, WIDTH_PLACES, WIDTH_PHOTOS});
+	initPhotoColumn(CLMN_PHOTOS);
 	initSorting(CLMN_DATE);
 
 	auto tracks_by_regions = data_list.tracksByRegions();
@@ -126,6 +131,7 @@ void Trekking::WidgetDataList::showByRegions(const DataList& data_list)
 				item_track->setText(CLMN_KIND, track->kind());
 				item_track->setText(CLMN_COUNTRIES, track->countriesToString(QStringLiteral(" • ")));
 				item_track->setText(CLMN_PLACES, track->places());
+				item_track->setPhotoLink(CLMN_PHOTOS, photo_dir, track->photoLink());
 				item_track->setHoveredToolTip(track->summaryString());
 				item_track->setId(track->id());
 				if (!ids.contains(track->id())) {
@@ -152,15 +158,16 @@ void Trekking::WidgetDataList::showByRegions(const DataList& data_list)
 	}
 }
 
-void Trekking::WidgetDataList::showByKinds(const DataList& data_list)
+void Trekking::WidgetDataList::showByKinds(const DataList& data_list, const QString& photo_dir)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_TIME, CLMN_DIST,
-				  CLMN_PEAK, CLMN_COUNTRIES, CLMN_PLACES};
+				  CLMN_PEAK, CLMN_COUNTRIES, CLMN_PLACES, CLMN_PHOTOS};
 	setSearchColumns({CLMN_DATE, CLMN_COUNTRIES, CLMN_PLACES});
 	initColumns({tr("Тип / Даты"), tr("К-во"), tr("Ночёвок"), tr("Километров"),
-				 tr("Высшая точка"), tr("Страны"), tr("Место")},
+				 tr("Высшая точка"), tr("Страны"), tr("Маршрут"), ""},
 				{WIDTH_DATE, WIDTH_COUNT, WIDTH_TIME, WIDTH_DIST,
-				 WIDTH_PEAK, WIDTH_COUNTRIES, WIDTH_PLACES});
+				 WIDTH_PEAK, WIDTH_COUNTRIES, WIDTH_PLACES, WIDTH_PHOTOS});
+	initPhotoColumn(CLMN_PHOTOS);
 	initSorting(CLMN_DATE);
 
 	auto tracks_by_kinds = data_list.tracksByKinds();
@@ -179,6 +186,7 @@ void Trekking::WidgetDataList::showByKinds(const DataList& data_list)
 			item_track->setNumb(CLMN_PEAK, track->peak());
 			item_track->setText(CLMN_COUNTRIES, track->countriesToString(QStringLiteral(" • ")));
 			item_track->setText(CLMN_PLACES, track->places());
+			item_track->setPhotoLink(CLMN_PHOTOS, photo_dir, track->photoLink());
 			item_track->setHoveredToolTip(track->summaryString());
 			item_track->setId(track->id());
 			kind_time += track->time();

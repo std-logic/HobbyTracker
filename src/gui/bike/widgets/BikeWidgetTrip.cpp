@@ -44,7 +44,7 @@ void Bike::WidgetTrip::initWidgets(const QString& photo_dir)
 	add(tr("Страны:"), _edit_countries);
 	_edit_countries->setPlaceholderText(tr("Список через запятую"));
 
-	add(tr("Места:"), _edit_places);
+	add(tr("Маршрут:"), _edit_places);
 	_edit_places->setPlaceholderText(tr("Список через запятую"));
 
 	add(tr("Фото:"), _widget_photos);
@@ -104,7 +104,7 @@ bool Bike::WidgetTrip::copyGuiToData()
 	_data.setCountriesFromString(_edit_countries->text());
 
 	if (_edit_places->text().isEmpty()) {
-		emit showMessage(tr("Не введены места!"));
+		emit showMessage(tr("Не введён маршрут!"));
 		return false;
 	}
 	_data.setPlacesFromString(_edit_places->text());

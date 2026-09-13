@@ -75,6 +75,12 @@ public:
 	inline QString places() const
 	{ return _places; }
 
+	template<typename T>
+	inline void setPhotoLink(T&& photo_link)
+	{ _photo_link = std::forward<T>(photo_link); }
+	inline QString photoLink() const
+	{ return _photo_link; }
+
 	QString summaryString() const
 	{
 		QString text;
@@ -87,7 +93,7 @@ public:
 		text += Helper::htmlTableRow(tr("Тип"), _kind);
 		auto countries_head = (_countries.size() > 1) ? tr("Страны") : tr("Страна");
 		text += Helper::htmlTableRow(countries_head, countriesToString(QStringLiteral(" • ")));
-		text += Helper::htmlTableRow(tr("Место"), _places);
+		text += Helper::htmlTableRow(tr("Маршрут"), _places);
 		text += Helper::htmlTableEnd();
 		return text;
 	}
@@ -103,6 +109,7 @@ private:
 	QString _kind;
 	QStringList _countries;
 	QString _places;
+	QString _photo_link;
 };
 
 } // namespace Trekking

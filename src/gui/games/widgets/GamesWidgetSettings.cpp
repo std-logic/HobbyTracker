@@ -1,5 +1,7 @@
 #include "GamesWidgetSettings.h"
 
+#include <gui/base/widgets/BaseWidgetCsvSettings.h>
+
 Games::WidgetSettings::WidgetSettings(const Settings& settings, QWidget* parent)
 	: Base::WidgetSettings{parent}
 	, _settings{settings}

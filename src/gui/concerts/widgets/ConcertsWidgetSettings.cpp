@@ -1,5 +1,7 @@
 #include "ConcertsWidgetSettings.h"
 
+#include <gui/base/widgets/BaseWidgetCsvSettings.h>
+
 Concerts::WidgetSettings::WidgetSettings(const Settings& settings, QWidget* parent)
 	: Base::WidgetSettings{parent}
 	, _settings{settings}

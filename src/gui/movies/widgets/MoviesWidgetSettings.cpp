@@ -1,5 +1,7 @@
 #include "MoviesWidgetSettings.h"
 
+#include <gui/base/widgets/BaseWidgetCsvSettings.h>
+
 Movies::WidgetSettings::WidgetSettings(const Settings& settings, QWidget* parent)
 	: Base::WidgetSettings{parent}
 	, _settings{settings}

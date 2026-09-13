@@ -84,7 +84,7 @@ public:
 		text += Helper::htmlTableRow(tr("Расстояние"), tr("%1 км").arg(_dist));
 		auto countries_head = (_countries.size() > 1) ? tr("Страны") : tr("Страна");
 		text += Helper::htmlTableRow(countries_head, countriesToString(QStringLiteral(" • ")));
-		text += Helper::htmlTableRow(tr("Места"), placesToString(QStringLiteral(" → ")));
+		text += Helper::htmlTableRow(tr("Маршрут"), placesToString(QStringLiteral(" → ")));
 		text += Helper::htmlTableEnd();
 		return text;
 	}

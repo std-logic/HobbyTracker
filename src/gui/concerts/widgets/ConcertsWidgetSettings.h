@@ -2,8 +2,12 @@
 
 #include "../data/ConcertsSettings.h"
 
-#include <gui/base/widgets/BaseWidgetCsvSettings.h>
 #include <gui/base/widgets/BaseWidgetSettings.h>
+
+namespace Base
+{
+class WidgetCsvSettings;
+}
 
 namespace Concerts
 {

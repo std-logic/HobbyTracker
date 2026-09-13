@@ -2,17 +2,19 @@
 
 #include <gui/base/widgets/BaseComboEdit.h>
 #include <gui/base/widgets/BaseWidgetDateEdit.h>
+#include <gui/base/widgets/BaseWidgetFileEdit.h>
 
 #include <QLineEdit>
 #include <QValidator>
 
-Trekking::WidgetData::WidgetData(size_t index, const DataList& data_list, QWidget* parent)
+Trekking::WidgetData::WidgetData(size_t index, const DataList& data_list,
+								 const QString& photo_dir, QWidget* parent)
 	: Base::WidgetData{index, data_list.size(), parent}
 	, _data_list{data_list}
 {
 	initData();
 	initCommonParams();
-	initWidgets();
+	initWidgets(photo_dir);
 	copyDataToGui();
 }
 
@@ -28,7 +30,7 @@ void Trekking::WidgetData::initCommonParams()
 			tr("Добавление нового похода"));
 }
 
-void Trekking::WidgetData::initWidgets()
+void Trekking::WidgetData::initWidgets(const QString& photo_dir)
 {
 	add(tr("Старт:"), _edit_date_start);
 
@@ -48,7 +50,11 @@ void Trekking::WidgetData::initWidgets()
 	add(tr("Страны:"), _edit_countries);
 	_edit_countries->setPlaceholderText(tr("Список через запятую"));
 
-	add(tr("Место:"), _edit_places);
+	add(tr("Маршрут:"), _edit_places);
+
+	add(tr("Фото:"), _widget_photos);
+	_widget_photos->setMode(Base::WidgetFileEdit::ChooseMode::File);
+	_widget_photos->setStartDir(photo_dir);
 }
 
 void Trekking::WidgetData::copyDataToGui()
@@ -67,6 +73,8 @@ void Trekking::WidgetData::copyDataToGui()
 		_edit_countries->setText(_data.countriesToString());
 
 		_edit_places->setText(_data.places());
+
+		_widget_photos->setText(_data.photoLink());
 	}
 
 	_combo_kind->setTextAndList(_data.kind(), _data_list.listOfKinds());
@@ -117,10 +125,12 @@ bool Trekking::WidgetData::copyGuiToData()
 	_data.setCountriesFromString(_edit_countries->text());
 
 	if (_edit_places->text().isEmpty()) {
-		emit showMessage(tr("Не введены места!"));
+		emit showMessage(tr("Не введён маршрут!"));
 		return false;
 	}
 	_data.setPlaces(_edit_places->text());
+
+	_data.setPhotoLink(_widget_photos->text());
 
 	return true;
 }

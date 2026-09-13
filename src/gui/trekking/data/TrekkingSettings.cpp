@@ -30,6 +30,8 @@ void Trekking::Settings::save() const
 
 	_csv_settings.save(&settings, "csv");
 
+	settings.setValue("photo_dir", _photo_dir);
+
 	settings.endGroup();
 }
 
@@ -42,6 +44,8 @@ void Trekking::Settings::load()
 
 	_csv_settings.load(&settings, "csv");
 	_csv_settings.setHeader(CsvFileData, DataConverter::getDefaultCsvHeader());
+
+	_photo_dir = settings.value("photo_dir").toString();
 
 	settings.endGroup();
 }

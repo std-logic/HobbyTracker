@@ -1,5 +1,7 @@
 #include "BooksWidgetSettings.h"
 
+#include <gui/base/widgets/BaseWidgetCsvSettings.h>
+
 Books::WidgetSettings::WidgetSettings(const Settings& settings, QWidget* parent)
 	: Base::WidgetSettings{parent}
 	, _settings{settings}

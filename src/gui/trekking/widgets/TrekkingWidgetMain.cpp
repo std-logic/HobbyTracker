@@ -86,6 +86,7 @@ void Trekking::WidgetMain::saveSettings(const Settings& settings)
 {
 	_settings = settings;
 	_settings.save();
+	updateDataList();
 	emit showMessage(tr("Настройки сохранены"));
 }
 
@@ -126,7 +127,7 @@ void Trekking::WidgetMain::editData(const QString& id)
 void Trekking::WidgetMain::showData(size_t index)
 {
 	if (!_widget_data) {
-		_widget_data = new WidgetData(index, _data_list, this);
+		_widget_data = new WidgetData(index, _data_list, _settings.photoDir(), this);
 		connect(_widget_data, &WidgetData::showMessage,
 				this, &WidgetMain::showMessage);
 		connect(_widget_data, &WidgetData::saveData,
@@ -168,7 +169,7 @@ void Trekking::WidgetMain::updateSummary()
 
 void Trekking::WidgetMain::updateDataList()
 {
-	_widget_data_list->update(_data_list);
+	_widget_data_list->update(_data_list, _settings.photoDir());
 }
 
 void Trekking::WidgetMain::updateChart()

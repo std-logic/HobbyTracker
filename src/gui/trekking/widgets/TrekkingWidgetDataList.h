@@ -14,15 +14,15 @@ public:
 	explicit WidgetDataList(QWidget* parent = nullptr);
 	~WidgetDataList() = default;
 
-	void update(const DataList& data_list);
+	void update(const DataList& data_list, const QString& photo_dir);
 
 signals:
 
 private:
-	void showSimple(const DataList& data_list);
-	void showByCountries(const DataList& data_list);
-	void showByRegions(const DataList& data_list);
-	void showByKinds(const DataList& data_list);
+	void showSimple(const DataList& data_list, const QString& photo_dir);
+	void showByCountries(const DataList& data_list, const QString& photo_dir);
+	void showByRegions(const DataList& data_list, const QString& photo_dir);
+	void showByKinds(const DataList& data_list, const QString& photo_dir);
 
 private:
 	static const int WIDTH_DATE = 200;
@@ -33,6 +33,7 @@ private:
 	static const int WIDTH_KIND = 140;
 	static const int WIDTH_COUNTRIES = 200;
 	static const int WIDTH_PLACES = 0; // stretched
+	static const int WIDTH_PHOTOS = 30;
 };
 
 } // namespace Trekking
