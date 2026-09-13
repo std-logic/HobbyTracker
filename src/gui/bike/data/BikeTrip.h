@@ -68,6 +68,12 @@ public:
 	inline QString placesToString(const QString& delimiter = ", ") const
 	{ return _places.join(delimiter); }
 
+	template<typename T>
+	inline void setPhotoLink(T&& photo_link)
+	{ _photo_link = std::forward<T>(photo_link); }
+	inline QString photoLink() const
+	{ return _photo_link; }
+
 	QString summaryString() const
 	{
 		QString text;
@@ -92,6 +98,7 @@ private:
 	uint32_t _dist = 0; // km
 	QStringList _countries;
 	QStringList _places;
+	QString _photo_link;
 };
 
 } // namespace Bike

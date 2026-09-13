@@ -102,6 +102,7 @@ void Bike::WidgetMain::saveSettings(const Settings& settings)
 {
 	_settings = settings;
 	_settings.save();
+	updateTripList();
 	emit showMessage(tr("Настройки сохранены"));
 }
 
@@ -192,7 +193,7 @@ void Bike::WidgetMain::editTrip(const QString& id)
 void Bike::WidgetMain::showTrip(size_t index)
 {
 	if (!_widget_trip) {
-		_widget_trip = new WidgetTrip(index, _trip_list, this);
+		_widget_trip = new WidgetTrip(index, _trip_list, _settings.photoDir(), this);
 		connect(_widget_trip, &WidgetTrip::showMessage,
 				this, &WidgetMain::showMessage);
 		connect(_widget_trip, &WidgetTrip::saveData,
@@ -254,7 +255,7 @@ void Bike::WidgetMain::updateDataList()
 
 void Bike::WidgetMain::updateTripList()
 {
-	_widget_trip_list->update(_trip_list);
+	_widget_trip_list->update(_trip_list, _settings.photoDir());
 }
 
 void Bike::WidgetMain::updateChart()

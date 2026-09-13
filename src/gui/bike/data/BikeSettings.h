@@ -20,8 +20,15 @@ public:
 	inline Csv::Settings csvSettings() const
 	{ return _csv_settings; }
 
+	template<typename T>
+	inline void setPhotoDir(T&& photo_dir)
+	{ _photo_dir = std::forward<T>(photo_dir); }
+	inline QString photoDir() const
+	{ return _photo_dir; }
+
 private:
 	Csv::Settings _csv_settings;
+	QString _photo_dir;
 };
 
 } // namespace Bike

@@ -9,24 +9,25 @@ Bike::WidgetTripList::WidgetTripList(QWidget* parent)
 {
 }
 
-void Bike::WidgetTripList::update(const TripList& trip_list)
+void Bike::WidgetTripList::update(const TripList& trip_list, const QString& photo_dir)
 {
 	clear();
 	setRootIsDecorated(static_cast<DataListViewModes>(_view_mode) != DataListViewModes::Simple);
 	switch (static_cast<DataListViewModes>(_view_mode)) {
-		case DataListViewModes::Simple:			showSimple(trip_list);			break;
-		case DataListViewModes::ByCountries:	showByCountries(trip_list);		break;
+		case DataListViewModes::Simple:			showSimple(trip_list, photo_dir);			break;
+		case DataListViewModes::ByCountries:	showByCountries(trip_list, photo_dir);		break;
 		default: return;
 	}
 	updateSearch();
 }
 
-void Bike::WidgetTripList::showSimple(const TripList& trip_list)
+void Bike::WidgetTripList::showSimple(const TripList& trip_list, const QString& photo_dir)
 {
-	enum Columns {CLMN_DATE, CLMN_TIME, CLMN_DIST, CLMN_COUNTRIES, CLMN_PLACES};
+	enum Columns {CLMN_DATE, CLMN_TIME, CLMN_DIST, CLMN_COUNTRIES, CLMN_PLACES, CLMN_PHOTOS};
 	setSearchColumns({CLMN_COUNTRIES, CLMN_PLACES});
-	initColumns({tr("Даты"), tr("Ночёвок"), tr("Километров"), tr("Страны"), tr("Места")},
-				{WIDTH_DATE, WIDTH_TIME, WIDTH_DIST, WIDTH_COUNTRIES, WIDTH_PLACES});
+	initColumns({tr("Даты"), tr("Ночёвок"), tr("Километров"), tr("Страны"), tr("Места"), ""},
+				{WIDTH_DATE, WIDTH_TIME, WIDTH_DIST, WIDTH_COUNTRIES, WIDTH_PLACES, WIDTH_PHOTOS});
+	initPhotoColumn(CLMN_PHOTOS);
 	initSorting(CLMN_DATE, Qt::DescendingOrder);
 
 	for (const auto& trip : trip_list) {
@@ -36,20 +37,22 @@ void Bike::WidgetTripList::showSimple(const TripList& trip_list)
 		item_trip->setNumb(CLMN_DIST, trip.dist());
 		item_trip->setText(CLMN_COUNTRIES, trip.countriesToString(QStringLiteral(" • ")));
 		item_trip->setText(CLMN_PLACES, trip.placesToString(QStringLiteral(" → ")));
+		item_trip->setPhotoLink(CLMN_PHOTOS, photo_dir, trip.photoLink());
 		item_trip->setHoveredToolTip(trip.summaryString());
 		item_trip->setId(trip.id());
 	}
 }
 
-void Bike::WidgetTripList::showByCountries(const TripList& trip_list)
+void Bike::WidgetTripList::showByCountries(const TripList& trip_list, const QString& photo_dir)
 {
 	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_TIME, CLMN_DIST,
-				  CLMN_COUNTRIES, CLMN_PLACES};
+				  CLMN_COUNTRIES, CLMN_PLACES, CLMN_PHOTOS};
 	setSearchColumns({CLMN_COUNTRIES, CLMN_PLACES});
 	initColumns({tr("Страна / Даты"), tr("К-во"), tr("Ночёвок"), tr("Километров"),
-				 tr("Страны"), tr("Места")},
+				 tr("Страны"), tr("Места"), ""},
 				{WIDTH_DATE, WIDTH_COUNT, WIDTH_TIME, WIDTH_DIST,
-				 WIDTH_COUNTRIES, WIDTH_PLACES});
+				 WIDTH_COUNTRIES, WIDTH_PLACES, WIDTH_PHOTOS});
+	initPhotoColumn(CLMN_PHOTOS);
 	initSorting(CLMN_DATE);
 
 	auto trips_by_countries = trip_list.tripsByCountries();
@@ -67,6 +70,7 @@ void Bike::WidgetTripList::showByCountries(const TripList& trip_list)
 			item_trip->setNumb(CLMN_DIST, trip->dist());
 			item_trip->setText(CLMN_COUNTRIES, trip->countriesToString(QStringLiteral(" • ")));
 			item_trip->setText(CLMN_PLACES, trip->placesToString(QStringLiteral(" → ")));
+			item_trip->setPhotoLink(CLMN_PHOTOS, photo_dir, trip->photoLink());
 			item_trip->setHoveredToolTip(trip->summaryString());
 			item_trip->setId(trip->id());
 			country_time += trip->time();

@@ -1,17 +1,19 @@
 #include "BikeWidgetTrip.h"
 
 #include <gui/base/widgets/BaseWidgetDateEdit.h>
+#include <gui/base/widgets/BaseWidgetFileEdit.h>
 
 #include <QLineEdit>
 #include <QValidator>
 
-Bike::WidgetTrip::WidgetTrip(size_t index, const TripList& list, QWidget* parent)
+Bike::WidgetTrip::WidgetTrip(size_t index, const TripList& list,
+							 const QString& photo_dir, QWidget* parent)
 	: Base::WidgetData{index, list.size(), parent}
 	, _data_list{list}
 {
 	initData();
 	initCommonParams();
-	initWidgets();
+	initWidgets(photo_dir);
 	copyDataToGui();
 }
 
@@ -27,7 +29,7 @@ void Bike::WidgetTrip::initCommonParams()
 			tr("Добавление нового велопохода"));
 }
 
-void Bike::WidgetTrip::initWidgets()
+void Bike::WidgetTrip::initWidgets(const QString& photo_dir)
 {
 	add(tr("Старт:"), _edit_date_start);
 
@@ -44,6 +46,10 @@ void Bike::WidgetTrip::initWidgets()
 
 	add(tr("Места:"), _edit_places);
 	_edit_places->setPlaceholderText(tr("Список через запятую"));
+
+	add(tr("Фото:"), _widget_photos);
+	_widget_photos->setMode(Base::WidgetFileEdit::ChooseMode::File);
+	_widget_photos->setStartDir(photo_dir);
 }
 
 void Bike::WidgetTrip::copyDataToGui()
@@ -60,6 +66,8 @@ void Bike::WidgetTrip::copyDataToGui()
 		_edit_countries->setText(_data.countriesToString());
 
 		_edit_places->setText(_data.placesToString());
+
+		_widget_photos->setText(_data.photoLink());
 	}
 }
 
@@ -100,6 +108,8 @@ bool Bike::WidgetTrip::copyGuiToData()
 		return false;
 	}
 	_data.setPlacesFromString(_edit_places->text());
+
+	_data.setPhotoLink(_widget_photos->text());
 
 	return true;
 }

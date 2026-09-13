@@ -14,13 +14,13 @@ public:
 	explicit WidgetTripList(QWidget* parent = nullptr);
 	~WidgetTripList() = default;
 
-	void update(const TripList& trip_list);
+	void update(const TripList& trip_list, const QString& photo_dir);
 
 signals:
 
 private:
-	void showSimple(const TripList& trip_list);
-	void showByCountries(const TripList& trip_list);
+	void showSimple(const TripList& trip_list, const QString& photo_dir);
+	void showByCountries(const TripList& trip_list, const QString& photo_dir);
 
 private:
 	static const int WIDTH_DATE = 180;
@@ -29,6 +29,7 @@ private:
 	static const int WIDTH_DIST = 100;
 	static const int WIDTH_COUNTRIES = 200;
 	static const int WIDTH_PLACES = 0; // stretched
+	static const int WIDTH_PHOTOS = 30;
 };
 
 } // namespace Bike

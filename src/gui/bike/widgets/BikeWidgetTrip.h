@@ -9,6 +9,7 @@ class QLineEdit;
 namespace Base
 {
 class WidgetDateEdit;
+class WidgetFileEdit;
 }
 
 namespace Bike
@@ -18,7 +19,8 @@ class WidgetTrip : public Base::WidgetData
 {
 	Q_OBJECT
 public:
-	explicit WidgetTrip(size_t index, const TripList& list, QWidget* parent = nullptr);
+	explicit WidgetTrip(size_t index, const TripList& list,
+						const QString& photo_dir, QWidget* parent = nullptr);
 	~WidgetTrip() = default;
 
 signals:
@@ -27,7 +29,7 @@ signals:
 private:
 	void initData();
 	void initCommonParams();
-	void initWidgets();
+	void initWidgets(const QString& photo_dir);
 
 	void copyDataToGui();
 	bool copyGuiToData();
@@ -42,6 +44,7 @@ private:
 	QLineEdit* _edit_dist = nullptr;
 	QLineEdit* _edit_countries = nullptr;
 	QLineEdit* _edit_places = nullptr;
+	Base::WidgetFileEdit* _widget_photos = nullptr;
 
 	TripList _data_list;
 	Trip _data;
