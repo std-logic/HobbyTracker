@@ -7,6 +7,7 @@
 #include <QHeaderView>
 #include <QShortcut>
 #include <QMouseEvent>
+#include <QDesktopServices>
 
 Base::WidgetTree::WidgetTree(QWidget* parent)
 	: QTreeWidget{parent}
@@ -101,11 +102,15 @@ void Base::WidgetTree::initColumns(const QStringList& labels, const std::vector<
 			head->setSectionResizeMode(i, QHeaderView::Stretch);
 		}
 	}
+	auto head_item = headerItem();
+	for (int i = 0; i < head_item->columnCount(); ++i) {
+		head_item->setIcon(i, QIcon());
+	}
 }
 
 void Base::WidgetTree::initSorting(int default_column, Qt::SortOrder default_order, bool force)
 {
-	if (!force) {
+	if (!force && !_sorting_column.isEmpty()) {
 		auto header_item = headerItem();
 		for (int column = 0; column < columnCount(); ++column) {
 			if (header_item->text(column) == _sorting_column) {
@@ -117,13 +122,26 @@ void Base::WidgetTree::initSorting(int default_column, Qt::SortOrder default_ord
 	sortByColumn(default_column, default_order);
 }
 
+void Base::WidgetTree::initPhotoColumn(int column)
+{
+	auto head_item = headerItem();
+	head_item->setIcon(column, QIcon::fromTheme(QIcon::ThemeIcon::CameraPhoto));
+}
+
 void Base::WidgetTree::mousePressEvent(QMouseEvent* event)
 {
 	hideToolTip();
 
-	if (event->button() == Qt::RightButton) {
-		QTreeWidgetItem* item = itemAt(event->position().toPoint());
-		if (item) { showRightClickToolTip(item); }
+	const QPoint pos = event->position().toPoint();
+	QTreeWidgetItem* item = itemAt(pos);
+
+	if (item) {
+		if (event->button() == Qt::RightButton) {
+			showRightClickToolTip(item);
+		} else if (event->button() == Qt::LeftButton) {
+			int column = columnAt(pos.x());
+			openLink(item, column);
+		}
 	}
 
 	QTreeWidget::mousePressEvent(event);
@@ -131,11 +149,25 @@ void Base::WidgetTree::mousePressEvent(QMouseEvent* event)
 
 void Base::WidgetTree::mouseMoveEvent(QMouseEvent* event)
 {
-	QTreeWidgetItem* item = itemAt(event->position().toPoint());
+	const QPoint pos = event->position().toPoint();
+	QTreeWidgetItem* item = itemAt(pos);
+	int column = columnAt(pos.x());
+	bool item_changed = false, column_changed = false;
+
 	if (_hovered_item != item) {
 		if (_hovered_item) { hideToolTip(); }
 		_hovered_item = item;
 		if (_hovered_item) { showHoveredToolTip(_hovered_item); }
+		item_changed = true;
+	}
+
+	if (_hovered_column != column) {
+		_hovered_column = column;
+		column_changed = true;
+	}
+
+	if (item_changed || column_changed) {
+		showLinkCursor(_hovered_item, _hovered_column);
 	}
 
 	QTreeWidget::mouseMoveEvent(event);
@@ -144,7 +176,9 @@ void Base::WidgetTree::mouseMoveEvent(QMouseEvent* event)
 void Base::WidgetTree::leaveEvent(QEvent* event)
 {
 	hideToolTip();
+	hideLinkCursor();
 	_hovered_item = nullptr;
+	_hovered_column = -1;
 
 	QTreeWidget::leaveEvent(event);
 }
@@ -170,6 +204,29 @@ void Base::WidgetTree::showRightClickToolTip(QTreeWidgetItem* item)
 void Base::WidgetTree::hideToolTip()
 {
 	_tooltip->hideText();
+}
+
+void Base::WidgetTree::showLinkCursor(QTreeWidgetItem* item, int column)
+{
+	auto base_item = dynamic_cast<WidgetTreeItem*>(item);
+	if (base_item && base_item->hasPhotoLink(column)) {
+		viewport()->setCursor(Qt::PointingHandCursor);
+	} else {
+		viewport()->unsetCursor();
+	}
+}
+
+void Base::WidgetTree::hideLinkCursor()
+{
+	viewport()->unsetCursor();
+}
+
+void Base::WidgetTree::openLink(QTreeWidgetItem* item, int column)
+{
+	auto base_item = dynamic_cast<WidgetTreeItem*>(item);
+	if (base_item && base_item->hasPhotoLink(column)) {
+		QDesktopServices::openUrl(QUrl::fromLocalFile(base_item->photoLink()));
+	}
 }
 
 bool Base::WidgetTree::filterItem(QTreeWidgetItem* item,

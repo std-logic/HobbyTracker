@@ -29,6 +29,7 @@ protected:
 	void updateSearch();
 	void initColumns(const QStringList& labels, const std::vector<int>& widths = {});
 	void initSorting(int default_column = 0, Qt::SortOrder default_order = Qt::AscendingOrder, bool force = false);
+	void initPhotoColumn(int column);
 
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
@@ -38,6 +39,9 @@ private:
 	void showHoveredToolTip(QTreeWidgetItem* item);
 	void showRightClickToolTip(QTreeWidgetItem* item);
 	void hideToolTip();
+	void showLinkCursor(QTreeWidgetItem* item, int column);
+	void hideLinkCursor();
+	void openLink(QTreeWidgetItem* item, int column);
 	bool filterItem(QTreeWidgetItem* item, const QString& search_text, bool parent_found = false);
 
 private slots:
@@ -54,6 +58,7 @@ protected:
 	Qt::SortOrder _sorting_order = Qt::AscendingOrder;
 
 	QTreeWidgetItem* _hovered_item = nullptr;
+	int _hovered_column = -1;
 	Base::ToolTip* _tooltip = nullptr;
 
 	std::vector<int> _search_columns;

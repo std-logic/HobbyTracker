@@ -62,6 +62,16 @@ void Base::WidgetTreeItem::setCountry(int column, const QString& country)
 	}
 }
 
+void Base::WidgetTreeItem::setPhotoLink(int column,
+		const QString& photo_dir, const QString& photo_link)
+{
+	if (!photo_link.isEmpty()) {
+		_photo_column = column;
+		_photo_link = photo_dir + photo_link;
+		setIcon(column, QIcon::fromTheme(QIcon::ThemeIcon::ZoomIn));
+	}
+}
+
 void Base::WidgetTreeItem::setBold(int column, bool enable)
 {
 	auto default_font = font(column);

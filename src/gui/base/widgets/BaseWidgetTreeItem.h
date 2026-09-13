@@ -26,6 +26,10 @@ public:
 
 	void setCountry(int column, const QString& country);
 
+	void setPhotoLink(int column, const QString& photo_dir, const QString& photo_link);
+	bool hasPhotoLink(int column) const { return (_photo_column == column); }
+	QString photoLink() const { return _photo_link; }
+
 	void setBold(int column, bool enable);
 	void setBoldEverywhere(bool enable);
 	void setBackgroundEverywhere(const QBrush& brush);
@@ -41,6 +45,9 @@ public:
 private:
 	QString _hovered_tooltip;
 	QString _rightclick_tooltip;
+
+	int _photo_column = -1;
+	QString _photo_link;
 };
 
 } // namespace Base
