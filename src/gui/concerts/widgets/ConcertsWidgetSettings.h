@@ -7,6 +7,7 @@
 namespace Base
 {
 class WidgetCsvSettings;
+class WidgetFileEdit;
 }
 
 namespace Concerts
@@ -26,6 +27,7 @@ signals:
 private:
 	void initWidgets();
 
+	void copySettingsToGui();
 	void copyGuiToSettings();
 
 private slots:
@@ -33,6 +35,7 @@ private slots:
 
 private:
 	Base::WidgetCsvSettings* _widget_csv_settings = nullptr;
+	Base::WidgetFileEdit* _widget_photo_dir = nullptr;
 
 	Settings _settings;
 };

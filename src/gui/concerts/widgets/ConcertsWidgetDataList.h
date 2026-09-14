@@ -19,7 +19,7 @@ public:
 	explicit WidgetDataList(QWidget* parent = nullptr);
 	~WidgetDataList() = default;
 
-	void update(const DataList& data_list, const Base::ExtraList& extra_list);
+	void update(const DataList& data_list, const Base::ExtraList& extra_list, const QString& photo_dir);
 
 public slots:
 	void setFavoritesState(Qt::CheckState state);
@@ -27,14 +27,14 @@ public slots:
 signals:
 
 private:
-	void showByYears(const DataList& data_list);
-	void showByArtists(const DataList& data_list, const Base::ExtraList& extra_list);
-	void showByTags(const DataList& data_list, const Base::ExtraList& extra_list);
-	void showByCountries(const DataList& data_list);
-	void showByCities(const DataList& data_list);
-	void showByPlaces(const DataList& data_list, const Base::ExtraList& extra_list);
-	void showPlacesTree(const DataList& data_list, const Base::ExtraList& extra_list);
-	void showSimple(const DataList& data_list);
+	void showByYears(const DataList& data_list, const QString& photo_dir);
+	void showByArtists(const DataList& data_list, const Base::ExtraList& extra_list, const QString& photo_dir);
+	void showByTags(const DataList& data_list, const Base::ExtraList& extra_list, const QString& photo_dir);
+	void showByCountries(const DataList& data_list, const QString& photo_dir);
+	void showByCities(const DataList& data_list, const QString& photo_dir);
+	void showByPlaces(const DataList& data_list, const Base::ExtraList& extra_list, const QString& photo_dir);
+	void showPlacesTree(const DataList& data_list, const Base::ExtraList& extra_list, const QString& photo_dir);
+	void showSimple(const DataList& data_list, const QString& photo_dir);
 
 private:
 	static const int WIDTH_DATE_SMALL = 150;
@@ -45,6 +45,7 @@ private:
 	static const int WIDTH_COUNTRY = 120;
 	static const int WIDTH_CITY = 170;
 	static const int WIDTH_PLACE = 260;
+	static const int WIDTH_PHOTOS = 30;
 
 	bool _favorites_state = false;
 };

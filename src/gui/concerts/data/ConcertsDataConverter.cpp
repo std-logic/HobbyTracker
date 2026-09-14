@@ -13,6 +13,7 @@ QStringList Concerts::DataConverter::getDefaultCsvHeader()
 	header[CLMN_COUNTRY]		= tr("Страна");
 	header[CLMN_CITY]			= tr("Город");
 	header[CLMN_PLACE]			= tr("Место");
+	header[CLMN_PHOTO_LINK]		= tr("Фото");
 
 	return header;
 }
@@ -43,6 +44,9 @@ Concerts::DataList Concerts::DataConverter::conv(const Csv::Data& csv_data)
 		if (CLMN_PLACE < line_size) {
 			data.setPlace(line[CLMN_PLACE]);
 		}
+		if (CLMN_PHOTO_LINK < line_size) {
+			data.setPhotoLink(line[CLMN_PHOTO_LINK]);
+		}
 
 		data_list.add(data);
 	}
@@ -63,6 +67,7 @@ Csv::Data Concerts::DataConverter::conv(const DataList& data_list)
 		line[CLMN_COUNTRY]		= data.country();
 		line[CLMN_CITY]			= data.city();
 		line[CLMN_PLACE]		= data.place();
+		line[CLMN_PHOTO_LINK]	= data.photoLink();
 
 		csv_data.push_back(line);
 	}

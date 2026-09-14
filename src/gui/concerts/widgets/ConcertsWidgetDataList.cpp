@@ -12,19 +12,21 @@ Concerts::WidgetDataList::WidgetDataList(QWidget* parent)
 {
 }
 
-void Concerts::WidgetDataList::update(const DataList& data_list, const Base::ExtraList& extra_list)
+void Concerts::WidgetDataList::update(const DataList& data_list,
+									  const Base::ExtraList& extra_list,
+									  const QString& photo_dir)
 {
 	clear();
 	setRootIsDecorated(static_cast<DataListViewModes>(_view_mode) != DataListViewModes::Simple);
 	switch (static_cast<DataListViewModes>(_view_mode)) {
-		case DataListViewModes::ByYears:		showByYears(data_list);					break;
-		case DataListViewModes::ByArtists:		showByArtists(data_list, extra_list);	break;
-		case DataListViewModes::ByTags:			showByTags(data_list, extra_list);		break;
-		case DataListViewModes::ByCountries:	showByCountries(data_list);				break;
-		case DataListViewModes::ByCities:		showByCities(data_list);				break;
-		case DataListViewModes::ByPlaces:		showByPlaces(data_list, extra_list);	break;
-		case DataListViewModes::PlacesTree:		showPlacesTree(data_list, extra_list);	break;
-		case DataListViewModes::Simple:			showSimple(data_list);					break;
+		case DataListViewModes::ByYears:		showByYears(data_list, photo_dir);					break;
+		case DataListViewModes::ByArtists:		showByArtists(data_list, extra_list, photo_dir);	break;
+		case DataListViewModes::ByTags:			showByTags(data_list, extra_list, photo_dir);		break;
+		case DataListViewModes::ByCountries:	showByCountries(data_list, photo_dir);				break;
+		case DataListViewModes::ByCities:		showByCities(data_list, photo_dir);					break;
+		case DataListViewModes::ByPlaces:		showByPlaces(data_list, extra_list, photo_dir);		break;
+		case DataListViewModes::PlacesTree:		showPlacesTree(data_list, extra_list, photo_dir);	break;
+		case DataListViewModes::Simple:			showSimple(data_list, photo_dir);					break;
 		default: return;
 	}
 	updateSearch();
@@ -42,12 +44,17 @@ void Concerts::WidgetDataList::setFavoritesState(Qt::CheckState state)
 	}
 }
 
-void Concerts::WidgetDataList::showByYears(const DataList& data_list)
+void Concerts::WidgetDataList::showByYears(const DataList& data_list,
+										   const QString& photo_dir)
 {
-	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE};
+	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_COUNTRY,
+				  CLMN_CITY, CLMN_PLACE, CLMN_PHOTOS};
 	setSearchColumns({CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE});
-	initColumns({tr("Год / Дата"), tr("К-во"), tr("Группы"), tr("Страна"), tr("Город"), tr("Место")},
-				{WIDTH_DATE_SMALL, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_COUNTRY, WIDTH_CITY, WIDTH_PLACE});
+	initColumns({tr("Год / Дата"), tr("К-во"), tr("Группы"), tr("Страна"),
+				 tr("Город"), tr("Место"), ""},
+				{WIDTH_DATE_SMALL, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_COUNTRY,
+				 WIDTH_CITY, WIDTH_PLACE, WIDTH_PHOTOS});
+	initPhotoColumn(CLMN_PHOTOS);
 	initSorting(CLMN_DATE, Qt::DescendingOrder);
 
 	auto concerts_by_years = data_list.concertsByYears();
@@ -62,22 +69,30 @@ void Concerts::WidgetDataList::showByYears(const DataList& data_list)
 		for (const auto concert : concerts) {
 			auto item_concert = new Base::WidgetTreeItem(item_year);
 			item_concert->setText(CLMN_DATE, concert->date());
-			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
+			item_concert->setText(CLMN_ARTISTS,
+					concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
 			item_concert->setText(CLMN_COUNTRY, concert->country());
 			item_concert->setText(CLMN_CITY, concert->city());
 			item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert->place()));
+			item_concert->setPhotoLink(CLMN_PHOTOS, photo_dir, concert->photoLink());
 			item_concert->setHoveredToolTip(concert->summaryString());
 			item_concert->setId(concert->id());
 		}
 	}
 }
 
-void Concerts::WidgetDataList::showByArtists(const DataList& data_list, const Base::ExtraList& extra_list)
+void Concerts::WidgetDataList::showByArtists(const DataList& data_list,
+											 const Base::ExtraList& extra_list,
+											 const QString& photo_dir)
 {
-	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE};
+	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_COUNTRY,
+				  CLMN_CITY, CLMN_PLACE, CLMN_PHOTOS};
 	setSearchColumns({CLMN_DATE, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE});
-	initColumns({tr("Группа / Дата"), tr("К-во"), tr("Группы"), tr("Страна"), tr("Город"), tr("Место")},
-				{WIDTH_DATE_MEDIUM, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_COUNTRY, WIDTH_CITY, WIDTH_PLACE});
+	initColumns({tr("Группа / Дата"), tr("К-во"), tr("Группы"), tr("Страна"),
+				 tr("Город"), tr("Место"), ""},
+				{WIDTH_DATE_MEDIUM, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_COUNTRY,
+				 WIDTH_CITY, WIDTH_PLACE, WIDTH_PHOTOS});
+	initPhotoColumn(CLMN_PHOTOS);
 	initSorting(CLMN_DATE);
 
 	auto favorites = _favorites_state ?
@@ -96,22 +111,30 @@ void Concerts::WidgetDataList::showByArtists(const DataList& data_list, const Ba
 		for (const auto concert : concerts) {
 			auto item_concert = new Base::WidgetTreeItem(item_artist);
 			item_concert->setText(CLMN_DATE, concert->date());
-			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
+			item_concert->setText(CLMN_ARTISTS,
+					concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
 			item_concert->setText(CLMN_COUNTRY, concert->country());
 			item_concert->setText(CLMN_CITY, concert->city());
 			item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert->place()));
+			item_concert->setPhotoLink(CLMN_PHOTOS, photo_dir, concert->photoLink());
 			item_concert->setHoveredToolTip(concert->summaryString());
 			item_concert->setId(concert->id());
 		}
 	}
 }
 
-void Concerts::WidgetDataList::showByTags(const DataList& data_list, const Base::ExtraList& extra_list)
+void Concerts::WidgetDataList::showByTags(const DataList& data_list,
+										  const Base::ExtraList& extra_list,
+										  const QString& photo_dir)
 {
-	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE};
+	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_COUNTRY,
+				  CLMN_CITY, CLMN_PLACE, CLMN_PHOTOS};
 	setSearchColumns({CLMN_DATE, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE});
-	initColumns({tr("Тип / Дата"), tr("К-во"), tr("Группы"), tr("Страна"), tr("Город"), tr("Место")},
-				{WIDTH_DATE_SMALL, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_COUNTRY, WIDTH_CITY, WIDTH_PLACE});
+	initColumns({tr("Тип / Дата"), tr("К-во"), tr("Группы"), tr("Страна"),
+				 tr("Город"), tr("Место"), ""},
+				{WIDTH_DATE_SMALL, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_COUNTRY,
+				 WIDTH_CITY, WIDTH_PLACE, WIDTH_PHOTOS});
+	initPhotoColumn(CLMN_PHOTOS);
 	initSorting(CLMN_DATE);
 
 	for (const auto& extra : extra_list) {
@@ -129,10 +152,12 @@ void Concerts::WidgetDataList::showByTags(const DataList& data_list, const Base:
 					for (const auto concert : concerts) {
 						auto item_concert = new Base::WidgetTreeItem(item_tag);
 						item_concert->setText(CLMN_DATE, concert->date());
-						item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
+						item_concert->setText(CLMN_ARTISTS,
+								concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
 						item_concert->setText(CLMN_COUNTRY, concert->country());
 						item_concert->setText(CLMN_CITY, concert->city());
 						item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert->place()));
+						item_concert->setPhotoLink(CLMN_PHOTOS, photo_dir, concert->photoLink());
 						item_concert->setHoveredToolTip(concert->summaryString());
 						item_concert->setId(concert->id());
 					}
@@ -142,12 +167,17 @@ void Concerts::WidgetDataList::showByTags(const DataList& data_list, const Base:
 	}
 }
 
-void Concerts::WidgetDataList::showByCountries(const DataList& data_list)
+void Concerts::WidgetDataList::showByCountries(const DataList& data_list,
+											   const QString& photo_dir)
 {
-	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_CITY, CLMN_PLACE};
+	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS,
+				  CLMN_CITY, CLMN_PLACE, CLMN_PHOTOS};
 	setSearchColumns({CLMN_DATE, CLMN_ARTISTS, CLMN_CITY, CLMN_PLACE});
-	initColumns({tr("Страна / Дата"), tr("К-во"), tr("Группы"), tr("Город"), tr("Место")},
-				{WIDTH_DATE_SMALL, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_CITY, WIDTH_PLACE});
+	initColumns({tr("Страна / Дата"), tr("К-во"), tr("Группы"),
+				 tr("Город"), tr("Место"), ""},
+				{WIDTH_DATE_SMALL, WIDTH_COUNT, WIDTH_ARTISTS,
+				 WIDTH_CITY, WIDTH_PLACE, WIDTH_PHOTOS});
+	initPhotoColumn(CLMN_PHOTOS);
 	initSorting(CLMN_DATE);
 
 	auto concerts_by_countries = data_list.concertsByCountries();
@@ -160,21 +190,25 @@ void Concerts::WidgetDataList::showByCountries(const DataList& data_list)
 		for (const auto concert : concerts) {
 			auto item_concert = new Base::WidgetTreeItem(item_country);
 			item_concert->setText(CLMN_DATE, concert->date());
-			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
+			item_concert->setText(CLMN_ARTISTS,
+					concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
 			item_concert->setText(CLMN_CITY, concert->city());
 			item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert->place()));
+			item_concert->setPhotoLink(CLMN_PHOTOS, photo_dir, concert->photoLink());
 			item_concert->setHoveredToolTip(concert->summaryString());
 			item_concert->setId(concert->id());
 		}
 	}
 }
 
-void Concerts::WidgetDataList::showByCities(const DataList& data_list)
+void Concerts::WidgetDataList::showByCities(const DataList& data_list,
+											const QString& photo_dir)
 {
-	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_PLACE};
+	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_PLACE, CLMN_PHOTOS};
 	setSearchColumns({CLMN_DATE, CLMN_ARTISTS, CLMN_PLACE});
-	initColumns({tr("Город / Дата"), tr("К-во"), tr("Группы"), tr("Место")},
-				{WIDTH_DATE_MEDIUM, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_PLACE});
+	initColumns({tr("Город / Дата"), tr("К-во"), tr("Группы"), tr("Место"), ""},
+				{WIDTH_DATE_MEDIUM, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_PLACE, WIDTH_PHOTOS});
+	initPhotoColumn(CLMN_PHOTOS);
 	initSorting(CLMN_DATE);
 
 	auto concerts_by_cities = data_list.concertsByCities();
@@ -187,20 +221,25 @@ void Concerts::WidgetDataList::showByCities(const DataList& data_list)
 		for (const auto concert : concerts) {
 			auto item_concert = new Base::WidgetTreeItem(item_city);
 			item_concert->setText(CLMN_DATE, concert->date());
-			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
+			item_concert->setText(CLMN_ARTISTS,
+					concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
 			item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert->place()));
+			item_concert->setPhotoLink(CLMN_PHOTOS, photo_dir, concert->photoLink());
 			item_concert->setHoveredToolTip(concert->summaryString());
 			item_concert->setId(concert->id());
 		}
 	}
 }
 
-void Concerts::WidgetDataList::showByPlaces(const DataList& data_list, const Base::ExtraList& extra_list)
+void Concerts::WidgetDataList::showByPlaces(const DataList& data_list,
+											const Base::ExtraList& extra_list,
+											const QString& photo_dir)
 {
-	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS};
+	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_PHOTOS};
 	setSearchColumns({CLMN_DATE, CLMN_ARTISTS});
-	initColumns({tr("Место / Дата"), tr("К-во"), tr("Группы")},
-				{WIDTH_DATE_BIG, WIDTH_COUNT, WIDTH_ARTISTS});
+	initColumns({tr("Место / Дата"), tr("К-во"), tr("Группы"), ""},
+				{WIDTH_DATE_BIG, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_PHOTOS});
+	initPhotoColumn(CLMN_PHOTOS);
 	initSorting(CLMN_DATE);
 
 	auto favorites = _favorites_state ?
@@ -219,19 +258,24 @@ void Concerts::WidgetDataList::showByPlaces(const DataList& data_list, const Bas
 		for (const auto concert : concerts) {
 			auto item_concert = new Base::WidgetTreeItem(item_place);
 			item_concert->setText(CLMN_DATE, concert->date());
-			item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
+			item_concert->setText(CLMN_ARTISTS,
+					concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
+			item_concert->setPhotoLink(CLMN_PHOTOS, photo_dir, concert->photoLink());
 			item_concert->setHoveredToolTip(concert->summaryString());
 			item_concert->setId(concert->id());
 		}
 	}
 }
 
-void Concerts::WidgetDataList::showPlacesTree(const DataList& data_list, const Base::ExtraList& extra_list)
+void Concerts::WidgetDataList::showPlacesTree(const DataList& data_list,
+											  const Base::ExtraList& extra_list,
+											  const QString& photo_dir)
 {
-	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS};
+	enum Columns {CLMN_DATE, CLMN_COUNT, CLMN_ARTISTS, CLMN_PHOTOS};
 	setSearchColumns({CLMN_DATE, CLMN_ARTISTS});
-	initColumns({tr("Страна / Город / Место / Дата"), tr("К-во"), tr("Группы")},
-				{WIDTH_DATE_BIG, WIDTH_COUNT, WIDTH_ARTISTS});
+	initColumns({tr("Страна / Город / Место / Дата"), tr("К-во"), tr("Группы"), ""},
+				{WIDTH_DATE_BIG, WIDTH_COUNT, WIDTH_ARTISTS, WIDTH_PHOTOS});
+	initPhotoColumn(CLMN_PHOTOS);
 	initSorting(CLMN_DATE);
 
 	auto synonyms = extra_list.getSynonyms(tr("[Синонимы для мест]"));
@@ -261,7 +305,9 @@ void Concerts::WidgetDataList::showPlacesTree(const DataList& data_list, const B
 				for (const auto concert : concerts_in_place) {
 					auto item_concert = new Base::WidgetTreeItem(item_place);
 					item_concert->setText(CLMN_DATE, concert->date());
-					item_concert->setText(CLMN_ARTISTS, concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
+					item_concert->setText(CLMN_ARTISTS,
+							concert->artistsAndDescriptionToString(QStringLiteral(" • ")));
+					item_concert->setPhotoLink(CLMN_PHOTOS, photo_dir, concert->photoLink());
 					item_concert->setHoveredToolTip(concert->summaryString());
 					item_concert->setId(concert->id());
 				}
@@ -270,12 +316,17 @@ void Concerts::WidgetDataList::showPlacesTree(const DataList& data_list, const B
 	}
 }
 
-void Concerts::WidgetDataList::showSimple(const DataList& data_list)
+void Concerts::WidgetDataList::showSimple(const DataList& data_list,
+										  const QString& photo_dir)
 {
-	enum Columns {CLMN_DATE, CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE};
+	enum Columns {CLMN_DATE, CLMN_ARTISTS, CLMN_COUNTRY,
+				  CLMN_CITY, CLMN_PLACE, CLMN_PHOTOS};
 	setSearchColumns({CLMN_ARTISTS, CLMN_COUNTRY, CLMN_CITY, CLMN_PLACE});
-	initColumns({tr("Дата"), tr("Группы"), tr("Страна"), tr("Город"), tr("Место")},
-				{WIDTH_DATE_SMALL, WIDTH_ARTISTS, WIDTH_COUNTRY, WIDTH_CITY, WIDTH_PLACE});
+	initColumns({tr("Дата"), tr("Группы"), tr("Страна"),
+				 tr("Город"), tr("Место"), ""},
+				{WIDTH_DATE_SMALL, WIDTH_ARTISTS, WIDTH_COUNTRY,
+				 WIDTH_CITY, WIDTH_PLACE, WIDTH_PHOTOS});
+	initPhotoColumn(CLMN_PHOTOS);
 	initSorting(CLMN_DATE, Qt::DescendingOrder);
 
 	for (const auto& concert : data_list) {
@@ -285,6 +336,7 @@ void Concerts::WidgetDataList::showSimple(const DataList& data_list)
 		item_concert->setText(CLMN_COUNTRY, concert.country());
 		item_concert->setText(CLMN_CITY, concert.city());
 		item_concert->setText(CLMN_PLACE, Helper::startWithCapital(concert.place()));
+		item_concert->setPhotoLink(CLMN_PHOTOS, photo_dir, concert.photoLink());
 		item_concert->setHoveredToolTip(concert.summaryString());
 		item_concert->setId(concert.id());
 	}

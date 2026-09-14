@@ -2,16 +2,18 @@
 
 #include <gui/base/widgets/BaseComboEdit.h>
 #include <gui/base/widgets/BaseWidgetDateEdit.h>
+#include <gui/base/widgets/BaseWidgetFileEdit.h>
 
 #include <QLineEdit>
 
-Concerts::WidgetData::WidgetData(size_t index, const DataList& data_list, QWidget* parent)
+Concerts::WidgetData::WidgetData(size_t index, const DataList& data_list,
+								 const QString& photo_dir, QWidget* parent)
 	: Base::WidgetData{index, data_list.size(), parent}
 	, _data_list{data_list}
 {
 	initData();
 	initCommonParams();
-	initWidgets();
+	initWidgets(photo_dir);
 	copyDataToGui();
 
 	// strictly after initialization finished, because we need only real changes
@@ -33,7 +35,7 @@ void Concerts::WidgetData::initCommonParams()
 			tr("Добавление нового концерта"));
 }
 
-void Concerts::WidgetData::initWidgets()
+void Concerts::WidgetData::initWidgets(const QString& photo_dir)
 {
 	add(tr("Дата:"), _edit_date);
 
@@ -48,6 +50,10 @@ void Concerts::WidgetData::initWidgets()
 	add(tr("Город:"), _combo_city);
 
 	add(tr("Место:"), _combo_place);
+
+	add(tr("Фото:"), _widget_photos);
+	_widget_photos->setMode(Base::WidgetFileEdit::ChooseMode::File);
+	_widget_photos->setStartDir(photo_dir);
 }
 
 void Concerts::WidgetData::copyDataToGui()
@@ -64,6 +70,8 @@ void Concerts::WidgetData::copyDataToGui()
 		_combo_city->setTextAndList(_data.city(), _data_list.listOfCities(_data.country()));
 
 		_combo_place->setTextAndList(_data.place(), _data_list.listOfPlaces(_data.city()));
+
+		_widget_photos->setText(_data.photoLink());
 	} else {
 		_combo_description->addList(_data_list.listOfDescriptions());
 
@@ -100,6 +108,8 @@ bool Concerts::WidgetData::copyGuiToData()
 		return false;
 	}
 	_data.setPlace(_combo_place->currentText());
+
+	_data.setPhotoLink(_widget_photos->text());
 
 	return true;
 }

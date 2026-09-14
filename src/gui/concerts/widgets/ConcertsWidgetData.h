@@ -10,6 +10,7 @@ namespace Base
 {
 class ComboEdit;
 class WidgetDateEdit;
+class WidgetFileEdit;
 }
 
 namespace Concerts
@@ -19,7 +20,8 @@ class WidgetData : public Base::WidgetData
 {
 	Q_OBJECT
 public:
-	explicit WidgetData(size_t index, const DataList& data_list, QWidget* parent = nullptr);
+	explicit WidgetData(size_t index, const DataList& data_list,
+						const QString& photo_dir, QWidget* parent = nullptr);
 	~WidgetData() = default;
 
 signals:
@@ -28,7 +30,7 @@ signals:
 private:
 	void initData();
 	void initCommonParams();
-	void initWidgets();
+	void initWidgets(const QString& photo_dir);
 
 	void copyDataToGui();
 	bool copyGuiToData();
@@ -45,6 +47,7 @@ private:
 	Base::ComboEdit* _combo_country = nullptr;
 	Base::ComboEdit* _combo_city = nullptr;
 	Base::ComboEdit* _combo_place = nullptr;
+	Base::WidgetFileEdit* _widget_photos = nullptr;
 
 	DataList _data_list;
 	Data _data;

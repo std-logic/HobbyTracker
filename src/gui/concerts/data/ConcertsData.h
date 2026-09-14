@@ -84,6 +84,12 @@ public:
 	inline QString countryCityPlace(const QString& place_synonym) const
 	{ return _country + ", " + _city + ", " + place_synonym; }
 
+	template<typename T>
+	inline void setPhotoLink(T&& photo_link)
+	{ _photo_link = std::forward<T>(photo_link); }
+	inline QString photoLink() const
+	{ return _photo_link; }
+
 	QString summaryString() const
 	{
 		QString text;
@@ -112,6 +118,7 @@ private:
 	QString _country;
 	QString _city;
 	QString _place;
+	QString _photo_link;
 };
 
 } // namespace Concerts

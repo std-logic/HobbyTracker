@@ -33,6 +33,7 @@ private:
 		CLMN_COUNTRY,
 		CLMN_CITY,
 		CLMN_PLACE,
+		CLMN_PHOTO_LINK,
 		NUM_OF_COLUMNS
 	};
 };
