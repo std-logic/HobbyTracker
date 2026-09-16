@@ -20,10 +20,12 @@ public:
 		QString code;
 		QString region;
 		QString comment;
-		QString icon_path;
 		QIcon icon;
 		bool is_former = false;
 		bool is_union = false;
+
+		QString flagIconPath() const { return ":/flags_icons/flags/icons/" + code + ".png"; }
+		QString flagFullPath() const { return ":/flags_full/flags/full/" + code + ".png"; }
 	};
 
 	static void init();

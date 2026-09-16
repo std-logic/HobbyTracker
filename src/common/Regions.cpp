@@ -20,8 +20,7 @@ void Regions::init()
 			if (CLMN_CODE < line_size) {
 				data.code = line[CLMN_CODE];
 				if (!data.code.isEmpty()) {
-					data.icon_path = ":/flags/flags/" + data.code + ".svg";
-					data.icon = QIcon(data.icon_path);
+					data.icon = QIcon(data.flagIconPath());
 				}
 			}
 			if (CLMN_REGIONS < line_size) {

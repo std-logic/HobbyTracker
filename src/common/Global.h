@@ -8,6 +8,7 @@
 namespace Global
 {
 	inline const char settings_file_name[] = "HobbyTrackerSettings.ini";
+	inline const char flags_file_name[] = "HobbyTrackerFlags.rcc";
 
 	inline const uint32_t undefined_value = 0;
 

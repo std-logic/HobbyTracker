@@ -57,8 +57,7 @@ void Base::WidgetTreeItem::setCountry(int column, const QString& country)
 	}
 	if (!data.icon.isNull()) {
 		setIcon(column, data.icon);
-		int w = ((data.code == "np") || (data.code == "ch")) ? 400 : 600;
-		setRightClickToolTip(Helper::htmlImage(data.icon_path, w));
+		setRightClickToolTip(data.flagFullPath());
 	}
 }
 

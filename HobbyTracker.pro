@@ -1,4 +1,4 @@
-QT += core gui widgets charts svg
+QT += core gui widgets charts
 
 CONFIG += c++20
 
@@ -19,6 +19,16 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 # win32: CONFIG(release, debug|release) {
 # QMAKE_POST_LINK += $$quote($$[QT_INSTALL_BINS]/windeployqt.exe --no-compiler-runtime $$DESTDIR)
 # }
+
+# Automatic creating rcc files from qrc
+FLAGS_FILES = $$files($$PWD/res/flags/*, true)
+FLAGS_QRC = $$PWD/res/HobbyTrackerFlags.qrc
+FLAGS_RCC = $$DESTDIR/HobbyTrackerFlags.rcc
+generate_flags_rcc.target = $$FLAGS_RCC
+generate_flags_rcc.commands = $$[QT_HOST_BINS]/rcc -binary $$FLAGS_QRC -o $$FLAGS_RCC
+generate_flags_rcc.depends = $$FLAGS_QRC $$FLAGS_FILES
+QMAKE_EXTRA_TARGETS += generate_flags_rcc
+PRE_TARGETDEPS += $$FLAGS_RCC
 
 INCLUDEPATH += \
 	src

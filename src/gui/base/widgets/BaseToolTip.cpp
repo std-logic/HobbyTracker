@@ -49,7 +49,11 @@ void Base::ToolTip::onTimerDelay()
 
 void Base::ToolTip::update(const QString& text)
 {
-	setText(text);
+	if (text.startsWith(QChar(':'))) {
+		setPixmap(QPixmap(text));
+	} else {
+		setText(text);
+	}
 	adjustSize();
 	updatePos();
 	show();
