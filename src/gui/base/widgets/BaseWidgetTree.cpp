@@ -187,9 +187,7 @@ void Base::WidgetTree::showHoveredToolTip(QTreeWidgetItem* item)
 {
 	auto base_item = dynamic_cast<WidgetTreeItem*>(item);
 	if (base_item && base_item->hasHoveredToolTip()) {
-		_tooltip->showText(base_item->hoveredToolTip());
-	} else {
-		_tooltip->hideText();
+		_tooltip->showText(base_item->hoveredToolTip(), base_item->hoveredMode());
 	}
 }
 
@@ -197,7 +195,7 @@ void Base::WidgetTree::showRightClickToolTip(QTreeWidgetItem* item)
 {
 	auto base_item = dynamic_cast<WidgetTreeItem*>(item);
 	if (base_item && base_item->hasRightClickToolTip()) {
-		_tooltip->showText(base_item->rightClickToolTip(), true);
+		_tooltip->showText(base_item->rightClickToolTip(), base_item->rightClickMode(), true);
 	}
 }
 

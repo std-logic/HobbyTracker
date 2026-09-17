@@ -1,5 +1,7 @@
 #pragma once
 
+#include "BaseToolTip.h"
+
 #include <QTreeWidgetItem>
 
 namespace Base
@@ -34,17 +36,24 @@ public:
 	void setBoldEverywhere(bool enable);
 	void setBackgroundEverywhere(const QBrush& brush);
 
-	void setHoveredToolTip(const QString& str) { _hovered_tooltip = str; }
+	void setHoveredToolTip(const QString& str, ToolTip::Mode mode = ToolTip::Mode::Text)
+	{ _hovered_tooltip = str; _hovered_mode = mode; }
 	bool hasHoveredToolTip() const { return !_hovered_tooltip.isEmpty(); }
 	QString hoveredToolTip() const { return _hovered_tooltip; }
+	ToolTip::Mode hoveredMode() const { return _hovered_mode; }
 
-	void setRightClickToolTip(const QString& str) { _rightclick_tooltip = str; }
+	void setRightClickToolTip(const QString& str, ToolTip::Mode mode = ToolTip::Mode::Text)
+	{ _rightclick_tooltip = str; _rightclick_mode = mode; }
 	bool hasRightClickToolTip() const { return !_rightclick_tooltip.isEmpty(); }
 	QString rightClickToolTip() const { return _rightclick_tooltip; }
+	ToolTip::Mode rightClickMode() const { return _rightclick_mode; }
 
 private:
 	QString _hovered_tooltip;
+	ToolTip::Mode _hovered_mode = ToolTip::Mode::Text;
+
 	QString _rightclick_tooltip;
+	ToolTip::Mode _rightclick_mode = ToolTip::Mode::Text;
 
 	int _photo_column = -1;
 	QString _photo_link;

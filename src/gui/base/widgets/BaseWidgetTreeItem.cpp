@@ -57,7 +57,7 @@ void Base::WidgetTreeItem::setCountry(int column, const QString& country)
 	}
 	if (!data.icon.isNull()) {
 		setIcon(column, data.icon);
-		setRightClickToolTip(data.flagFullPath());
+		setRightClickToolTip(data.flagFullPath(), ToolTip::Mode::Image);
 	}
 }
 
@@ -68,6 +68,7 @@ void Base::WidgetTreeItem::setPhotoLink(int column,
 		_photo_column = column;
 		_photo_link = photo_dir + photo_link;
 		setIcon(column, QIcon::fromTheme(QIcon::ThemeIcon::ZoomIn));
+		setRightClickToolTip(_photo_link, ToolTip::Mode::Image);
 	}
 }
 

@@ -25,12 +25,13 @@ Base::ToolTip::ToolTip(QWidget* parent)
 	connect(_timer_delay, &QTimer::timeout, this, &ToolTip::onTimerDelay);
 }
 
-void Base::ToolTip::showText(const QString& text, bool immediately)
+void Base::ToolTip::showText(const QString& text, Mode mode, bool immediately)
 {
 	if ((_show_delay == 0) || immediately) {
-		update(text);
+		update(text, mode);
 	} else {
 		_text = text;
+		_mode = mode;
 		_timer_delay->start(_show_delay);
 	}
 }
@@ -44,13 +45,17 @@ void Base::ToolTip::hideText()
 
 void Base::ToolTip::onTimerDelay()
 {
-	update(_text);
+	update(_text, _mode);
 }
 
-void Base::ToolTip::update(const QString& text)
+void Base::ToolTip::update(const QString& text, Mode mode)
 {
-	if (text.startsWith(QChar(':'))) {
-		setPixmap(QPixmap(text));
+	if (mode == Mode::Image) {
+		auto pixmap = QPixmap(text);
+		if ((pixmap.width() > MAX_SIZE.width()) || (pixmap.height() > MAX_SIZE.height())) {
+			pixmap = pixmap.scaled(MAX_SIZE, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+		}
+		setPixmap(pixmap);
 	} else {
 		setText(text);
 	}
