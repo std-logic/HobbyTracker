@@ -16,6 +16,7 @@ Base::ToolTip::ToolTip(QWidget* parent)
 		"QLabel{"
 		"background-color: #ffffff;"
 		"color: #000000;"
+		"border: 1px solid #afafaf;"
 		"padding: 3px;"
 		"}"
 	);

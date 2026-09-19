@@ -37,8 +37,8 @@ namespace Global
 	{
 		inline const char label_value[] =
 				"QLabel{"
-				"background-color: rgb(240,240,240); "
-				"border: 1px solid rgb(200,200,200); "
+				"background-color: rgb(240,240,240);"
+				"border: 1px solid rgb(200,200,200);"
 				"border-radius: 6px;"
 				"padding-left: 10px;"
 				"padding-right: 10px;"

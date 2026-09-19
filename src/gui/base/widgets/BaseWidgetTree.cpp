@@ -125,7 +125,7 @@ void Base::WidgetTree::initSorting(int default_column, Qt::SortOrder default_ord
 void Base::WidgetTree::initPhotoColumn(int column)
 {
 	auto head_item = headerItem();
-	head_item->setIcon(column, QIcon::fromTheme(QIcon::ThemeIcon::CameraPhoto));
+	head_item->setIcon(column, QIcon(":/icons/icons/photo_1.png"));
 }
 
 void Base::WidgetTree::mousePressEvent(QMouseEvent* event)

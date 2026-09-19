@@ -2,4 +2,8 @@
     <qresource prefix="/regions">
         <file>regions/regions.csv</file>
     </qresource>
+    <qresource prefix="/icons">
+        <file>icons/photo_1.png</file>
+        <file>icons/photo_2.png</file>
+    </qresource>
 </RCC>

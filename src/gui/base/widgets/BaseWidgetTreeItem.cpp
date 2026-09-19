@@ -67,7 +67,7 @@ void Base::WidgetTreeItem::setPhotoLink(int column,
 	if (!photo_link.isEmpty()) {
 		_photo_column = column;
 		_photo_link = photo_dir + photo_link;
-		setIcon(column, QIcon::fromTheme(QIcon::ThemeIcon::ZoomIn));
+		setIcon(column, QIcon(":/icons/icons/photo_2.png"));
 		setRightClickToolTip(_photo_link, ToolTip::Mode::Image);
 	}
 }
