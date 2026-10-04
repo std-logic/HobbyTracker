@@ -136,6 +136,27 @@ Flights::DataList::ListOfStrings Flights::DataList::listOfAirports(const QString
 	return list;
 }
 
+Flights::DataList::AirportsByCountries Flights::DataList::airportsByCountries() const
+{
+	AirportsByCountries list;
+	for (const auto& data : _data_list) {
+		for (size_t i = 0; i < data.pointsNum(); ++i) {
+			list[data.country(i)].insert(data.cityAirport(i));
+		}
+	}
+	return list;
+}
+
+Flights::DataList::NumbersByStringsVec Flights::DataList::numbersAirportsByCountries(size_t max_num) const
+{
+	auto airports_by_countries = airportsByCountries();
+	NumbersByStrings list;
+	for (const auto& [country, airports] : airports_by_countries) {
+		list[country] = airports.size();
+	}
+	return sortedVec(list, max_num);
+}
+
 Flights::DataList::SublistsByStrings Flights::DataList::flightsByRoutes() const
 {
 	SublistsByStrings list;

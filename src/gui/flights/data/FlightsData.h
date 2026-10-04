@@ -175,6 +175,9 @@ public:
 		return list_of_airports;
 	}
 
+	inline QString cityAirport(size_t index) const
+	{ return _points[index].city + ", " + _points[index].airport; }
+
 	inline uint32_t dist(size_t index) const
 	{ return _points[index].dist; }
 	uint32_t distTotal() const

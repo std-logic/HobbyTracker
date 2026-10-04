@@ -14,6 +14,7 @@ enum class DataListViewModes
 	ByCountries,
 	ByCities,
 	ByAirports,
+	ByAirportsNum,
 	ByRoutes,
 	AirportsTree,
 	Simple,
@@ -27,6 +28,7 @@ enum class ChartViewModes
 	ByCountries,
 	ByCities,
 	ByAirports,
+	ByAirportsNum,
 };
 
 enum CsvFiles

@@ -23,6 +23,7 @@ void Flights::WidgetDataList::update(const DataList& data_list)
 		case DataListViewModes::ByCountries:	showByCountries(data_list);		break;
 		case DataListViewModes::ByCities:		showByCities(data_list);		break;
 		case DataListViewModes::ByAirports:		showByAirports(data_list);		break;
+		case DataListViewModes::ByAirportsNum:	showByAirportsNum(data_list);	break;
 		case DataListViewModes::ByRoutes:		showByRoutes(data_list);		break;
 		case DataListViewModes::AirportsTree:	showAirportsTree(data_list);	break;
 		case DataListViewModes::Simple:			showSimple(data_list);			break;
@@ -173,6 +174,28 @@ void Flights::WidgetDataList::showByAirports(const DataList& data_list)
 			item_flight->setText(CLMN_POINTS, flight->pointsToString());
 			item_flight->setHoveredToolTip(flight->summaryString());
 			item_flight->setId(flight->id());
+		}
+	}
+}
+
+void Flights::WidgetDataList::showByAirportsNum(const DataList& data_list)
+{
+	enum Columns {CLMN_AIRPORTS, CLMN_COUNT};
+	setSearchColumns({CLMN_AIRPORTS});
+	initColumns({tr("Страна / Аэропорт"), tr("К-во")},
+				{WIDTH_DATE, 0});
+	initSorting(CLMN_AIRPORTS);
+
+	auto airports_by_countries = data_list.airportsByCountries();
+
+	for (const auto& [country, airports] : airports_by_countries) {
+		auto item_country = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
+		item_country->setCountry(CLMN_AIRPORTS, country);
+		item_country->setNumb(CLMN_COUNT, airports.size());
+
+		for (const auto& airport : airports) {
+			auto item_airport = new Base::WidgetTreeItem(item_country);
+			item_airport->setText(CLMN_AIRPORTS, airport);
 		}
 	}
 }

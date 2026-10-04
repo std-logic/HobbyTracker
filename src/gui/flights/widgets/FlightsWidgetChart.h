@@ -25,6 +25,7 @@ private:
 	void showByCountries(const DataList& data_list);
 	void showByCities(const DataList& data_list);
 	void showByAirports(const DataList& data_list);
+	void showByAirportsNum(const DataList& data_list);
 };
 
 } // namespace Flights

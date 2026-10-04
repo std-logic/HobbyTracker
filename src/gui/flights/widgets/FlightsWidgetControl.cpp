@@ -29,6 +29,7 @@ void Flights::WidgetControl::initWidgets()
 				{tr("По странам"), static_cast<int>(DataListViewModes::ByCountries)},
 				{tr("По городам"), static_cast<int>(DataListViewModes::ByCities)},
 				{tr("По аэропортам"), static_cast<int>(DataListViewModes::ByAirports)},
+				{tr("По к-ву аэропортов"), static_cast<int>(DataListViewModes::ByAirportsNum)},
 				{tr("По маршрутам"), static_cast<int>(DataListViewModes::ByRoutes)},
 				{tr("Полное древо"), static_cast<int>(DataListViewModes::AirportsTree)},
 				{tr("Простой список"), static_cast<int>(DataListViewModes::Simple)},
@@ -53,6 +54,7 @@ void Flights::WidgetControl::initWidgets()
 				{tr("По странам"), static_cast<int>(ChartViewModes::ByCountries)},
 				{tr("По городам"), static_cast<int>(ChartViewModes::ByCities)},
 				{tr("По аэропортам"), static_cast<int>(ChartViewModes::ByAirports)},
+				{tr("По к-ву аэропортов"), static_cast<int>(ChartViewModes::ByAirportsNum)},
 		});
 
 		_button_chart->addSlaveWidgets({

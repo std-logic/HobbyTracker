@@ -24,6 +24,7 @@ private:
 	void showByCountries(const DataList& data_list);
 	void showByCities(const DataList& data_list);
 	void showByAirports(const DataList& data_list);
+	void showByAirportsNum(const DataList& data_list);
 	void showByRoutes(const DataList& data_list);
 	void showAirportsTree(const DataList& data_list);
 	void showSimple(const DataList& data_list);

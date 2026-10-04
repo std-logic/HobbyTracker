@@ -49,6 +49,10 @@ public:
 	NumbersByStringsVec numbersByAirports(size_t max_num) const;
 	ListOfStrings listOfAirports(const QString& city) const;
 
+	using AirportsByCountries = std::unordered_map<QString, std::unordered_set<QString>>;
+	AirportsByCountries airportsByCountries() const;
+	NumbersByStringsVec numbersAirportsByCountries(size_t max_num) const;
+
 	SublistsByStrings flightsByRoutes() const;
 
 	static uint32_t flightsNumInSublist(const SubListContainer& sublist);
