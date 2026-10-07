@@ -12,8 +12,7 @@
 Base::WidgetTree::WidgetTree(QWidget* parent)
 	: QTreeWidget{parent}
 {
-	setFrameStyle(QFrame::Box);
-	setFrameShadow(QFrame::Sunken);
+	setFrameStyle(QFrame::Box | QFrame::Sunken);
 	setLineWidth(1);
 
 	setStyleSheet(Global::Stylesheets::tree_widget);
