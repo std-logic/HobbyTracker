@@ -38,6 +38,15 @@ public:
 	{ return _artists; }
 	inline QString artistsToString(const QString& delimiter = ", ") const
 	{ return _artists.join(delimiter); }
+	inline void clearArtists()
+	{ _artists.clear(); }
+	template<typename T>
+	inline void addArtist(T&& artist)
+	{ _artists.emplace_back(std::forward<T>(artist)); }
+	inline QString artist(int index) const
+	{ return _artists[index]; }
+	inline int artistsNum() const
+	{ return _artists.size(); }
 
 	template<typename T>
 	inline void setDescription(T&& description)

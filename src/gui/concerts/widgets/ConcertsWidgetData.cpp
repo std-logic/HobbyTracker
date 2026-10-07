@@ -1,6 +1,8 @@
 #include "ConcertsWidgetData.h"
 
 #include <gui/base/widgets/BaseComboEdit.h>
+#include <gui/base/widgets/BaseFlowContainer.h>
+#include <gui/base/widgets/BaseFlowItem.h>
 #include <gui/base/widgets/BaseWidgetDateEdit.h>
 #include <gui/base/widgets/BaseWidgetFileEdit.h>
 
@@ -26,6 +28,8 @@ Concerts::WidgetData::WidgetData(size_t index, const DataList& data_list,
 void Concerts::WidgetData::initData()
 {
 	if (_mode_edit_data) { _data = _data_list[_index]; }
+	// save artists list for future fast access to it
+	_artists_list = _data_list.listOfArtists();
 }
 
 void Concerts::WidgetData::initCommonParams()
@@ -33,14 +37,17 @@ void Concerts::WidgetData::initCommonParams()
 	setWindowTitle(_mode_edit_data ?
 			tr("Редактирование данных концерта") :
 			tr("Добавление нового концерта"));
+	setMinimumWidth(600);
 }
 
 void Concerts::WidgetData::initWidgets(const QString& photo_dir)
 {
 	add(tr("Дата:"), _edit_date);
 
-	add(tr("Группы:"), _edit_artists);
-	_edit_artists->setPlaceholderText(tr("Список через запятую"));
+	add(tr("Группы:"), _flow_artists);
+	_flow_artists->setFixedItemWidth(240);
+	connect(_flow_artists, &Base::FlowContainer::addWidgetRequest,
+			this, [this]() { addArtist(QString()); });
 
 	add(tr("Описание:"), _combo_description);
 	_combo_description->lineEdit()->setPlaceholderText(tr("Необязательное поле"));
@@ -61,8 +68,6 @@ void Concerts::WidgetData::copyDataToGui()
 	if (_mode_edit_data) {
 		_edit_date->setText(_data.date());
 
-		_edit_artists->setText(_data.artistsToString());
-
 		_combo_description->setTextAndList(_data.description(), _data_list.listOfDescriptions());
 
 		_combo_country->setTextAndList(_data.country(), _data_list.listOfCountries());
@@ -77,6 +82,10 @@ void Concerts::WidgetData::copyDataToGui()
 
 		_combo_country->addList(_data_list.listOfCountries());
 	}
+
+	for (int i = 0; i < _data.artistsNum(); ++i) {
+		addArtist(_data.artist(i));
+	}
 }
 
 bool Concerts::WidgetData::copyGuiToData()
@@ -87,7 +96,13 @@ bool Concerts::WidgetData::copyGuiToData()
 	}
 	_data.setDate(_edit_date->text());
 
-	_data.setArtistsFromString(_edit_artists->text());
+	_data.clearArtists();
+	for (int i = 0; i < _flow_artists->count(); ++i) {
+		auto edit = dynamic_cast<Base::ComboEdit*>(_flow_artists->widgetAt(i));
+		if (edit && !edit->currentText().isEmpty()) {
+			_data.addArtist(edit->currentText());
+		}
+	}
 
 	_data.setDescription(_combo_description->currentText());
 
@@ -120,6 +135,15 @@ void Concerts::WidgetData::save()
 		emit saveData(_index, _data);
 		close();
 	}
+}
+
+void Concerts::WidgetData::addArtist(const QString& artist)
+{
+	auto item = new Base::FlowItem(_flow_artists);
+	auto edit = new Base::ComboEdit(item);
+	edit->setTextAndList(artist, _artists_list);
+	item->addWidget(edit);
+	_flow_artists->addWidget(item);
 }
 
 void Concerts::WidgetData::countryChanged(const QString& country)
