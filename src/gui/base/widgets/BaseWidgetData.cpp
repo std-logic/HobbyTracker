@@ -45,6 +45,16 @@ void Base::WidgetData::addLayout(const QString& label_text, QLayout* layout)
 	_layout_main->addLayout(layout, row_count, 1);
 }
 
+void Base::WidgetData::addLine()
+{
+	auto row_count = _layout_main->rowCount();
+	auto* line = new QWidget(this);
+	line->setFixedHeight(1);
+	line->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+	line->setStyleSheet("QWidget{background-color: rgb(173,173,173);}");
+	_layout_main->addWidget(line, row_count, 1);
+}
+
 void Base::WidgetData::initCommonParams()
 {
 	setAttribute(Qt::WA_DeleteOnClose);

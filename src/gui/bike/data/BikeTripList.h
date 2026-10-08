@@ -30,6 +30,9 @@ public:
 
 	SublistsByStrings tripsByCountries() const;
 	NumbersByStringsVec numbersByCountries(size_t max_num) const;
+	ListOfStrings listOfCountries() const;
+
+	ListOfStrings listOfPlaces() const;
 };
 
 } // namespace Bike

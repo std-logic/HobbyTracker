@@ -27,6 +27,8 @@ protected:
 	void addLayout(QLayout* layout);
 	void addLayout(const QString& label_text, QLayout* layout);
 
+	void addLine();
+
 	template<std::derived_from<QWidget> T>
 	void add(T*& widget)
 	{

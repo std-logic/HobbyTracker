@@ -1,5 +1,6 @@
 #include "BikeWidgetTrip.h"
 
+#include <gui/base/widgets/BaseFlowWithComboEdit.h>
 #include <gui/base/widgets/BaseWidgetDateEdit.h>
 #include <gui/base/widgets/BaseWidgetFileEdit.h>
 
@@ -27,6 +28,7 @@ void Bike::WidgetTrip::initCommonParams()
 	setWindowTitle(_mode_edit_data ?
 			tr("Редактирование велопохода") :
 			tr("Добавление нового велопохода"));
+	setMinimumWidth(700);
 }
 
 void Bike::WidgetTrip::initWidgets(const QString& photo_dir)
@@ -41,11 +43,13 @@ void Bike::WidgetTrip::initWidgets(const QString& photo_dir)
 	add(tr("Километров:"), _edit_dist);
 	_edit_dist->setValidator(new QIntValidator(0, 100000, _edit_dist));
 
-	add(tr("Страны:"), _edit_countries);
-	_edit_countries->setPlaceholderText(tr("Список через запятую"));
+	add(tr("Страны:"), _flow_countries);
+	_flow_countries->setFixedItemWidth(190);
 
-	add(tr("Маршрут:"), _edit_places);
-	_edit_places->setPlaceholderText(tr("Список через запятую"));
+	addLine();
+
+	add(tr("Маршрут:"), _flow_places);
+	_flow_places->setFixedItemWidth(190);
 
 	add(tr("Фото:"), _widget_photos);
 	_widget_photos->setMode(Base::WidgetFileEdit::ChooseMode::File);
@@ -63,12 +67,14 @@ void Bike::WidgetTrip::copyDataToGui()
 
 		_edit_dist->setText(QString::number(_data.dist()));
 
-		_edit_countries->setText(_data.countriesToString());
-
-		_edit_places->setText(_data.placesToString());
-
 		_widget_photos->setText(_data.photoLink());
 	}
+
+	_flow_countries->setList(_data_list.listOfCountries());
+	_flow_countries->setValues(_data.countries(), true);
+
+	_flow_places->setList(_data_list.listOfPlaces());
+	_flow_places->setValues(_data.places(), true);
 }
 
 bool Bike::WidgetTrip::copyGuiToData()
@@ -97,17 +103,17 @@ bool Bike::WidgetTrip::copyGuiToData()
 	}
 	_data.setDist(_edit_dist->text().toUInt());
 
-	if (_edit_countries->text().isEmpty()) {
+	if (!_flow_countries->isValid()) {
 		emit showMessage(tr("Не введены страны!"));
 		return false;
 	}
-	_data.setCountriesFromString(_edit_countries->text());
+	_data.setCountries(_flow_countries->values());
 
-	if (_edit_places->text().isEmpty()) {
+	if (!_flow_places->isValid()) {
 		emit showMessage(tr("Не введён маршрут!"));
 		return false;
 	}
-	_data.setPlacesFromString(_edit_places->text());
+	_data.setPlaces(_flow_places->values());
 
 	_data.setPhotoLink(_widget_photos->text());
 

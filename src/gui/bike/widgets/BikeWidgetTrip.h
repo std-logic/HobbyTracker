@@ -8,6 +8,7 @@ class QLineEdit;
 
 namespace Base
 {
+class FlowWithComboEdit;
 class WidgetDateEdit;
 class WidgetFileEdit;
 }
@@ -42,8 +43,8 @@ private:
 	Base::WidgetDateEdit* _edit_date_end = nullptr;
 	QLineEdit* _edit_time = nullptr;
 	QLineEdit* _edit_dist = nullptr;
-	QLineEdit* _edit_countries = nullptr;
-	QLineEdit* _edit_places = nullptr;
+	Base::FlowWithComboEdit* _flow_countries = nullptr;
+	Base::FlowWithComboEdit* _flow_places = nullptr;
 	Base::WidgetFileEdit* _widget_photos = nullptr;
 
 	TripList _data_list;

@@ -36,3 +36,13 @@ Bike::TripList::NumbersByStringsVec Bike::TripList::numbersByCountries(size_t ma
 {
 	return sortedVec(numbersByStrings(&Trip::countries), max_num);
 }
+
+Bike::TripList::ListOfStrings Bike::TripList::listOfCountries() const
+{
+	return listOfStrings(&Trip::countries);
+}
+
+Bike::TripList::ListOfStrings Bike::TripList::listOfPlaces() const
+{
+	return listOfStrings(&Trip::places);
+}
