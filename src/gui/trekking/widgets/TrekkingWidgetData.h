@@ -9,6 +9,7 @@ class QLineEdit;
 namespace Base
 {
 class ComboEdit;
+class FlowWithComboEdit;
 class WidgetDateEdit;
 class WidgetFileEdit;
 }
@@ -45,7 +46,7 @@ private:
 	QLineEdit* _edit_dist = nullptr;
 	QLineEdit* _edit_peak = nullptr;
 	Base::ComboEdit* _combo_kind = nullptr;
-	QLineEdit* _edit_countries = nullptr;
+	Base::FlowWithComboEdit* _flow_countries = nullptr;
 	QLineEdit* _edit_places = nullptr;
 	Base::WidgetFileEdit* _widget_photos = nullptr;
 

@@ -17,8 +17,9 @@ public:
 	virtual ~FlowWithComboEdit() = default;
 
 	void setList(const std::set<QString>& list_of_strings);
-	void setValues(const QStringList& texts);
+	void setValues(const QStringList& texts, bool add_one_if_empty = false);
 	QStringList values() const;
+	bool isValid() const;
 	ComboEdit* comboEditAt(int index) const;
 
 public slots:

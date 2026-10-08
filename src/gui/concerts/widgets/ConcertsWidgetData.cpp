@@ -79,7 +79,7 @@ void Concerts::WidgetData::copyDataToGui()
 	}
 
 	_flow_artists->setList(_data_list.listOfArtists());
-	_flow_artists->setValues(_data.artists());
+	_flow_artists->setValues(_data.artists(), true);
 }
 
 bool Concerts::WidgetData::copyGuiToData()

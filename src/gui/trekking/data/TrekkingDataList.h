@@ -33,6 +33,7 @@ public:
 
 	SublistsByStrings tracksByCountries() const;
 	NumbersByStringsVec numbersByCountries(size_t max_num) const;
+	ListOfStrings listOfCountries() const;
 
 	Sublists2ByStrings tracksByRegions() const;
 	NumbersByStringsVec numbersByRegions(size_t max_num) const;

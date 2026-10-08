@@ -14,10 +14,13 @@ void Base::FlowWithComboEdit::setList(const std::set<QString>& list_of_strings)
 	_list_of_strings = list_of_strings;
 }
 
-void Base::FlowWithComboEdit::setValues(const QStringList& texts)
+void Base::FlowWithComboEdit::setValues(const QStringList& texts, bool add_one_if_empty)
 {
 	for (const auto& text : texts) {
 		addComboEdit(text);
+	}
+	if (texts.isEmpty() && add_one_if_empty) {
+		addComboEdit(QString());
 	}
 }
 
@@ -31,6 +34,17 @@ QStringList Base::FlowWithComboEdit::values() const
 		}
 	}
 	return texts;
+}
+
+bool Base::FlowWithComboEdit::isValid() const
+{
+	for (int i = 0; i < count(); ++i) {
+		auto edit = comboEditAt(i);
+		if (edit && !edit->currentText().isEmpty()) {
+			return true;
+		}
+	}
+	return false;
 }
 
 Base::ComboEdit* Base::FlowWithComboEdit::comboEditAt(int index) const

@@ -1,6 +1,7 @@
 #include "TrekkingWidgetData.h"
 
 #include <gui/base/widgets/BaseComboEdit.h>
+#include <gui/base/widgets/BaseFlowWithComboEdit.h>
 #include <gui/base/widgets/BaseWidgetDateEdit.h>
 #include <gui/base/widgets/BaseWidgetFileEdit.h>
 
@@ -28,6 +29,7 @@ void Trekking::WidgetData::initCommonParams()
 	setWindowTitle(_mode_edit_data ?
 			tr("Редактирование похода") :
 			tr("Добавление нового похода"));
+	setMinimumWidth(600);
 }
 
 void Trekking::WidgetData::initWidgets(const QString& photo_dir)
@@ -47,8 +49,8 @@ void Trekking::WidgetData::initWidgets(const QString& photo_dir)
 
 	add(tr("Тип:"), _combo_kind);
 
-	add(tr("Страны:"), _edit_countries);
-	_edit_countries->setPlaceholderText(tr("Список через запятую"));
+	add(tr("Страны:"), _flow_countries);
+	_flow_countries->setFixedItemWidth(220);
 
 	add(tr("Маршрут:"), _edit_places);
 
@@ -70,14 +72,15 @@ void Trekking::WidgetData::copyDataToGui()
 
 		_edit_peak->setText(QString::number(_data.peak()));
 
-		_edit_countries->setText(_data.countriesToString());
-
 		_edit_places->setText(_data.places());
 
 		_widget_photos->setText(_data.photoLink());
 	}
 
 	_combo_kind->setTextAndList(_data.kind(), _data_list.listOfKinds());
+
+	_flow_countries->setList(_data_list.listOfCountries());
+	_flow_countries->setValues(_data.countries(), true);
 }
 
 bool Trekking::WidgetData::copyGuiToData()
@@ -118,11 +121,11 @@ bool Trekking::WidgetData::copyGuiToData()
 	}
 	_data.setKind(_combo_kind->currentText());
 
-	if (_edit_countries->text().isEmpty()) {
+	if (!_flow_countries->isValid()) {
 		emit showMessage(tr("Не введены страны!"));
 		return false;
 	}
-	_data.setCountriesFromString(_edit_countries->text());
+	_data.setCountries(_flow_countries->values());
 
 	if (_edit_places->text().isEmpty()) {
 		emit showMessage(tr("Не введён маршрут!"));
