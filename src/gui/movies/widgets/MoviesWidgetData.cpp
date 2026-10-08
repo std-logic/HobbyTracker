@@ -100,7 +100,7 @@ void Movies::WidgetData::copyDataToGui()
 
 		_check_favorite->setChecked(_data.isFavorite());
 	} else {
-		_combo_kind->addList(_data_list.listOfKinds());
+		_combo_kind->setList(_data_list.listOfKinds());
 	}
 }
 

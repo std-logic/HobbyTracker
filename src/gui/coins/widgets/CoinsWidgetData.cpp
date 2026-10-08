@@ -86,9 +86,9 @@ void Coins::WidgetData::copyDataToGui()
 
 		_combo_state->setTextAndList(_data.state(), _data_list.listOfStates());
 	} else {
-		_combo_country->addList(_data_list.listOfCountries());
+		_combo_country->setList(_data_list.listOfCountries());
 
-		_combo_state->addList(_data_list.listOfStates());
+		_combo_state->setList(_data_list.listOfStates());
 	}
 }
 
@@ -156,7 +156,7 @@ void Coins::WidgetData::save()
 void Coins::WidgetData::countryChanged(const QString& country)
 {
 	if (!country.isEmpty() && (_combo_country->findText(country) >= 0)) {
-		_combo_period->addList(_data_list.listOfPeriods(country), true);
+		_combo_period->setList(_data_list.listOfPeriods(country), true);
 	} else {
 		_combo_period->clear();
 	}
@@ -165,8 +165,8 @@ void Coins::WidgetData::countryChanged(const QString& country)
 void Coins::WidgetData::periodChanged(const QString& period)
 {
 	if (!period.isEmpty() && (_combo_period->findText(period) >= 0)) {
-		_combo_currency->addList(_data_list.listOfCurrencies(_combo_country->currentText(), period), true);
-		_combo_value->addList(_data_list.listOfValues(_combo_country->currentText(), period));
+		_combo_currency->setList(_data_list.listOfCurrencies(_combo_country->currentText(), period), true);
+		_combo_value->setList(_data_list.listOfValues(_combo_country->currentText(), period));
 	} else {
 		_combo_currency->clear();
 		_combo_value->clear();

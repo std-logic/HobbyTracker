@@ -7,7 +7,7 @@
 namespace Base
 {
 class ComboEdit;
-class FlowContainer;
+class FlowWithComboEdit;
 class WidgetDateEdit;
 class WidgetFileEdit;
 }
@@ -36,13 +36,12 @@ private:
 
 private slots:
 	void save() override;
-	void addArtist(const QString& artist);
 	void countryChanged(const QString& country);
 	void cityChanged(const QString& city);
 
 private:
 	Base::WidgetDateEdit* _edit_date = nullptr;
-	Base::FlowContainer* _flow_artists = nullptr;
+	Base::FlowWithComboEdit* _flow_artists = nullptr;
 	Base::ComboEdit* _combo_description = nullptr;
 	Base::ComboEdit* _combo_country = nullptr;
 	Base::ComboEdit* _combo_city = nullptr;
@@ -51,7 +50,6 @@ private:
 
 	DataList _data_list;
 	Data _data;
-	DataList::ListOfStrings _artists_list;
 };
 
 } // namespace Concerts

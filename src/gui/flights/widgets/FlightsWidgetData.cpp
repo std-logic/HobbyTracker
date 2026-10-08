@@ -99,7 +99,7 @@ void Flights::WidgetData::copyDataToGui()
 	auto list_of_countries = _data_list.listOfCountries();
 
 	for (size_t i = 0; i < max_points_num; ++i) {
-		_widgets_point[i].combo_country->addList(list_of_countries);
+		_widgets_point[i].combo_country->setList(list_of_countries);
 
 		if (i < _data.pointsNum()) {
 			_widgets_point[i].combo_country->lineEdit()->setText(_data.country(i));
@@ -158,7 +158,7 @@ void Flights::WidgetData::save()
 void Flights::WidgetData::countryChanged(size_t point, const QString& country)
 {
 	if (!country.isEmpty() && (_widgets_point[point].combo_country->findText(country) >= 0)) {
-		_widgets_point[point].combo_city->addList(_data_list.listOfCities(country), true);
+		_widgets_point[point].combo_city->setList(_data_list.listOfCities(country), true);
 	} else {
 		_widgets_point[point].combo_city->clear();
 	}
@@ -167,7 +167,7 @@ void Flights::WidgetData::countryChanged(size_t point, const QString& country)
 void Flights::WidgetData::cityChanged(size_t point, const QString& city)
 {
 	if (!city.isEmpty() && (_widgets_point[point].combo_city->findText(city) >= 0)) {
-		_widgets_point[point].combo_airport->addList(_data_list.listOfAirports(city), true);
+		_widgets_point[point].combo_airport->setList(_data_list.listOfAirports(city), true);
 	} else {
 		_widgets_point[point].combo_airport->clear();
 	}
