@@ -12,6 +12,8 @@ class QPushButton;
 namespace Base
 {
 class ComboEdit;
+class FlowWithComboEdit;
+class FlowWithLineEdit;
 class WidgetDateTimeEdit;
 class WidgetRating;
 }
@@ -44,11 +46,11 @@ private:
 	QLineEdit* _edit_title_tr = nullptr;
 	QLineEdit* _edit_title_orig = nullptr;
 	Base::ComboEdit* _combo_kind = nullptr;
-	QLineEdit* _edit_genres = nullptr;
-	QLineEdit* _edit_countries = nullptr;
-	QLineEdit* _edit_directors = nullptr;
-	QLineEdit* _edit_writers = nullptr;
-	QPlainTextEdit* _edit_actors = nullptr;
+	Base::FlowWithComboEdit* _flow_genres = nullptr;
+	Base::FlowWithComboEdit* _flow_countries = nullptr;
+	Base::FlowWithComboEdit* _flow_directors = nullptr;
+	Base::FlowWithComboEdit* _flow_writers = nullptr;
+	Base::FlowWithLineEdit* _flow_actors = nullptr;
 	QLineEdit* _edit_time = nullptr;
 	QLineEdit* _edit_year = nullptr;
 	Base::WidgetRating* _widget_rating = nullptr;

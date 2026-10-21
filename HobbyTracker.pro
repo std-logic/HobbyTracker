@@ -55,6 +55,7 @@ SOURCES += \
 	src/gui/base/widgets/BaseFlowLayout.cpp \
 	src/gui/base/widgets/BaseFlowPlaceholder.cpp \
 	src/gui/base/widgets/BaseFlowWithComboEdit.cpp \
+	src/gui/base/widgets/BaseFlowWithLineEdit.cpp \
 	src/gui/base/widgets/BaseToolTip.cpp \
 	src/gui/base/widgets/BaseWidgetChart.cpp \
 	src/gui/base/widgets/BaseWidgetControl.cpp \
@@ -207,6 +208,7 @@ HEADERS += \
 	src/gui/base/widgets/BaseFlowMimeData.h \
 	src/gui/base/widgets/BaseFlowPlaceholder.h \
 	src/gui/base/widgets/BaseFlowWithComboEdit.h \
+	src/gui/base/widgets/BaseFlowWithLineEdit.h \
 	src/gui/base/widgets/BaseToolTip.h \
 	src/gui/base/widgets/BaseWidgetChart.h \
 	src/gui/base/widgets/BaseWidgetControl.h \

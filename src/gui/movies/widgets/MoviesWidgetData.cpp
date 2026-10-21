@@ -1,11 +1,12 @@
 #include "MoviesWidgetData.h"
 
 #include <gui/base/widgets/BaseComboEdit.h>
+#include <gui/base/widgets/BaseFlowWithComboEdit.h>
+#include <gui/base/widgets/BaseFlowWithLineEdit.h>
 #include <gui/base/widgets/BaseWidgetDateTimeEdit.h>
 #include <gui/base/widgets/BaseWidgetRating.h>
 
 #include <QLineEdit>
-#include <QPlainTextEdit>
 #include <QCheckBox>
 #include <QPushButton>
 #include <QHBoxLayout>
@@ -31,7 +32,7 @@ void Movies::WidgetData::initCommonParams()
 	setWindowTitle(_mode_edit_data ?
 			tr("Редактирование данных произведения") :
 			tr("Добавление нового произведения"));
-	setMinimumWidth(500);
+	setMinimumWidth(760);
 }
 
 void Movies::WidgetData::initWidgets()
@@ -43,22 +44,28 @@ void Movies::WidgetData::initWidgets()
 
 	add(tr("Тип:"), _combo_kind);
 
-	add(tr("Жанр:"), _edit_genres);
-	_edit_genres->setPlaceholderText(tr("Список через запятую"));
+	add(tr("Жанр:"), _flow_genres);
+	_flow_genres->setFixedItemWidth(200);
 
-	add(tr("Страна:"), _edit_countries);
-	_edit_countries->setPlaceholderText(tr("Список через запятую"));
+	addLine();
 
-	add(tr("Режиссёр:"), _edit_directors);
-	_edit_directors->setPlaceholderText(tr("Список через запятую"));
+	add(tr("Страна:"), _flow_countries);
+	_flow_countries->setFixedItemWidth(200);
 
-	add(tr("Сценарист:"), _edit_writers);
-	_edit_writers->setPlaceholderText(tr("Список через запятую"));
+	addLine();
 
-	add(tr("Актёры:"), _edit_actors);
-	_edit_actors->setPlaceholderText(tr("Список через запятую"));
-	_edit_actors->setFixedHeight(72);
-	_edit_actors->setStyleSheet("QPlainTextEdit{background-color: white;}");
+	add(tr("Режиссёр:"), _flow_directors);
+	_flow_directors->setFixedItemWidth(200);
+
+	addLine();
+
+	add(tr("Сценарист:"), _flow_writers);
+	_flow_writers->setFixedItemWidth(200);
+
+	addLine();
+
+	add(tr("Актёры:"), _flow_actors);
+	_flow_actors->setFixedItemWidth(200);
 
 	add(tr("Длительность:"), _edit_time);
 
@@ -80,16 +87,6 @@ void Movies::WidgetData::copyDataToGui()
 
 		_combo_kind->setTextAndList(_data.kind(), _data_list.listOfKinds());
 
-		_edit_genres->setText(_data.genresToString());
-
-		_edit_countries->setText(_data.countriesToString());
-
-		_edit_directors->setText(_data.directorsToString());
-
-		_edit_writers->setText(_data.writersToString());
-
-		_edit_actors->setPlainText(_data.actorsToString());
-
 		_edit_time->setText(QString::number(_data.time()));
 
 		_edit_year->setText(_data.yearString());
@@ -102,6 +99,20 @@ void Movies::WidgetData::copyDataToGui()
 	} else {
 		_combo_kind->setList(_data_list.listOfKinds());
 	}
+
+	_flow_genres->setList(_data_list.listOfGenres());
+	_flow_genres->setValues(_data.genres(), true);
+
+	_flow_countries->setList(_data_list.listOfCountries());
+	_flow_countries->setValues(_data.countries(), true);
+
+	_flow_directors->setList(_data_list.listOfDirectors());
+	_flow_directors->setValues(_data.directors(), true);
+
+	_flow_writers->setList(_data_list.listOfWriters());
+	_flow_writers->setValues(_data.writers(), true);
+
+	_flow_actors->setValues(_data.actors(), true);
 }
 
 bool Movies::WidgetData::copyGuiToData()
@@ -120,32 +131,23 @@ bool Movies::WidgetData::copyGuiToData()
 	}
 	_data.setKind(_combo_kind->currentText());
 
-	if (_edit_genres->text().isEmpty()) {
+	if (!_flow_genres->isValid()) {
 		emit showMessage(tr("Не введён жанр!"));
 		return false;
 	}
-	_data.setGenresFromString(_edit_genres->text());
+	_data.setGenres(_flow_genres->values());
 
-	if (_edit_countries->text().isEmpty()) {
+	if (!_flow_countries->isValid()) {
 		emit showMessage(tr("Не введена страна!"));
 		return false;
 	}
-	_data.setCountriesFromString(_edit_countries->text());
+	_data.setCountries(_flow_countries->values());
 
-	if (_edit_directors->text().isEmpty()) {
-		emit showMessage(tr("Не введён режиссёр!"));
-		return false;
-	}
-	_data.setDirectorsFromString(_edit_directors->text());
+	_data.setDirectors(_flow_directors->values());
 
-	_data.setWritersFromString(_edit_writers->text());
+	_data.setWriters(_flow_writers->values());
 
-	auto actors = _edit_actors->toPlainText().trimmed();
-	if (actors.isEmpty()) {
-		emit showMessage(tr("Не введены актёры!"));
-		return false;
-	}
-	_data.setActorsFromString(actors);
+	_data.setActors(_flow_actors->values());
 
 	if (_edit_time->text().isEmpty()) {
 		emit showMessage(tr("Не введена длительность!"));
