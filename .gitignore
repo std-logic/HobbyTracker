@@ -42,6 +42,7 @@
 
 # qt
 *.pro.user
+.qtcreator
 
 # output folder
 bin
