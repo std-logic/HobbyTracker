@@ -18,6 +18,11 @@ namespace Global
 		inline const QColor tree_level_2 = QColor(200, 200, 200);
 		inline const QColor tree_level_3 = QColor(190, 190, 190);
 
+		inline const QColor chart_background = QColor(100, 100, 100);
+		inline const QColor chart_labels = QColor(Qt::white);
+		inline const QColor chart_bars_border = QColor(60, 120, 180);
+		inline const QColor chart_bars = QColor(90, 155, 215);
+
 		inline const QColor rating[10] =
 		{
 			QColor(255, 100, 100), // 1

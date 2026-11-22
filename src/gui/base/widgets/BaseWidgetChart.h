@@ -26,10 +26,6 @@ signals:
 	void needUpdate();
 
 protected:
-	QBarSet* getBarSet();
-	QValueAxis* getAxisY();
-	QBarCategoryAxis* getAxisX();
-
 	void setToolTipInsteadOfLabels(bool on);
 
 	void updateBars(const std::map<QString, int>& values);
@@ -47,6 +43,10 @@ private slots:
 
 protected:
 	int _view_mode = 0;
+
+	QBarSet* _bar_set = nullptr;
+	QValueAxis* _bar_axis_y = nullptr;
+	QBarCategoryAxis* _bar_axis_x = nullptr;
 
 	Base::ToolTip* _tooltip = nullptr;
 	bool _tooltip_on = false;

@@ -3,7 +3,6 @@
 
 #include <common/Global.h>
 
-#include <QVBoxLayout>
 #include <QBarSet>
 #include <QBarSeries>
 #include <QValueAxis>
@@ -20,36 +19,36 @@ Base::WidgetChart::WidgetChart(QWidget* parent)
 	auto bar_chart = chart();
 
 	bar_chart->setTheme(QChart::ChartThemeDark);
-	bar_chart->setBackgroundBrush(QColor(100, 100, 100));
+	bar_chart->setBackgroundBrush(Global::Colors::chart_background);
 	bar_chart->setMargins({3, 0, 10, 0});
 	bar_chart->legend()->setVisible(false);
 	auto title_font = bar_chart->titleFont();
 	title_font.setPointSize(Global::Sizes::font_big);
 	bar_chart->setTitleFont(title_font);
 
-	auto bar_set = new QBarSet("");
-	bar_set->setLabelColor(QColor(Qt::white));
-	bar_set->setBorderColor(QColor(60, 120, 180));
-	bar_set->setColor(QColor(90, 155, 215));
-	auto label_font = bar_set->labelFont();
+	_bar_set = new QBarSet("");
+	_bar_set->setLabelColor(Global::Colors::chart_labels);
+	_bar_set->setBorderColor(Global::Colors::chart_bars_border);
+	_bar_set->setColor(Global::Colors::chart_bars);
+	auto label_font = _bar_set->labelFont();
 	label_font.setPointSize(Global::Sizes::font_small);
-	bar_set->setLabelFont(label_font);
-	connect(bar_set, &QBarSet::hovered, this, &WidgetChart::barSetHovered);
+	_bar_set->setLabelFont(label_font);
+	connect(_bar_set, &QBarSet::hovered, this, &WidgetChart::barSetHovered);
 
 	auto bar_series = new QBarSeries();
 	bar_series->setLabelsVisible(true);
 	bar_series->setLabelsPosition(QAbstractBarSeries::LabelsOutsideEnd);
-	bar_series->append(bar_set);
+	bar_series->append(_bar_set);
 	bar_chart->addSeries(bar_series);
 
-	auto bar_axis_x = new QBarCategoryAxis;
-	bar_chart->addAxis(bar_axis_x, Qt::AlignBottom);
-	bar_series->attachAxis(bar_axis_x);
+	_bar_axis_x = new QBarCategoryAxis;
+	bar_chart->addAxis(_bar_axis_x, Qt::AlignBottom);
+	bar_series->attachAxis(_bar_axis_x);
 
-	auto bar_axis_y = new QValueAxis;
-	bar_axis_y->setLabelFormat("%d");
-	bar_chart->addAxis(bar_axis_y, Qt::AlignLeft);
-	bar_series->attachAxis(bar_axis_y);
+	_bar_axis_y = new QValueAxis;
+	_bar_axis_y->setLabelFormat("%d");
+	bar_chart->addAxis(_bar_axis_y, Qt::AlignLeft);
+	bar_series->attachAxis(_bar_axis_y);
 
 	_tooltip = new ToolTip(this);
 
@@ -65,49 +64,20 @@ void Base::WidgetChart::setViewMode(int view_mode)
 
 void Base::WidgetChart::clearChart()
 {
-	auto bar_axis_x = getAxisX();
-	bar_axis_x->clear();
-
-	auto bar_sets_1 = getBarSet();
-	bar_sets_1->remove(0, bar_sets_1->count());
-
+	_bar_axis_x->clear();
+	_bar_set->remove(0, _bar_set->count());
 	chart()->setTitle(QString());
-}
-
-QBarSet* Base::WidgetChart::getBarSet()
-{
-	auto bar_chart = chart();
-	auto bar_series = bar_chart->series();
-	auto bar_series_1 = bar_series.first();
-	auto bar_sets = reinterpret_cast<QAbstractBarSeries*>(bar_series_1)->barSets();
-	auto bar_set_1 = bar_sets.first();
-	return bar_set_1;
-}
-
-QValueAxis* Base::WidgetChart::getAxisY()
-{
-	auto bar_chart = chart();
-	auto bar_axis_y = bar_chart->axes(Qt::Vertical);
-	auto bar_axis_y_1 = reinterpret_cast<QValueAxis*>(bar_axis_y.first());
-	return bar_axis_y_1;
-}
-
-QBarCategoryAxis* Base::WidgetChart::getAxisX()
-{
-	auto bar_chart = chart();
-	auto bar_axis_x = bar_chart->axes(Qt::Horizontal);
-	auto bar_axis_x_1 = reinterpret_cast<QBarCategoryAxis*>(bar_axis_x.first());
-	return bar_axis_x_1;
 }
 
 void Base::WidgetChart::setToolTipInsteadOfLabels(bool on)
 {
 	_tooltip_on = on;
-	getAxisX()->setLabelsVisible(!on);
+	_bar_axis_x->setLabelsVisible(!on);
 }
 
 void Base::WidgetChart::updateBars(const std::map<QString, int>& values)
 {
+	if (values.empty()) { return; }
 	QStringList array_x;
 	QList<qreal> array_y;
 	int min_y = std::numeric_limits<int>::max();
@@ -124,6 +94,7 @@ void Base::WidgetChart::updateBars(const std::map<QString, int>& values)
 
 void Base::WidgetChart::updateBars(const std::map<uint32_t, int>& values)
 {
+	if (values.empty()) { return; }
 	QStringList array_x;
 	QList<qreal> array_y;
 	int min_y = std::numeric_limits<int>::max();
@@ -140,6 +111,7 @@ void Base::WidgetChart::updateBars(const std::map<uint32_t, int>& values)
 
 void Base::WidgetChart::updateBars(const std::map<uint32_t, std::pair<QString, int>>& values)
 {
+	if (values.empty()) { return; }
 	QStringList array_x;
 	QList<qreal> array_y;
 	int min_y = std::numeric_limits<int>::max();
@@ -156,6 +128,7 @@ void Base::WidgetChart::updateBars(const std::map<uint32_t, std::pair<QString, i
 
 void Base::WidgetChart::updateBars(const std::vector<std::pair<QString, int>>& values)
 {
+	if (values.empty()) { return; }
 	QStringList array_x;
 	QList<qreal> array_y;
 	int min_y = std::numeric_limits<int>::max();
@@ -172,8 +145,8 @@ void Base::WidgetChart::updateBars(const std::vector<std::pair<QString, int>>& v
 
 void Base::WidgetChart::updateBars(const QStringList& array_x, const QList<qreal>& array_y)
 {
-	getAxisX()->append(array_x);
-	getBarSet()->append(array_y);
+	_bar_axis_x->append(array_x);
+	_bar_set->append(array_y);
 }
 
 void Base::WidgetChart::updateAxisYRange(int min_y, int max_y)
@@ -184,9 +157,8 @@ void Base::WidgetChart::updateAxisYRange(int min_y, int max_y)
 	int range_start = (min_y < 0) ? ((min_y / step_y) - 1) * step_y : 0;
 	int range_end = ((max_y / step_y) + 1 + add) * step_y;
 
-	auto bar_axis_y = getAxisY();
-	bar_axis_y->setRange(range_start, range_end);
-	bar_axis_y->setTickCount(((range_end - range_start) / step_y) + 1);
+	_bar_axis_y->setRange(range_start, range_end);
+	_bar_axis_y->setTickCount(((range_end - range_start) / step_y) + 1);
 }
 
 int Base::WidgetChart::calcStepY(int range)
@@ -212,8 +184,8 @@ void Base::WidgetChart::barSetHovered(bool status, int index)
 	if (!_tooltip_on) { return; }
 	if (status) {
 		_tooltip->showText(QStringLiteral("%1: %2")
-						   .arg(getAxisX()->at(index))
-						   .arg(static_cast<int>(getBarSet()->at(index))));
+						   .arg(_bar_axis_x->at(index))
+						   .arg(static_cast<int>(_bar_set->at(index))));
 	} else {
 		_tooltip->hideText();
 	}
