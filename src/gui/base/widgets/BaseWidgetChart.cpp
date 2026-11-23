@@ -69,9 +69,8 @@ void Base::WidgetChart::clearChart()
 	chart()->setTitle(QString());
 }
 
-void Base::WidgetChart::setToolTipInsteadOfLabels(bool on)
+void Base::WidgetChart::hideLabels(bool on)
 {
-	_tooltip_on = on;
 	_bar_axis_x->setLabelsVisible(!on);
 }
 
@@ -181,7 +180,6 @@ int Base::WidgetChart::calcStepY(int range)
 
 void Base::WidgetChart::barSetHovered(bool status, int index)
 {
-	if (!_tooltip_on) { return; }
 	if (status) {
 		_tooltip->showText(QStringLiteral("%1: %2")
 						   .arg(_bar_axis_x->at(index))

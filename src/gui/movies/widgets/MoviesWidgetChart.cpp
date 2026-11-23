@@ -12,7 +12,7 @@ Movies::WidgetChart::WidgetChart(QWidget* parent)
 void Movies::WidgetChart::update(const DataList& data_list, const Base::ExtraList& extra_list)
 {
 	clearChart();
-	setToolTipInsteadOfLabels(static_cast<ChartViewModes>(_view_mode) == ChartViewModes::ByYears);
+	hideLabels(static_cast<ChartViewModes>(_view_mode) == ChartViewModes::ByYears);
 	switch (static_cast<ChartViewModes>(_view_mode)) {
 		case ChartViewModes::ByViewDates:	showByViewDates(data_list);					break;
 		case ChartViewModes::ByGenres:		showByGenres(data_list);					break;

@@ -11,7 +11,7 @@ void Player::WidgetChart::update(const Library& library)
 {
 	clearChart();
 	if (library.empty()) { return; }
-	setToolTipInsteadOfLabels(static_cast<ChartViewModes>(_view_mode) == ChartViewModes::ByYears);
+	hideLabels(static_cast<ChartViewModes>(_view_mode) == ChartViewModes::ByYears);
 	switch (static_cast<ChartViewModes>(_view_mode)) {
 		case ChartViewModes::ByPlayCounts:	showByPlayCounts(library);	break;
 		case ChartViewModes::ByArtists:		showByArtists(library);		break;
@@ -25,7 +25,7 @@ void Player::WidgetChart::update(const std::vector<Library>& libraries)
 {
 	clearChart();
 	if (libraries.empty()) { return; }
-	setToolTipInsteadOfLabels(false);
+	hideLabels(false);
 	switch (static_cast<ChartViewModes>(_view_mode)) {
 		case ChartViewModes::HistoryPlayCounts:	showHistoryPlayCounts(libraries);	break;
 		case ChartViewModes::HistoryArtists:	showHistoryArtists(libraries);		break;

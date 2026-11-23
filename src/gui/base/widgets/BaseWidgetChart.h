@@ -26,7 +26,7 @@ signals:
 	void needUpdate();
 
 protected:
-	void setToolTipInsteadOfLabels(bool on);
+	void hideLabels(bool on);
 
 	void updateBars(const std::map<QString, int>& values);
 	void updateBars(const std::map<uint32_t, int>& values);
@@ -47,9 +47,7 @@ protected:
 	QBarSet* _bar_set = nullptr;
 	QValueAxis* _bar_axis_y = nullptr;
 	QBarCategoryAxis* _bar_axis_x = nullptr;
-
 	Base::ToolTip* _tooltip = nullptr;
-	bool _tooltip_on = false;
 };
 
 } // namespace Base
