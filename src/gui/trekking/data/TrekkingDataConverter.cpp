@@ -51,7 +51,7 @@ Trekking::DataList Trekking::DataConverter::conv(const Csv::Data& csv_data)
 			data.setKind(line[CLMN_KIND]);
 		}
 		if (CLMN_COUNTRIES < line_size) {
-			data.setCountriesFromString(line[CLMN_COUNTRIES]);
+			data.setCountriesFromString(line[CLMN_COUNTRIES], QStringLiteral("|"));
 		}
 		if (CLMN_PLACES < line_size) {
 			data.setPlaces(line[CLMN_PLACES]);
@@ -79,7 +79,7 @@ Csv::Data Trekking::DataConverter::conv(const DataList& data_list)
 		line[CLMN_DIST]			= QString::number(data.dist());
 		line[CLMN_PEAK]			= QString::number(data.peak());
 		line[CLMN_KIND]			= data.kind();
-		line[CLMN_COUNTRIES]	= data.countriesToString();
+		line[CLMN_COUNTRIES]	= data.countriesToString(QStringLiteral("|"));
 		line[CLMN_PLACES]		= data.places();
 		line[CLMN_PHOTO_LINK]	= data.photoLink();
 

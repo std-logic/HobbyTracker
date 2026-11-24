@@ -42,10 +42,10 @@ Bike::TripList Bike::TripConverter::conv(const Csv::Data& csv_data)
 			if (conv_ok) { data.setDist(dist); }
 		}
 		if (CLMN_COUNTRIES < line_size) {
-			data.setCountriesFromString(line[CLMN_COUNTRIES]);
+			data.setCountriesFromString(line[CLMN_COUNTRIES], QStringLiteral("|"));
 		}
 		if (CLMN_PLACES < line_size) {
-			data.setPlacesFromString(line[CLMN_PLACES]);
+			data.setPlacesFromString(line[CLMN_PLACES], QStringLiteral("|"));
 		}
 		if (CLMN_PHOTO_LINK < line_size) {
 			data.setPhotoLink(line[CLMN_PHOTO_LINK]);
@@ -68,8 +68,8 @@ Csv::Data Bike::TripConverter::conv(const TripList& data_list)
 		line[CLMN_DATE_END]		= data.dateEnd();
 		line[CLMN_TIME]			= QString::number(data.time());
 		line[CLMN_DIST]			= QString::number(data.dist());
-		line[CLMN_COUNTRIES]	= data.countriesToString();
-		line[CLMN_PLACES]		= data.placesToString();
+		line[CLMN_COUNTRIES]	= data.countriesToString(QStringLiteral("|"));
+		line[CLMN_PLACES]		= data.placesToString(QStringLiteral("|"));
 		line[CLMN_PHOTO_LINK]	= data.photoLink();
 
 		csv_data.push_back(line);

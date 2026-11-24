@@ -28,7 +28,7 @@ Flights::DataList Flights::DataConverter::conv(const Csv::Data& csv_data)
 		}
 		for (int i = CLMN_POINT_FIRST; i <= CLMN_POINT_LAST; ++i) {
 			if (i < line_size) {
-				data.addPointFromString(line[i]);
+				data.addPointFromString(line[i], QStringLiteral("|"));
 			}
 		}
 
@@ -47,7 +47,7 @@ Csv::Data Flights::DataConverter::conv(const DataList& data_list)
 
 		line[CLMN_DATE]		= data.date();
 		for (int i = CLMN_POINT_FIRST; i <= CLMN_POINT_LAST; ++i) {
-			line[i]			= data.pointToString(i - CLMN_POINT_FIRST);
+			line[i]			= data.pointToString(i - CLMN_POINT_FIRST, QStringLiteral("|"));
 		}
 
 		csv_data.push_back(line);

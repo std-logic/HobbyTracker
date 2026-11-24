@@ -30,7 +30,7 @@ Concerts::DataList Concerts::DataConverter::conv(const Csv::Data& csv_data)
 			data.setDate(line[CLMN_DATE]);
 		}
 		if (CLMN_ARTISTS < line_size) {
-			data.setArtistsFromString(line[CLMN_ARTISTS]);
+			data.setArtistsFromString(line[CLMN_ARTISTS], QStringLiteral("|"));
 		}
 		if (CLMN_DESCRIPTION < line_size) {
 			data.setDescription(line[CLMN_DESCRIPTION]);
@@ -62,7 +62,7 @@ Csv::Data Concerts::DataConverter::conv(const DataList& data_list)
 		QStringList line(NUM_OF_COLUMNS);
 
 		line[CLMN_DATE]			= data.date();
-		line[CLMN_ARTISTS]		= data.artistsToString();
+		line[CLMN_ARTISTS]		= data.artistsToString(QStringLiteral("|"));
 		line[CLMN_DESCRIPTION]	= data.description();
 		line[CLMN_COUNTRY]		= data.country();
 		line[CLMN_CITY]			= data.city();
