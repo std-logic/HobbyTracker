@@ -19,6 +19,7 @@ void Movies::WidgetDataList::update(const DataList& data_list, const Base::Extra
 	switch (static_cast<DataListViewModes>(_view_mode)) {
 		case DataListViewModes::Simple:			showSimple(data_list);						break;
 		case DataListViewModes::ByKinds:		showByKinds(data_list);						break;
+		case DataListViewModes::ByViewDates:	showByViewDates(data_list);					break;
 		case DataListViewModes::ByGenres:		showByGenres(data_list);					break;
 		case DataListViewModes::ByCountries:	showByCountries(data_list, extra_list);		break;
 		case DataListViewModes::ByRegions:		showByRegions(data_list, extra_list);		break;
@@ -90,6 +91,41 @@ void Movies::WidgetDataList::showByKinds(const DataList& data_list)
 
 		for (const auto movie : movies) {
 			auto item_movie = new Base::WidgetTreeItem(item_kind);
+			item_movie->setText(CLMN_VIEW_DATE, movie->viewDateWithoutSeconds());
+			item_movie->setText(CLMN_TITLE, movie->title());
+			item_movie->setText(CLMN_GENRES, movie->genresToString());
+			item_movie->setText(CLMN_COUNTRIES, movie->countriesToString());
+			item_movie->setText(CLMN_DIRECTORS, movie->directorsToString());
+			item_movie->setText(CLMN_ACTORS, movie->actorsToString());
+			item_movie->setText(CLMN_YEAR, movie->yearString());
+			item_movie->setRating(CLMN_RATING, movie->rating());
+			item_movie->setHoveredToolTip(movie->summaryString());
+			item_movie->setId(movie->id());
+		}
+	}
+}
+
+void Movies::WidgetDataList::showByViewDates(const DataList& data_list)
+{
+	enum Columns {CLMN_VIEW_DATE, CLMN_COUNT, CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES,
+				  CLMN_DIRECTORS, CLMN_ACTORS, CLMN_YEAR, CLMN_RATING};
+	setSearchColumns({CLMN_TITLE, CLMN_GENRES, CLMN_COUNTRIES, CLMN_DIRECTORS, CLMN_ACTORS});
+	initColumns({tr("Год просмотра / Дата"), tr("К-во"), tr("Название"), tr("Жанр"), tr("Страна"),
+				 tr("Режиссёр"), tr("Актёры"), tr("Год"), tr("Оценка")},
+				{WIDTH_VIEW_DATE_MEDIUM, WIDTH_COUNT, WIDTH_TITLE, WIDTH_GENRES, WIDTH_COUNTRIES,
+				 WIDTH_DIRECTORS, WIDTH_ACTORS, WIDTH_YEAR, WIDTH_RATING});
+	initSorting(CLMN_VIEW_DATE, Qt::DescendingOrder, true);
+
+	auto movies_by_view_dates = data_list.moviesByViewDates(_favorites_only);
+
+	for (const auto& [year, movies] : movies_by_view_dates) {
+		auto item_year = new Base::WidgetTreeItem(this, Global::Colors::tree_level_1);
+		item_year->setNumb(CLMN_VIEW_DATE, year);
+		item_year->setNumb(CLMN_COUNT, movies.size());
+		item_year->setText(CLMN_YEAR, Helper::yearString(movies));
+
+		for (const auto movie : movies) {
+			auto item_movie = new Base::WidgetTreeItem(item_year);
 			item_movie->setText(CLMN_VIEW_DATE, movie->viewDateWithoutSeconds());
 			item_movie->setText(CLMN_TITLE, movie->title());
 			item_movie->setText(CLMN_GENRES, movie->genresToString());

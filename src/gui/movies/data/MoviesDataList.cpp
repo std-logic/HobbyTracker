@@ -223,6 +223,11 @@ Movies::DataList::NumbersByIntegers Movies::DataList::numbersByRatings(bool favo
 	return numbersByIntegers(&Data::rating, &Data::isFavorite, favorites_only);
 }
 
+Movies::DataList::SublistsByIntegers Movies::DataList::moviesByViewDates(bool favorites_only) const
+{
+	return sublistsByIntegers(&Data::viewYear, &Data::isFavorite, favorites_only);
+}
+
 Movies::DataList::NumbersByIntegers Movies::DataList::numbersByViewDates(bool favorites_only) const
 {
 	return numbersByIntegers(&Data::viewYear, &Data::isFavorite, favorites_only);

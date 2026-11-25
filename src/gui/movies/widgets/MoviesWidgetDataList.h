@@ -29,6 +29,7 @@ signals:
 private:
 	void showSimple(const DataList& data_list);
 	void showByKinds(const DataList& data_list);
+	void showByViewDates(const DataList& data_list);
 	void showByGenres(const DataList& data_list);
 	void showByCountries(const DataList& data_list, const Base::ExtraList& extra_list);
 	void showByRegions(const DataList& data_list, const Base::ExtraList& extra_list);

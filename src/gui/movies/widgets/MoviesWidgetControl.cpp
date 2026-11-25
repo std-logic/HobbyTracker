@@ -28,6 +28,7 @@ void Movies::WidgetControl::initWidgets()
 		addComboBox(_combo_data_list_view_mode, &WidgetControl::setDataListViewMode, {
 				{tr("Простой список"), static_cast<int>(DataListViewModes::Simple)},
 				{tr("По типам"), static_cast<int>(DataListViewModes::ByKinds)},
+				{tr("По годам просмотра"), static_cast<int>(DataListViewModes::ByViewDates)},
 				{tr("По жанрам"), static_cast<int>(DataListViewModes::ByGenres)},
 				{tr("По странам"), static_cast<int>(DataListViewModes::ByCountries)},
 				{tr("По регионам"), static_cast<int>(DataListViewModes::ByRegions)},

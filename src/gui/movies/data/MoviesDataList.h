@@ -71,6 +71,7 @@ public:
 	SublistsByIntegers moviesByRatings(bool favorites_only = false) const;
 	NumbersByIntegers numbersByRatings(bool favorites_only = false) const;
 
+	SublistsByIntegers moviesByViewDates(bool favorites_only = false) const;
 	NumbersByIntegers numbersByViewDates(bool favorites_only = false) const;
 };
 

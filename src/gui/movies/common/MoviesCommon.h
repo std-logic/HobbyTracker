@@ -7,6 +7,7 @@ enum class DataListViewModes
 {
 	Simple,
 	ByKinds,
+	ByViewDates,
 	ByGenres,
 	ByCountries,
 	ByRegions,
